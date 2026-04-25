@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>txtContrasea_2</class>
+ <widget class="QDialog" name="txtContrasea_2">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>597</width>
+    <height>517</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: white;</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>100</y>
+     <width>111</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>22</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">&lt;span style=&quot;color:#18B7A5;&quot;&gt;Stay&lt;/span&gt;&lt;span style=&quot;color:#FF9F2E;&quot;&gt;Fit&lt;/span&gt;</string>
+   </property>
+   <property name="text">
+    <string>&lt;span style=&quot;color:#18B7A5;&quot;&gt;Stay&lt;/span&gt;&lt;span style=&quot;color:#FF9F2E;&quot;&gt;Fit&lt;/span&gt;</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::RichText</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>150</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    color: rgb(103, 103, 103);
+    font: 8pt &quot;MS Shell Dlg 2&quot;;
+}</string>
+   </property>
+   <property name="text">
+    <string>Tu gimnasio, tu mejor versión</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>190</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    color: #333333;
+}</string>
+   </property>
+   <property name="text">
+    <string>Iniciar Sesión</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txtUsuario">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>260</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background-color: white;
+    padding-left: 35px;
+    font: 9pt &quot;Segoe UI&quot;;
+    color: #333333;
+}</string>
+   </property>
+   <property name="placeholderText">
+    <string>Usuario</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txtContrasea">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>310</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    padding-left: 12px;
+    background-color: white;
+    font: 9pt &quot;Segoe UI&quot;;
+    color: #333333;
+}</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Contraseña</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>230</y>
+     <width>181</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    color: rgb(103, 103, 103);
+    font: 8pt &quot;MS Shell Dlg 2&quot;;
+}</string>
+   </property>
+   <property name="text">
+    <string>Accede a tu cuenta para continuar</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>360</y>
+     <width>221</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font: bold 10pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #13998A;
+}padding: 6px;</string>
+   </property>
+   <property name="text">
+    <string>Iniciar sesión</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../../../../../../../../Downloads/logo_stayfit/logo_stayfit.qrc"/>
+ </resources>
+ <connections/>
+</ui>
