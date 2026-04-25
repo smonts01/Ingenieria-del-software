@@ -91,10 +91,10 @@
   <widget class="QLineEdit" name="txtUsuario">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>160</x>
      <y>260</y>
-     <width>221</width>
-     <height>31</height>
+     <width>261</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -107,6 +107,9 @@
     color: #333333;
 }</string>
    </property>
+   <property name="text">
+    <string/>
+   </property>
    <property name="placeholderText">
     <string>Usuario</string>
    </property>
@@ -114,10 +117,10 @@
   <widget class="QLineEdit" name="txtContrasea">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>310</y>
-     <width>221</width>
-     <height>31</height>
+     <x>160</x>
+     <y>330</y>
+     <width>261</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -134,7 +137,7 @@
     <enum>QLineEdit::Password</enum>
    </property>
    <property name="placeholderText">
-    <string>Contraseña</string>
+    <string>        Contraseña</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -159,10 +162,10 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>360</y>
-     <width>221</width>
-     <height>41</height>
+     <x>150</x>
+     <y>400</y>
+     <width>301</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -180,6 +183,60 @@ QPushButton:hover {
    </property>
    <property name="text">
     <string>Iniciar sesión</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>10</y>
+     <width>331</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>331</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/prefijoNuevo/logo_stayfit.png)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>270</y>
+     <width>20</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/prefijoNuevo/icono_usuario.png)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>340</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/prefijoNuevo/contrasenia.jpg)</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
