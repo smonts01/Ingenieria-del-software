@@ -321,7 +321,7 @@ QPushButton:hover {
   <zorder>btnOjo</zorder>
  </widget>
  <resources>
-  <include location="../../../../../../../../../Downloads/logo_stayfit/logo_stayfit.qrc"/>
+  <include location="../imagenes/recursos.qrc"/>
  </resources>
  <connections/>
 </ui>
