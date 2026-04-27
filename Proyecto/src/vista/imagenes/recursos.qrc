@@ -1,0 +1,17 @@
+<RCC>
+  <qresource>
+    <file>fondo_app.png</file>
+  </qresource>
+  <qresource prefix="prefijoNuevo">
+    <file>ojo_abierto.jpg</file>
+    <file>contrasenia.jpg</file>
+    <file>logo_stayfit.png</file>
+    <file>logo_stayfit.png</file>
+    <file>icono_usuario.png</file>
+  </qresource>
+  <qresource prefix="nuevas imagenes"/>
+  <qresource prefix="logoapp"/>
+  <qresource prefix="prefijoNuevo">
+    <file>logo_stayfit.png</file>
+  </qresource>
+</RCC>
