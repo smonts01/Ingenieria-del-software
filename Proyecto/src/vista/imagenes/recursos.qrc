@@ -3,15 +3,24 @@
     <file>fondo_app.png</file>
   </qresource>
   <qresource prefix="prefijoNuevo">
-    <file>casa_inicio.png</file>
     <file>ojo_abierto.jpg</file>
     <file>contrasenia.jpg</file>
     <file>logo_stayfit.png</file>
     <file>logo_stayfit.png</file>
     <file>icono_usuario.png</file>
+    <file>casa_inicio.png</file>
   </qresource>
-  <qresource prefix="nuevas imagenes"/>
-  <qresource prefix="logoapp"/>
+  <qresource prefix="newPrefix">
+    <file>inscripcion.png</file>
+    <file>calendario.png</file>
+    <file>pagos.png</file>
+    <file>informacion.png</file>
+    <file>grafico-de-barras.png</file>
+    <file>fuego.png</file>
+    <file>marca-de-verificacion.png</file>
+    <file>usuario.png</file>
+    <file>ola.png</file>
+  </qresource>
   <qresource prefix="prefijoNuevo">
     <file>logo_stayfit.png</file>
   </qresource>

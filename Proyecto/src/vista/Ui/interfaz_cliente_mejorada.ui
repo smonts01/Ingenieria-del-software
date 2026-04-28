@@ -46,17 +46,23 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
       <rect>
-       <x>25</x>
+       <x>18</x>
        <y>10</y>
-       <width>55</width>
-       <height>55</height>
+       <width>65</width>
+       <height>65</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 28pt &quot;Segoe UI Emoji&quot;; color: #18B7A5;</string>
      </property>
      <property name="text">
-      <string>🏃</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -104,7 +110,13 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string notr="true">background-color: #18B7A5; color: white; border-radius: 22px; font: 20pt &quot;Segoe UI Emoji&quot;;</string>
      </property>
      <property name="text">
-      <string>👤</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -295,9 +307,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>28</x>
-       <y>455</y>
+       <y>439</y>
        <width>164</width>
-       <height>85</height>
+       <height>101</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -325,7 +337,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         <x>18</x>
         <y>35</y>
         <width>130</width>
-        <height>40</height>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -353,6 +365,139 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="pixmap">
       <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>25</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>177</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>220</y>
+       <width>25</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>265</y>
+       <width>25</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>310</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>355</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -412,25 +557,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <height>110</height>
       </rect>
      </property>
-     <widget class="QLabel" name="lblIconClases">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>25</y>
-        <width>44</width>
-        <height>44</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#D8F4F0; border-radius:22px; font:17pt &quot;Segoe UI Emoji&quot;;</string>
-      </property>
-      <property name="text">
-       <string>📅</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="lblTituloClases">
       <property name="geometry">
        <rect>
@@ -479,6 +605,47 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string>esta semana</string>
       </property>
      </widget>
+     <widget class="QLabel" name="lblIconClases">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>25</y>
+        <width>50</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#D8F4F0; border-radius:22px; font:17pt &quot;Segoe UI Emoji&quot;;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>35</y>
+        <width>30</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="card2">
      <property name="geometry">
@@ -492,17 +659,17 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblIconPago">
       <property name="geometry">
        <rect>
-        <x>15</x>
+        <x>11</x>
         <y>25</y>
-        <width>44</width>
-        <height>44</height>
+        <width>50</width>
+        <height>50</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color:#FFF0D9; border-radius:22px; font:16pt &quot;Segoe UI Emoji&quot;; color:#FF9F2E;</string>
       </property>
       <property name="text">
-       <string>💳</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -554,6 +721,25 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
       <property name="text">
        <string>Tienes 1 pago pendiente</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>35</y>
+        <width>30</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -723,9 +909,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblTituloTabla">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>50</x>
         <y>15</y>
-        <width>190</width>
+        <width>220</width>
         <height>24</height>
        </rect>
       </property>
@@ -733,7 +919,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>📅  Próximas clases inscritas</string>
+       <string>Próximas clases inscritas</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="tablaProximasClases">
@@ -794,6 +980,25 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string>Ver todas mis inscripciones</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>18</x>
+        <y>18</y>
+        <width>20</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="cardPago">
      <property name="geometry">
@@ -807,7 +1012,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblTituloUltPago">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>50</x>
         <y>15</y>
         <width>130</width>
         <height>24</height>
@@ -817,7 +1022,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>💳  Último pago</string>
+       <string>Último pago</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblCuota">
@@ -897,6 +1102,25 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string>Ver historial de pagos</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>15</y>
+        <width>23</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="cardActividad">
      <property name="geometry">
@@ -910,7 +1134,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblTituloAct">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>50</x>
         <y>12</y>
         <width>150</width>
         <height>22</height>
@@ -920,7 +1144,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>📊  Resumen de actividad</string>
+       <string>Resumen de actividad</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblEntrenos">
@@ -985,6 +1209,25 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>15</y>
+        <width>25</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
