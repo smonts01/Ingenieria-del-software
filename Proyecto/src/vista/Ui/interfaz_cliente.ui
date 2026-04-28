@@ -59,7 +59,7 @@ QPushButton:hover {
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; font-weight:700; color:#ff9f2e;&quot;&gt;StayFit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; font-weight:700; color:#55aaff;&quot;&gt;Stay&lt;/span&gt;&lt;span style=&quot; font-size:24pt; font-weight:700; color:#ff9f2e;&quot;&gt;Fit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnInicio">
@@ -304,13 +304,13 @@ QPushButton:hover {
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QLabel" name="labelSaludo">
+    <widget class="QLabel" name="lblNombreCliente">
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>10</y>
+       <y>20</y>
        <width>171</width>
-       <height>81</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="toolTip">
@@ -322,7 +322,254 @@ QPushButton:hover {
 }</string>
      </property>
      <property name="text">
-      <string>Hola, nombre apellido</string>
+      <string>Hola, Cliente</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnCerrarSesion">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>20</y>
+       <width>171</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: white;
+    color: #18B7A5;
+    border: 1px solid #18B7A5;
+    border-radius: 8px;
+    font: bold 10pt &quot;Segoe UI&quot;;
+}</string>
+     </property>
+     <property name="text">
+      <string>Cerrar sesión</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblFechaAltaCliente">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>40</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+    color: #777777;
+}</string>
+     </property>
+     <property name="text">
+      <string>Cliente desde fecha</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblBienvenida">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>161</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bienvendid@, Cliente</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frame">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>130</y>
+       <width>170</width>
+       <height>110</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: white;
+    border: 1px solid #E6E6E6;
+    border-radius: 12px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>10</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Proximas clases</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_2">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>130</y>
+       <width>170</width>
+       <height>110</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: white;
+    border: 1px solid #E6E6E6;
+    border-radius: 12px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>10</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Estado de pagos</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_3">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>130</y>
+       <width>170</width>
+       <height>110</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: white;
+    border: 1px solid #E6E6E6;
+    border-radius: 12px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>141</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Calorías de esta semana</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_4">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>130</y>
+       <width>170</width>
+       <height>110</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: white;
+    border: 1px solid #E6E6E6;
+    border-radius: 12px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>10</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Asistencias</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>270</y>
+       <width>371</width>
+       <height>200</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: white;
+    border: 1px solid #E6E6E6;
+    border-radius: 12px;
+}</string>
+     </property>
+     <column>
+      <property name="text">
+       <string>Clase</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fecha</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Hora</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Sala</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>300</y>
+       <width>171</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Próximas clases inscritas</string>
      </property>
     </widget>
    </widget>

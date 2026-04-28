@@ -3,6 +3,7 @@
     <file>fondo_app.png</file>
   </qresource>
   <qresource prefix="prefijoNuevo">
+    <file>casa_inicio.png</file>
     <file>ojo_abierto.jpg</file>
     <file>contrasenia.jpg</file>
     <file>logo_stayfit.png</file>
