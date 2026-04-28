@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #F7F9FA;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frameMenu">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-10</y>
+      <width>220</width>
+      <height>650</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>-10</y>
+       <width>151</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; font-weight:700; color:#ff9f2e;&quot;&gt;StayFit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnInicio">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>160</y>
+       <width>79</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    color: white;
+    border-radius: 8px;
+    text-align: left;
+    padding-left: 20px;
+    font: bold 11pt &quot;Segoe UI&quot;;
+}</string>
+     </property>
+     <property name="text">
+      <string>Inicio</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnClases">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>210</y>
+       <width>79</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Clases</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnInscripciones">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>250</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Mis inscripciones</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnPagos">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>300</y>
+       <width>79</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Pagos</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnEstadisticas">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>360</y>
+       <width>121</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Estadísticas</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnCalorias">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>400</y>
+       <width>79</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Calorias</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnPerfil">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>450</y>
+       <width>79</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Perfil</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnInformacion">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>480</y>
+       <width>141</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    color: #333333;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    font: 11pt &quot;Segoe UI&quot;;
+}
+
+QPushButton:hover {
+    background-color: #E6F7F5;
+    border-radius: 8px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Información</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frameContenido">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>0</y>
+      <width>780</width>
+      <height>650</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame {
+    background-color: #F7F9FA;
+    border: none;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>33</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
