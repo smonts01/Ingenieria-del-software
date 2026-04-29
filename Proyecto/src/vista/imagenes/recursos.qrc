@@ -3,6 +3,7 @@
     <file>fondo_app.png</file>
   </qresource>
   <qresource prefix="entrenador">
+    <file>reborde_ola.png</file>
     <file>corazon-en-mano.png</file>
     <file>rosas-de-corazon.png</file>
     <file>ver-usuario.png</file>
