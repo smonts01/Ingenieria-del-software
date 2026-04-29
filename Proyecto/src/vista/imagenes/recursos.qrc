@@ -2,6 +2,17 @@
   <qresource>
     <file>fondo_app.png</file>
   </qresource>
+  <qresource prefix="entrenador">
+    <file>corazon-en-mano.png</file>
+    <file>rosas-de-corazon.png</file>
+    <file>ver-usuario.png</file>
+    <file>reloj.png</file>
+    <file>usuarios.png</file>
+    <file>lista-de-verificacion.png</file>
+    <file>grafico-circular.png</file>
+    <file>anadir-grupo.png</file>
+    <file>clasificacion.png</file>
+  </qresource>
   <qresource prefix="prefijoNuevo">
     <file>ojo_abierto.jpg</file>
     <file>contrasenia.jpg</file>
