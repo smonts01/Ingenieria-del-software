@@ -12,7 +12,6 @@
     <file>lista-de-verificacion.png</file>
     <file>grafico-circular.png</file>
     <file>anadir-grupo.png</file>
-    <file>clasificacion.png</file>
   </qresource>
   <qresource prefix="prefijoNuevo">
     <file>ojo_abierto.jpg</file>
@@ -27,6 +26,12 @@
     <file>calendario.png</file>
     <file>pagos.png</file>
     <file>informacion.png</file>
+    <file>peso.png</file>
+    <file>bicicleta.png</file>
+    <file>bailando.png</file>
+    <file>pilates.png</file>
+    <file>yoga.png</file>
+    <file>yoga (1).png</file>
     <file>grafico-de-barras.png</file>
     <file>fuego.png</file>
     <file>marca-de-verificacion.png</file>

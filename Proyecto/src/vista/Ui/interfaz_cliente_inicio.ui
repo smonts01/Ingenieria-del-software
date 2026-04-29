@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>650</height>
+    <width>1200</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1000</width>
+      <width>1201</width>
       <height>90</height>
      </rect>
     </property>
@@ -157,8 +157,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QPushButton" name="btnCerrarSesion">
      <property name="geometry">
       <rect>
-       <x>860</x>
-       <y>27</y>
+       <x>1060</x>
+       <y>20</y>
        <width>115</width>
        <height>36</height>
       </rect>
@@ -174,7 +174,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <x>0</x>
       <y>90</y>
       <width>220</width>
-      <height>560</height>
+      <height>611</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -287,8 +287,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="cardSigue">
      <property name="geometry">
       <rect>
-       <x>28</x>
-       <y>439</y>
+       <x>30</x>
+       <y>470</y>
        <width>164</width>
        <height>101</height>
       </rect>
@@ -490,8 +490,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <rect>
       <x>220</x>
       <y>90</y>
-      <width>780</width>
-      <height>560</height>
+      <width>981</width>
+      <height>601</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -1247,51 +1247,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
       <property name="scaledContents">
        <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardConsejo">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>490</y>
-       <width>720</width>
-       <height>55</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QFrame#cardConsejo { background-color:#EEF9F7; border:none; border-radius:12px; }</string>
-     </property>
-     <widget class="QLabel" name="lblConsejo">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>10</y>
-        <width>320</width>
-        <height>35</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Tu bienestar es nuestra prioridad\nRecuerda mantener una alimentación equilibrada.</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblMotivacion">
-      <property name="geometry">
-       <rect>
-        <x>430</x>
-        <y>10</y>
-        <width>260</width>
-        <height>35</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>¡No te rindas!\nSigue así, vas por el buen camino.</string>
       </property>
      </widget>
     </widget>
