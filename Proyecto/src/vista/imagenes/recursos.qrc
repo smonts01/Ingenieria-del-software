@@ -3,7 +3,6 @@
     <file>anadir-grupo.png</file>
     <file>fondo_app.png</file>
   </qresource>
-
   <qresource prefix="entrenador">
     <file>reloj_naranja.png</file>
     <file>check.png</file>
@@ -19,18 +18,14 @@
     <file>lista-de-verificacion.png</file>
     <file>grafico-circular.png</file>
     <file>anadir-grupo.png</file>
-    <file>clasificacion.png</file>
   </qresource>
-
   <qresource prefix="prefijoNuevo">
     <file>ojo_abierto.jpg</file>
     <file>contrasenia.jpg</file>
     <file>logo_stayfit.png</file>
-    <file>logo_stayfit.png</file>
     <file>icono_usuario.png</file>
     <file>casa_inicio.png</file>
   </qresource>
-  
   <qresource prefix="newPrefix">
     <file>inscripcion.png</file>
     <file>calendario.png</file>
@@ -41,8 +36,5 @@
     <file>marca-de-verificacion.png</file>
     <file>usuario.png</file>
     <file>ola.png</file>
-  </qresource>
-  <qresource prefix="prefijoNuevo">
-    <file>logo_stayfit.png</file>
   </qresource>
 </RCC>
