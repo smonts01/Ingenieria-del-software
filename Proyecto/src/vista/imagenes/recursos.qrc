@@ -3,6 +3,9 @@
     <file>fondo_app.png</file>
   </qresource>
   <qresource prefix="entrenador">
+    <file>reloj_naranja.png</file>
+    <file>check.png</file>
+    <file>cancelar.png</file>
     <file>loto.png</file>
     <file>dos-personas.png</file>
     <file>reborde_ola.png</file>
