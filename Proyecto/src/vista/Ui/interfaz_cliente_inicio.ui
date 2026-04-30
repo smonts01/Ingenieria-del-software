@@ -312,49 +312,11 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>130</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>175</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_8">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>220</y>
+       <y>130</y>
        <width>25</width>
        <height>25</height>
       </rect>
@@ -369,30 +331,11 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>265</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_10">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>310</y>
+       <y>175</y>
        <width>23</width>
        <height>23</height>
       </rect>
@@ -411,7 +354,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>355</y>
+       <y>220</y>
        <width>23</width>
        <height>23</height>
       </rect>

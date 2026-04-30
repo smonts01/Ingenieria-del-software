@@ -780,7 +780,7 @@ Sala 2</string>
        <string notr="true">background-color:#8E6CFF; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/bicicleta.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/bicicleta.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>

@@ -1,47 +1,57 @@
 <RCC>
-  <qresource>
-<<<<<<< HEAD
-    <file>tendencia.png</file>
-=======
-    <file>anadir-grupo.png</file>
->>>>>>> 2a345aabe35364dc9550cacff6bc138409ab0e71
-    <file>fondo_app.png</file>
-  </qresource>
-  <qresource prefix="entrenador">
-    <file>tendencia.png</file>
-    <file>silla-de-campamento.png</file>
-    <file>estrella.png</file>
-    <file>reloj_naranja.png</file>
-    <file>check.png</file>
-    <file>cancelar.png</file>
-    <file>loto.png</file>
-    <file>dos-personas.png</file>
-    <file>reborde_ola.png</file>
-    <file>corazon-en-mano.png</file>
-    <file>rosas-de-corazon.png</file>
-    <file>ver-usuario.png</file>
-    <file>reloj.png</file>
-    <file>usuarios.png</file>
-    <file>lista-de-verificacion.png</file>
-    <file>grafico-circular.png</file>
-    <file>anadir-grupo.png</file>
-  </qresource>
-  <qresource prefix="prefijoNuevo">
-    <file>ojo_abierto.jpg</file>
-    <file>contrasenia.jpg</file>
-    <file>logo_stayfit.png</file>
-    <file>icono_usuario.png</file>
-    <file>casa_inicio.png</file>
-  </qresource>
   <qresource prefix="newPrefix">
-    <file>inscripcion.png</file>
+    <file>anadir-grupo.png</file>
+    <file>bailando.png</file>
+    <file>bicicleta.png</file>
+    <file>boton-de-verificacion.png</file>
     <file>calendario.png</file>
-    <file>pagos.png</file>
-    <file>informacion.png</file>
-    <file>grafico-de-barras.png</file>
+    <file>campana.png</file>
+    <file>cancelar.png</file>
+    <file>candado.png</file>
+    <file>cartera.png</file>
+    <file>casa_inicio.png</file>
+    <file>check.png</file>
+    <file>clientes.png</file>
+    <file>consultar-calendario.png</file>
+    <file>contrasenia.jpg</file>
+    <file>control de acceso.png</file>
+    <file>corazon-en-mano.png</file>
+    <file>despertador.png</file>
+    <file>dos-personas.png</file>
+    <file>estrella.png</file>
+    <file>fondo_app.png</file>
     <file>fuego.png</file>
+    <file>grafico-circular.png</file>
+    <file>grafico-de-barras.png</file>
+    <file>icono_usuario.png</file>
+    <file>informacion.png</file>
+    <file>inscripcion.png</file>
+    <file>lista-de-verificacion.png</file>
+    <file>logo_stayfit.png</file>
+    <file>loto.png</file>
+    <file>lupa.png</file>
     <file>marca-de-verificacion.png</file>
-    <file>usuario.png</file>
+    <file>metodo-de-pago.png</file>
+    <file>ojo_abierto.jpg</file>
+    <file>ojo_cerrado.jpg</file>
     <file>ola.png</file>
+    <file>pagos.png</file>
+    <file>pesas_emoji.webp</file>
+    <file>peso.png</file>
+    <file>pilates.png</file>
+    <file>reborde_ola.png</file>
+    <file>recursos.qrc</file>
+    <file>registrar usuario.png</file>
+    <file>reloj.png</file>
+    <file>reloj_naranja.png</file>
+    <file>rosas-de-corazon.png</file>
+    <file>silla-de-campamento.png</file>
+    <file>tabla-de-ingresos.png</file>
+    <file>tendencia.png</file>
+    <file>usuario.png</file>
+    <file>usuarios.png</file>
+    <file>ver-usuario.png</file>
+    <file>yoga (1).png</file>
+    <file>yoga.png</file>
   </qresource>
 </RCC>
