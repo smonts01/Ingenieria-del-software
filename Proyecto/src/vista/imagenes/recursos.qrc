@@ -1,8 +1,12 @@
 <RCC>
   <qresource>
+    <file>tendencia.png</file>
     <file>fondo_app.png</file>
   </qresource>
   <qresource prefix="entrenador">
+    <file>tendencia.png</file>
+    <file>silla-de-campamento.png</file>
+    <file>estrella.png</file>
     <file>reloj_naranja.png</file>
     <file>check.png</file>
     <file>cancelar.png</file>
