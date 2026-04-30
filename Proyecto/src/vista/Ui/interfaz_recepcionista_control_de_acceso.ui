@@ -488,9 +488,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>90</y>
+       <y>80</y>
        <width>411</width>
-       <height>81</height>
+       <height>121</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblNombreCliente_2">
@@ -513,7 +513,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>40</y>
+        <y>50</y>
         <width>191</width>
         <height>20</height>
        </rect>
@@ -529,7 +529,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="geometry">
        <rect>
         <x>250</x>
-        <y>35</y>
+        <y>45</y>
         <width>151</width>
         <height>31</height>
        </rect>
@@ -565,7 +565,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>40</y>
+        <y>50</y>
         <width>21</width>
         <height>21</height>
        </rect>
@@ -585,9 +585,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>460</x>
-       <y>90</y>
-       <width>501</width>
-       <height>161</height>
+       <y>80</y>
+       <width>471</width>
+       <height>121</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblNombreCliente_3">
@@ -628,6 +628,152 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QLabel" name="lblNombreCliente_8">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>30</y>
+        <width>270</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>11</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: bold 11pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+      </property>
+      <property name="text">
+       <string>Marta González</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNombreCliente_9">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>50</y>
+        <width>101</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 11pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+      </property>
+      <property name="text">
+       <string>DNI: 1234567A</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNombreCliente_10">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>70</y>
+        <width>101</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 11pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+      </property>
+      <property name="text">
+       <string>ID:125</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNombreCliente_11">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>90</y>
+        <width>191</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>11</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 11pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+      </property>
+      <property name="text">
+       <string>Cliente desde: 15/01/2024</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="card1_3">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>10</y>
+        <width>151</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#card1_3 {
+    background-color: #FFFFFF;
+    border: 1px solid #DADDE2;
+    border-radius: 12px;
+}</string>
+      </property>
+      <widget class="QLabel" name="lblNombreCliente_5">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>270</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: bold 11pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+       </property>
+       <property name="text">
+        <string>Estado de pago</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnCalorias_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>111</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Abonado</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QLabel" name="label_19">
      <property name="geometry">
@@ -654,15 +800,15 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="card1_2">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>420</y>
+       <x>30</x>
+       <y>520</y>
        <width>481</width>
-       <height>101</height>
+       <height>81</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">#card1_2 {
-    background-color: #FFFFFF;
+    background-color: #CFE2FF;
     border: 1px solid #DADDE2;
     border-radius: 12px;
 }</string>
@@ -689,8 +835,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblNombreCliente_4">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>25</y>
+        <x>90</x>
+        <y>10</y>
         <width>270</width>
         <height>24</height>
        </rect>
@@ -712,7 +858,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:#D8F4F0; color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
+       <string notr="true">background-color:#93C5FD; color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
        <string/>
@@ -721,10 +867,10 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblResumen_2">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>20</y>
+        <x>90</x>
+        <y>10</y>
         <width>381</width>
-        <height>91</height>
+        <height>81</height>
        </rect>
       </property>
       <property name="acceptDrops">
@@ -766,147 +912,18 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="card1_3">
-     <property name="geometry">
-      <rect>
-       <x>640</x>
-       <y>260</y>
-       <width>321</width>
-       <height>171</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#card1_3 {
-    background-color: #FFFFFF;
-    border: 1px solid #DADDE2;
-    border-radius: 12px;
-}</string>
-     </property>
-     <widget class="QLabel" name="lblNombreCliente_5">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>270</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Últimos accesos registrados</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblResumen_4">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>90</y>
-        <width>251</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>El cliente está al corriente de pago</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton_3">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>82</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>-1</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QRadioButton {
-    background-color: transparent;
-    color: #333333;
-    font-size: 13px;
-}
-
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-}</string>
-      </property>
-      <property name="text">
-       <string>Abonado</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton_4">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>120</y>
-        <width>91</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>-1</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QRadioButton {
-    background-color: transparent;
-    color: #333333;
-    font-size: 13px;
-}
-
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-}</string>
-      </property>
-      <property name="text">
-       <string>Pendiente</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblResumen_5">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>140</y>
-        <width>211</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>El cliente tiene pagos pendientes</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="card1_4">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>180</y>
-       <width>321</width>
+       <x>460</x>
+       <y>210</y>
+       <width>411</width>
        <height>111</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">#card1_4 {
-    background-color: #FFFFFF;
+    background-color: #FFF1E0;
     border: 1px solid #DADDE2;
     border-radius: 12px;
 }</string>
@@ -933,14 +950,14 @@ QRadioButton::indicator {
      <widget class="QLabel" name="lblNombreCliente_6">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>140</x>
         <y>10</y>
         <width>270</width>
         <height>24</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #FFB347;</string>
       </property>
       <property name="text">
        <string>Registrar entrada</string>
@@ -951,12 +968,12 @@ QRadioButton::indicator {
        <rect>
         <x>20</x>
         <y>10</y>
-        <width>50</width>
-        <height>50</height>
+        <width>91</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:#D8F4F0; color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
+       <string notr="true">background-color:#FFE3C2; color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
        <string/>
@@ -965,7 +982,7 @@ QRadioButton::indicator {
      <widget class="QLabel" name="lblResumen_6">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>140</x>
         <y>40</y>
         <width>251</width>
         <height>20</height>
@@ -983,8 +1000,8 @@ QRadioButton::indicator {
        <rect>
         <x>30</x>
         <y>20</y>
-        <width>25</width>
-        <height>25</height>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="text">
@@ -1000,7 +1017,7 @@ QRadioButton::indicator {
      <widget class="QPushButton" name="btnInicio_3">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>190</x>
         <y>70</y>
         <width>151</width>
         <height>31</height>
@@ -1021,9 +1038,8 @@ QRadioButton::indicator {
        <enum>Qt::LeftToRight</enum>
       </property>
       <property name="styleSheet">
-       <string notr="true">
-#btnInicio_2 {
-    background-color:#00BFA6;
+       <string notr="true">#btnInicio_3 {
+    background-color:#FFB347;
     border: 1px solid #DADDE2;
 	color: #FFFFFF;
     border-radius: 12px;
@@ -1038,14 +1054,14 @@ QRadioButton::indicator {
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>300</y>
-       <width>321</width>
+       <y>210</y>
+       <width>411</width>
        <height>111</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">#card1_5 {
-    background-color: #FFFFFF;
+    background-color: #E8F8F5;
     border: 1px solid #DADDE2;
     border-radius: 12px;
 }</string>
@@ -1072,14 +1088,14 @@ QRadioButton::indicator {
      <widget class="QLabel" name="lblNombreCliente_7">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>130</x>
         <y>10</y>
         <width>270</width>
         <height>24</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #00BFA6;</string>
       </property>
       <property name="text">
        <string>Registrar salida</string>
@@ -1090,8 +1106,8 @@ QRadioButton::indicator {
        <rect>
         <x>20</x>
         <y>10</y>
-        <width>50</width>
-        <height>50</height>
+        <width>91</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1104,7 +1120,7 @@ QRadioButton::indicator {
      <widget class="QLabel" name="lblResumen_7">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>130</x>
         <y>40</y>
         <width>251</width>
         <height>20</height>
@@ -1122,8 +1138,8 @@ QRadioButton::indicator {
        <rect>
         <x>30</x>
         <y>20</y>
-        <width>25</width>
-        <height>25</height>
+        <width>61</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="text">
@@ -1139,7 +1155,7 @@ QRadioButton::indicator {
      <widget class="QPushButton" name="btnInicio_4">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>180</x>
         <y>70</y>
         <width>151</width>
         <height>31</height>
@@ -1161,7 +1177,8 @@ QRadioButton::indicator {
       </property>
       <property name="styleSheet">
        <string notr="true">
-#btnInicio_2 {
+
+#btnInicio_4 {
     background-color:#00BFA6;
     border: 1px solid #DADDE2;
 	color: #FFFFFF;
@@ -1173,15 +1190,128 @@ QRadioButton::indicator {
       </property>
      </widget>
     </widget>
+    <widget class="QFrame" name="card1_6">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>340</y>
+       <width>771</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#card1_6 {
+    background-color: #FFFFFF;
+    border: 1px solid #DADDE2;
+    border-radius: 12px;
+}</string>
+     </property>
+     <widget class="QLabel" name="lblNombreCliente_12">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>270</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+      </property>
+      <property name="text">
+       <string>Últimos accesos registrados</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>741</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>Nueva columna</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>ID</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Usuario</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Nombre</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tipo de acceso</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Fecha y hora</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Recepcionista</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
     <zorder>label_19</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>card1</zorder>
     <zorder>card3</zorder>
     <zorder>card1_2</zorder>
-    <zorder>card1_3</zorder>
     <zorder>card1_4</zorder>
     <zorder>card1_5</zorder>
+    <zorder>card1_6</zorder>
    </widget>
   </widget>
  </widget>

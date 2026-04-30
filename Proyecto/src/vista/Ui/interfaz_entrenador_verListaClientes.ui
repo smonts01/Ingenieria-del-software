@@ -174,48 +174,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
     </property>
-    <widget class="QPushButton" name="btnInscritos">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>170</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>11</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: transparent;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-    text-align: left;
-    color: #333333;
-}
-
-QPushButton:hover {
-    background-color: #E8F8F5;
-}
-
-QPushButton:checked {
-    background-color: #DDF7F3;
-    color: #333333;
-    font-weight: bold;
-}</string>
-     </property>
-     <property name="text">
-      <string>Clientes inscritos</string>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QPushButton" name="btnOcupacion">
      <property name="geometry">
       <rect>
@@ -497,52 +455,6 @@ QPushButton:checked {
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnRegistroAsistencia">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>120</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>11</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #18B7A5;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-    text-align: left;
-    color: #FFFFFF;
-}
-
-QPushButton:hover {
-    background-color: #E8F8F5;
-}
-
-QPushButton:checked {
-    background-color: #DDF7F3;
-    color: #333333;
-    font-weight: bold;
-}
-
- 
-
-</string>
-     </property>
-     <property name="text">
-      <string>Registrar asistencia</string>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QPushButton" name="btnInicio_2">
      <property name="geometry">
       <rect>
@@ -610,6 +522,94 @@ QPushButton:checked {
       <string>Clases</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="btnInscritos">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>178</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}
+
+ 
+
+</string>
+     </property>
+     <property name="text">
+      <string>Clientes Inscritos</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnRegistroAsistencia">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>120</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #333333;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>Registrar asistencia</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frameContenido">
     <property name="geometry">
@@ -626,8 +626,8 @@ QPushButton:checked {
     <widget class="QLabel" name="lblBienvenida">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>20</y>
+       <x>40</x>
+       <y>10</y>
        <width>300</width>
        <height>34</height>
       </rect>
@@ -636,14 +636,14 @@ QPushButton:checked {
       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string>
      </property>
      <property name="text">
-      <string>Registrar asistencia</string>
+      <string>Clientes inscritos</string>
      </property>
     </widget>
     <widget class="QLabel" name="lblResumen">
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>60</y>
+       <y>50</y>
        <width>470</width>
        <height>20</height>
       </rect>
@@ -652,15 +652,15 @@ QPushButton:checked {
       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
      </property>
      <property name="text">
-      <string>Selecciona una clase para registrar asistencia</string>
+      <string>Consulta los clientes apuntados a tus clases</string>
      </property>
     </widget>
     <widget class="QFrame" name="card2">
      <property name="geometry">
       <rect>
-       <x>500</x>
-       <y>98</y>
-       <width>451</width>
+       <x>40</x>
+       <y>100</y>
+       <width>911</width>
        <height>101</height>
       </rect>
      </property>
@@ -680,10 +680,10 @@ QPushButton:checked {
        <string>Información de la clase</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_nombreclase">
+     <widget class="QLabel" name="label_nombreclase_ins">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>90</x>
         <y>30</y>
         <width>47</width>
         <height>41</height>
@@ -702,10 +702,10 @@ QPushButton:checked {
        <string>Yoga</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblSalaClase">
+     <widget class="QLabel" name="lblSalaClase_ins">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>90</x>
         <y>60</y>
         <width>41</width>
         <height>20</height>
@@ -718,10 +718,10 @@ QPushButton:checked {
        <string>Sala 2</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblHorarioClase">
+     <widget class="QLabel" name="lblHorarioClase_ins">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>350</x>
         <y>60</y>
         <width>61</width>
         <height>20</height>
@@ -737,7 +737,7 @@ QPushButton:checked {
      <widget class="QLabel" name="lblResumen_4">
       <property name="geometry">
        <rect>
-        <x>380</x>
+        <x>700</x>
         <y>60</y>
         <width>51</width>
         <height>20</height>
@@ -750,10 +750,10 @@ QPushButton:checked {
        <string>inscritos</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_fecha">
+     <widget class="QLabel" name="label_fecha_ins">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>350</x>
         <y>30</y>
         <width>111</width>
         <height>41</height>
@@ -772,10 +772,10 @@ QPushButton:checked {
        <string>28 mayo 2026</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_numInscritos">
+     <widget class="QLabel" name="label_numInscritos_ins">
       <property name="geometry">
        <rect>
-        <x>380</x>
+        <x>700</x>
         <y>30</y>
         <width>47</width>
         <height>41</height>
@@ -797,7 +797,7 @@ QPushButton:checked {
      <widget class="QLabel" name="lblIconCal_2">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>35</y>
         <width>51</width>
         <height>51</height>
@@ -813,7 +813,7 @@ QPushButton:checked {
      <widget class="QLabel" name="emoricono_clase">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>45</y>
         <width>51</width>
         <height>31</height>
@@ -831,7 +831,7 @@ QPushButton:checked {
      <widget class="QLabel" name="lblIconAs_2">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>280</x>
         <y>35</y>
         <width>50</width>
         <height>50</height>
@@ -847,7 +847,7 @@ QPushButton:checked {
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>280</x>
         <y>45</y>
         <width>51</width>
         <height>31</height>
@@ -863,7 +863,7 @@ QPushButton:checked {
      <widget class="QLabel" name="lblIconPago">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>620</x>
         <y>35</y>
         <width>50</width>
         <height>50</height>
@@ -879,7 +879,7 @@ QPushButton:checked {
      <widget class="QLabel" name="label_7">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>620</x>
         <y>45</y>
         <width>51</width>
         <height>31</height>
@@ -891,79 +891,6 @@ QPushButton:checked {
       <property name="text">
        <string/>
       </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="card2_2">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>98</y>
-       <width>421</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background: #FFFFFF;border-radius: 12px;</string>
-     </property>
-     <widget class="QLabel" name="lblTituloproxclase_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>95</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Seleccionar clase</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboSeleccionarClase">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>331</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QComboBox {
-    background-color: white;
-    border: 1px solid #D1D5DB;
-    border-radius: 8px;
-    padding-left: 12px;
-    color: #374151;
-    font-size: 12px;
-}
-
-QComboBox:hover {
-    border: 1px solid #00BFA6;
-}</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>Yoga - 28 mayo 2026 · 17:00 - 18:00 · Sala 2</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Boompa - 28 mayo 2026 · 10:00 - 11:00 · Sala 1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>StayCycling - 28 mayo 2026 · 19:00 - 20:00 · Sala 1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Pilates - 29 mayo 2026 · 09:00 - 10:00 · Sala 3</string>
-       </property>
-      </item>
      </widget>
     </widget>
     <widget class="QLabel" name="label_17">
@@ -995,22 +922,6 @@ QComboBox:hover {
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>20</y>
-       <width>31</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">image:url(:/newPrefix/calendario.png)</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_19">
      <property name="geometry">
       <rect>
@@ -1027,7 +938,7 @@ QComboBox:hover {
       <string/>
      </property>
     </widget>
-    <widget class="QTableWidget" name="tablaInscritosAsistencia">
+    <widget class="QTableWidget" name="tablaInscritos">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -1098,7 +1009,7 @@ QTableWidget::item {
      </column>
      <column>
       <property name="text">
-       <string>Acción</string>
+       <string>Fecha de inscripción</string>
       </property>
      </column>
      <item row="0" column="0">
@@ -1108,12 +1019,12 @@ QTableWidget::item {
      </item>
      <item row="0" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string>Inscrito</string>
       </property>
      </item>
      <item row="0" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string> 25 mayo 2026 </string>
       </property>
      </item>
      <item row="1" column="0">
@@ -1123,12 +1034,12 @@ QTableWidget::item {
      </item>
      <item row="1" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string>Inscrito</string>
       </property>
      </item>
      <item row="1" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string> 25 mayo 2026 </string>
       </property>
      </item>
      <item row="2" column="0">
@@ -1143,7 +1054,7 @@ QTableWidget::item {
      </item>
      <item row="2" column="2">
       <property name="text">
-       <string>✓ Marcar asistencia    Marcar ausencia</string>
+       <string> 26 mayo 2026 </string>
       </property>
      </item>
      <item row="3" column="0">
@@ -1153,12 +1064,12 @@ QTableWidget::item {
      </item>
      <item row="3" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string>Inscrito</string>
       </property>
      </item>
      <item row="3" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string> 26 mayo 2026 </string>
       </property>
      </item>
      <item row="4" column="0">
@@ -1173,7 +1084,7 @@ QTableWidget::item {
      </item>
      <item row="4" column="2">
       <property name="text">
-       <string>✓ Marcar asistencia    Marcar ausencia</string>
+       <string> 27 mayo 2026 </string>
       </property>
      </item>
      <item row="5" column="0">
@@ -1188,7 +1099,7 @@ QTableWidget::item {
      </item>
      <item row="5" column="2">
       <property name="text">
-       <string>✓ Marcar asistencia    Marcar ausencia</string>
+       <string> 27 mayo 2026 </string>
       </property>
      </item>
      <item row="6" column="0">
@@ -1198,27 +1109,27 @@ QTableWidget::item {
      </item>
      <item row="6" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string>Inscrito</string>
       </property>
      </item>
      <item row="6" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string> 27 mayo 2026 </string>
       </property>
      </item>
     </widget>
-    <widget class="QFrame" name="frameResumenAsistencia">
+    <widget class="QFrame" name="frameClientesInscritos">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>490</y>
-       <width>911</width>
-       <height>101</height>
+       <x>30</x>
+       <y>80</y>
+       <width>931</width>
+       <height>491</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">#frameResumenAsistencia {
-    background-color: white;
+      <string notr="true">#frameClientesInscritos {
+    background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
     border-radius: 12px;
 }</string>
@@ -1229,275 +1140,79 @@ QTableWidget::item {
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>191</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 15px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>Resumen de asistencia </string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSalaClase_2">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>30</y>
-        <width>81</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Asistieron</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSalaClase_3">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>30</y>
-        <width>81</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Pendientes</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSalaClase_4">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>30</y>
-        <width>81</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Ausencias</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSalaClase_5">
-      <property name="geometry">
-       <rect>
-        <x>570</x>
-        <y>30</y>
-        <width>81</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Total inscritos</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_6">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>30</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/check.png)</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_13">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>30</y>
-        <width>30</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/reloj_naranja.png)</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_14">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>30</y>
-        <width>30</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/cancelar.png)</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="Line" name="line">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>10</y>
-        <width>20</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_numAsist">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>45</y>
-        <width>21</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
+    </widget>
+    <widget class="QLabel" name="lblSalaClase_2">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>510</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+     </property>
+     <property name="text">
+      <string>Total inscritos:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_total_inscritos">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>505</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
     background: transparent;
     border: none;
     color: #1F2937;
     font-size: 16px;
     font-weight: bold;
 }</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;6&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_numPend">
-      <property name="geometry">
-       <rect>
-        <x>260</x>
-        <y>45</y>
-        <width>21</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 16px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;3&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_numAus">
-      <property name="geometry">
-       <rect>
-        <x>430</x>
-        <y>45</y>
-        <width>21</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 16px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;5&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_TotalInscritos">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>45</y>
-        <width>41</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 16px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;14&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_GuardarAsist">
-      <property name="geometry">
-       <rect>
-        <x>700</x>
-        <y>30</y>
-        <width>191</width>
-        <height>45</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
+     </property>
+     <property name="text">
+      <string>14</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonRegistrarAsist">
+     <property name="geometry">
+      <rect>
+       <x>670</x>
+       <y>500</y>
+       <width>281</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
     background-color: #00BFA6;
     color: white;
     border: none;
     border-radius: 8px;
     font-weight: bold;
-    padding: 12px;
+    padding: 10px;
 }</string>
-      </property>
-      <property name="text">
-       <string>Guardar asistencia</string>
-      </property>
-     </widget>
+     </property>
+     <property name="text">
+      <string>Registrar asistencia</string>
+     </property>
     </widget>
-    <zorder>label_19</zorder>
     <zorder>label_18</zorder>
+    <zorder>frameClientesInscritos</zorder>
+    <zorder>label_19</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>card2</zorder>
-    <zorder>card2_2</zorder>
     <zorder>label_17</zorder>
-    <zorder>label_5</zorder>
-    <zorder>tablaInscritosAsistencia</zorder>
-    <zorder>frameResumenAsistencia</zorder>
+    <zorder>tablaInscritos</zorder>
+    <zorder>lblSalaClase_2</zorder>
+    <zorder>label_total_inscritos</zorder>
+    <zorder>pushButtonRegistrarAsist</zorder>
    </widget>
   </widget>
  </widget>
