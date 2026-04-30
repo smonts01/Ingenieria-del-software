@@ -1,7 +1,9 @@
 <RCC>
   <qresource>
+    <file>anadir-grupo.png</file>
     <file>fondo_app.png</file>
   </qresource>
+
   <qresource prefix="entrenador">
     <file>reloj_naranja.png</file>
     <file>check.png</file>
@@ -19,6 +21,7 @@
     <file>anadir-grupo.png</file>
     <file>clasificacion.png</file>
   </qresource>
+
   <qresource prefix="prefijoNuevo">
     <file>ojo_abierto.jpg</file>
     <file>contrasenia.jpg</file>
@@ -27,6 +30,7 @@
     <file>icono_usuario.png</file>
     <file>casa_inicio.png</file>
   </qresource>
+  
   <qresource prefix="newPrefix">
     <file>inscripcion.png</file>
     <file>calendario.png</file>

@@ -56,7 +56,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -152,7 +152,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -333,7 +333,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap>:/prefijoNuevo/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -349,7 +349,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>:/newPrefix/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -365,7 +365,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
+      <pixmap>:/newPrefix/inscripcion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -381,7 +381,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+      <pixmap>:/newPrefix/pagos.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -397,7 +397,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+      <pixmap>:/newPrefix/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -413,7 +413,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
+      <pixmap>:/newPrefix/fuego.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -429,7 +429,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -445,7 +445,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+      <pixmap>:/newPrefix/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -509,26 +509,10 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string>Todas las clases</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblTabFav">
-     <property name="geometry">
-      <rect>
-       <x>185</x>
-       <y>105</y>
-       <width>100</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:10pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-     </property>
-     <property name="text">
-      <string>Mis favoritas</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="lblTabRes">
      <property name="geometry">
       <rect>
-       <x>320</x>
+       <x>185</x>
        <y>105</y>
        <width>100</width>
        <height>24</height>
@@ -566,7 +550,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
        <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/peso.png</pixmap>
+       <pixmap>:/newPrefix/peso.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -681,7 +665,7 @@ Sala 1</string>
        <string notr="true">background-color:#FF9F2E; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/yoga.png</pixmap>
+       <pixmap>:/newPrefix/yoga.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -796,7 +780,7 @@ Sala 2</string>
        <string notr="true">background-color:#8E6CFF; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/bicicleta.png</pixmap>
+       <pixmap>:/newPrefix/bicicleta.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -911,7 +895,7 @@ Sala 1</string>
        <string notr="true">background-color:#2F80ED; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pilates.png</pixmap>
+       <pixmap>:/newPrefix/pilates.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1196,7 +1180,7 @@ Sala 1</string>
        <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/peso.png</pixmap>
+       <pixmap>:/newPrefix/peso.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1216,7 +1200,7 @@ Sala 1</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/entrenador/reborde_ola.png</pixmap>
+      <pixmap>:/entrenador/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1226,7 +1210,6 @@ Sala 1</string>
     <zorder>lblTituloClases</zorder>
     <zorder>lblSubClases</zorder>
     <zorder>lblTabTodas</zorder>
-    <zorder>lblTabFav</zorder>
     <zorder>lblTabRes</zorder>
     <zorder>cardClase1</zorder>
     <zorder>cardClase2</zorder>
