@@ -184,7 +184,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>45</x>
-       <y>22</y>
+       <y>35</y>
        <width>150</width>
        <height>36</height>
       </rect>
@@ -335,8 +335,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>30</y>
+       <x>10</x>
+       <y>40</y>
        <width>20</width>
        <height>20</height>
       </rect>
@@ -374,7 +374,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>177</y>
+       <y>175</y>
        <width>23</width>
        <height>23</height>
       </rect>
@@ -469,7 +469,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>90</y>
+       <y>85</y>
        <width>20</width>
        <height>20</height>
       </rect>
@@ -1269,6 +1269,36 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>611</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/entrenador/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label_17</zorder>
+    <zorder>lblBienvenida</zorder>
+    <zorder>lblResumen</zorder>
+    <zorder>card1</zorder>
+    <zorder>card2</zorder>
+    <zorder>card3</zorder>
+    <zorder>card4</zorder>
+    <zorder>cardTabla</zorder>
+    <zorder>cardPago</zorder>
+    <zorder>cardActividad</zorder>
+    <zorder>label_16</zorder>
    </widget>
   </widget>
  </widget>

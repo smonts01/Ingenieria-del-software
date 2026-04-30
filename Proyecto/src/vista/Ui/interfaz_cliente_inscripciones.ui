@@ -100,25 +100,6 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
       <string>Tu gimnasio, tu mejor versión</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblAvatarCliente">
-     <property name="geometry">
-      <rect>
-       <x>285</x>
-       <y>23</y>
-       <width>44</width>
-       <height>44</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="lblNombreCliente">
      <property name="geometry">
       <rect>
@@ -164,6 +145,31 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
       <string>Cerrar sesión</string>
      </property>
     </widget>
+    <widget class="QLabel" name="lblAvatarCliente">
+     <property name="geometry">
+      <rect>
+       <x>285</x>
+       <y>23</y>
+       <width>44</width>
+       <height>44</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #18B7A5; color: white; border-radius: 22px; font: 20pt &quot;Segoe UI Emoji&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frameMenu">
     <property name="geometry">
@@ -178,7 +184,7 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
      <property name="geometry">
       <rect>
        <x>45</x>
-       <y>22</y>
+       <y>35</y>
        <width>150</width>
        <height>36</height>
       </rect>
@@ -326,158 +332,158 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
       </property>
      </widget>
     </widget>
-   </widget>
-   <widget class="QLabel" name="iconInicio">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>20</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="iconClases">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>90</y>
-      <width>20</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="iconInscripciones">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>130</y>
-      <width>25</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="iconPagos">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>177</y>
-      <width>23</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="iconEstadisticas">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>220</y>
-      <width>25</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="iconCalorias">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>265</y>
-      <width>25</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="iconPerfil">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>310</y>
-      <width>23</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="iconInformacion">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>355</y>
-      <width>23</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
+    <widget class="QLabel" name="iconInformacion">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>355</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="iconPerfil">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>310</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="iconCalorias">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>265</y>
+       <width>25</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="iconEstadisticas">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>220</y>
+       <width>25</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="iconPagos">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>175</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="iconInscripciones">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>25</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="iconClases">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>85</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="iconInicio">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frameContenido">
     <property name="geometry">
@@ -661,7 +667,7 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/pesas.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/peso.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -677,31 +683,6 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <height>82</height>
       </rect>
      </property>
-     <widget class="QLabel" name="lblClase2Icon">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>18</y>
-        <width>46</width>
-        <height>46</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background:#FF9F2E; border-radius:23px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="lblClase2">
       <property name="geometry">
        <rect>
@@ -763,6 +744,25 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <string>Ver detalles</string>
       </property>
      </widget>
+     <widget class="QLabel" name="icoClase2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#FF9F2E; border-radius:20px;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/yoga.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="cardClase3">
      <property name="geometry">
@@ -773,31 +773,6 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <height>82</height>
       </rect>
      </property>
-     <widget class="QLabel" name="lblClase3Icon">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>18</y>
-        <width>46</width>
-        <height>46</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background:#8E6CFF; border-radius:23px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="lblClase3">
       <property name="geometry">
        <rect>
@@ -859,6 +834,25 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <string>Ver detalles</string>
       </property>
      </widget>
+     <widget class="QLabel" name="icoClase3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#8E6CFF; border-radius:20px;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/bicicleta.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="cardClase4">
      <property name="geometry">
@@ -869,31 +863,6 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <height>82</height>
       </rect>
      </property>
-     <widget class="QLabel" name="lblClase4Icon">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>18</y>
-        <width>46</width>
-        <height>46</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background:#F6B300; border-radius:23px;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/marca-de-verificacion.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="lblClase4">
       <property name="geometry">
        <rect>
@@ -953,6 +922,25 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
       </property>
       <property name="text">
        <string>Ver detalles</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="icoClase3_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:#F6B300; border-radius:20px</string>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/bailando.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -1068,8 +1056,8 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <rect>
         <x>90</x>
         <y>10</y>
-        <width>181</width>
-        <height>36</height>
+        <width>180</width>
+        <height>35</height>
        </rect>
       </property>
       <property name="placeholderText">
@@ -1195,32 +1183,59 @@ QLineEdit, QComboBox { background-color: white; border: 1px solid #DDE3EA; borde
        <string>Lunes, 26 may 2026\n18:00 - 19:00 · Sala 1</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblProximaIcon">
+     <widget class="QLabel" name="icoClase1_2">
       <property name="geometry">
        <rect>
-        <x>22</x>
-        <y>48</y>
-        <width>38</width>
-        <height>38</height>
+        <x>20</x>
+        <y>50</y>
+        <width>40</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background:#18B7A5; border-radius:19px;</string>
-      </property>
-      <property name="text">
-       <string/>
+       <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/peso.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
      </widget>
     </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>-2</x>
+       <y>-5</y>
+       <width>991</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/entrenador/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label</zorder>
+    <zorder>lblTitulo</zorder>
+    <zorder>lblSubtitulo</zorder>
+    <zorder>iconBuscar</zorder>
+    <zorder>btnTabActivas</zorder>
+    <zorder>btnTabCompletadas</zorder>
+    <zorder>btnTabCanceladas</zorder>
+    <zorder>cardClase1</zorder>
+    <zorder>cardClase2</zorder>
+    <zorder>cardClase3</zorder>
+    <zorder>cardClase4</zorder>
+    <zorder>cardFiltros</zorder>
+    <zorder>cardResumen</zorder>
+    <zorder>cardProxima</zorder>
    </widget>
   </widget>
  </widget>
