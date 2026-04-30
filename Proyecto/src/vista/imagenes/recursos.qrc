@@ -1,8 +1,13 @@
 <RCC>
   <qresource>
+<<<<<<< HEAD
     <file>tendencia.png</file>
+=======
+    <file>anadir-grupo.png</file>
+>>>>>>> 2a345aabe35364dc9550cacff6bc138409ab0e71
     <file>fondo_app.png</file>
   </qresource>
+
   <qresource prefix="entrenador">
     <file>tendencia.png</file>
     <file>silla-de-campamento.png</file>
@@ -23,6 +28,7 @@
     <file>anadir-grupo.png</file>
     <file>clasificacion.png</file>
   </qresource>
+
   <qresource prefix="prefijoNuevo">
     <file>ojo_abierto.jpg</file>
     <file>contrasenia.jpg</file>
@@ -31,6 +37,7 @@
     <file>icono_usuario.png</file>
     <file>casa_inicio.png</file>
   </qresource>
+  
   <qresource prefix="newPrefix">
     <file>inscripcion.png</file>
     <file>calendario.png</file>
