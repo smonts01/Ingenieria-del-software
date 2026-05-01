@@ -378,9 +378,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblPanel">
       <property name="geometry">
        <rect>
-        <x>18</x>
-        <y>14</y>
-        <width>130</width>
+        <x>10</x>
+        <y>20</y>
+        <width>141</width>
         <height>24</height>
        </rect>
       </property>
@@ -449,7 +449,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <x>30</x>
        <y>25</y>
        <width>260</width>
-       <height>34</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -462,8 +462,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLabel" name="lblSubtitulo">
      <property name="geometry">
       <rect>
-       <x>32</x>
-       <y>60</y>
+       <x>30</x>
+       <y>70</y>
        <width>520</width>
        <height>20</height>
       </rect>
@@ -563,43 +563,42 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
      </item>
     </widget>
-    <widget class="QPushButton" name="btnNuevoPago">
-     <property name="geometry">
-      <rect>
-       <x>755</x>
-       <y>100</y>
-       <width>110</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>+ Registrar pago</string>
-     </property>
-    </widget>
     <widget class="QFrame" name="cardTabla">
      <property name="geometry">
       <rect>
        <x>30</x>
        <y>150</y>
-       <width>735</width>
+       <width>701</width>
        <height>405</height>
       </rect>
      </property>
      <widget class="QTableWidget" name="tablaPagos">
       <property name="geometry">
        <rect>
-        <x>15</x>
-        <y>15</y>
-        <width>705</width>
-        <height>335</height>
+        <x>40</x>
+        <y>40</y>
+        <width>641</width>
+        <height>291</height>
        </rect>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="rowCount">
        <number>8</number>
       </property>
       <property name="columnCount">
-       <number>7</number>
+       <number>5</number>
       </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>120</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
       <row/>
       <row/>
       <row/>
@@ -608,11 +607,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <row/>
       <row/>
       <row/>
-      <column>
-       <property name="text">
-        <string>ID</string>
-       </property>
-      </column>
       <column>
        <property name="text">
         <string>Cliente</string>
@@ -638,289 +632,204 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         <string>Estado</string>
        </property>
       </column>
-      <column>
-       <property name="text">
-        <string>Acciones</string>
-       </property>
-      </column>
       <item row="0" column="0">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="0" column="1">
        <property name="text">
         <string>Ana García</string>
        </property>
       </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>Básica</string>
+       </property>
+      </item>
       <item row="0" column="2">
        <property name="text">
-        <string>Mensual</string>
+        <string>25,00 €</string>
        </property>
       </item>
       <item row="0" column="3">
        <property name="text">
-        <string>35,00 €</string>
+        <string>15/05/2026</string>
        </property>
       </item>
       <item row="0" column="4">
        <property name="text">
-        <string>15/05/2026</string>
-       </property>
-      </item>
-      <item row="0" column="5">
-       <property name="text">
         <string>Pagado</string>
-       </property>
-      </item>
-      <item row="0" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
        </property>
       </item>
       <item row="1" column="0">
        <property name="text">
-        <string>2</string>
+        <string>Carlos López</string>
        </property>
       </item>
       <item row="1" column="1">
        <property name="text">
-        <string>Carlos López</string>
+        <string>Premium</string>
        </property>
       </item>
       <item row="1" column="2">
        <property name="text">
-        <string>Mensual</string>
+        <string>35,00 €</string>
        </property>
       </item>
       <item row="1" column="3">
        <property name="text">
-        <string>35,00 €</string>
+        <string>18/05/2026</string>
        </property>
       </item>
       <item row="1" column="4">
        <property name="text">
-        <string>18/05/2026</string>
-       </property>
-      </item>
-      <item row="1" column="5">
-       <property name="text">
         <string>Pendiente</string>
-       </property>
-      </item>
-      <item row="1" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
        </property>
       </item>
       <item row="2" column="0">
        <property name="text">
-        <string>3</string>
+        <string>María Martínez</string>
        </property>
       </item>
       <item row="2" column="1">
        <property name="text">
-        <string>María Martínez</string>
+        <string>Básica</string>
        </property>
       </item>
       <item row="2" column="2">
        <property name="text">
-        <string>Trimestral</string>
+        <string>25,00 €</string>
        </property>
       </item>
       <item row="2" column="3">
        <property name="text">
-        <string>95,00 €</string>
+        <string>20/05/2026</string>
        </property>
       </item>
       <item row="2" column="4">
        <property name="text">
-        <string>20/05/2026</string>
-       </property>
-      </item>
-      <item row="2" column="5">
-       <property name="text">
         <string>Pagado</string>
-       </property>
-      </item>
-      <item row="2" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
        </property>
       </item>
       <item row="3" column="0">
        <property name="text">
-        <string>4</string>
+        <string>Javier Ruiz</string>
        </property>
       </item>
       <item row="3" column="1">
        <property name="text">
-        <string>Javier Ruiz</string>
+        <string>Premium</string>
        </property>
       </item>
       <item row="3" column="2">
        <property name="text">
-        <string>Mensual</string>
+        <string>35,00 €</string>
        </property>
       </item>
       <item row="3" column="3">
        <property name="text">
-        <string>35,00 €</string>
+        <string>22/05/2026</string>
        </property>
       </item>
       <item row="3" column="4">
        <property name="text">
-        <string>22/05/2026</string>
-       </property>
-      </item>
-      <item row="3" column="5">
-       <property name="text">
-        <string>Vencido</string>
-       </property>
-      </item>
-      <item row="3" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
+        <string>Pendiente</string>
        </property>
       </item>
       <item row="4" column="0">
        <property name="text">
-        <string>5</string>
+        <string>Laura Sánchez</string>
        </property>
       </item>
       <item row="4" column="1">
        <property name="text">
-        <string>Laura Sánchez</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="2">
        <property name="text">
-        <string>Anual</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="3">
        <property name="text">
-        <string>350,00 €</string>
+        <string>25/05/2026</string>
        </property>
       </item>
       <item row="4" column="4">
        <property name="text">
-        <string>25/05/2026</string>
-       </property>
-      </item>
-      <item row="4" column="5">
-       <property name="text">
         <string>Pagado</string>
-       </property>
-      </item>
-      <item row="4" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
        </property>
       </item>
       <item row="5" column="0">
        <property name="text">
-        <string>6</string>
+        <string>Pedro Alonso</string>
        </property>
       </item>
       <item row="5" column="1">
        <property name="text">
-        <string>Pedro Alonso</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="2">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="3">
        <property name="text">
-        <string>35,00 €</string>
+        <string>28/05/2026</string>
        </property>
       </item>
       <item row="5" column="4">
        <property name="text">
-        <string>28/05/2026</string>
-       </property>
-      </item>
-      <item row="5" column="5">
-       <property name="text">
         <string>Pendiente</string>
-       </property>
-      </item>
-      <item row="5" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
        </property>
       </item>
       <item row="6" column="0">
        <property name="text">
-        <string>7</string>
+        <string>Sofía Herrera</string>
        </property>
       </item>
       <item row="6" column="1">
        <property name="text">
-        <string>Sofía Herrera</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="2">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="3">
        <property name="text">
-        <string>35,00 €</string>
+        <string>30/05/2026</string>
        </property>
       </item>
       <item row="6" column="4">
        <property name="text">
-        <string>30/05/2026</string>
-       </property>
-      </item>
-      <item row="6" column="5">
-       <property name="text">
         <string>Pendiente</string>
-       </property>
-      </item>
-      <item row="6" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
        </property>
       </item>
       <item row="7" column="0">
        <property name="text">
-        <string>8</string>
+        <string>Diego Navarro</string>
        </property>
       </item>
       <item row="7" column="1">
        <property name="text">
-        <string>Diego Navarro</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="2">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="3">
        <property name="text">
-        <string>35,00 €</string>
+        <string>02/06/2026</string>
        </property>
       </item>
       <item row="7" column="4">
        <property name="text">
-        <string>02/06/2026</string>
-       </property>
-      </item>
-      <item row="7" column="5">
-       <property name="text">
         <string>Pagado</string>
-       </property>
-      </item>
-      <item row="7" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
        </property>
       </item>
      </widget>
@@ -943,7 +852,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QPushButton" name="btnAnterior">
       <property name="geometry">
        <rect>
-        <x>435</x>
+        <x>420</x>
         <y>362</y>
         <width>75</width>
         <height>28</height>
@@ -959,8 +868,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QPushButton" name="btnPag1">
       <property name="geometry">
        <rect>
-        <x>520</x>
-        <y>362</y>
+        <x>510</x>
+        <y>360</y>
         <width>35</width>
         <height>28</height>
        </rect>
@@ -975,8 +884,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QPushButton" name="btnPag2">
       <property name="geometry">
        <rect>
-        <x>565</x>
-        <y>362</y>
+        <x>550</x>
+        <y>360</y>
         <width>35</width>
         <height>28</height>
        </rect>
@@ -991,8 +900,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QPushButton" name="btnSiguiente">
       <property name="geometry">
        <rect>
-        <x>615</x>
-        <y>362</y>
+        <x>600</x>
+        <y>360</y>
         <width>85</width>
         <height>28</height>
        </rect>
@@ -1008,8 +917,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="cardResumen">
      <property name="geometry">
       <rect>
-       <x>790</x>
-       <y>30</y>
+       <x>770</x>
+       <y>100</y>
        <width>165</width>
        <height>160</height>
       </rect>
@@ -1066,7 +975,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>115</y>
+        <y>110</y>
         <width>125</width>
         <height>22</height>
        </rect>
@@ -1082,7 +991,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>135</y>
+        <y>130</y>
         <width>125</width>
         <height>22</height>
        </rect>
@@ -1098,8 +1007,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="cardIngresos">
      <property name="geometry">
       <rect>
-       <x>790</x>
-       <y>205</y>
+       <x>770</x>
+       <y>290</y>
        <width>165</width>
        <height>140</height>
       </rect>
@@ -1120,32 +1029,100 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string>Ingresos recientes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblGrafico">
+     <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>15</x>
+        <x>20</x>
         <y>50</y>
-        <width>135</width>
-        <height>70</height>
+        <width>131</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#18B7A5; background-color:#E8F8F6; border-radius:10px;</string>
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #00BFA6;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
       </property>
       <property name="text">
-       <string>Feb   Mar   Abr   May
-1.800 2.500 3.200 4.350</string>
+       <string>Feb               1.800 €</string>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>131</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #00BFA6;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>Mar               2.500 €</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>131</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #00BFA6;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>Abr               3.200 €</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>110</y>
+        <width>131</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #00BFA6;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>May              4.350 €</string>
       </property>
      </widget>
     </widget>
     <widget class="QFrame" name="cardPendientes">
      <property name="geometry">
       <rect>
-       <x>790</x>
-       <y>360</y>
+       <x>770</x>
+       <y>440</y>
        <width>165</width>
        <height>95</height>
       </rect>
@@ -1199,61 +1176,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardAcciones">
-     <property name="geometry">
-      <rect>
-       <x>790</x>
-       <y>470</y>
-       <width>165</width>
-       <height>115</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblAcciones">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>12</y>
-        <width>140</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Acciones rápidas</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAccionPrincipal">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>42</y>
-        <width>135</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>+ Registrar pago</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnVerPendientes">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>76</y>
-        <width>135</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ver pendientes</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QLabel" name="fondoOla">
      <property name="geometry">
       <rect>
@@ -1292,6 +1214,22 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>30</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/newPrefix/metodo-de-pago.png)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <zorder>label</zorder>
     <zorder>fondoOla</zorder>
     <zorder>lblTitulo</zorder>
@@ -1300,12 +1238,11 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <zorder>cmbEstado</zorder>
     <zorder>cmbTarifa</zorder>
     <zorder>cmbMes</zorder>
-    <zorder>btnNuevoPago</zorder>
     <zorder>cardTabla</zorder>
     <zorder>cardResumen</zorder>
     <zorder>cardIngresos</zorder>
     <zorder>cardPendientes</zorder>
-    <zorder>cardAcciones</zorder>
+    <zorder>label_6</zorder>
    </widget>
   </widget>
  </widget>
