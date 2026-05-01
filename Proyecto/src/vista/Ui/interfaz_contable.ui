@@ -694,7 +694,7 @@ QPushButton:checked {
        <string>Ingresos del mes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelClase">
+     <widget class="QLabel" name="labelIngresosMes">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -742,7 +742,7 @@ QPushButton:checked {
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerDetalles">
+     <widget class="QPushButton" name="buttonVerDetallesIngresos">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -816,7 +816,7 @@ QPushButton:hover {
        <string>Tarifas activas</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumAsistencias">
+     <widget class="QLabel" name="labelNumTarifas">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -826,10 +826,10 @@ QPushButton:hover {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:bold 16pt &quot;Segoe UI&quot;;color: rgb(0, 0, 0)</string>
+       <string notr="true">font:bold 16pt &quot;Segoe UI&quot;;color: rgb(170, 85, 255)</string>
       </property>
       <property name="text">
-       <string>2</string>
+       <string>3</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblSubAs_2">
@@ -864,7 +864,7 @@ QPushButton:hover {
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerDetalles_3">
+     <widget class="QPushButton" name="buttonVerDetalles_Tarifas">
       <property name="geometry">
        <rect>
         <x>60</x>
@@ -938,7 +938,7 @@ QPushButton:hover {
        <string>Informes generados </string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblPorcentajeOcupacion">
+     <widget class="QLabel" name="lblInformesGen">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -986,7 +986,7 @@ QPushButton:hover {
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerDetalles_4">
+     <widget class="QPushButton" name="buttonVerDetalles_Informes">
       <property name="geometry">
        <rect>
         <x>60</x>
@@ -1024,8 +1024,8 @@ QPushButton:hover {
       <rect>
        <x>40</x>
        <y>230</y>
-       <width>441</width>
-       <height>321</height>
+       <width>481</width>
+       <height>251</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblTituloTabla">
@@ -1063,11 +1063,11 @@ QPushButton:hover {
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerTodasClases">
+     <widget class="QPushButton" name="buttonVerTodosPagos">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>15</y>
+        <x>380</x>
+        <y>10</y>
         <width>91</width>
         <height>23</height>
        </rect>
@@ -1089,20 +1089,130 @@ QPushButton:hover {
 }</string>
       </property>
       <property name="text">
-       <string>Ver todas →</string>
+       <string>Ver todos →</string>
       </property>
       <property name="flat">
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QTableWidget" name="tablaUltimosPagos">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>451</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget {
+    background-color: white;
+    border: none;
+    gridline-color: #E5E7EB;
+    color: #1F2937;
+    font-size: 12px;
+}
+
+QHeaderView::section {
+    background-color: #F7F9FA;
+    color: #1F2937;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 7px;
+}
+
+QTableWidget::item {
+    padding: 7px;
+    border-bottom: 1px solid #E5E7EB;
+}</string>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="rowCount">
+       <number>4</number>
+      </property>
+      <property name="columnCount">
+       <number>10</number>
+      </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>90</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column>
+       <property name="text">
+        <string>Cliente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tarifa</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Importe</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Fecha</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Estado</string>
+       </property>
+      </column>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <item row="0" column="0">
+       <property name="text">
+        <string>Alejandro Martínez</string>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>Premium</string>
+       </property>
+      </item>
+      <item row="0" column="2">
+       <property name="text">
+        <string>45,00</string>
+       </property>
+      </item>
+      <item row="0" column="3">
+       <property name="text">
+        <string>26 may 2024</string>
+       </property>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string>Abonado</string>
+       </property>
+      </item>
+     </widget>
     </widget>
     <widget class="QFrame" name="asist">
      <property name="geometry">
       <rect>
-       <x>510</x>
+       <x>540</x>
        <y>230</y>
-       <width>431</width>
-       <height>311</height>
+       <width>401</width>
+       <height>251</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1116,7 +1226,7 @@ QPushButton:hover {
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>10</y>
+        <y>15</y>
         <width>261</width>
         <height>24</height>
        </rect>
@@ -1132,13 +1242,13 @@ QPushButton:hover {
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>10</y>
+        <y>18</y>
         <width>51</width>
         <height>21</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/lista-de-verificacion.png)</string>
+       <string notr="true">image: url(:/newPrefix/tarjeta-de-credito.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -1147,9 +1257,9 @@ QPushButton:hover {
      <widget class="QPushButton" name="buttonVerTodasClases_2">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>320</x>
         <y>10</y>
-        <width>91</width>
+        <width>71</width>
         <height>23</height>
        </rect>
       </property>
@@ -1175,6 +1285,91 @@ QPushButton:hover {
       <property name="flat">
        <bool>true</bool>
       </property>
+     </widget>
+     <widget class="QTableWidget" name="tablaClientesPagosPendientes">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>351</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget {
+    background-color: white;
+    border: none;
+    gridline-color: #E5E7EB;
+    color: #1F2937;
+    font-size: 12px;
+}
+
+QHeaderView::section {
+    background-color: #F7F9FA;
+    color: #1F2937;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 7px;
+}
+
+QTableWidget::item {
+    padding: 7px;
+    border-bottom: 1px solid #E5E7EB;
+}</string>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="rowCount">
+       <number>4</number>
+      </property>
+      <property name="columnCount">
+       <number>3</number>
+      </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>120</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column>
+       <property name="text">
+        <string>Cliente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Importe Pendiente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Fecha límite</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>Raúl Sánchez</string>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>45,00</string>
+       </property>
+      </item>
+      <item row="0" column="2">
+       <property name="text">
+        <string>05 jun 2024</string>
+       </property>
+      </item>
      </widget>
     </widget>
     <widget class="QLabel" name="label_16">
@@ -1213,7 +1408,7 @@ QPushButton:hover {
        <rect>
         <x>70</x>
         <y>10</y>
-        <width>95</width>
+        <width>101</width>
         <height>20</height>
        </rect>
       </property>
@@ -1224,7 +1419,7 @@ QPushButton:hover {
        <string>Pagos pendientes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumClases">
+     <widget class="QLabel" name="labelNumPagosPend">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -1234,7 +1429,7 @@ QPushButton:hover {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:bold 16pt &quot;Segoe UI&quot;;color: rgb(0, 0, 0)</string>
+       <string notr="true">font:bold 16pt &quot;Segoe UI&quot;;color: #18B7A5</string>
       </property>
       <property name="text">
        <string>12</string>
@@ -1256,7 +1451,7 @@ QPushButton:hover {
        <string>clientes con deuda</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerDetalles_2">
+     <widget class="QPushButton" name="buttonVerDetalles_PagosPend">
       <property name="geometry">
        <rect>
         <x>70</x>
