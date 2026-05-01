@@ -535,7 +535,7 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       <rect>
        <x>30</x>
        <y>110</y>
-       <width>170</width>
+       <width>130</width>
        <height>105</height>
       </rect>
      </property>
@@ -591,9 +591,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <widget class="QFrame" name="cardResumen2">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>180</x>
        <y>110</y>
-       <width>170</width>
+       <width>130</width>
        <height>105</height>
       </rect>
      </property>
@@ -649,9 +649,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <widget class="QFrame" name="cardResumen3">
      <property name="geometry">
       <rect>
-       <x>410</x>
+       <x>330</x>
        <y>110</y>
-       <width>170</width>
+       <width>130</width>
        <height>105</height>
       </rect>
      </property>
@@ -707,9 +707,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <widget class="QFrame" name="cardResumen4">
      <property name="geometry">
       <rect>
-       <x>600</x>
+       <x>480</x>
        <y>110</y>
-       <width>170</width>
+       <width>130</width>
        <height>105</height>
       </rect>
      </property>
@@ -762,129 +762,6 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardActividad">
-     <property name="geometry">
-      <rect>
-       <x>390</x>
-       <y>20</y>
-       <width>331</width>
-       <height>105</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblActividad">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>13</y>
-        <width>220</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Resumen de rendimiento</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblNumClasesActivas">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>40</y>
-        <width>51</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#18B7A5;
-</string>
-      </property>
-      <property name="text">
-       <string>24</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblNumEntrenadores">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>40</y>
-        <width>41</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#FF9F2E;</string>
-      </property>
-      <property name="text">
-       <string>18</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblNumSalas">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>40</y>
-        <width>31</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#8E6CFF;</string>
-      </property>
-      <property name="text">
-       <string>6 </string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblDato1_2">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>60</y>
-        <width>111</width>
-        <height>45</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
-      </property>
-      <property name="text">
-       <string>Clases activas</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblDato2_2">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>65</y>
-        <width>90</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#FF9F2E;</string>
-      </property>
-      <property name="text">
-       <string>Entrenadores</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblDato3_2">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>70</y>
-        <width>90</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#8E6CFF;</string>
-      </property>
-      <property name="text">
-       <string>Salas en uso</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QLabel" name="fondoOla">
      <property name="geometry">
       <rect>
@@ -928,7 +805,7 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       <rect>
        <x>30</x>
        <y>235</y>
-       <width>610</width>
+       <width>581</width>
        <height>345</height>
       </rect>
      </property>
@@ -969,7 +846,7 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
        <rect>
         <x>20</x>
         <y>45</y>
-        <width>570</width>
+        <width>541</width>
         <height>275</height>
        </rect>
       </property>
@@ -1410,9 +1287,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <widget class="QFrame" name="cardGrafico">
      <property name="geometry">
       <rect>
-       <x>660</x>
+       <x>645</x>
        <y>235</y>
-       <width>285</width>
+       <width>300</width>
        <height>165</height>
       </rect>
      </property>
@@ -1543,9 +1420,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <widget class="QFrame" name="cardOcupacion">
      <property name="geometry">
       <rect>
-       <x>660</x>
+       <x>645</x>
        <y>415</y>
-       <width>285</width>
+       <width>300</width>
        <height>165</height>
       </rect>
      </property>
@@ -1670,6 +1547,129 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       </property>
      </widget>
     </widget>
+    <widget class="QFrame" name="cardActividad">
+     <property name="geometry">
+      <rect>
+       <x>645</x>
+       <y>110</y>
+       <width>300</width>
+       <height>105</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="lblActividad">
+      <property name="geometry">
+       <rect>
+        <x>22</x>
+        <y>13</y>
+        <width>220</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Resumen de rendimiento</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNumClasesActivas">
+      <property name="geometry">
+       <rect>
+        <x>25</x>
+        <y>40</y>
+        <width>45</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#18B7A5;
+</string>
+      </property>
+      <property name="text">
+       <string>24</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNumEntrenadores">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>40</y>
+        <width>41</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#FF9F2E;</string>
+      </property>
+      <property name="text">
+       <string>18</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNumSalas">
+      <property name="geometry">
+       <rect>
+        <x>215</x>
+        <y>40</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#8E6CFF;</string>
+      </property>
+      <property name="text">
+       <string>6 </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblDato1_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>90</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
+      </property>
+      <property name="text">
+       <string>Clases activas</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblDato2_2">
+      <property name="geometry">
+       <rect>
+        <x>115</x>
+        <y>70</y>
+        <width>90</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#FF9F2E;</string>
+      </property>
+      <property name="text">
+       <string>Entrenadores</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblDato3_2">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>70</y>
+        <width>90</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#8E6CFF;</string>
+      </property>
+      <property name="text">
+       <string>Salas en uso</string>
+      </property>
+     </widget>
+    </widget>
     <zorder>label</zorder>
     <zorder>fondoOla</zorder>
     <zorder>lblTitulo</zorder>
@@ -1679,10 +1679,10 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <zorder>cardResumen2</zorder>
     <zorder>cardResumen3</zorder>
     <zorder>cardResumen4</zorder>
-    <zorder>cardActividad</zorder>
     <zorder>cardRanking</zorder>
     <zorder>cardGrafico</zorder>
     <zorder>cardOcupacion</zorder>
+    <zorder>cardActividad</zorder>
    </widget>
   </widget>
  </widget>
