@@ -484,8 +484,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLineEdit" name="txtBuscar">
      <property name="geometry">
       <rect>
-       <x>25</x>
-       <y>100</y>
+       <x>75</x>
+       <y>150</y>
        <width>160</width>
        <height>32</height>
       </rect>
@@ -497,8 +497,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QComboBox" name="cmbCategorias">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>100</y>
+       <x>250</x>
+       <y>150</y>
        <width>150</width>
        <height>32</height>
       </rect>
@@ -527,8 +527,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QComboBox" name="cmbEstados">
      <property name="geometry">
       <rect>
-       <x>365</x>
-       <y>100</y>
+       <x>415</x>
+       <y>150</y>
        <width>140</width>
        <height>32</height>
       </rect>
@@ -557,8 +557,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QComboBox" name="cmbHorarios">
      <property name="geometry">
       <rect>
-       <x>520</x>
-       <y>100</y>
+       <x>570</x>
+       <y>150</y>
        <width>140</width>
        <height>32</height>
       </rect>
@@ -582,8 +582,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QPushButton" name="btnNuevaClase">
      <property name="geometry">
       <rect>
-       <x>690</x>
-       <y>100</y>
+       <x>740</x>
+       <y>150</y>
        <width>95</width>
        <height>32</height>
       </rect>
@@ -592,32 +592,101 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>+ Nueva clase</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
     <widget class="QFrame" name="cardTabla">
      <property name="geometry">
       <rect>
-       <x>25</x>
-       <y>150</y>
-       <width>760</width>
-       <height>440</height>
+       <x>75</x>
+       <y>200</y>
+       <width>820</width>
+       <height>390</height>
       </rect>
      </property>
-     <widget class="QTableWidget" name="tablaClases">
+     <widget class="QLabel" name="lblTablaTitulo">
       <property name="geometry">
        <rect>
         <x>15</x>
-        <y>15</y>
-        <width>730</width>
-        <height>360</height>
+        <y>12</y>
+        <width>250</width>
+        <height>24</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;; color:#1F2937;</string>
+      </property>
+      <property name="text">
+       <string>Listado editable de clases</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblAyudaEdicion">
+      <property name="geometry">
+       <rect>
+        <x>265</x>
+        <y>12</y>
+        <width>460</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+      </property>
+      <property name="text">
+       <string>Doble clic sobre una celda para modificar los datos de la clase.</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tablaClases">
+      <property name="geometry">
+       <rect>
+        <x>25</x>
+        <y>45</y>
+        <width>781</width>
+        <height>340</height>
+       </rect>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::EditTrigger::AnyKeyPressed|QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed</set>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+      </property>
+      <property name="showGrid">
+       <bool>true</bool>
+      </property>
       <property name="rowCount">
-       <number>8</number>
+       <number>16</number>
       </property>
       <property name="columnCount">
        <number>8</number>
       </property>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>90</number>
+       <number>95</number>
       </attribute>
       <attribute name="horizontalHeaderStretchLastSection">
        <bool>true</bool>
@@ -625,6 +694,14 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <attribute name="verticalHeaderVisible">
        <bool>false</bool>
       </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <row/>
       <row/>
       <row/>
@@ -670,7 +747,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </column>
       <column>
        <property name="text">
-        <string>Estado / Acciones</string>
+        <string>Estado</string>
        </property>
       </column>
       <item row="0" column="0">
@@ -680,7 +757,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="0" column="1">
        <property name="text">
-        <string>🏋 Body Pump</string>
+        <string>Body Pump</string>
        </property>
       </item>
       <item row="0" column="2">
@@ -695,7 +772,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="0" column="4">
        <property name="text">
-        <string>Lun, Mié, Vie\n18:00 - 19:00</string>
+        <string>Lun, Mié, Vie
+18:00 - 19:00</string>
        </property>
       </item>
       <item row="0" column="5">
@@ -710,7 +788,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="0" column="7">
        <property name="text">
-        <string>Activa    👁  ✎  🗑</string>
+        <string>Activa</string>
        </property>
       </item>
       <item row="1" column="0">
@@ -720,7 +798,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="1" column="1">
        <property name="text">
-        <string>🧘 Yoga</string>
+        <string>Yoga</string>
        </property>
       </item>
       <item row="1" column="2">
@@ -735,7 +813,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="1" column="4">
        <property name="text">
-        <string>Mar, Jue\n19:30 - 20:30</string>
+        <string>Mar, Jue
+19:30 - 20:30</string>
        </property>
       </item>
       <item row="1" column="5">
@@ -750,7 +829,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="1" column="7">
        <property name="text">
-        <string>Activa    👁  ✎  🗑</string>
+        <string>Activa</string>
        </property>
       </item>
       <item row="2" column="0">
@@ -760,7 +839,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="2" column="1">
        <property name="text">
-        <string>🚴 Spinning</string>
+        <string>Spinning</string>
        </property>
       </item>
       <item row="2" column="2">
@@ -775,7 +854,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="2" column="4">
        <property name="text">
-        <string>Lun, Mié, Vie\n17:00 - 18:00</string>
+        <string>Lun, Mié, Vie
+17:00 - 18:00</string>
        </property>
       </item>
       <item row="2" column="5">
@@ -790,7 +870,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="2" column="7">
        <property name="text">
-        <string>Activa    👁  ✎  🗑</string>
+        <string>Activa</string>
        </property>
       </item>
       <item row="3" column="0">
@@ -800,7 +880,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="3" column="1">
        <property name="text">
-        <string>🧎 Pilates</string>
+        <string>Pilates</string>
        </property>
       </item>
       <item row="3" column="2">
@@ -815,7 +895,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="3" column="4">
        <property name="text">
-        <string>Mar, Jue\n10:00 - 11:00</string>
+        <string>Mar, Jue
+10:00 - 11:00</string>
        </property>
       </item>
       <item row="3" column="5">
@@ -830,7 +911,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="3" column="7">
        <property name="text">
-        <string>Activa    👁  ✎  🗑</string>
+        <string>Activa</string>
        </property>
       </item>
       <item row="4" column="0">
@@ -840,7 +921,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="4" column="1">
        <property name="text">
-        <string>💃 Zumba</string>
+        <string>Zumba</string>
        </property>
       </item>
       <item row="4" column="2">
@@ -855,7 +936,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="4" column="4">
        <property name="text">
-        <string>Lun, Mié\n20:00 - 21:00</string>
+        <string>Lun, Mié
+20:00 - 21:00</string>
        </property>
       </item>
       <item row="4" column="5">
@@ -870,7 +952,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="4" column="7">
        <property name="text">
-        <string>Activa    👁  ✎  🗑</string>
+        <string>Activa</string>
        </property>
       </item>
       <item row="5" column="0">
@@ -880,7 +962,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="5" column="1">
        <property name="text">
-        <string>🥊 Boxeo</string>
+        <string>Boxeo</string>
        </property>
       </item>
       <item row="5" column="2">
@@ -895,7 +977,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="5" column="4">
        <property name="text">
-        <string>Mar, Jue\n18:30 - 19:30</string>
+        <string>Mar, Jue
+18:30 - 19:30</string>
        </property>
       </item>
       <item row="5" column="5">
@@ -910,7 +993,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="5" column="7">
        <property name="text">
-        <string>Activa    👁  ✎  🗑</string>
+        <string>Activa</string>
        </property>
       </item>
       <item row="6" column="0">
@@ -920,7 +1003,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="6" column="1">
        <property name="text">
-        <string>🤸 Stretching</string>
+        <string>Stretching</string>
        </property>
       </item>
       <item row="6" column="2">
@@ -935,7 +1018,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="6" column="4">
        <property name="text">
-        <string>Sáb\n11:00 - 12:00</string>
+        <string>Sáb
+11:00 - 12:00</string>
        </property>
       </item>
       <item row="6" column="5">
@@ -950,7 +1034,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="6" column="7">
        <property name="text">
-        <string>Inactiva    👁  ✎  🗑</string>
+        <string>Inactiva</string>
        </property>
       </item>
       <item row="7" column="0">
@@ -960,7 +1044,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="7" column="1">
        <property name="text">
-        <string>⏱ HIIT</string>
+        <string>HIIT</string>
        </property>
       </item>
       <item row="7" column="2">
@@ -975,7 +1059,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="7" column="4">
        <property name="text">
-        <string>Vie\n19:00 - 20:00</string>
+        <string>Vie
+19:00 - 20:00</string>
        </property>
       </item>
       <item row="7" column="5">
@@ -990,7 +1075,335 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </item>
       <item row="7" column="7">
        <property name="text">
-        <string>Borrador    👁  ✎  🗑</string>
+        <string>Borrador</string>
+       </property>
+      </item>
+      <item row="8" column="0">
+       <property name="text">
+        <string>9</string>
+       </property>
+      </item>
+      <item row="8" column="1">
+       <property name="text">
+        <string>GAP</string>
+       </property>
+      </item>
+      <item row="8" column="2">
+       <property name="text">
+        <string>Fuerza</string>
+       </property>
+      </item>
+      <item row="8" column="3">
+       <property name="text">
+        <string>Marta Gil</string>
+       </property>
+      </item>
+      <item row="8" column="4">
+       <property name="text">
+        <string>Lun, Mié
+09:00 - 10:00</string>
+       </property>
+      </item>
+      <item row="8" column="5">
+       <property name="text">
+        <string>Sala 2</string>
+       </property>
+      </item>
+      <item row="8" column="6">
+       <property name="text">
+        <string>11 / 20</string>
+       </property>
+      </item>
+      <item row="8" column="7">
+       <property name="text">
+        <string>Activa</string>
+       </property>
+      </item>
+      <item row="9" column="0">
+       <property name="text">
+        <string>10</string>
+       </property>
+      </item>
+      <item row="9" column="1">
+       <property name="text">
+        <string>Running Indoor</string>
+       </property>
+      </item>
+      <item row="9" column="2">
+       <property name="text">
+        <string>Cardio</string>
+       </property>
+      </item>
+      <item row="9" column="3">
+       <property name="text">
+        <string>Sergio Díaz</string>
+       </property>
+      </item>
+      <item row="9" column="4">
+       <property name="text">
+        <string>Mar, Jue
+08:00 - 09:00</string>
+       </property>
+      </item>
+      <item row="9" column="5">
+       <property name="text">
+        <string>Sala 1</string>
+       </property>
+      </item>
+      <item row="9" column="6">
+       <property name="text">
+        <string>14 / 18</string>
+       </property>
+      </item>
+      <item row="9" column="7">
+       <property name="text">
+        <string>Activa</string>
+       </property>
+      </item>
+      <item row="10" column="0">
+       <property name="text">
+        <string>11</string>
+       </property>
+      </item>
+      <item row="10" column="1">
+       <property name="text">
+        <string>Yoga Relax</string>
+       </property>
+      </item>
+      <item row="10" column="2">
+       <property name="text">
+        <string>Bienestar</string>
+       </property>
+      </item>
+      <item row="10" column="3">
+       <property name="text">
+        <string>Laura Sánchez</string>
+       </property>
+      </item>
+      <item row="10" column="4">
+       <property name="text">
+        <string>Vie
+20:00 - 21:00</string>
+       </property>
+      </item>
+      <item row="10" column="5">
+       <property name="text">
+        <string>Sala 3</string>
+       </property>
+      </item>
+      <item row="10" column="6">
+       <property name="text">
+        <string>6 / 15</string>
+       </property>
+      </item>
+      <item row="10" column="7">
+       <property name="text">
+        <string>Activa</string>
+       </property>
+      </item>
+      <item row="11" column="0">
+       <property name="text">
+        <string>12</string>
+       </property>
+      </item>
+      <item row="11" column="1">
+       <property name="text">
+        <string>Cross Training</string>
+       </property>
+      </item>
+      <item row="11" column="2">
+       <property name="text">
+        <string>Fuerza</string>
+       </property>
+      </item>
+      <item row="11" column="3">
+       <property name="text">
+        <string>David Pérez</string>
+       </property>
+      </item>
+      <item row="11" column="4">
+       <property name="text">
+        <string>Lun, Mié, Vie
+07:30 - 08:30</string>
+       </property>
+      </item>
+      <item row="11" column="5">
+       <property name="text">
+        <string>Sala 1</string>
+       </property>
+      </item>
+      <item row="11" column="6">
+       <property name="text">
+        <string>10 / 16</string>
+       </property>
+      </item>
+      <item row="11" column="7">
+       <property name="text">
+        <string>Activa</string>
+       </property>
+      </item>
+      <item row="12" column="0">
+       <property name="text">
+        <string>13</string>
+       </property>
+      </item>
+      <item row="12" column="1">
+       <property name="text">
+        <string>Core</string>
+       </property>
+      </item>
+      <item row="12" column="2">
+       <property name="text">
+        <string>Fuerza</string>
+       </property>
+      </item>
+      <item row="12" column="3">
+       <property name="text">
+        <string>Ana Torres</string>
+       </property>
+      </item>
+      <item row="12" column="4">
+       <property name="text">
+        <string>Jue
+17:30 - 18:15</string>
+       </property>
+      </item>
+      <item row="12" column="5">
+       <property name="text">
+        <string>Sala 2</string>
+       </property>
+      </item>
+      <item row="12" column="6">
+       <property name="text">
+        <string>8 / 12</string>
+       </property>
+      </item>
+      <item row="12" column="7">
+       <property name="text">
+        <string>Activa</string>
+       </property>
+      </item>
+      <item row="13" column="0">
+       <property name="text">
+        <string>14</string>
+       </property>
+      </item>
+      <item row="13" column="1">
+       <property name="text">
+        <string>Spinning Pro</string>
+       </property>
+      </item>
+      <item row="13" column="2">
+       <property name="text">
+        <string>Cardio</string>
+       </property>
+      </item>
+      <item row="13" column="3">
+       <property name="text">
+        <string>Carlos Ruiz</string>
+       </property>
+      </item>
+      <item row="13" column="4">
+       <property name="text">
+        <string>Sáb
+10:00 - 11:00</string>
+       </property>
+      </item>
+      <item row="13" column="5">
+       <property name="text">
+        <string>Sala 1</string>
+       </property>
+      </item>
+      <item row="13" column="6">
+       <property name="text">
+        <string>13 / 15</string>
+       </property>
+      </item>
+      <item row="13" column="7">
+       <property name="text">
+        <string>Activa</string>
+       </property>
+      </item>
+      <item row="14" column="0">
+       <property name="text">
+        <string>15</string>
+       </property>
+      </item>
+      <item row="14" column="1">
+       <property name="text">
+        <string>Mindfulness</string>
+       </property>
+      </item>
+      <item row="14" column="2">
+       <property name="text">
+        <string>Bienestar</string>
+       </property>
+      </item>
+      <item row="14" column="3">
+       <property name="text">
+        <string>Elena Gómez</string>
+       </property>
+      </item>
+      <item row="14" column="4">
+       <property name="text">
+        <string>Dom
+11:30 - 12:15</string>
+       </property>
+      </item>
+      <item row="14" column="5">
+       <property name="text">
+        <string>Sala 3</string>
+       </property>
+      </item>
+      <item row="14" column="6">
+       <property name="text">
+        <string>4 / 15</string>
+       </property>
+      </item>
+      <item row="14" column="7">
+       <property name="text">
+        <string>Inactiva</string>
+       </property>
+      </item>
+      <item row="15" column="0">
+       <property name="text">
+        <string>16</string>
+       </property>
+      </item>
+      <item row="15" column="1">
+       <property name="text">
+        <string>Kick Boxing</string>
+       </property>
+      </item>
+      <item row="15" column="2">
+       <property name="text">
+        <string>Combate</string>
+       </property>
+      </item>
+      <item row="15" column="3">
+       <property name="text">
+        <string>David Pérez</string>
+       </property>
+      </item>
+      <item row="15" column="4">
+       <property name="text">
+        <string>Mié
+20:00 - 21:00</string>
+       </property>
+      </item>
+      <item row="15" column="5">
+       <property name="text">
+        <string>Sala 1</string>
+       </property>
+      </item>
+      <item row="15" column="6">
+       <property name="text">
+        <string>7 / 12</string>
+       </property>
+      </item>
+      <item row="15" column="7">
+       <property name="text">
+        <string>Borrador</string>
        </property>
       </item>
      </widget>
@@ -998,8 +1411,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="geometry">
        <rect>
         <x>15</x>
-        <y>390</y>
-        <width>220</width>
+        <y>398</y>
+        <width>330</width>
         <height>25</height>
        </rect>
       </property>
@@ -1007,31 +1420,15 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
       </property>
       <property name="text">
-       <string>Mostrando 1 a 8 de 32 clases</string>
+       <string>Mostrando todas las clases · usa la barra lateral para subir y bajar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnAnterior">
+     <widget class="QPushButton" name="btnGuardarCambios">
       <property name="geometry">
        <rect>
-        <x>405</x>
-        <y>387</y>
-        <width>80</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>‹ Anterior</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnPag1">
-      <property name="geometry">
-       <rect>
-        <x>495</x>
-        <y>387</y>
-        <width>32</width>
+        <x>560</x>
+        <y>395</y>
+        <width>170</width>
         <height>30</height>
        </rect>
       </property>
@@ -1039,81 +1436,17 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">background-color:#18B7A5; color:white; border:none; border-radius:8px; font:bold 9pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>1</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnPag2">
-      <property name="geometry">
-       <rect>
-        <x>535</x>
-        <y>387</y>
-        <width>32</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>2</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnPag3">
-      <property name="geometry">
-       <rect>
-        <x>575</x>
-        <y>387</y>
-        <width>32</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>3</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnPag4">
-      <property name="geometry">
-       <rect>
-        <x>615</x>
-        <y>387</y>
-        <width>32</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>4</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnSiguiente">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>387</y>
-        <width>85</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Siguiente ›</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
+       <string>Guardar cambios</string>
       </property>
      </widget>
     </widget>
     <widget class="QFrame" name="cardResumen">
      <property name="geometry">
       <rect>
-       <x>810</x>
-       <y>25</y>
-       <width>150</width>
-       <height>190</height>
+       <x>534</x>
+       <y>20</y>
+       <width>361</width>
+       <height>100</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblResTitulo">
@@ -1135,10 +1468,10 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblResIcon">
       <property name="geometry">
        <rect>
-        <x>18</x>
-        <y>55</y>
-        <width>48</width>
-        <height>48</height>
+        <x>20</x>
+        <y>50</y>
+        <width>30</width>
+        <height>30</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1154,8 +1487,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblTotalClases">
       <property name="geometry">
        <rect>
-        <x>82</x>
-        <y>55</y>
+        <x>80</x>
+        <y>40</y>
         <width>60</width>
         <height>35</height>
        </rect>
@@ -1170,8 +1503,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblClasesTotales">
       <property name="geometry">
        <rect>
-        <x>82</x>
-        <y>90</y>
+        <x>80</x>
+        <y>80</y>
         <width>70</width>
         <height>18</height>
        </rect>
@@ -1186,8 +1519,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblActivas">
       <property name="geometry">
        <rect>
-        <x>18</x>
-        <y>125</y>
+        <x>210</x>
+        <y>10</y>
         <width>120</width>
         <height>18</height>
        </rect>
@@ -1202,8 +1535,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblInactivas">
       <property name="geometry">
        <rect>
-        <x>18</x>
-        <y>148</y>
+        <x>220</x>
+        <y>40</y>
         <width>120</width>
         <height>18</height>
        </rect>
@@ -1218,8 +1551,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblBorradores">
       <property name="geometry">
        <rect>
-        <x>18</x>
-        <y>170</y>
+        <x>220</x>
+        <y>70</y>
         <width>120</width>
         <height>18</height>
        </rect>
@@ -1232,179 +1565,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardCategorias">
-     <property name="geometry">
-      <rect>
-       <x>810</x>
-       <y>235</y>
-       <width>150</width>
-       <height>150</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblCatTitulo">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>15</y>
-        <width>130</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Clases por categoría</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblDonut">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>50</y>
-        <width>60</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#D8F4F0; border-radius:30px; color:#18B7A5; font:bold 18pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>◌</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblLeyenda">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>45</y>
-        <width>55</width>
-        <height>95</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>● Fuerza   8
-● Cardio    7
-● Bienestar 6
-● Baile      4
-● Combate 3
-● Otras      4</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardAcciones">
-     <property name="geometry">
-      <rect>
-       <x>810</x>
-       <y>405</y>
-       <width>150</width>
-       <height>185</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblAcciones">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>15</y>
-        <width>120</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Acciones rápidas</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAccionPrincipal">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>50</y>
-        <width>120</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>+ Nueva clase</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnGestionarCat">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>88</y>
-        <width>120</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Gestionar categorías</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAsignar">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>126</y>
-        <width>120</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Asignar instructores</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnVerHorarios">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>164</y>
-        <width>120</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ver horarios</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>991</width>
-       <height>621</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <zorder>label</zorder>
+    <zorder>cardTabla</zorder>
     <zorder>lblTitulo</zorder>
     <zorder>lblSubtitulo</zorder>
     <zorder>txtBuscar</zorder>
@@ -1412,10 +1574,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <zorder>cmbEstados</zorder>
     <zorder>cmbHorarios</zorder>
     <zorder>btnNuevaClase</zorder>
-    <zorder>cardTabla</zorder>
     <zorder>cardResumen</zorder>
-    <zorder>cardCategorias</zorder>
-    <zorder>cardAcciones</zorder>
    </widget>
   </widget>
  </widget>
