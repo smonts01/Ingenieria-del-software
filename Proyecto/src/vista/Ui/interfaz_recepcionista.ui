@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>700</height>
+    <width>1202</width>
+    <height>701</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -151,7 +151,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QPushButton" name="btnCerrarSesion">
      <property name="geometry">
       <rect>
-       <x>1000</x>
+       <x>1050</x>
        <y>30</y>
        <width>115</width>
        <height>36</height>

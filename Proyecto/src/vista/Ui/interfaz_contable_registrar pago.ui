@@ -178,7 +178,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>80</y>
+       <y>70</y>
        <width>141</width>
        <height>36</height>
       </rect>
@@ -447,7 +447,7 @@ QPushButton:checked {
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>90</y>
+       <y>80</y>
        <width>20</width>
        <height>20</height>
       </rect>
