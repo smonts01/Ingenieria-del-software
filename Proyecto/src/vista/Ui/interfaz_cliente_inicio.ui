@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -306,7 +306,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -438,8 +438,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <rect>
        <x>30</x>
        <y>98</y>
-       <width>170</width>
-       <height>110</height>
+       <width>205</width>
+       <height>105</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblTituloClases">
@@ -535,10 +535,10 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="card2">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>255</x>
        <y>98</y>
-       <width>170</width>
-       <height>110</height>
+       <width>205</width>
+       <height>105</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblIconPago">
@@ -631,10 +631,10 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="card3">
      <property name="geometry">
       <rect>
-       <x>410</x>
+       <x>480</x>
        <y>98</y>
-       <width>170</width>
-       <height>110</height>
+       <width>205</width>
+       <height>105</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblIconCal">
@@ -727,10 +727,10 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="card4">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>98</y>
-       <width>150</width>
-       <height>110</height>
+       <x>705</x>
+       <y>100</y>
+       <width>205</width>
+       <height>105</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblIconAs">
@@ -824,8 +824,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>228</y>
-       <width>355</width>
+       <y>223</y>
+       <width>430</width>
        <height>238</height>
       </rect>
      </property>
@@ -850,7 +850,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <rect>
         <x>20</x>
         <y>50</y>
-        <width>315</width>
+        <width>391</width>
         <height>130</height>
        </rect>
       </property>
@@ -895,7 +895,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <rect>
         <x>20</x>
         <y>193</y>
-        <width>315</width>
+        <width>391</width>
         <height>32</height>
        </rect>
       </property>
@@ -926,9 +926,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="cardPago">
      <property name="geometry">
       <rect>
-       <x>405</x>
-       <y>228</y>
-       <width>345</width>
+       <x>480</x>
+       <y>223</y>
+       <width>430</width>
        <height>120</height>
       </rect>
      </property>
@@ -1048,9 +1048,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="cardActividad">
      <property name="geometry">
       <rect>
-       <x>405</x>
-       <y>365</y>
-       <width>345</width>
+       <x>480</x>
+       <y>360</y>
+       <width>430</width>
        <height>101</height>
       </rect>
      </property>
@@ -1176,8 +1176,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLabel" name="label_17">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>0</y>
+       <x>-20</x>
+       <y>-20</y>
        <width>991</width>
        <height>611</height>
       </rect>
@@ -1186,7 +1186,26 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/entrenador/reborde_ola.png</pixmap>
+      <pixmap>:/entrenador/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1203,6 +1222,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <zorder>cardPago</zorder>
     <zorder>cardActividad</zorder>
     <zorder>label_16</zorder>
+    <zorder>label_3</zorder>
    </widget>
   </widget>
  </widget>

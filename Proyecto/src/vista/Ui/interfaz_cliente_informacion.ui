@@ -54,7 +54,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -105,7 +105,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/usuario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -195,7 +195,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string>Clases</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnInscripciones">
+    <widget class="QPushButton" name="btnEstadisticas">
      <property name="geometry">
       <rect>
        <x>45</x>
@@ -205,53 +205,14 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       </rect>
      </property>
      <property name="text">
-      <string>Mis inscripciones</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnPagos">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>170</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Pagos</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnEstadisticas">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>215</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
       <string>Estadísticas</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnCalorias">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>260</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Calorías</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnPerfil">
      <property name="geometry">
       <rect>
        <x>45</x>
-       <y>305</y>
+       <y>170</y>
        <width>150</width>
        <height>36</height>
       </rect>
@@ -264,7 +225,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      <property name="geometry">
       <rect>
        <x>45</x>
-       <y>350</y>
+       <y>215</y>
        <width>150</width>
        <height>36</height>
       </rect>
@@ -334,7 +295,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -353,13 +314,13 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/calendario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="icoInscripciones">
+    <widget class="QLabel" name="icoEstadisticas">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -372,13 +333,13 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/inscripcion.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="icoPagos">
+    <widget class="QLabel" name="icoPerfil">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -391,64 +352,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/pagos.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="icoEstadisticas">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>220</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/newPrefix/grafico-de-barras.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="icoCalorias">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>265</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/newPrefix/fuego.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="icoPerfil">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>310</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/newPrefix/usuario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -458,7 +362,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>355</y>
+       <y>220</y>
        <width>23</width>
        <height>23</height>
       </rect>
@@ -467,7 +371,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/informacion.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -565,17 +469,17 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      <widget class="QLabel" name="icoSobre">
       <property name="geometry">
        <rect>
-        <x>32</x>
-        <y>30</y>
-        <width>25</width>
-        <height>25</height>
+        <x>26</x>
+        <y>26</y>
+        <width>35</width>
+        <height>35</height>
        </rect>
       </property>
       <property name="text">
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>:/prefijoNuevo/casa_inicio.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -655,7 +559,13 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string notr="true">font:bold 18pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
       </property>
       <property name="text">
-       <string>◷</string>
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reloj.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="lblHorarioTitulo">
@@ -719,17 +629,23 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      <widget class="QLabel" name="icoUbi">
       <property name="geometry">
        <rect>
-        <x>34</x>
-        <y>29</y>
-        <width>24</width>
-        <height>26</height>
+        <x>30</x>
+        <y>27</y>
+        <width>30</width>
+        <height>32</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font:bold 18pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
       </property>
       <property name="text">
-       <string>⌖</string>
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/alfiler.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="lblUbiTitulo">
@@ -1272,6 +1188,35 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       </property>
      </widget>
     </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label</zorder>
+    <zorder>fondoOla</zorder>
+    <zorder>lblTitulo</zorder>
+    <zorder>lblSubtitulo</zorder>
+    <zorder>cardSobre</zorder>
+    <zorder>cardHorario</zorder>
+    <zorder>cardUbicacion</zorder>
+    <zorder>cardServicios</zorder>
+    <zorder>cardNormas</zorder>
+    <zorder>cardContacto</zorder>
    </widget>
   </widget>
  </widget>
