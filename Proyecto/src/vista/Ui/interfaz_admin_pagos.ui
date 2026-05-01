@@ -576,435 +576,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>+ Registrar pago</string>
      </property>
     </widget>
-    <widget class="QFrame" name="cardTabla">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>150</y>
-       <width>735</width>
-       <height>405</height>
-      </rect>
-     </property>
-     <widget class="QTableWidget" name="tablaPagos">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>15</y>
-        <width>705</width>
-        <height>335</height>
-       </rect>
-      </property>
-      <property name="rowCount">
-       <number>8</number>
-      </property>
-      <property name="columnCount">
-       <number>7</number>
-      </property>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <column>
-       <property name="text">
-        <string>ID</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Cliente</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Tarifa</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Importe</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Vencimiento</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Estado</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Acciones</string>
-       </property>
-      </column>
-      <item row="0" column="0">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item row="0" column="1">
-       <property name="text">
-        <string>Ana García</string>
-       </property>
-      </item>
-      <item row="0" column="2">
-       <property name="text">
-        <string>Mensual</string>
-       </property>
-      </item>
-      <item row="0" column="3">
-       <property name="text">
-        <string>35,00 €</string>
-       </property>
-      </item>
-      <item row="0" column="4">
-       <property name="text">
-        <string>15/05/2026</string>
-       </property>
-      </item>
-      <item row="0" column="5">
-       <property name="text">
-        <string>Pagado</string>
-       </property>
-      </item>
-      <item row="0" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-      <item row="1" column="0">
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item row="1" column="1">
-       <property name="text">
-        <string>Carlos López</string>
-       </property>
-      </item>
-      <item row="1" column="2">
-       <property name="text">
-        <string>Mensual</string>
-       </property>
-      </item>
-      <item row="1" column="3">
-       <property name="text">
-        <string>35,00 €</string>
-       </property>
-      </item>
-      <item row="1" column="4">
-       <property name="text">
-        <string>18/05/2026</string>
-       </property>
-      </item>
-      <item row="1" column="5">
-       <property name="text">
-        <string>Pendiente</string>
-       </property>
-      </item>
-      <item row="1" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-      <item row="2" column="0">
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item row="2" column="1">
-       <property name="text">
-        <string>María Martínez</string>
-       </property>
-      </item>
-      <item row="2" column="2">
-       <property name="text">
-        <string>Trimestral</string>
-       </property>
-      </item>
-      <item row="2" column="3">
-       <property name="text">
-        <string>95,00 €</string>
-       </property>
-      </item>
-      <item row="2" column="4">
-       <property name="text">
-        <string>20/05/2026</string>
-       </property>
-      </item>
-      <item row="2" column="5">
-       <property name="text">
-        <string>Pagado</string>
-       </property>
-      </item>
-      <item row="2" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-      <item row="3" column="0">
-       <property name="text">
-        <string>4</string>
-       </property>
-      </item>
-      <item row="3" column="1">
-       <property name="text">
-        <string>Javier Ruiz</string>
-       </property>
-      </item>
-      <item row="3" column="2">
-       <property name="text">
-        <string>Mensual</string>
-       </property>
-      </item>
-      <item row="3" column="3">
-       <property name="text">
-        <string>35,00 €</string>
-       </property>
-      </item>
-      <item row="3" column="4">
-       <property name="text">
-        <string>22/05/2026</string>
-       </property>
-      </item>
-      <item row="3" column="5">
-       <property name="text">
-        <string>Vencido</string>
-       </property>
-      </item>
-      <item row="3" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-      <item row="4" column="0">
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item row="4" column="1">
-       <property name="text">
-        <string>Laura Sánchez</string>
-       </property>
-      </item>
-      <item row="4" column="2">
-       <property name="text">
-        <string>Anual</string>
-       </property>
-      </item>
-      <item row="4" column="3">
-       <property name="text">
-        <string>350,00 €</string>
-       </property>
-      </item>
-      <item row="4" column="4">
-       <property name="text">
-        <string>25/05/2026</string>
-       </property>
-      </item>
-      <item row="4" column="5">
-       <property name="text">
-        <string>Pagado</string>
-       </property>
-      </item>
-      <item row="4" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-      <item row="5" column="0">
-       <property name="text">
-        <string>6</string>
-       </property>
-      </item>
-      <item row="5" column="1">
-       <property name="text">
-        <string>Pedro Alonso</string>
-       </property>
-      </item>
-      <item row="5" column="2">
-       <property name="text">
-        <string>Mensual</string>
-       </property>
-      </item>
-      <item row="5" column="3">
-       <property name="text">
-        <string>35,00 €</string>
-       </property>
-      </item>
-      <item row="5" column="4">
-       <property name="text">
-        <string>28/05/2026</string>
-       </property>
-      </item>
-      <item row="5" column="5">
-       <property name="text">
-        <string>Pendiente</string>
-       </property>
-      </item>
-      <item row="5" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-      <item row="6" column="0">
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item row="6" column="1">
-       <property name="text">
-        <string>Sofía Herrera</string>
-       </property>
-      </item>
-      <item row="6" column="2">
-       <property name="text">
-        <string>Mensual</string>
-       </property>
-      </item>
-      <item row="6" column="3">
-       <property name="text">
-        <string>35,00 €</string>
-       </property>
-      </item>
-      <item row="6" column="4">
-       <property name="text">
-        <string>30/05/2026</string>
-       </property>
-      </item>
-      <item row="6" column="5">
-       <property name="text">
-        <string>Pendiente</string>
-       </property>
-      </item>
-      <item row="6" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-      <item row="7" column="0">
-       <property name="text">
-        <string>8</string>
-       </property>
-      </item>
-      <item row="7" column="1">
-       <property name="text">
-        <string>Diego Navarro</string>
-       </property>
-      </item>
-      <item row="7" column="2">
-       <property name="text">
-        <string>Mensual</string>
-       </property>
-      </item>
-      <item row="7" column="3">
-       <property name="text">
-        <string>35,00 €</string>
-       </property>
-      </item>
-      <item row="7" column="4">
-       <property name="text">
-        <string>02/06/2026</string>
-       </property>
-      </item>
-      <item row="7" column="5">
-       <property name="text">
-        <string>Pagado</string>
-       </property>
-      </item>
-      <item row="7" column="6">
-       <property name="text">
-        <string>👁  ✎  🧾</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QLabel" name="lblMostrando">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>365</y>
-        <width>230</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>Mostrando 1 a 8 de 124 pagos</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAnterior">
-      <property name="geometry">
-       <rect>
-        <x>435</x>
-        <y>362</y>
-        <width>75</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>‹ Anterior</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnPag1">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>362</y>
-        <width>35</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; color:white; border-radius:7px; font:bold 9pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>1</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnPag2">
-      <property name="geometry">
-       <rect>
-        <x>565</x>
-        <y>362</y>
-        <width>35</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>2</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnSiguiente">
-      <property name="geometry">
-       <rect>
-        <x>615</x>
-        <y>362</y>
-        <width>85</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Siguiente ›</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>btnAccion</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="cardResumen">
      <property name="geometry">
       <rect>
@@ -1292,6 +863,735 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QFrame" name="cardTabla">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>150</y>
+       <width>735</width>
+       <height>435</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="lblTablaTitulo">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>10</y>
+        <width>230</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;; color:#1F2937;</string>
+      </property>
+      <property name="text">
+       <string>Listado editable de pagos</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblTablaAyuda">
+      <property name="geometry">
+       <rect>
+        <x>245</x>
+        <y>12</y>
+        <width>300</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+      </property>
+      <property name="text">
+       <string>Doble clic sobre una celda para modificar los datos.</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnGuardarCambios">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>10</y>
+        <width>145</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Guardar cambios</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tablaPagos">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>48</y>
+        <width>705</width>
+        <height>335</height>
+       </rect>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed|QAbstractItemView::EditTrigger::SelectedClicked</set>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+      </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="rowCount">
+       <number>16</number>
+      </property>
+      <property name="columnCount">
+       <number>7</number>
+      </property>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column>
+       <property name="text">
+        <string>ID</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Cliente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tarifa</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Importe</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Vencimiento</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Estado</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Notas</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>1</string>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>Ana García</string>
+       </property>
+      </item>
+      <item row="0" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="0" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string>15/05/2026</string>
+       </property>
+      </item>
+      <item row="0" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="0" column="6">
+       <property name="text">
+        <string>Recibo enviado</string>
+       </property>
+      </item>
+      <item row="1" column="0">
+       <property name="text">
+        <string>2</string>
+       </property>
+      </item>
+      <item row="1" column="1">
+       <property name="text">
+        <string>Carlos López</string>
+       </property>
+      </item>
+      <item row="1" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="1" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="1" column="4">
+       <property name="text">
+        <string>18/05/2026</string>
+       </property>
+      </item>
+      <item row="1" column="5">
+       <property name="text">
+        <string>Pendiente</string>
+       </property>
+      </item>
+      <item row="1" column="6">
+       <property name="text">
+        <string>Recordatorio pendiente</string>
+       </property>
+      </item>
+      <item row="2" column="0">
+       <property name="text">
+        <string>3</string>
+       </property>
+      </item>
+      <item row="2" column="1">
+       <property name="text">
+        <string>María Martínez</string>
+       </property>
+      </item>
+      <item row="2" column="2">
+       <property name="text">
+        <string>Trimestral</string>
+       </property>
+      </item>
+      <item row="2" column="3">
+       <property name="text">
+        <string>95,00 €</string>
+       </property>
+      </item>
+      <item row="2" column="4">
+       <property name="text">
+        <string>20/05/2026</string>
+       </property>
+      </item>
+      <item row="2" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="2" column="6">
+       <property name="text">
+        <string>Pago con tarjeta</string>
+       </property>
+      </item>
+      <item row="3" column="0">
+       <property name="text">
+        <string>4</string>
+       </property>
+      </item>
+      <item row="3" column="1">
+       <property name="text">
+        <string>Javier Ruiz</string>
+       </property>
+      </item>
+      <item row="3" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="3" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="3" column="4">
+       <property name="text">
+        <string>22/05/2026</string>
+       </property>
+      </item>
+      <item row="3" column="5">
+       <property name="text">
+        <string>Vencido</string>
+       </property>
+      </item>
+      <item row="3" column="6">
+       <property name="text">
+        <string>Avisar por email</string>
+       </property>
+      </item>
+      <item row="4" column="0">
+       <property name="text">
+        <string>5</string>
+       </property>
+      </item>
+      <item row="4" column="1">
+       <property name="text">
+        <string>Laura Sánchez</string>
+       </property>
+      </item>
+      <item row="4" column="2">
+       <property name="text">
+        <string>Anual</string>
+       </property>
+      </item>
+      <item row="4" column="3">
+       <property name="text">
+        <string>350,00 €</string>
+       </property>
+      </item>
+      <item row="4" column="4">
+       <property name="text">
+        <string>25/05/2026</string>
+       </property>
+      </item>
+      <item row="4" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="4" column="6">
+       <property name="text">
+        <string>Descuento aplicado</string>
+       </property>
+      </item>
+      <item row="5" column="0">
+       <property name="text">
+        <string>6</string>
+       </property>
+      </item>
+      <item row="5" column="1">
+       <property name="text">
+        <string>Pedro Alonso</string>
+       </property>
+      </item>
+      <item row="5" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="5" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="5" column="4">
+       <property name="text">
+        <string>28/05/2026</string>
+       </property>
+      </item>
+      <item row="5" column="5">
+       <property name="text">
+        <string>Pendiente</string>
+       </property>
+      </item>
+      <item row="5" column="6">
+       <property name="text">
+        <string>Pago en recepción</string>
+       </property>
+      </item>
+      <item row="6" column="0">
+       <property name="text">
+        <string>7</string>
+       </property>
+      </item>
+      <item row="6" column="1">
+       <property name="text">
+        <string>Sofía Herrera</string>
+       </property>
+      </item>
+      <item row="6" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="6" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="6" column="4">
+       <property name="text">
+        <string>30/05/2026</string>
+       </property>
+      </item>
+      <item row="6" column="5">
+       <property name="text">
+        <string>Pendiente</string>
+       </property>
+      </item>
+      <item row="6" column="6">
+       <property name="text">
+        <string>Confirmar transferencia</string>
+       </property>
+      </item>
+      <item row="7" column="0">
+       <property name="text">
+        <string>8</string>
+       </property>
+      </item>
+      <item row="7" column="1">
+       <property name="text">
+        <string>Diego Navarro</string>
+       </property>
+      </item>
+      <item row="7" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="7" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="7" column="4">
+       <property name="text">
+        <string>02/06/2026</string>
+       </property>
+      </item>
+      <item row="7" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="7" column="6">
+       <property name="text">
+        <string>Actualizado</string>
+       </property>
+      </item>
+      <item row="8" column="0">
+       <property name="text">
+        <string>9</string>
+       </property>
+      </item>
+      <item row="8" column="1">
+       <property name="text">
+        <string>Lucía Moreno</string>
+       </property>
+      </item>
+      <item row="8" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="8" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="8" column="4">
+       <property name="text">
+        <string>04/06/2026</string>
+       </property>
+      </item>
+      <item row="8" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="8" column="6">
+       <property name="text">
+        <string>Recibo enviado</string>
+       </property>
+      </item>
+      <item row="9" column="0">
+       <property name="text">
+        <string>10</string>
+       </property>
+      </item>
+      <item row="9" column="1">
+       <property name="text">
+        <string>Hugo Pérez</string>
+       </property>
+      </item>
+      <item row="9" column="2">
+       <property name="text">
+        <string>Trimestral</string>
+       </property>
+      </item>
+      <item row="9" column="3">
+       <property name="text">
+        <string>95,00 €</string>
+       </property>
+      </item>
+      <item row="9" column="4">
+       <property name="text">
+        <string>05/06/2026</string>
+       </property>
+      </item>
+      <item row="9" column="5">
+       <property name="text">
+        <string>Pendiente</string>
+       </property>
+      </item>
+      <item row="9" column="6">
+       <property name="text">
+        <string>Revisar banco</string>
+       </property>
+      </item>
+      <item row="10" column="0">
+       <property name="text">
+        <string>11</string>
+       </property>
+      </item>
+      <item row="10" column="1">
+       <property name="text">
+        <string>Elena Torres</string>
+       </property>
+      </item>
+      <item row="10" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="10" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="10" column="4">
+       <property name="text">
+        <string>07/06/2026</string>
+       </property>
+      </item>
+      <item row="10" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="10" column="6">
+       <property name="text">
+        <string>Efectivo</string>
+       </property>
+      </item>
+      <item row="11" column="0">
+       <property name="text">
+        <string>12</string>
+       </property>
+      </item>
+      <item row="11" column="1">
+       <property name="text">
+        <string>Raúl Jiménez</string>
+       </property>
+      </item>
+      <item row="11" column="2">
+       <property name="text">
+        <string>Anual</string>
+       </property>
+      </item>
+      <item row="11" column="3">
+       <property name="text">
+        <string>350,00 €</string>
+       </property>
+      </item>
+      <item row="11" column="4">
+       <property name="text">
+        <string>08/06/2026</string>
+       </property>
+      </item>
+      <item row="11" column="5">
+       <property name="text">
+        <string>Pendiente</string>
+       </property>
+      </item>
+      <item row="11" column="6">
+       <property name="text">
+        <string>Cliente avisado</string>
+       </property>
+      </item>
+      <item row="12" column="0">
+       <property name="text">
+        <string>13</string>
+       </property>
+      </item>
+      <item row="12" column="1">
+       <property name="text">
+        <string>Nuria Vega</string>
+       </property>
+      </item>
+      <item row="12" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="12" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="12" column="4">
+       <property name="text">
+        <string>09/06/2026</string>
+       </property>
+      </item>
+      <item row="12" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="12" column="6">
+       <property name="text">
+        <string>Pago domiciliado</string>
+       </property>
+      </item>
+      <item row="13" column="0">
+       <property name="text">
+        <string>14</string>
+       </property>
+      </item>
+      <item row="13" column="1">
+       <property name="text">
+        <string>Álvaro Cano</string>
+       </property>
+      </item>
+      <item row="13" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="13" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="13" column="4">
+       <property name="text">
+        <string>10/06/2026</string>
+       </property>
+      </item>
+      <item row="13" column="5">
+       <property name="text">
+        <string>Vencido</string>
+       </property>
+      </item>
+      <item row="13" column="6">
+       <property name="text">
+        <string>Bloquear reserva</string>
+       </property>
+      </item>
+      <item row="14" column="0">
+       <property name="text">
+        <string>15</string>
+       </property>
+      </item>
+      <item row="14" column="1">
+       <property name="text">
+        <string>Irene Molina</string>
+       </property>
+      </item>
+      <item row="14" column="2">
+       <property name="text">
+        <string>Trimestral</string>
+       </property>
+      </item>
+      <item row="14" column="3">
+       <property name="text">
+        <string>95,00 €</string>
+       </property>
+      </item>
+      <item row="14" column="4">
+       <property name="text">
+        <string>12/06/2026</string>
+       </property>
+      </item>
+      <item row="14" column="5">
+       <property name="text">
+        <string>Pagado</string>
+       </property>
+      </item>
+      <item row="14" column="6">
+       <property name="text">
+        <string>Todo correcto</string>
+       </property>
+      </item>
+      <item row="15" column="0">
+       <property name="text">
+        <string>16</string>
+       </property>
+      </item>
+      <item row="15" column="1">
+       <property name="text">
+        <string>Mario León</string>
+       </property>
+      </item>
+      <item row="15" column="2">
+       <property name="text">
+        <string>Mensual</string>
+       </property>
+      </item>
+      <item row="15" column="3">
+       <property name="text">
+        <string>35,00 €</string>
+       </property>
+      </item>
+      <item row="15" column="4">
+       <property name="text">
+        <string>15/06/2026</string>
+       </property>
+      </item>
+      <item row="15" column="5">
+       <property name="text">
+        <string>Pendiente</string>
+       </property>
+      </item>
+      <item row="15" column="6">
+       <property name="text">
+        <string>Esperando confirmación</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="lblMostrando">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>392</y>
+        <width>360</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
+      </property>
+      <property name="text">
+       <string>Tabla única editable · desplázate para ver todos los pagos</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnEliminarPago">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>392</y>
+        <width>145</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Eliminar seleccionado</string>
+      </property>
+     </widget>
+    </widget>
     <zorder>label</zorder>
     <zorder>fondoOla</zorder>
     <zorder>lblTitulo</zorder>
@@ -1301,11 +1601,11 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <zorder>cmbTarifa</zorder>
     <zorder>cmbMes</zorder>
     <zorder>btnNuevoPago</zorder>
-    <zorder>cardTabla</zorder>
     <zorder>cardResumen</zorder>
     <zorder>cardIngresos</zorder>
     <zorder>cardPendientes</zorder>
     <zorder>cardAcciones</zorder>
+    <zorder>cardTabla</zorder>
    </widget>
   </widget>
  </widget>

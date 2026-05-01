@@ -1453,7 +1453,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="geometry">
        <rect>
         <x>15</x>
-        <y>15</y>
+        <y>12</y>
         <width>130</width>
         <height>22</height>
        </rect>
@@ -1519,9 +1519,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblActivas">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>10</y>
-        <width>120</width>
+        <x>200</x>
+        <y>12</y>
+        <width>90</width>
         <height>18</height>
        </rect>
       </property>
@@ -1535,9 +1535,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblInactivas">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>40</y>
-        <width>120</width>
+        <x>200</x>
+        <y>42</y>
+        <width>90</width>
         <height>18</height>
        </rect>
       </property>
@@ -1551,9 +1551,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <widget class="QLabel" name="lblBorradores">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>70</y>
-        <width>120</width>
+        <x>200</x>
+        <y>72</y>
+        <width>90</width>
         <height>18</height>
        </rect>
       </property>
@@ -1562,6 +1562,45 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
       <property name="text">
        <string>Borradores                    2</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesActivas">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>12</y>
+        <width>49</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>10</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesInactivas">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>42</y>
+        <width>49</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblCLasesBorradores">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>72</y>
+        <width>49</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1</string>
       </property>
      </widget>
     </widget>
