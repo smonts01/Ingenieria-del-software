@@ -584,9 +584,15 @@ QPushButton:checked {
       <rect>
        <x>50</x>
        <y>220</y>
-       <width>150</width>
+       <width>161</width>
        <height>36</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
