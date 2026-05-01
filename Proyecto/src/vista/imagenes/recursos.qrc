@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>decreciente.png</file>
     <file>ajuste.png</file>
     <file>contable_chico.png</file>
     <file>contable_chica.png</file>
