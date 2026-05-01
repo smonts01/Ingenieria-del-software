@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -386,7 +386,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -459,7 +459,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/entrenador/lista-de-verificacion.png)</string>
+      <string notr="true">image: url(:/newPrefix/lista-de-verificacion.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -475,7 +475,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/anadir-grupo.png)</string>
+      <string notr="true">image:url(:/newPrefix/anadir-grupo.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -491,7 +491,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/entrenador/grafico-circular.png)</string>
+      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -603,6 +603,30 @@ QPushButton:checked {
        <width>150</width>
        <height>36</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}
+
+ 
+
+</string>
      </property>
      <property name="text">
       <string>Clases</string>
@@ -720,7 +744,7 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/reloj.png)</string>
+       <string notr="true">image:url(:/newPrefix/reloj.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -826,7 +850,7 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/usuarios.png)</string>
+       <string notr="true">image:url(:/newPrefix/usuarios.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -916,7 +940,7 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/grafico-circular.png)</string>
+       <string notr="true">image:url(:/newPrefix/grafico-circular.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -1110,9 +1134,9 @@ QPushButton:checked {
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>220</y>
-       <width>601</width>
-       <height>211</height>
+       <y>240</y>
+       <width>911</width>
+       <height>191</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1137,12 +1161,24 @@ QTableWidget::item {
     padding: 8px;
 }</string>
      </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="rowCount">
       <number>5</number>
      </property>
      <property name="columnCount">
-      <number>13</number>
+      <number>6</number>
      </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>150</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
@@ -1181,13 +1217,6 @@ QTableWidget::item {
        <string>Ocupación</string>
       </property>
      </column>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
      <item row="0" column="0">
       <property name="text">
        <string>Boompa</string>
