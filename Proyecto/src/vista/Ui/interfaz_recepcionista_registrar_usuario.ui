@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -251,32 +251,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Clientes</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnEstadisticas">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>215</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Pagos</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnCalorias">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>260</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Información</string>
-     </property>
-    </widget>
     <widget class="QFrame" name="cardSigue">
      <property name="geometry">
       <rect>
@@ -338,7 +312,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -358,44 +332,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="pixmap">
       <pixmap>../imagenes/control de acceso.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>220</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>270</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -915,7 +851,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLabel" name="label_19">
      <property name="geometry">
       <rect>
-       <x>-410</x>
+       <x>-390</x>
        <y>0</y>
        <width>1391</width>
        <height>621</height>
@@ -1203,192 +1139,6 @@ QRadioButton::indicator {
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QFrame" name="card1_3">
-     <property name="geometry">
-      <rect>
-       <x>500</x>
-       <y>320</y>
-       <width>321</width>
-       <height>171</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#card1_3 {
-    background-color: #FFFFFF;
-    border: 1px solid #DADDE2;
-    border-radius: 12px;
-}</string>
-     </property>
-     <widget class="QLabel" name="label_18">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>20</y>
-        <width>31</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>../imagenes/usuario.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblNombreCliente_5">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>25</y>
-        <width>270</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Estado de pago</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblIconAs_5">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>50</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#D8F4F0; color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblResumen_4">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>90</y>
-        <width>251</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>El cliente está al corriente de pago</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton_3">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>82</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>-1</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QRadioButton {
-    background-color: transparent;
-    color: #333333;
-    font-size: 13px;
-}
-
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-}</string>
-      </property>
-      <property name="text">
-       <string>Abonado</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton_4">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>120</y>
-        <width>91</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>-1</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QRadioButton {
-    background-color: transparent;
-    color: #333333;
-    font-size: 13px;
-}
-
-QRadioButton::indicator {
-    width: 16px;
-    height: 16px;
-}</string>
-      </property>
-      <property name="text">
-       <string>Pendiente</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblResumen_5">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>140</y>
-        <width>211</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>El cliente tiene pagos pendientes</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_5">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>20</y>
-        <width>31</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
     <widget class="QPushButton" name="btnInicio_2">
      <property name="geometry">
       <rect>
@@ -1425,14 +1175,13 @@ QRadioButton::indicator {
       <string> Registrar usuario    </string>
      </property>
     </widget>
-    <zorder>label_19</zorder>
     <zorder>label_16</zorder>
+    <zorder>label_19</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>card1</zorder>
     <zorder>card3</zorder>
     <zorder>card1_2</zorder>
-    <zorder>card1_3</zorder>
     <zorder>btnInicio_2</zorder>
    </widget>
   </widget>

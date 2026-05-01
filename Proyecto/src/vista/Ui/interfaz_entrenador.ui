@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -399,7 +399,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -472,7 +472,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/entrenador/lista-de-verificacion.png)</string>
+      <string notr="true">image: url(:/newPrefix/lista-de-verificacion.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -488,7 +488,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/anadir-grupo.png)</string>
+      <string notr="true">image:url(:/newPrefix/anadir-grupo.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -504,7 +504,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/entrenador/grafico-circular.png)</string>
+      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -752,7 +752,7 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/reloj.png)</string>
+       <string notr="true">image:url(:/newPrefix/reloj.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -874,7 +874,7 @@ QPushButton:hover {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/usuarios.png)</string>
+       <string notr="true">image:url(:/newPrefix/usuarios.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -996,7 +996,7 @@ QPushButton:hover {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/grafico-circular.png)</string>
+       <string notr="true">image:url(:/newPrefix/grafico-circular.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -1307,7 +1307,7 @@ QPushButton:hover {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/lista-de-verificacion.png)</string>
+       <string notr="true">image:url(:/newPrefix/lista-de-verificacion.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -1513,7 +1513,7 @@ QPushButton:pressed {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/corazon-en-mano.png)</string>
+       <string notr="true">image:url(:/newPrefix/corazon-en-mano.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -1529,7 +1529,7 @@ QPushButton:pressed {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/rosas-de-corazon.png)</string>
+       <string notr="true">image:url(:/newPrefix/rosas-de-corazon.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -1769,7 +1769,7 @@ QPushButton:hover {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/ver-usuario.png)</string>
+      <string notr="true">image:url(:/newPrefix/ver-usuario.png)</string>
      </property>
      <property name="text">
       <string/>
