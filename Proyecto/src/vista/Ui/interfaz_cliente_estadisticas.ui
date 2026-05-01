@@ -54,7 +54,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -105,7 +105,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       <string notr="true">background-color: #18B7A5; color: white; border-radius: 22px; font: 20pt &quot;Segoe UI Emoji&quot;;</string>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/usuario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -198,7 +198,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       <string>Clases</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnInscripciones">
+    <widget class="QPushButton" name="btnEstadisticas">
      <property name="geometry">
       <rect>
        <x>45</x>
@@ -208,53 +208,14 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       </rect>
      </property>
      <property name="text">
-      <string>Mis inscripciones</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnPagos">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>170</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Pagos</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnEstadisticas">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>215</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
       <string>Estadísticas</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnCalorias">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>260</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Calorías</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnPerfil">
      <property name="geometry">
       <rect>
        <x>45</x>
-       <y>305</y>
+       <y>170</y>
        <width>150</width>
        <height>36</height>
       </rect>
@@ -267,7 +228,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      <property name="geometry">
       <rect>
        <x>45</x>
-       <y>350</y>
+       <y>215</y>
        <width>150</width>
        <height>36</height>
       </rect>
@@ -334,7 +295,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -350,39 +311,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/calendario.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>130</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/newPrefix/inscripcion.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>175</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/newPrefix/pagos.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -392,29 +321,13 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>220</y>
+       <y>130</y>
        <width>25</width>
        <height>25</height>
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/grafico-de-barras.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>265</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/newPrefix/fuego.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -424,13 +337,13 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>310</y>
+       <y>175</y>
        <width>23</width>
        <height>23</height>
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/usuario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -440,13 +353,13 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>355</y>
+       <y>220</y>
        <width>23</width>
        <height>23</height>
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/informacion.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -538,14 +451,14 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      <widget class="QLabel" name="icoEntrenos">
       <property name="geometry">
        <rect>
-        <x>25</x>
-        <y>35</y>
-        <width>30</width>
-        <height>30</height>
+        <x>22</x>
+        <y>30</y>
+        <width>40</width>
+        <height>40</height>
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/zapatilla.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pesa.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -632,7 +545,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/reloj.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reloj.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -719,7 +632,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/fuego.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -806,7 +719,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/marca-de-verificacion.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/marca-de-verificacion.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1475,6 +1388,26 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>611</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label_2</zorder>
     <zorder>labelFondoOla</zorder>
     <zorder>lblTituloEstadisticas</zorder>
     <zorder>lblSubtituloEstadisticas</zorder>
