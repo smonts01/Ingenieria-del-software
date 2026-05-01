@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -245,32 +245,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Clientes</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnEstadisticas">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>215</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Pagos</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnCalorias">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>260</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Información</string>
-     </property>
-    </widget>
     <widget class="QFrame" name="cardSigue">
      <property name="geometry">
       <rect>
@@ -332,7 +306,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -352,44 +326,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="pixmap">
       <pixmap>../imagenes/control de acceso.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>220</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>270</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -697,7 +633,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <rect>
         <x>80</x>
         <y>20</y>
-        <width>100</width>
+        <width>111</width>
         <height>20</height>
        </rect>
       </property>
@@ -705,26 +641,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>Pagos pendientes</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_14">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>33</y>
-        <width>35</width>
-        <height>35</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
+       <string>Nuevos usuarios hoy</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblNumClases_3">
@@ -757,6 +674,25 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
       <property name="text">
        <string>clientes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>../imagenes/registrar usuario.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -1034,7 +970,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <rect>
        <x>30</x>
        <y>490</y>
-       <width>421</width>
+       <width>451</width>
        <height>101</height>
       </rect>
      </property>
@@ -1125,7 +1061,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLabel" name="label_19">
      <property name="geometry">
       <rect>
-       <x>-410</x>
+       <x>-390</x>
        <y>0</y>
        <width>1391</width>
        <height>621</height>

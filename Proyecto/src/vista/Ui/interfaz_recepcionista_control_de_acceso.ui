@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -251,32 +251,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Clientes</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnEstadisticas">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>215</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Pagos</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnCalorias">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>260</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Información</string>
-     </property>
-    </widget>
     <widget class="QFrame" name="cardSigue">
      <property name="geometry">
       <rect>
@@ -338,7 +312,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -358,44 +332,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="pixmap">
       <pixmap>../imagenes/control de acceso.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>220</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>270</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -522,7 +458,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="placeholderText">
-       <string>Introduce el DNI del usuario</string>
+       <string>Introduce el DNI o ID del usuario</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btnInicio_2">
@@ -778,8 +714,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLabel" name="label_19">
      <property name="geometry">
       <rect>
-       <x>-410</x>
-       <y>0</y>
+       <x>-380</x>
+       <y>10</y>
        <width>1391</width>
        <height>621</height>
       </rect>
