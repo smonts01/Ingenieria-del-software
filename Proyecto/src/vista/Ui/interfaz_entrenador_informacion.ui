@@ -185,12 +185,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-    background-color: transparent;
+    background-color: #18B7A5;
     border: none;
     border-radius: 8px;
     padding: 8px 12px;
     text-align: left;
-    color: #333333;
+    color: #FFFFFF;
 }
 
 QPushButton:hover {
@@ -535,7 +535,7 @@ QPushButton:checked {
       <rect>
        <x>50</x>
        <y>270</y>
-       <width>161</width>
+       <width>151</width>
        <height>36</height>
       </rect>
      </property>
@@ -550,12 +550,12 @@ QPushButton:checked {
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
-    background-color: #18B7A5;
+    background-color: transparent;
     border: none;
     border-radius: 8px;
     padding: 8px 12px;
     text-align: left;
-    color: #FFFFFF;
+    color: #333333;
 }
 
 QPushButton:hover {
@@ -566,11 +566,7 @@ QPushButton:checked {
     background-color: #DDF7F3;
     color: #333333;
     font-weight: bold;
-}
-
- 
-
-</string>
+}</string>
      </property>
      <property name="text">
       <string>Perfil</string>
@@ -628,8 +624,8 @@ QPushButton:checked {
     <widget class="QLabel" name="lblBienvenida">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>10</y>
+       <x>100</x>
+       <y>20</y>
        <width>300</width>
        <height>34</height>
       </rect>
@@ -638,13 +634,13 @@ QPushButton:checked {
       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string>
      </property>
      <property name="text">
-      <string>Mi perfil</string>
+      <string>Información</string>
      </property>
     </widget>
     <widget class="QLabel" name="lblResumen">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>100</x>
        <y>50</y>
        <width>470</width>
        <height>20</height>
@@ -654,7 +650,7 @@ QPushButton:checked {
       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
      </property>
      <property name="text">
-      <string>Consulta tu información personal y profesional</string>
+      <string>Consulta ayuda rápida sobre el uso del panel de entrenador.</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_17">
@@ -686,289 +682,13 @@ QPushButton:checked {
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label_19">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>30</y>
-       <width>1771</width>
-       <height>651</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/reborde_ola.png)</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QFrame" name="frame">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>80</y>
-       <width>901</width>
-       <height>221</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QFrame {
-    background-color: white;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-}</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>191</width>
-        <height>171</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/avatar_entrenadora_chica.png);
-background: transparent;
-border: None;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="Line" name="line">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>20</y>
-        <width>1</width>
-        <height>170</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QFrame {
-    background-color: #E5E7EB;
-    border: none;
-}</string>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_6">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>50</y>
-        <width>171</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #00BFA6;
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:400;&quot;&gt;Entrenador/a personal&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Nombre">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>20</y>
-        <width>221</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 24px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>Nombre Apellidos</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>80</y>
-        <width>201</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #374151;
-    font-size: 13px;
-}</string>
-      </property>
-      <property name="text">
-       <string>correo.entrenador@stayfit.com</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_9">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>110</y>
-        <width>201</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #374151;
-    font-size: 13px;
-}</string>
-      </property>
-      <property name="text">
-       <string>+34 600 123 456</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_16">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>140</y>
-        <width>201</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #374151;
-    font-size: 13px;
-}</string>
-      </property>
-      <property name="text">
-       <string>Madrid, España</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_20">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>170</y>
-        <width>201</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #374151;
-    font-size: 13px;
-}</string>
-      </property>
-      <property name="text">
-       <string>Miembro desde: Enero 2024</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_21">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>80</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/correo-electronico.png);
-background: transparent;
-border: None;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_22">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>110</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/telefono.png);
-background: transparent;
-border: None;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_23">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>140</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/marcador-de-posicion.png);
-background: transparent;
-border: None;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_27">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>170</y>
-        <width>41</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/calendario_miembro.png);
-background: transparent;
-border: None;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="frame_2">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>320</y>
-       <width>901</width>
-       <height>191</height>
+       <x>10</x>
+       <y>10</y>
+       <width>961</width>
+       <height>591</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -984,36 +704,21 @@ border: None;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_24">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>10</y>
-        <width>171</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>Resumen de actividad</string>
-      </property>
-     </widget>
      <widget class="QFrame" name="frame_3">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>40</y>
-        <width>151</width>
-        <height>141</height>
+        <y>70</y>
+        <width>901</width>
+        <height>111</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+    background-color: #F0FFFC;
+    border: 1px solid #B2F5EA;
+    border-radius: 12px;
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -1024,32 +729,14 @@ border: None;</string>
       <widget class="QLabel" name="lblIconAs_3">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>10</y>
-         <width>50</width>
-         <height>50</height>
+         <x>29</x>
+         <y>15</y>
+         <width>71</width>
+         <height>71</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:#D8F4F0; color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_5">
-       <property name="geometry">
-        <rect>
-         <x>55</x>
-         <y>20</y>
-         <width>40</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/dos-personas.png);
-background:transparent;
-border:None</string>
+        <string notr="true">background-color: rgb(207, 255, 252); border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
        </property>
        <property name="text">
         <string/>
@@ -1058,9 +745,9 @@ border:None</string>
       <widget class="QLabel" name="label_Num_Clases_semana">
        <property name="geometry">
         <rect>
-         <x>65</x>
-         <y>60</y>
-         <width>21</width>
+         <x>120</x>
+         <y>10</y>
+         <width>201</width>
          <height>31</height>
         </rect>
        </property>
@@ -1069,42 +756,20 @@ border:None</string>
     background: transparent;
     border: none;
     color: #00BFA6;
-    font-size: 26px;
+    font-size: 20px;
     font-weight: bold;
 }</string>
        </property>
        <property name="text">
-        <string>8</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_25">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>90</y>
-         <width>131</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-       </property>
-       <property name="text">
-        <string>Clases Asignadas</string>
+        <string>Registrar asistencia</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_13">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>110</y>
-         <width>101</width>
+         <x>120</x>
+         <y>50</y>
+         <width>531</width>
          <height>16</height>
         </rect>
        </property>
@@ -1112,23 +777,48 @@ border:None</string>
         <string notr="true">QLabel {
     background: transparent;
     border: none;
-    color: #6B7280;
-    font-size: 12px;
+    color: #374151;
+    font-size: 15px;
 }</string>
        </property>
        <property name="text">
-        <string>Esta semana</string>
+        <string>Selecciona una clase, marca los clientes que han asistido y guarda el registro.</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>45</x>
+         <y>35</y>
+         <width>40</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">image: url(:/newPrefix/inscripcion.png);
+background: transparent;
+border: None;</string>
+       </property>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </widget>
      <widget class="QFrame" name="frame_4">
       <property name="geometry">
        <rect>
-        <x>240</x>
-        <y>40</y>
-        <width>151</width>
-        <height>141</height>
+        <x>30</x>
+        <y>200</y>
+        <width>901</width>
+        <height>111</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+    background-color: #FAF5FF;
+    border: 1px solid #DDD6FE;
+    border-radius: 12px;
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -1136,30 +826,12 @@ border:None</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="label_28">
-       <property name="geometry">
-        <rect>
-         <x>55</x>
-         <y>20</y>
-         <width>40</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/calendario.png);
-background:transparent;
-border:None</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_Num_Clases_Hoy">
        <property name="geometry">
         <rect>
-         <x>65</x>
-         <y>60</y>
-         <width>21</width>
+         <x>120</x>
+         <y>10</y>
+         <width>241</width>
          <height>31</height>
         </rect>
        </property>
@@ -1168,42 +840,20 @@ border:None</string>
     background: transparent;
     border: none;
     color: rgb(170, 85, 255);
-    font-size: 26px;
+    font-size: 20px;
     font-weight: bold;
 }</string>
        </property>
        <property name="text">
-        <string>3</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_29">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>90</y>
-         <width>101</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-       </property>
-       <property name="text">
-        <string>Clases de hoy</string>
+        <string>Clientes inscritos</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_30">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>110</y>
-         <width>101</width>
+         <x>120</x>
+         <y>50</y>
+         <width>841</width>
          <height>16</height>
         </rect>
        </property>
@@ -1211,21 +861,21 @@ border:None</string>
         <string notr="true">QLabel {
     background: transparent;
     border: none;
-    color: #6B7280;
-    font-size: 12px;
+    color: #374151;
+    font-size: 15px;
 }</string>
        </property>
        <property name="text">
-        <string>Esta semana</string>
+        <string>Consulta qué clientes están apuntados a cada una de tus clases.</string>
        </property>
       </widget>
       <widget class="QLabel" name="lblIconCal">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>10</y>
-         <width>51</width>
-         <height>51</height>
+         <x>29</x>
+         <y>15</y>
+         <width>71</width>
+         <height>71</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -1235,32 +885,11 @@ border:None</string>
         <string/>
        </property>
       </widget>
-      <zorder>lblIconCal</zorder>
-      <zorder>label_28</zorder>
-      <zorder>label_Num_Clases_Hoy</zorder>
-      <zorder>label_29</zorder>
-      <zorder>label_30</zorder>
-     </widget>
-     <widget class="QFrame" name="frame_5">
-      <property name="geometry">
-       <rect>
-        <x>460</x>
-        <y>40</y>
-        <width>151</width>
-        <height>141</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QLabel" name="label_14">
+      <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
-         <x>55</x>
-         <y>20</y>
+         <x>45</x>
+         <y>35</y>
          <width>40</width>
          <height>31</height>
         </rect>
@@ -1274,101 +903,26 @@ border:None</string>
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_Num_Clientes_Total">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>60</y>
-         <width>31</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: rgb(255, 170, 0);
-    font-size: 26px;
-    font-weight: bold;
-}</string>
-       </property>
-       <property name="text">
-        <string>48</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_26">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>90</y>
-         <width>131</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-       </property>
-       <property name="text">
-        <string>Clientes inscritos</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_15">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>110</y>
-         <width>61</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #6B7280;
-    font-size: 12px;
-}</string>
-       </property>
-       <property name="text">
-        <string>En total</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lblIconPago">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>10</y>
-         <width>51</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:#FFF0D9; border-radius:22px; font:16pt &quot;Segoe UI Emoji&quot;; color:#FF9F2E;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <zorder>lblIconPago</zorder>
-      <zorder>label_14</zorder>
-      <zorder>label_Num_Clientes_Total</zorder>
-      <zorder>label_26</zorder>
-      <zorder>label_15</zorder>
+      <zorder>lblIconCal</zorder>
+      <zorder>label_Num_Clases_Hoy</zorder>
+      <zorder>label_30</zorder>
+      <zorder>label_5</zorder>
      </widget>
-     <widget class="QFrame" name="frame_6">
+     <widget class="QFrame" name="frame_5">
       <property name="geometry">
        <rect>
-        <x>690</x>
-        <y>40</y>
-        <width>151</width>
-        <height>141</height>
+        <x>30</x>
+        <y>330</y>
+        <width>901</width>
+        <height>111</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+    background-color: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 12px;
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -1376,17 +930,39 @@ border:None</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="lblIconAs_6">
+      <widget class="QLabel" name="label_Num_Clientes_Total">
        <property name="geometry">
         <rect>
-         <x>50</x>
+         <x>120</x>
          <y>10</y>
-         <width>50</width>
-         <height>50</height>
+         <width>271</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:#D8F4F0; color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
+        <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: rgb(85, 85, 255);
+    font-size: 20px;
+    font-weight: bold;
+}</string>
+       </property>
+       <property name="text">
+        <string>Ocupación de clases</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblIconAs_7">
+       <property name="geometry">
+        <rect>
+         <x>29</x>
+         <y>15</y>
+         <width>71</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(187, 207, 255); color:#18B7A5; border-radius:22px; font:bold 20pt &quot;Segoe UI&quot;;</string>
        </property>
        <property name="text">
         <string/>
@@ -1395,27 +971,87 @@ border:None</string>
       <widget class="QLabel" name="label_31">
        <property name="geometry">
         <rect>
-         <x>55</x>
-         <y>20</y>
+         <x>120</x>
+         <y>50</y>
+         <width>841</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #374151;
+    font-size: 15px;
+}</string>
+       </property>
+       <property name="text">
+        <string>Revisa el número de plazas ocupadas y libres de tus clases</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>45</x>
+         <y>35</y>
          <width>40</width>
          <height>31</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image: url(:/newPrefix/incrementar.png);
-background:transparent;
-border:None</string>
+        <string notr="true">image: url(:/newPrefix/grafico-de-barras.png);
+background: transparent;
+border: None;</string>
        </property>
        <property name="text">
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_Porcentaje_Asistencia">
+     </widget>
+     <widget class="QFrame" name="frame_6">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>460</y>
+        <width>901</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+    background-color: #FFF7ED;
+    border: 1px solid #FDBA74;
+    border-radius: 12px;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="lblIconPago_2">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>60</y>
-         <width>61</width>
+         <x>29</x>
+         <y>15</y>
+         <width>71</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(255, 230, 128); border-radius:22px; font:16pt &quot;Segoe UI Emoji&quot;;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_Num_Clientes_Total_2">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>10</y>
+         <width>271</width>
          <height>31</height>
         </rect>
        </property>
@@ -1423,21 +1059,21 @@ border:None</string>
         <string notr="true">QLabel {
     background: transparent;
     border: none;
-    color: rgb(85, 170, 255);
-    font-size: 26px;
+    color: rgb(255, 129, 26);
+    font-size: 20px;
     font-weight: bold;
 }</string>
        </property>
        <property name="text">
-        <string>92%</string>
+        <string>Importante</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_32">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>90</y>
-         <width>131</width>
+         <x>120</x>
+         <y>50</y>
+         <width>841</width>
          <height>16</height>
         </rect>
        </property>
@@ -1445,133 +1081,57 @@ border:None</string>
         <string notr="true">QLabel {
     background: transparent;
     border: none;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: bold;
+    color: #374151;
+    font-size: 15px;
 }</string>
        </property>
        <property name="text">
-        <string>Asistencia media</string>
+        <string>Si necesitas modificar datos personales o clases asignadas, contacta con la administración</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_33">
+      <widget class="QLabel" name="label_9">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>110</y>
-         <width>101</width>
-         <height>16</height>
+         <x>45</x>
+         <y>35</y>
+         <width>40</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #6B7280;
-    font-size: 12px;
-}</string>
+        <string notr="true">image: url(:/newPrefix/advertencia.png);
+background: transparent;
+border: None;</string>
        </property>
        <property name="text">
-        <string>Últimos 30 días</string>
+        <string/>
        </property>
       </widget>
      </widget>
-     <zorder>frame_3</zorder>
-     <zorder>label_24</zorder>
-     <zorder>frame_4</zorder>
-     <zorder>frame_5</zorder>
-     <zorder>frame_6</zorder>
-    </widget>
-    <widget class="QFrame" name="frameAvisoPerfil">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>530</y>
-       <width>901</width>
-       <height>71</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#frameAvisoPerfil {
-    background-color: #E6F7F4;
-    border: 1px solid #B2F5EA;
-    border-radius: 12px;
-}</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QLabel" name="label_34">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>20</y>
-        <width>171</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-      </property>
-      <property name="text">
-       <string>Información</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_35">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>40</y>
-        <width>551</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #6B7280;
-    font-size: 12px;
-}</string>
-      </property>
-      <property name="text">
-       <string>Para modificar tus datos personales o de contacto, por favor contacta con el administrador del sistema</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_36">
+     <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>20</y>
-        <width>51</width>
+        <width>61</width>
         <height>31</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/informacion.png)</string>
+       <string notr="true">image: url(:/newPrefix/informacion.png) ;
+background: transparent;
+border: None;</string>
       </property>
       <property name="text">
        <string/>
       </property>
      </widget>
     </widget>
-    <zorder>label_19</zorder>
     <zorder>label_18</zorder>
+    <zorder>frame_2</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>label_17</zorder>
-    <zorder>frame</zorder>
-    <zorder>frame_2</zorder>
-    <zorder>frameAvisoPerfil</zorder>
    </widget>
   </widget>
  </widget>
