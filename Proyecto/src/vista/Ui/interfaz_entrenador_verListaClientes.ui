@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -344,7 +344,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/casa_inicio.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -417,7 +417,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/entrenador/lista-de-verificacion.png)</string>
+      <string notr="true">image: url(:/newPrefix/lista-de-verificacion.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -433,7 +433,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/anadir-grupo.png)</string>
+      <string notr="true">image:url(:/newPrefix/anadir-grupo.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -449,7 +449,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/entrenador/grafico-circular.png)</string>
+      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -821,7 +821,7 @@ QPushButton:checked {
       </property>
       <property name="styleSheet">
        <string notr="true">
-	image:url(:/entrenador/loto.png)
+	image:url(:/newPrefix/loto.png)
 </string>
       </property>
       <property name="text">
@@ -886,7 +886,7 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/entrenador/dos-personas.png)</string>
+       <string notr="true">image:url(:/newPrefix/dos-personas.png)</string>
       </property>
       <property name="text">
        <string/>
