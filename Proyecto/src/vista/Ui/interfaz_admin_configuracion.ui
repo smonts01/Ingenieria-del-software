@@ -399,14 +399,14 @@ QCheckBox { font: 9pt &quot;Segoe UI&quot;; color: #374151; }
     <widget class="QLabel" name="icoConfig">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>310</y>
        <width>23</width>
        <height>23</height>
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ajuste.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -648,7 +648,7 @@ QCheckBox { font: 9pt &quot;Segoe UI&quot;; color: #374151; }
       <rect>
        <x>30</x>
        <y>305</y>
-       <width>280</width>
+       <width>430</width>
        <height>170</height>
       </rect>
      </property>
@@ -720,9 +720,9 @@ QCheckBox { font: 9pt &quot;Segoe UI&quot;; color: #374151; }
     <widget class="QFrame" name="cardNotificaciones">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>485</x>
        <y>305</y>
-       <width>280</width>
+       <width>430</width>
        <height>170</height>
       </rect>
      </property>
@@ -788,77 +788,6 @@ QCheckBox { font: 9pt &quot;Segoe UI&quot;; color: #374151; }
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardBackup">
-     <property name="geometry">
-      <rect>
-       <x>630</x>
-       <y>305</y>
-       <width>285</width>
-       <height>170</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblBackup">
-      <property name="geometry">
-       <rect>
-        <x>25</x>
-        <y>18</y>
-        <width>180</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 12pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Copia de seguridad</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblUltBackup">
-      <property name="geometry">
-       <rect>
-        <x>25</x>
-        <y>55</y>
-        <width>230</width>
-        <height>36</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color:#6B7280; font:9pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Última copia realizada: 09/04/2026</string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnBackup">
-      <property name="geometry">
-       <rect>
-        <x>25</x>
-        <y>100</y>
-        <width>110</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Crear copia</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnRestaurar">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>100</y>
-        <width>110</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Restaurar</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QPushButton" name="btnGuardarGeneral">
      <property name="geometry">
       <rect>
@@ -921,7 +850,6 @@ QCheckBox { font: 9pt &quot;Segoe UI&quot;; color: #374151; }
     <zorder>cardSistema</zorder>
     <zorder>cardSeguridad</zorder>
     <zorder>cardNotificaciones</zorder>
-    <zorder>cardBackup</zorder>
     <zorder>btnGuardarGeneral</zorder>
    </widget>
   </widget>
