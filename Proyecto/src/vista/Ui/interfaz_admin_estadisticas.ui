@@ -289,10 +289,10 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
      <widget class="QLabel" name="lblSigueTexto">
       <property name="geometry">
        <rect>
-        <x>18</x>
-        <y>35</y>
+        <x>20</x>
+        <y>30</y>
         <width>130</width>
-        <height>51</height>
+        <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
