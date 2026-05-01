@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>1200</width><height>700</height></rect>
+  </property>
+  <property name="windowTitle">
+   <string>StayFit - Clases Administrador</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+QMainWindow { background-color: #F7F9FA; }
+QLabel { background: transparent; color: #1F2937; font-family: &quot;Segoe UI&quot;; }
+QPushButton { font-family: &quot;Segoe UI&quot;; }
+QFrame#frameHeader { background-color: white; border-bottom: 1px solid #E5E7EB; }
+QFrame#frameMenu { background-color: white; border-right: 1px solid #E5E7EB; }
+QFrame#frameContenido { background-color: #F7F9FA; border: none; }
+QFrame#cardTabla, QFrame#cardResumen, QFrame#cardCategorias, QFrame#cardAcciones, QFrame#cardPanel { background-color: white; border: 1px solid #E6E6E6; border-radius: 12px; }
+QPushButton#btnClases { background-color: #18B7A5; color: white; border-radius: 8px; text-align: left; padding-left: 22px; font: bold 11pt &quot;Segoe UI&quot;; }
+QPushButton#btnInicio, QPushButton#btnUsuarios, QPushButton#btnInscripciones, QPushButton#btnPagos, QPushButton#btnEstadisticas, QPushButton#btnConfiguracion, QPushButton#btnReportes, QPushButton#btnAyuda { background-color: transparent; color: #333333; border: none; text-align: left; padding-left: 22px; font: 11pt &quot;Segoe UI&quot;; }
+QPushButton#btnInicio:hover, QPushButton#btnUsuarios:hover, QPushButton#btnInscripciones:hover, QPushButton#btnPagos:hover, QPushButton#btnEstadisticas:hover, QPushButton#btnConfiguracion:hover, QPushButton#btnReportes:hover, QPushButton#btnAyuda:hover { background-color: #E6F7F5; border-radius: 8px; }
+QPushButton#btnCerrarSesion { background-color: white; color: #18B7A5; border: 1px solid #18B7A5; border-radius: 8px; font: bold 10pt &quot;Segoe UI&quot;; }
+QPushButton#btnNuevaClase { background-color: #18B7A5; color: white; border: none; border-radius: 8px; font: bold 9pt &quot;Segoe UI&quot;; }
+QPushButton[class=&quot;btnAccion&quot;] { background-color: white; color: #374151; border: 1px solid #E5E7EB; border-radius: 8px; text-align: left; padding-left: 15px; font: 9pt &quot;Segoe UI&quot;; }
+QPushButton#btnAccionPrincipal { background-color: white; color: #18B7A5; border: 1px solid #18B7A5; border-radius: 8px; text-align: left; padding-left: 15px; font: bold 9pt &quot;Segoe UI&quot;; }
+QLineEdit { background-color: white; border: 1px solid #D9DEE7; border-radius: 8px; padding-left: 12px; font: 9pt &quot;Segoe UI&quot;; color: #374151; }
+QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8px; padding-left: 10px; font: 9pt &quot;Segoe UI&quot;; color: #6B7280; }
+QTableWidget { background-color: white; border: none; gridline-color: #E5E7EB; font: 9pt &quot;Segoe UI&quot;; color: #374151; }
+QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &quot;Segoe UI&quot;; border: none; border-bottom: 1px solid #E6E6E6; padding: 6px; }
+   </string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frameHeader">
+    <property name="geometry"><rect><x>0</x><y>0</y><width>1200</width><height>90</height></rect></property>
+    <widget class="QLabel" name="lblLogoIcono">
+     <property name="geometry"><rect><x>18</x><y>10</y><width>65</width><height>65</height></rect></property>
+     <property name="text"><string/></property>
+     <property name="pixmap"><pixmap resource="../imagenes/recursos.qrc">:/prefijoNuevo/logo_stayfit.png</pixmap></property>
+     <property name="scaledContents"><bool>true</bool></property>
+    </widget>
+    <widget class="QLabel" name="labelStayFitHeader">
+     <property name="geometry"><rect><x>80</x><y>8</y><width>170</width><height>40</height></rect></property>
+     <property name="text"><string>&lt;html&gt;&lt;body&gt;&lt;span style=&quot;font-size:26pt; font-weight:700; color:#18B7A5;&quot;&gt;Stay&lt;/span&gt;&lt;span style=&quot;font-size:26pt; font-weight:700; color:#FF9F2E;&quot;&gt;Fit&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;</string></property>
+    </widget>
+    <widget class="QLabel" name="labelSubtituloHeader">
+     <property name="geometry"><rect><x>84</x><y>52</y><width>180</width><height>18</height></rect></property>
+     <property name="styleSheet"><string notr="true">color:#6B7280; font:9pt &quot;Segoe UI&quot;;</string></property>
+     <property name="text"><string>Tu gimnasio, tu mejor versión</string></property>
+    </widget>
+    <widget class="QLabel" name="lblAvatarAdmin">
+     <property name="geometry"><rect><x>285</x><y>23</y><width>44</width><height>44</height></rect></property>
+     <property name="styleSheet"><string notr="true">background-color:#18B7A5; border-radius:22px;</string></property>
+     <property name="text"><string/></property>
+     <property name="pixmap"><pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap></property>
+     <property name="scaledContents"><bool>true</bool></property>
+    </widget>
+    <widget class="QLabel" name="lblNombreAdmin">
+     <property name="geometry"><rect><x>345</x><y>22</y><width>270</width><height>24</height></rect></property>
+     <property name="styleSheet"><string notr="true">font:bold 13pt &quot;Segoe UI&quot;; color:#1F2937;</string></property>
+     <property name="text"><string>Hola, Administrador</string></property>
+    </widget>
+    <widget class="QLabel" name="lblRolAdmin">
+     <property name="geometry"><rect><x>345</x><y>48</y><width>250</width><height>20</height></rect></property>
+     <property name="styleSheet"><string notr="true">font:10pt &quot;Segoe UI&quot;; color:#6B7280;</string></property>
+     <property name="text"><string>Administrador del sistema</string></property>
+    </widget>
+    <widget class="QPushButton" name="btnCerrarSesion">
+     <property name="geometry"><rect><x>1060</x><y>20</y><width>115</width><height>36</height></rect></property>
+     <property name="text"><string>Cerrar sesión</string></property>
+    </widget>
+   </widget>
+
+   <widget class="QFrame" name="frameMenu">
+    <property name="geometry"><rect><x>0</x><y>90</y><width>220</width><height>610</height></rect></property>
+    <widget class="QPushButton" name="btnInicio"><property name="geometry"><rect><x>45</x><y>35</y><width>150</width><height>36</height></rect></property><property name="text"><string>Inicio</string></property></widget>
+    <widget class="QPushButton" name="btnUsuarios"><property name="geometry"><rect><x>45</x><y>80</y><width>150</width><height>36</height></rect></property><property name="text"><string>Usuarios</string></property></widget>
+    <widget class="QPushButton" name="btnClases"><property name="geometry"><rect><x>45</x><y>125</y><width>150</width><height>36</height></rect></property><property name="text"><string>Clases</string></property></widget>
+    <widget class="QPushButton" name="btnInscripciones"><property name="geometry"><rect><x>45</x><y>170</y><width>150</width><height>36</height></rect></property><property name="text"><string>Inscripciones</string></property></widget>
+    <widget class="QPushButton" name="btnPagos"><property name="geometry"><rect><x>45</x><y>215</y><width>150</width><height>36</height></rect></property><property name="text"><string>Pagos</string></property></widget>
+    <widget class="QPushButton" name="btnEstadisticas"><property name="geometry"><rect><x>45</x><y>260</y><width>150</width><height>36</height></rect></property><property name="text"><string>Estadísticas</string></property></widget>
+    <widget class="QPushButton" name="btnConfiguracion"><property name="geometry"><rect><x>45</x><y>305</y><width>150</width><height>36</height></rect></property><property name="text"><string>Configuración</string></property></widget>
+    <widget class="QPushButton" name="btnReportes"><property name="geometry"><rect><x>45</x><y>350</y><width>150</width><height>36</height></rect></property><property name="text"><string>Reportes</string></property></widget>
+    <widget class="QPushButton" name="btnAyuda"><property name="geometry"><rect><x>45</x><y>395</y><width>150</width><height>36</height></rect></property><property name="text"><string>Centro de ayuda</string></property></widget>
+    <widget class="QFrame" name="cardPanel">
+     <property name="geometry"><rect><x>30</x><y>500</y><width>164</width><height>101</height></rect></property>
+     <property name="styleSheet"><string notr="true">QFrame#cardPanel { background-color:#18B7A5; border-radius:14px; border:none; }</string></property>
+     <widget class="QLabel" name="lblPanel"><property name="geometry"><rect><x>18</x><y>12</y><width>135</width><height>24</height></rect></property><property name="styleSheet"><string notr="true">color:white; font:bold 10pt &quot;Segoe UI&quot;;</string></property><property name="text"><string>Panel administrador</string></property></widget>
+     <widget class="QLabel" name="lblPanelTexto"><property name="geometry"><rect><x>18</x><y>38</y><width>130</width><height>55</height></rect></property><property name="styleSheet"><string notr="true">color:white; font:9pt &quot;Segoe UI&quot;;</string></property><property name="text"><string>Gestiona tu gimnasio de forma eficiente y desde un solo lugar.</string></property><property name="wordWrap"><bool>true</bool></property></widget>
+    </widget>
+    <widget class="QLabel" name="icoInicio"><property name="geometry"><rect><x>20</x><y>40</y><width>20</width><height>20</height></rect></property><property name="text"><string>⌂</string></property><property name="styleSheet"><string notr="true">font:bold 18pt &quot;Segoe UI&quot;; color:black;</string></property></widget>
+    <widget class="QLabel" name="icoUsuarios"><property name="geometry"><rect><x>19</x><y>84</y><width>24</width><height>24</height></rect></property><property name="text"><string>👥</string></property><property name="styleSheet"><string notr="true">font:15pt &quot;Segoe UI Emoji&quot;;</string></property></widget>
+    <widget class="QLabel" name="icoClases"><property name="geometry"><rect><x>20</x><y>130</y><width>22</width><height>22</height></rect></property><property name="pixmap"><pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap></property><property name="scaledContents"><bool>true</bool></property></widget>
+    <widget class="QLabel" name="icoIns"><property name="geometry"><rect><x>20</x><y>175</y><width>22</width><height>22</height></rect></property><property name="pixmap"><pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap></property><property name="scaledContents"><bool>true</bool></property></widget>
+    <widget class="QLabel" name="icoPagos"><property name="geometry"><rect><x>20</x><y>220</y><width>22</width><height>22</height></rect></property><property name="pixmap"><pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap></property><property name="scaledContents"><bool>true</bool></property></widget>
+    <widget class="QLabel" name="icoEst"><property name="geometry"><rect><x>20</x><y>265</y><width>23</width><height>23</height></rect></property><property name="pixmap"><pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap></property><property name="scaledContents"><bool>true</bool></property></widget>
+    <widget class="QLabel" name="icoConfig"><property name="geometry"><rect><x>20</x><y>310</y><width>23</width><height>23</height></rect></property><property name="text"><string>⚙</string></property><property name="styleSheet"><string notr="true">font:15pt &quot;Segoe UI Emoji&quot;;</string></property></widget>
+    <widget class="QLabel" name="icoRep"><property name="geometry"><rect><x>20</x><y>355</y><width>23</width><height>23</height></rect></property><property name="text"><string>▤</string></property><property name="styleSheet"><string notr="true">font:15pt &quot;Segoe UI&quot;;</string></property></widget>
+    <widget class="QLabel" name="icoHelp"><property name="geometry"><rect><x>20</x><y>400</y><width>23</width><height>23</height></rect></property><property name="text"><string>?</string></property><property name="styleSheet"><string notr="true">font:bold 16pt &quot;Segoe UI&quot;;</string></property></widget>
+   </widget>
+
+   <widget class="QFrame" name="frameContenido">
+    <property name="geometry"><rect><x>220</x><y>90</y><width>980</width><height>610</height></rect></property>
+    <widget class="QLabel" name="lblTitulo"><property name="geometry"><rect><x>25</x><y>25</y><width>200</width><height>34</height></rect></property><property name="styleSheet"><string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string></property><property name="text"><string>Clases</string></property></widget>
+    <widget class="QLabel" name="lblSubtitulo"><property name="geometry"><rect><x>27</x><y>60</y><width>520</width><height>20</height></rect></property><property name="styleSheet"><string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string></property><property name="text"><string>Gestiona todas las clases y actividades disponibles en tu gimnasio.</string></property></widget>
+    <widget class="QLineEdit" name="txtBuscar"><property name="geometry"><rect><x>25</x><y>100</y><width>160</width><height>32</height></rect></property><property name="placeholderText"><string>Buscar clase...</string></property></widget>
+    <widget class="QComboBox" name="cmbCategorias"><property name="geometry"><rect><x>200</x><y>100</y><width>150</width><height>32</height></rect></property><item><property name="text"><string>Todas las categorías</string></property></item><item><property name="text"><string>Fuerza</string></property></item><item><property name="text"><string>Cardio</string></property></item><item><property name="text"><string>Bienestar</string></property></item></widget>
+    <widget class="QComboBox" name="cmbEstados"><property name="geometry"><rect><x>365</x><y>100</y><width>140</width><height>32</height></rect></property><item><property name="text"><string>Todos los estados</string></property></item><item><property name="text"><string>Activa</string></property></item><item><property name="text"><string>Inactiva</string></property></item><item><property name="text"><string>Borrador</string></property></item></widget>
+    <widget class="QComboBox" name="cmbHorarios"><property name="geometry"><rect><x>520</x><y>100</y><width>140</width><height>32</height></rect></property><item><property name="text"><string>Todos los horarios</string></property></item><item><property name="text"><string>Mañana</string></property></item><item><property name="text"><string>Tarde</string></property></item></widget>
+    <widget class="QPushButton" name="btnNuevaClase"><property name="geometry"><rect><x>690</x><y>100</y><width>95</width><height>32</height></rect></property><property name="text"><string>+ Nueva clase</string></property></widget>
+
+    <widget class="QFrame" name="cardTabla">
+     <property name="geometry"><rect><x>25</x><y>150</y><width>760</width><height>440</height></rect></property>
+     <widget class="QTableWidget" name="tablaClases">
+      <property name="geometry"><rect><x>15</x><y>15</y><width>730</width><height>360</height></rect></property>
+      <property name="rowCount"><number>8</number></property>
+      <property name="columnCount"><number>8</number></property>
+      <attribute name="horizontalHeaderDefaultSectionSize"><number>90</number></attribute>
+      <attribute name="verticalHeaderVisible"><bool>false</bool></attribute>
+      <attribute name="horizontalHeaderStretchLastSection"><bool>true</bool></attribute>
+      <column><property name="text"><string>ID</string></property></column>
+      <column><property name="text"><string>Clase</string></property></column>
+      <column><property name="text"><string>Categoría</string></property></column>
+      <column><property name="text"><string>Instructor</string></property></column>
+      <column><property name="text"><string>Horario</string></property></column>
+      <column><property name="text"><string>Sala</string></property></column>
+      <column><property name="text"><string>Plazas</string></property></column>
+      <column><property name="text"><string>Estado / Acciones</string></property></column>
+      <item row="0" column="0"><property name="text"><string>1</string></property></item>
+      <item row="0" column="1"><property name="text"><string>🏋 Body Pump</string></property></item>
+      <item row="0" column="2"><property name="text"><string>Fuerza</string></property></item>
+      <item row="0" column="3"><property name="text"><string>María López</string></property></item>
+      <item row="0" column="4"><property name="text"><string>Lun, Mié, Vie\n18:00 - 19:00</string></property></item>
+      <item row="0" column="5"><property name="text"><string>Sala 1</string></property></item>
+      <item row="0" column="6"><property name="text"><string>8 / 15</string></property></item>
+      <item row="0" column="7"><property name="text"><string>Activa    👁  ✎  🗑</string></property></item>
+      <item row="1" column="0"><property name="text"><string>2</string></property></item>
+      <item row="1" column="1"><property name="text"><string>🧘 Yoga</string></property></item>
+      <item row="1" column="2"><property name="text"><string>Bienestar</string></property></item>
+      <item row="1" column="3"><property name="text"><string>Laura Sánchez</string></property></item>
+      <item row="1" column="4"><property name="text"><string>Mar, Jue\n19:30 - 20:30</string></property></item>
+      <item row="1" column="5"><property name="text"><string>Sala 2</string></property></item>
+      <item row="1" column="6"><property name="text"><string>10 / 20</string></property></item>
+      <item row="1" column="7"><property name="text"><string>Activa    👁  ✎  🗑</string></property></item>
+      <item row="2" column="0"><property name="text"><string>3</string></property></item>
+      <item row="2" column="1"><property name="text"><string>🚴 Spinning</string></property></item>
+      <item row="2" column="2"><property name="text"><string>Cardio</string></property></item>
+      <item row="2" column="3"><property name="text"><string>Carlos Ruiz</string></property></item>
+      <item row="2" column="4"><property name="text"><string>Lun, Mié, Vie\n17:00 - 18:00</string></property></item>
+      <item row="2" column="5"><property name="text"><string>Sala 1</string></property></item>
+      <item row="2" column="6"><property name="text"><string>5 / 15</string></property></item>
+      <item row="2" column="7"><property name="text"><string>Activa    👁  ✎  🗑</string></property></item>
+      <item row="3" column="0"><property name="text"><string>4</string></property></item>
+      <item row="3" column="1"><property name="text"><string>🧎 Pilates</string></property></item>
+      <item row="3" column="2"><property name="text"><string>Bienestar</string></property></item>
+      <item row="3" column="3"><property name="text"><string>Ana Torres</string></property></item>
+      <item row="3" column="4"><property name="text"><string>Mar, Jue\n10:00 - 11:00</string></property></item>
+      <item row="3" column="5"><property name="text"><string>Sala 3</string></property></item>
+      <item row="3" column="6"><property name="text"><string>9 / 15</string></property></item>
+      <item row="3" column="7"><property name="text"><string>Activa    👁  ✎  🗑</string></property></item>
+      <item row="4" column="0"><property name="text"><string>5</string></property></item>
+      <item row="4" column="1"><property name="text"><string>💃 Zumba</string></property></item>
+      <item row="4" column="2"><property name="text"><string>Baile</string></property></item>
+      <item row="4" column="3"><property name="text"><string>Javier Martín</string></property></item>
+      <item row="4" column="4"><property name="text"><string>Lun, Mié\n20:00 - 21:00</string></property></item>
+      <item row="4" column="5"><property name="text"><string>Sala 2</string></property></item>
+      <item row="4" column="6"><property name="text"><string>12 / 25</string></property></item>
+      <item row="4" column="7"><property name="text"><string>Activa    👁  ✎  🗑</string></property></item>
+      <item row="5" column="0"><property name="text"><string>6</string></property></item>
+      <item row="5" column="1"><property name="text"><string>🥊 Boxeo</string></property></item>
+      <item row="5" column="2"><property name="text"><string>Combate</string></property></item>
+      <item row="5" column="3"><property name="text"><string>David Pérez</string></property></item>
+      <item row="5" column="4"><property name="text"><string>Mar, Jue\n18:30 - 19:30</string></property></item>
+      <item row="5" column="5"><property name="text"><string>Sala 1</string></property></item>
+      <item row="5" column="6"><property name="text"><string>6 / 12</string></property></item>
+      <item row="5" column="7"><property name="text"><string>Activa    👁  ✎  🗑</string></property></item>
+      <item row="6" column="0"><property name="text"><string>7</string></property></item>
+      <item row="6" column="1"><property name="text"><string>🤸 Stretching</string></property></item>
+      <item row="6" column="2"><property name="text"><string>Bienestar</string></property></item>
+      <item row="6" column="3"><property name="text"><string>Elena Gómez</string></property></item>
+      <item row="6" column="4"><property name="text"><string>Sáb\n11:00 - 12:00</string></property></item>
+      <item row="6" column="5"><property name="text"><string>Sala 3</string></property></item>
+      <item row="6" column="6"><property name="text"><string>7 / 15</string></property></item>
+      <item row="6" column="7"><property name="text"><string>Inactiva    👁  ✎  🗑</string></property></item>
+      <item row="7" column="0"><property name="text"><string>8</string></property></item>
+      <item row="7" column="1"><property name="text"><string>⏱ HIIT</string></property></item>
+      <item row="7" column="2"><property name="text"><string>Cardio</string></property></item>
+      <item row="7" column="3"><property name="text"><string>Carlos Ruiz</string></property></item>
+      <item row="7" column="4"><property name="text"><string>Vie\n19:00 - 20:00</string></property></item>
+      <item row="7" column="5"><property name="text"><string>Sala 1</string></property></item>
+      <item row="7" column="6"><property name="text"><string>3 / 15</string></property></item>
+      <item row="7" column="7"><property name="text"><string>Borrador    👁  ✎  🗑</string></property></item>
+     </widget>
+     <widget class="QLabel" name="lblMostrando"><property name="geometry"><rect><x>15</x><y>390</y><width>220</width><height>25</height></rect></property><property name="styleSheet"><string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string></property><property name="text"><string>Mostrando 1 a 8 de 32 clases</string></property></widget>
+     <widget class="QPushButton" name="btnAnterior"><property name="geometry"><rect><x>405</x><y>387</y><width>80</width><height>30</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>‹ Anterior</string></property></widget>
+     <widget class="QPushButton" name="btnPag1"><property name="geometry"><rect><x>495</x><y>387</y><width>32</width><height>30</height></rect></property><property name="styleSheet"><string notr="true">background-color:#18B7A5; color:white; border:none; border-radius:8px; font:bold 9pt &quot;Segoe UI&quot;;</string></property><property name="text"><string>1</string></property></widget>
+     <widget class="QPushButton" name="btnPag2"><property name="geometry"><rect><x>535</x><y>387</y><width>32</width><height>30</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>2</string></property></widget>
+     <widget class="QPushButton" name="btnPag3"><property name="geometry"><rect><x>575</x><y>387</y><width>32</width><height>30</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>3</string></property></widget>
+     <widget class="QPushButton" name="btnPag4"><property name="geometry"><rect><x>615</x><y>387</y><width>32</width><height>30</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>4</string></property></widget>
+     <widget class="QPushButton" name="btnSiguiente"><property name="geometry"><rect><x>660</x><y>387</y><width>85</width><height>30</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>Siguiente ›</string></property></widget>
+    </widget>
+
+    <widget class="QFrame" name="cardResumen">
+     <property name="geometry"><rect><x>810</x><y>25</y><width>150</width><height>190</height></rect></property>
+     <widget class="QLabel" name="lblResTitulo"><property name="geometry"><rect><x>15</x><y>15</y><width>130</width><height>22</height></rect></property><property name="styleSheet"><string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string></property><property name="text"><string>Resumen de clases</string></property></widget>
+     <widget class="QLabel" name="lblResIcon"><property name="geometry"><rect><x>18</x><y>55</y><width>48</width><height>48</height></rect></property><property name="styleSheet"><string notr="true">background-color:#D8F4F0; border-radius:24px;</string></property><property name="pixmap"><pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap></property><property name="scaledContents"><bool>true</bool></property></widget>
+     <widget class="QLabel" name="lblTotalClases"><property name="geometry"><rect><x>82</x><y>55</y><width>60</width><height>35</height></rect></property><property name="styleSheet"><string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string></property><property name="text"><string>32</string></property></widget>
+     <widget class="QLabel" name="lblClasesTotales"><property name="geometry"><rect><x>82</x><y>90</y><width>70</width><height>18</height></rect></property><property name="styleSheet"><string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string></property><property name="text"><string>Clases totales</string></property></widget>
+     <widget class="QLabel" name="lblActivas"><property name="geometry"><rect><x>18</x><y>125</y><width>120</width><height>18</height></rect></property><property name="styleSheet"><string notr="true">font:9pt &quot;Segoe UI&quot;; color:#374151;</string></property><property name="text"><string>Activas                         24</string></property></widget>
+     <widget class="QLabel" name="lblInactivas"><property name="geometry"><rect><x>18</x><y>148</y><width>120</width><height>18</height></rect></property><property name="styleSheet"><string notr="true">font:9pt &quot;Segoe UI&quot;; color:#374151;</string></property><property name="text"><string>Inactivas                       6</string></property></widget>
+     <widget class="QLabel" name="lblBorradores"><property name="geometry"><rect><x>18</x><y>170</y><width>120</width><height>18</height></rect></property><property name="styleSheet"><string notr="true">font:9pt &quot;Segoe UI&quot;; color:#374151;</string></property><property name="text"><string>Borradores                    2</string></property></widget>
+    </widget>
+
+    <widget class="QFrame" name="cardCategorias">
+     <property name="geometry"><rect><x>810</x><y>235</y><width>150</width><height>150</height></rect></property>
+     <widget class="QLabel" name="lblCatTitulo"><property name="geometry"><rect><x>15</x><y>15</y><width>130</width><height>22</height></rect></property><property name="styleSheet"><string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string></property><property name="text"><string>Clases por categoría</string></property></widget>
+     <widget class="QLabel" name="lblDonut"><property name="geometry"><rect><x>20</x><y>50</y><width>60</width><height>60</height></rect></property><property name="styleSheet"><string notr="true">background-color:#D8F4F0; border-radius:30px; color:#18B7A5; font:bold 18pt &quot;Segoe UI&quot;;</string></property><property name="alignment"><set>Qt::AlignmentFlag::AlignCenter</set></property><property name="text"><string>◌</string></property></widget>
+     <widget class="QLabel" name="lblLeyenda"><property name="geometry"><rect><x>90</x><y>45</y><width>55</width><height>95</height></rect></property><property name="styleSheet"><string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string></property><property name="text"><string>● Fuerza   8
+● Cardio    7
+● Bienestar 6
+● Baile      4
+● Combate 3
+● Otras      4</string></property></widget>
+    </widget>
+
+    <widget class="QFrame" name="cardAcciones">
+     <property name="geometry"><rect><x>810</x><y>405</y><width>150</width><height>185</height></rect></property>
+     <widget class="QLabel" name="lblAcciones"><property name="geometry"><rect><x>15</x><y>15</y><width>120</width><height>22</height></rect></property><property name="styleSheet"><string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string></property><property name="text"><string>Acciones rápidas</string></property></widget>
+     <widget class="QPushButton" name="btnAccionPrincipal"><property name="geometry"><rect><x>15</x><y>50</y><width>120</width><height>30</height></rect></property><property name="text"><string>+ Nueva clase</string></property></widget>
+     <widget class="QPushButton" name="btnGestionarCat"><property name="geometry"><rect><x>15</x><y>88</y><width>120</width><height>30</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>Gestionar categorías</string></property></widget>
+     <widget class="QPushButton" name="btnAsignar"><property name="geometry"><rect><x>15</x><y>126</y><width>120</width><height>30</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>Asignar instructores</string></property></widget>
+     <widget class="QPushButton" name="btnVerHorarios"><property name="geometry"><rect><x>15</x><y>164</y><width>120</width><height>18</height></rect></property><property name="class" stdset="0"><string>btnAccion</string></property><property name="text"><string>Ver horarios</string></property></widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../imagenes/recursos.qrc"/>
+ </resources>
+ <connections/>
+</ui>
