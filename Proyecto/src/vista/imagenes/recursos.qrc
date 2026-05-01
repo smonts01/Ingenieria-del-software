@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>contable_chico.png</file>
+    <file>contable_chica.png</file>
+    <file>user_azul.png</file>
     <file>resumen.png</file>
     <file>filtrar.png</file>
     <file>cola.png</file>
