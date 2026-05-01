@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>ajuste.png</file>
     <file>euro_negrita.png</file>
     <file>tarjeta-de-credito.png</file>
     <file>caja-registradora.png</file>

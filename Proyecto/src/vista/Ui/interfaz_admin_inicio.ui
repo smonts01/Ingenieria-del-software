@@ -257,32 +257,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       <string>Configuración</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnReportes">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>340</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Reportes</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnAyuda">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>385</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Centro de ayuda</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="icoInicio">
      <property name="geometry">
       <rect>
@@ -392,39 +366,13 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       <string notr="true">font:16pt &quot;Segoe UI Emoji&quot;; color:#1F2937;</string>
      </property>
      <property name="text">
-      <string>⚙</string>
+      <string/>
      </property>
-    </widget>
-    <widget class="QLabel" name="icoRep">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>347</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ajuste.png</pixmap>
      </property>
-     <property name="styleSheet">
-      <string notr="true">font:14pt &quot;Segoe UI Emoji&quot;; color:#1F2937;</string>
-     </property>
-     <property name="text">
-      <string>📄</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="icoAyuda">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>392</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:bold 15pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-     </property>
-     <property name="text">
-      <string>?</string>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QFrame" name="cardSigue">
@@ -568,7 +516,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap>:/entrenador/usuarios.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuarios.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1238,6 +1186,39 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </property>
      </widget>
     </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label</zorder>
+    <zorder>labelFondoOla</zorder>
+    <zorder>lblTitulo</zorder>
+    <zorder>lblSubtitulo</zorder>
+    <zorder>cardUsuarios</zorder>
+    <zorder>cardClases</zorder>
+    <zorder>cardInscripciones</zorder>
+    <zorder>cardIngresos</zorder>
+    <zorder>cardTabla</zorder>
+    <zorder>cardGrafico</zorder>
+    <zorder>cardAcciones</zorder>
+    <zorder>cardPopulares</zorder>
+    <zorder>cardActividad</zorder>
+    <zorder>cardSistema</zorder>
    </widget>
   </widget>
  </widget>
