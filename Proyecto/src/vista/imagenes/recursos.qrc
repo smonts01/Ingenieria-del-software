@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>informe-de-negocio.png</file>
+    <file>euro.png</file>
     <file>advertencia.png</file>
     <file>incrementar.png</file>
     <file>telefono.png</file>
