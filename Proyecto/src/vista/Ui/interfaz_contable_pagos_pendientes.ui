@@ -687,7 +687,7 @@ QPushButton:checked {
     <widget class="QFrame" name="card2">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>270</x>
        <y>98</y>
        <width>210</width>
        <height>110</height>
@@ -730,15 +730,15 @@ QPushButton:checked {
        <rect>
         <x>70</x>
         <y>30</y>
-        <width>161</width>
+        <width>111</width>
         <height>20</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:bold 16pt &quot;Segoe UI&quot;; color:#FF9F2E;image: url(:/newPrefix/euro_negrita.png)</string>
+       <string notr="true">font:bold 16pt &quot;Segoe UI&quot;; color:#FF9F2E;</string>
       </property>
       <property name="text">
-       <string>485,00</string>
+       <string>485,00 €</string>
       </property>
      </widget>
      <widget class="QLabel" name="labelHora">
@@ -777,7 +777,7 @@ QPushButton:checked {
     <widget class="QFrame" name="card3">
      <property name="geometry">
       <rect>
-       <x>500</x>
+       <x>510</x>
        <y>98</y>
        <width>210</width>
        <height>110</height>
@@ -867,9 +867,9 @@ QPushButton:checked {
     <widget class="QFrame" name="card4">
      <property name="geometry">
       <rect>
-       <x>730</x>
-       <y>100</y>
-       <width>210</width>
+       <x>740</x>
+       <y>98</y>
+       <width>211</width>
        <height>110</height>
       </rect>
      </property>
@@ -957,16 +957,16 @@ QPushButton:checked {
     <widget class="QFrame" name="cardTabla">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>30</x>
        <y>230</y>
        <width>701</width>
-       <height>361</height>
+       <height>371</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblTituloTabla">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>82</x>
         <y>10</y>
         <width>220</width>
         <height>24</height>
@@ -984,8 +984,8 @@ QPushButton:checked {
        <rect>
         <x>20</x>
         <y>0</y>
-        <width>51</width>
-        <height>51</height>
+        <width>46</width>
+        <height>46</height>
        </rect>
       </property>
       <property name="text">
@@ -1002,17 +1002,57 @@ QPushButton:checked {
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>70</y>
-        <width>661</width>
+        <y>90</y>
+        <width>671</width>
         <height>261</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget {
+    background-color: white;
+    border: none;
+    gridline-color: #E5E7EB;
+    color: #1F2937;
+    font-size: 12px;
+}
+
+QHeaderView::section {
+    background-color: white;
+    color: #1F2937;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 8px;
+}
+
+QTableWidget::item {
+    padding: 8px;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+QTableWidget::item:selected {
+    background-color: #E6F7F4;
+    color: #1F2937;
+}</string>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="rowCount">
        <number>20</number>
       </property>
       <property name="columnCount">
-       <number>6</number>
+       <number>5</number>
       </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>130</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
       <row/>
       <row/>
       <row/>
@@ -1033,21 +1073,159 @@ QPushButton:checked {
       <row/>
       <row/>
       <row/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
+      <column>
+       <property name="text">
+        <string>Cliente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tarifa</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Importe pendiente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Fecha límite</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Estado</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>Raúl Sánchez</string>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>Premium</string>
+       </property>
+      </item>
+      <item row="0" column="2">
+       <property name="text">
+        <string>45,00</string>
+       </property>
+      </item>
+      <item row="0" column="3">
+       <property name="text">
+        <string>05 abr 2026</string>
+       </property>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string>Vencido</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLineEdit" name="txtBuscarClientePendiente">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>260</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    background-color: white;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding-left: 12px;
+    color: #374151;
+    font-size: 12px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #00BFA6;
+}</string>
+      </property>
+      <property name="placeholderText">
+       <string>           Buscar Cliente...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>55</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/newPrefix/lupa.png)</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboFiltroPagos">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>50</y>
+        <width>130</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+    background-color: white;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding-left: 10px;
+    color: #374151;
+    font-size: 12px;
+}</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>          Todos</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>          Pendiente</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>          Vencido</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>55</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/newPrefix/filtrar.png)</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </widget>
     <widget class="QFrame" name="asist">
      <property name="geometry">
       <rect>
-       <x>760</x>
+       <x>740</x>
        <y>230</y>
-       <width>181</width>
-       <height>201</height>
+       <width>221</width>
+       <height>371</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1077,23 +1255,241 @@ QPushButton:checked {
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>18</y>
+        <y>15</y>
         <width>51</width>
         <height>21</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/tarjeta-de-credito.png)</string>
+       <string notr="true">image: url(:/newPrefix/resumen.png)</string>
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>60</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #374151;
+    font-size: 13px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Pendientes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #F59E0B;
+    font-size: 18px;
+}</string>
+      </property>
+      <property name="text">
+       <string>●</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_Num_Pagos_Pend">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>60</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #1F2937;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>8</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>110</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #EF4444;
+    font-size: 18px;
+}</string>
+      </property>
+      <property name="text">
+       <string>●</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>110</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #374151;
+    font-size: 13px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Vencidos</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_Num_Vencidos">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>110</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #1F2937;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>4</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_25">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>160</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #00BFA6;
+    font-size: 18px;
+}</string>
+      </property>
+      <property name="text">
+       <string>●</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_26">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>160</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #374151;
+    font-size: 13px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Importe total:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ImporteTotal">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>180</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #00BFA6;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>485,00 €</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>171</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </widget>
     <widget class="QFrame" name="card2_2">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>30</x>
        <y>100</y>
        <width>210</width>
        <height>110</height>
@@ -1228,17 +1624,17 @@ QPushButton:checked {
       <string/>
      </property>
     </widget>
-    <zorder>label_18</zorder>
+    <zorder>asist</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>card2</zorder>
     <zorder>card3</zorder>
     <zorder>card4</zorder>
     <zorder>cardTabla</zorder>
-    <zorder>asist</zorder>
     <zorder>card2_2</zorder>
     <zorder>label_17</zorder>
     <zorder>label_13</zorder>
+    <zorder>label_18</zorder>
    </widget>
   </widget>
  </widget>

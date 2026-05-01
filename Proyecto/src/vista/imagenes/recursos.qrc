@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>resumen.png</file>
+    <file>filtrar.png</file>
     <file>cola.png</file>
     <file>importante.png</file>
     <file>calendario_semana.png</file>
