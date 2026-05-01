@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>avatar_entrenadora_chica.png</file>
+    <file>avatar_entrenador_chico.png</file>
     <file>anadir-grupo.png</file>
     <file>bailando.png</file>
     <file>bicicleta.png</file>
