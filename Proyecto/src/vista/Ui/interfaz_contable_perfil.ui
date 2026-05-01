@@ -787,7 +787,7 @@ QPushButton:checked {
         <string notr="true">font:bold 16pt &quot;Segoe UI&quot;;color: #18B7A5</string>
        </property>
        <property name="text">
-        <string>12</string>
+        <string>128</string>
        </property>
       </widget>
       <widget class="QLabel" name="lblIconAs_2">
@@ -853,9 +853,9 @@ border: None;</string>
       <widget class="QLabel" name="lblTituloproxclase">
        <property name="geometry">
         <rect>
-         <x>70</x>
+         <x>68</x>
          <y>10</y>
-         <width>111</width>
+         <width>121</width>
          <height>20</height>
         </rect>
        </property>
@@ -863,7 +863,7 @@ border: None;</string>
         <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;</string>
        </property>
        <property name="text">
-        <string>Importe pendiente</string>
+        <string>Pendientes revisados</string>
        </property>
       </widget>
       <widget class="QLabel" name="labelIngresosMes">
