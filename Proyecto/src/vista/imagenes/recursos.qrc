@@ -1,5 +1,12 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>incrementar.png</file>
+    <file>telefono.png</file>
+    <file>calendario_miembro.png</file>
+    <file>marcador-de-posicion.png</file>
+    <file>correo-electronico.png</file>
+    <file>avatar_entrenadora_chica.png</file>
+    <file>avatar_entrenador_chico.png</file>
     <file>anadir-grupo.png</file>
     <file>bailando.png</file>
     <file>bicicleta.png</file>
