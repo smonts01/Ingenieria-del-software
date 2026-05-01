@@ -1,0 +1,1244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>StayFit - Panel Cliente</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow { background-color: #F7F9FA; }
+QLabel { background: transparent; color: #1F2937; font-family: &quot;Segoe UI&quot;; }
+QPushButton { font-family: &quot;Segoe UI&quot;; }
+QFrame#frameHeader { background-color: white; border-bottom: 1px solid #E5E7EB; }
+QFrame#frameMenu { background-color: white; border-right: 1px solid #E5E7EB; }
+QFrame#frameContenido { background-color: #F7F9FA; border: none; }
+QFrame#card1, QFrame#card2, QFrame#card3, QFrame#card4, QFrame#cardTabla, QFrame#cardPago, QFrame#cardActividad, QFrame#cardConsejo, QFrame#cardMotivacion, QFrame#cardSigue { background-color: white; border: 1px solid #E6E6E6; border-radius: 12px; }
+QPushButton#btnInicio { background-color: #18B7A5; color: white; border-radius: 8px; text-align: left; padding-left: 22px; font: bold 11pt &quot;Segoe UI&quot;; }
+QPushButton#btnClases, QPushButton#btnInscripciones, QPushButton#btnPagos, QPushButton#btnEstadisticas, QPushButton#btnCalorias, QPushButton#btnPerfil, QPushButton#btnInformacion { background-color: transparent; color: #333333; border: none; text-align: left; padding-left: 22px; font: 11pt &quot;Segoe UI&quot;; }
+QPushButton#btnClases:hover, QPushButton#btnInscripciones:hover, QPushButton#btnPagos:hover, QPushButton#btnEstadisticas:hover, QPushButton#btnCalorias:hover, QPushButton#btnPerfil:hover, QPushButton#btnInformacion:hover { background-color: #E6F7F5; border-radius: 8px; }
+QPushButton#btnCerrarSesion { background-color: white; color: #18B7A5; border: 1px solid #18B7A5; border-radius: 8px; font: bold 10pt &quot;Segoe UI&quot;; }
+QPushButton#btnVerInscripciones { background-color: #18B7A5; color: white; border: none; border-radius: 8px; font: bold 10pt &quot;Segoe UI&quot;; }
+QPushButton#btnMini { background-color: transparent; color: #00A896; border: none; font: bold 9pt &quot;Segoe UI&quot;; }
+QTableWidget { background-color: white; border: 1px solid #E6E6E6; border-radius: 8px; gridline-color: #E6E6E6; font: 9pt &quot;Segoe UI&quot;; }
+QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &quot;Segoe UI&quot;; border: none; border-bottom: 1px solid #E6E6E6; padding: 6px; }</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="frameHeader">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1201</width>
+      <height>90</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <widget class="QLabel" name="lblLogoIcono">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>10</y>
+       <width>65</width>
+       <height>65</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 28pt &quot;Segoe UI Emoji&quot;; color: #18B7A5;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelStayFitHeader">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>8</y>
+       <width>170</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:26pt; font-weight:700; color:#18B7A5;&quot;&gt;Stay&lt;/span&gt;&lt;span style=&quot; font-size:26pt; font-weight:700; color:#FF9F2E;&quot;&gt;Fit&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelSubtituloHeader">
+     <property name="geometry">
+      <rect>
+       <x>84</x>
+       <y>52</y>
+       <width>170</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #6B7280; font: 9pt &quot;Segoe UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Tu gimnasio, tu mejor versión</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblAvatarCliente">
+     <property name="geometry">
+      <rect>
+       <x>285</x>
+       <y>23</y>
+       <width>44</width>
+       <height>44</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #18B7A5; color: white; border-radius: 22px; font: 20pt &quot;Segoe UI Emoji&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblNombreCliente">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>22</y>
+       <width>270</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #1F2937;</string>
+     </property>
+     <property name="text">
+      <string>Hola, Contable</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblFechaAltaEntrenador">
+     <property name="geometry">
+      <rect>
+       <x>345</x>
+       <y>48</y>
+       <width>191</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 10pt &quot;Segoe UI&quot;; color: #6B7280;</string>
+     </property>
+     <property name="text">
+      <string>Contable desde enero 2024</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnCerrarSesion">
+     <property name="geometry">
+      <rect>
+       <x>1060</x>
+       <y>30</y>
+       <width>115</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cerrar sesión</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frameMenu">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>89</y>
+      <width>220</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <widget class="QPushButton" name="btnInicio">
+     <property name="geometry">
+      <rect>
+       <x>45</x>
+       <y>22</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+	font-weight: normal;
+    text-align: left;
+    color: #333333;
+}
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+}</string>
+     </property>
+     <property name="text">
+      <string>Inicio</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnInscritos">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>170</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #333333;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>Gestión económica</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnOcupacion">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>220</y>
+       <width>161</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #333333;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>Informes</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnPerfil">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>270</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #333333;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>Perfil</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnInformacion">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>320</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}
+
+ 
+
+</string>
+     </property>
+     <property name="text">
+      <string>Información</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="cardSigue">
+     <property name="geometry">
+      <rect>
+       <x>28</x>
+       <y>439</y>
+       <width>164</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#cardSigue { background-color: #18B7A5; border-radius: 14px; border: none; }</string>
+     </property>
+     <widget class="QLabel" name="lblSigue">
+      <property name="geometry">
+       <rect>
+        <x>18</x>
+        <y>12</y>
+        <width>130</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:white; font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>¡Sigue así!</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSigueTexto">
+      <property name="geometry">
+       <rect>
+        <x>18</x>
+        <y>35</y>
+        <width>130</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:white; font:9pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Tu trabajo mantiene finanzas sanas y un gimnsasio en movimiento</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>280</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>330</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/caja-registradora.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/newPrefix/tarjeta-de-credito.png)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>180</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/newPrefix/cartera.png)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>230</y>
+       <width>23</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/newPrefix/grafico-de-barras.png)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnRegistroAsistencia">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>120</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #333333;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>Pagos pendientes</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnClases_2">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>80</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="tabletTracking">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #333333;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>Registrar pago</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frameContenido">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>90</y>
+      <width>981</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <widget class="QLabel" name="lblBienvenida">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>22</y>
+       <width>300</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string>
+     </property>
+     <property name="text">
+      <string>Información</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblResumen">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>58</y>
+       <width>470</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+     </property>
+     <property name="text">
+      <string>Consulta ayuda rápida sobre el uso del sistema.</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>480</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>-180</x>
+       <y>0</y>
+       <width>1391</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image:url(:/newPrefix/reborde_ola.png)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>20</y>
+       <width>51</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image:url(:/newPrefix/informacion.png)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frameAvisoPerfil_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>480</y>
+       <width>651</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#frameAvisoPerfil_2{
+    background-color: #E6F7F4;
+    border: 1px solid #B2F5EA;
+    border-radius: 12px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_38">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>50</y>
+        <width>551</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #6B7280;
+    font-size: 12px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Para modificar tus datos personales o de contacto, por favor contacta con el administrador del sistema</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_39">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>61</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image:url(:/newPrefix/informacion.png)</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblTituloocupacion_2">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>20</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #1F2937;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>Importante</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="card2_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>110</y>
+       <width>380</width>
+       <height>140</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+
+    background-color: white;
+    border-left: 5px solid #00BFA6;
+    border-radius: 12px;
+</string>
+     </property>
+     <widget class="QLabel" name="lblTituloproxclase_2">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>151</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #1F2937;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>Registar pago</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblIconAs_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>91</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background-color: #CCFBF1;
+    border-radius: 35px;
+    border: none;
+    color: #00BFA6;
+    font-size: 30px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>50</y>
+        <width>201</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #6B7280;
+    font-size: 14px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Permite registrar el pago de una cuota o tarifa de un cliente.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>71</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image:url(:/newPrefix/inscripcion.png);
+background: transparent;
+border: None</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="card2">
+     <property name="geometry">
+      <rect>
+       <x>440</x>
+       <y>110</y>
+       <width>380</width>
+       <height>140</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">  background-color: white;
+    border-left: 5px solid rgb(255, 170, 0);
+    border-radius: 12px;</string>
+     </property>
+     <widget class="QLabel" name="lblIconPago">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>91</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+QLabel {
+    background-color: #FFF7ED;
+    border-radius: 35px;
+    border: none;
+    color: #F97316;
+    font-size: 30px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblTituloproxclase">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #1F2937;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>Pagos pendientes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>60</y>
+        <width>201</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #6B7280;
+    font-size: 14px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Consulta clientes con pagos pendientes, vencidos e importe pendiente.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>71</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image:url(:/newPrefix/tarjeta-de-credito.png);
+background: transparent;
+border: None</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="card3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>290</y>
+       <width>380</width>
+       <height>140</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+
+    background-color: white;
+    border-left: 5px solid rgb(170, 85, 255);
+    border-radius: 12px;
+</string>
+     </property>
+     <widget class="QLabel" name="lblIconCal">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>91</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background-color: #F3E8FF;
+    border-radius: 35px;
+    border: none;
+    color: #8B5CF6;
+    font-size: 30px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblTituloasistencia">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>181</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #1F2937;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>Gestión económica</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>50</y>
+        <width>201</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #6B7280;
+    font-size: 14px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Administra tarifas, planes, salarios y el resumen económico del gimnasio.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>71</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/newPrefix/tabla-de-ingresos.png);
+background: transparent;
+border: None</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="card4">
+     <property name="geometry">
+      <rect>
+       <x>440</x>
+       <y>290</y>
+       <width>380</width>
+       <height>140</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+
+    background-color: white;
+    border-left: 5px solid rgb(85, 170, 255);
+    border-radius: 12px;
+</string>
+     </property>
+     <widget class="QLabel" name="lblIconAs">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>91</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background-color: #EFF6FF;
+    border-radius: 35px;
+    border: none;
+    color: #2563EB;
+    font-size: 30px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblTituloocupacion">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>20</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #1F2937;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>Informes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>50</y>
+        <width>201</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    background: transparent;
+    border: none;
+    color: #6B7280;
+    font-size: 14px;
+}</string>
+      </property>
+      <property name="text">
+       <string>Genera y consulta informes económicos sobre ingresos, gastos y balance.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>71</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/newPrefix/informe-de-negocio.png);
+background: transparent;
+border: None</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <zorder>label_18</zorder>
+    <zorder>lblBienvenida</zorder>
+    <zorder>lblResumen</zorder>
+    <zorder>label_17</zorder>
+    <zorder>label_13</zorder>
+    <zorder>frameAvisoPerfil_2</zorder>
+    <zorder>card2_2</zorder>
+    <zorder>card2</zorder>
+    <zorder>card3</zorder>
+    <zorder>card4</zorder>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../imagenes/recursos.qrc"/>
+ </resources>
+ <connections/>
+</ui>
