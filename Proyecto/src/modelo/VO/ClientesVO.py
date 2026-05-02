@@ -1,4 +1,4 @@
-class ClientesVo:
+class ClientesVO:
     def __init__(self, id_cliente, estado_pagado, calorias_acumuladas):
         self._id_cliente = id_cliente
         self._estado_pagado = estado_pagado
