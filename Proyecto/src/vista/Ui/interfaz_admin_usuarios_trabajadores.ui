@@ -478,14 +478,14 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <widget class="QPushButton" name="btnNuevoUsuario">
      <property name="geometry">
       <rect>
-       <x>680</x>
+       <x>840</x>
        <y>145</y>
-       <width>110</width>
+       <width>125</width>
        <height>32</height>
       </rect>
      </property>
      <property name="text">
-      <string>+ Nuevo cliente</string>
+      <string>+ Nuevo usuario</string>
      </property>
     </widget>
     <widget class="QLabel" name="fondoOla">
