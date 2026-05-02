@@ -535,7 +535,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>Usuarios totales</string>
+       <string>Clientes totales</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblUsuariosNum">
@@ -982,84 +982,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardAcciones">
-     <property name="geometry">
-      <rect>
-       <x>730</x>
-       <y>200</y>
-       <width>210</width>
-       <height>210</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblAccionesTitulo">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>14</y>
-        <width>160</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Acciones rápidas</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAccionPrincipal">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>50</y>
-        <width>174</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>+  Añadir nueva clase</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAccion">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>88</y>
-        <width>174</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Registrar nuevo usuario</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAccion">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>124</y>
-        <width>174</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ver inscripciones</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnAccion">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>160</y>
-        <width>174</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Generar reporte</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="cardPopulares">
      <property name="geometry">
       <rect>
@@ -1102,90 +1024,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardActividad">
-     <property name="geometry">
-      <rect>
-       <x>325</x>
-       <y>425</y>
-       <width>270</width>
-       <height>145</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblActividad">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>14</y>
-        <width>180</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>🕘  Actividad reciente</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblListaAct">
-      <property name="geometry">
-       <rect>
-        <x>28</x>
-        <y>45</y>
-        <width>225</width>
-        <height>85</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#374151;</string>
-      </property>
-      <property name="text">
-       <string>Nuevo usuario registrado    Hace 10 min\nPago recibido: 35,00 €      Hace 25 min\nNueva inscripción en Yoga    Hace 1 hora\nClase creada: HIIT           Hace 2 horas</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardSistema">
-     <property name="geometry">
-      <rect>
-       <x>610</x>
-       <y>425</y>
-       <width>330</width>
-       <height>145</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblSistema">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>14</y>
-        <width>180</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>🛡  Estado del sistema</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSistemaLista">
-      <property name="geometry">
-       <rect>
-        <x>28</x>
-        <y>45</y>
-        <width>275</width>
-        <height>85</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#374151;</string>
-      </property>
-      <property name="text">
-       <string>Servidores                         Operativo  ●\nBase de datos                      Operativo  ●\nPagos online                       Operativo  ●\nCopias de seguridad                Operativo  ●</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
@@ -1215,10 +1053,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <zorder>cardIngresos</zorder>
     <zorder>cardTabla</zorder>
     <zorder>cardGrafico</zorder>
-    <zorder>cardAcciones</zorder>
     <zorder>cardPopulares</zorder>
-    <zorder>cardActividad</zorder>
-    <zorder>cardSistema</zorder>
    </widget>
   </widget>
  </widget>
