@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>700</height>
+    <height>678</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -58,9 +58,6 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </property>
      <property name="scaledContents">
       <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="labelStayFitHeader">
@@ -109,9 +106,6 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </property>
      <property name="scaledContents">
       <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="lblNombreCliente">
@@ -170,7 +164,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -376,7 +370,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblTituloEstadisticas">
      <property name="geometry">
@@ -1314,25 +1308,6 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        <string>Racha de entrenamientos</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblCirculoRacha">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>42</y>
-        <width>50</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#FFF0D9; border:6px solid #FF9F2E; border-radius:25px; font:bold 12pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>12</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="lblSigueRacha">
       <property name="geometry">
        <rect>
@@ -1366,6 +1341,22 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       </property>
       <property name="wordWrap">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblNumEntrenos_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>50</y>
+        <width>70</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string>
+      </property>
+      <property name="text">
+       <string>12</string>
       </property>
      </widget>
     </widget>
