@@ -1595,8 +1595,8 @@ QLineEdit:focus {
     <widget class="QLabel" name="label_18">
      <property name="geometry">
       <rect>
-       <x>-180</x>
-       <y>0</y>
+       <x>-170</x>
+       <y>10</y>
        <width>1391</width>
        <height>621</height>
       </rect>
@@ -1624,6 +1624,7 @@ QLineEdit:focus {
       <string/>
      </property>
     </widget>
+    <zorder>label_18</zorder>
     <zorder>asist</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
@@ -1634,7 +1635,6 @@ QLineEdit:focus {
     <zorder>card2_2</zorder>
     <zorder>label_17</zorder>
     <zorder>label_13</zorder>
-    <zorder>label_18</zorder>
    </widget>
   </widget>
  </widget>

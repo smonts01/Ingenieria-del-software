@@ -42,7 +42,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -153,6 +153,25 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       <string>Cerrar sesión</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>20</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frameMenu">
     <property name="geometry">
@@ -164,7 +183,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -434,7 +453,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="labelFondoOla">
      <property name="geometry">
@@ -481,7 +500,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
      </property>
      <property name="text">
-      <string>Resumen general del estado de tu gimnasio.</string>
+      <string>Resumen general de la gestión del gimansio.</string>
      </property>
     </widget>
     <widget class="QFrame" name="cardUsuarios">
@@ -554,20 +573,20 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>256</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblUsuariosSub">
+     <widget class="QLabel" name="lblSubClases">
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>66</y>
-        <width>110</width>
-        <height>16</height>
+        <y>65</y>
+        <width>90</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>+12 este mes</string>
+       <string>clientes</string>
       </property>
      </widget>
     </widget>
@@ -641,20 +660,20 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>34</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblClasesSub">
+     <widget class="QLabel" name="lblSubClases_2">
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>66</y>
-        <width>110</width>
-        <height>16</height>
+        <y>65</y>
+        <width>90</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>+3 esta semana</string>
+       <string>esta semana</string>
       </property>
      </widget>
     </widget>
@@ -728,20 +747,20 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>142</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblInsSub">
+     <widget class="QLabel" name="lblSubClases_3">
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>66</y>
-        <width>110</width>
-        <height>16</height>
+        <y>65</y>
+        <width>90</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>+8 hoy</string>
+       <string>esta semana</string>
       </property>
      </widget>
     </widget>
@@ -815,20 +834,20 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>4.350 €</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblIngresosSub">
+     <widget class="QLabel" name="lblSubClases_4">
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>66</y>
-        <width>120</width>
-        <height>16</height>
+        <y>65</y>
+        <width>90</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#18B7A5;</string>
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>+18% vs mes anterior</string>
+       <string>ganados</string>
       </property>
      </widget>
     </widget>
@@ -836,8 +855,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>200</y>
-       <width>340</width>
+       <y>190</y>
+       <width>441</width>
        <height>210</height>
       </rect>
      </property>
@@ -878,8 +897,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <rect>
         <x>15</x>
         <y>50</y>
-        <width>310</width>
-        <height>120</height>
+        <width>421</width>
+        <height>151</height>
        </rect>
       </property>
       <row/>
@@ -907,26 +926,13 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        </property>
       </column>
      </widget>
-     <widget class="QPushButton" name="btnMini">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>178</y>
-        <width>160</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ver todas las inscripciones  →</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="cardGrafico">
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>200</y>
-       <width>315</width>
+       <x>500</x>
+       <y>190</y>
+       <width>441</width>
        <height>210</height>
       </rect>
      </property>
@@ -965,9 +971,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      <widget class="QLabel" name="graficoFake">
       <property name="geometry">
        <rect>
-        <x>25</x>
-        <y>48</y>
-        <width>265</width>
+        <x>30</x>
+        <y>60</y>
+        <width>391</width>
         <height>140</height>
        </rect>
       </property>
@@ -975,10 +981,23 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string notr="true">background-color:#F8FAFC; border:1px solid #E5E7EB; border-radius:8px; color:#18B7A5; font:bold 11pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>Ingresos\n\nEne   Feb   Mar   Abr   May\n1.800 2.500 3.000 3.500 4.350 €</string>
+       <string/>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_5">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>35</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Gráfico de barras de la comparativa de gastos y beneficios de cada mes.</string>
       </property>
      </widget>
     </widget>
@@ -986,9 +1005,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>425</y>
+       <y>405</y>
        <width>270</width>
-       <height>145</height>
+       <height>191</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblPopulares">
@@ -1007,20 +1026,244 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>🔥  Clases más populares</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblListaPop">
+     <widget class="QLabel" name="lblUsuariosTitulo_2">
       <property name="geometry">
        <rect>
-        <x>28</x>
-        <y>45</y>
-        <width>220</width>
-        <height>85</height>
+        <x>30</x>
+        <y>50</y>
+        <width>110</width>
+        <height>18</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#374151;</string>
+       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>1   Spinning        45 inscripciones\n2   Yoga              38 inscripciones\n3   CrossFit          32 inscripciones\n4   Pilates           28 inscripciones\n5   Zumba             22 inscripciones</string>
+       <string>Spinning</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesNum_2">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>45</y>
+        <width>80</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>34</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_6">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>50</y>
+        <width>90</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>inscripciones</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblUsuariosTitulo_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>78</y>
+        <width>110</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Zumba</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblUsuariosTitulo_4">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>106</y>
+        <width>110</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Yoga</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblUsuariosTitulo_5">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>136</y>
+        <width>110</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Pilates</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblUsuariosTitulo_6">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>166</y>
+        <width>110</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Crossfit</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesNum_3">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>70</y>
+        <width>80</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>34</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesNum_4">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>100</y>
+        <width>80</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>34</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesNum_5">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>130</y>
+        <width>80</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>34</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesNum_6">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>160</y>
+        <width>80</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>34</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_7">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>78</y>
+        <width>90</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>inscripciones</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_8">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>106</y>
+        <width>90</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>inscripciones</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_9">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>136</y>
+        <width>90</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>inscripciones</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_10">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>166</y>
+        <width>90</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>inscripciones</string>
       </property>
      </widget>
     </widget>
@@ -1043,6 +1286,304 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>20</y>
+       <width>35</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QFrame" name="cardPopulares_2">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>405</y>
+       <width>221</width>
+       <height>191</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#cardPopulares_2 {
+    background-color: #FFFFFF;
+    border: 1px solid #DADDE2;
+    border-radius: 12px;
+}</string>
+     </property>
+     <widget class="QLabel" name="lblPopulares_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>10</y>
+        <width>180</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Clientes por plan</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblUsuariosTitulo_7">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>110</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Básico</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblUsuariosTitulo_8">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>130</y>
+        <width>105</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Premium</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesNum_7">
+      <property name="geometry">
+       <rect>
+        <x>95</x>
+        <y>60</y>
+        <width>70</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>57</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClasesNum_8">
+      <property name="geometry">
+       <rect>
+        <x>95</x>
+        <y>125</y>
+        <width>80</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 18pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>28</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_11">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>70</y>
+        <width>90</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>clientes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblSubClases_12">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>130</y>
+        <width>90</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>clientes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="icoUsuarios_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>24</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuarios.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="asist">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>405</y>
+       <width>391</width>
+       <height>191</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#asist {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+}</string>
+     </property>
+     <widget class="QLabel" name="lblTituloUltPago">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>15</y>
+        <width>261</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Clientes con pagos pendientes</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>18</y>
+        <width>51</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/newPrefix/tarjeta-de-credito.png)</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="tablaClientesPagosPendientes">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>351</width>
+        <height>131</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget {
+    background-color: white;
+    border: none;
+    gridline-color: #E5E7EB;
+    color: #1F2937;
+    font-size: 12px;
+}
+
+QHeaderView::section {
+    background-color: #F7F9FA;
+    color: #1F2937;
+    font-weight: bold;
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 7px;
+}
+
+QTableWidget::item {
+    padding: 7px;
+    border-bottom: 1px solid #E5E7EB;
+}</string>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="rowCount">
+       <number>4</number>
+      </property>
+      <property name="columnCount">
+       <number>3</number>
+      </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>120</number>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column>
+       <property name="text">
+        <string>Cliente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Importe Pendiente</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Fecha límite</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>Raúl Sánchez</string>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>45,00</string>
+       </property>
+      </item>
+      <item row="0" column="2">
+       <property name="text">
+        <string>05 jun 2024</string>
+       </property>
+      </item>
+     </widget>
+    </widget>
     <zorder>label</zorder>
     <zorder>labelFondoOla</zorder>
     <zorder>lblTitulo</zorder>
@@ -1054,6 +1595,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <zorder>cardTabla</zorder>
     <zorder>cardGrafico</zorder>
     <zorder>cardPopulares</zorder>
+    <zorder>label_16</zorder>
+    <zorder>cardPopulares_2</zorder>
+    <zorder>asist</zorder>
    </widget>
   </widget>
  </widget>
