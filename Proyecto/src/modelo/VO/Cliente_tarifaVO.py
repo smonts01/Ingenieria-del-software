@@ -25,3 +25,4 @@ class Cliente_tarifaVO:
     @property
     def estado(self):
         return self._estado
+    
