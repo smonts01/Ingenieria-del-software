@@ -1179,29 +1179,6 @@ QTableWidget::item {
       <string>14</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButtonRegistrarAsist">
-     <property name="geometry">
-      <rect>
-       <x>670</x>
-       <y>500</y>
-       <width>281</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #00BFA6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    padding: 10px;
-}</string>
-     </property>
-     <property name="text">
-      <string>Registrar asistencia</string>
-     </property>
-    </widget>
     <zorder>label_18</zorder>
     <zorder>frameClientesInscritos</zorder>
     <zorder>label_19</zorder>
@@ -1212,7 +1189,6 @@ QTableWidget::item {
     <zorder>tablaInscritos</zorder>
     <zorder>lblSalaClase_2</zorder>
     <zorder>label_total_inscritos</zorder>
-    <zorder>pushButtonRegistrarAsist</zorder>
    </widget>
   </widget>
  </widget>

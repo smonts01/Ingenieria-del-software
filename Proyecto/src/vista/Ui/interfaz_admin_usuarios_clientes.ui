@@ -280,7 +280,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string notr="true">color:white; font:bold 10pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>Panel administrado</string>
+       <string>Panel administrador</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblPanelTexto">
@@ -473,19 +473,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      </property>
      <property name="text">
       <string>Gestiona los usuarios registrados en el sistema.</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btnNuevoUsuario">
-     <property name="geometry">
-      <rect>
-       <x>840</x>
-       <y>145</y>
-       <width>125</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>+ Nuevo usuario</string>
      </property>
     </widget>
     <widget class="QFrame" name="cardResumen">
@@ -732,22 +719,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>Listado editable de clientes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblAyudaEdicion_2">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>12</y>
-        <width>420</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Doble clic sobre una celda para editar los datos.</string>
-      </property>
-     </widget>
      <widget class="QTableWidget" name="tablaClientes_2">
       <property name="geometry">
        <rect>
@@ -758,19 +729,19 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        </rect>
       </property>
       <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+       <enum>Qt::ScrollBarAsNeeded</enum>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+       <enum>Qt::ScrollBarAsNeeded</enum>
       </property>
       <property name="editTriggers">
-       <set>QAbstractItemView::EditTrigger::AnyKeyPressed|QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed</set>
+       <set>QAbstractItemView::NoEditTriggers</set>
       </property>
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
       <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+       <enum>QAbstractItemView::SelectItems</enum>
       </property>
       <property name="showGrid">
        <bool>true</bool>
@@ -1503,19 +1474,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>Mostrando todos los clientes · usa la barra lateral para subir y bajar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnGuardarCambios_2">
-      <property name="geometry">
-       <rect>
-        <x>590</x>
-        <y>348</y>
-        <width>170</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Guardar cambios</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QLabel" name="lblTabClientes">
      <property name="geometry">
@@ -1626,7 +1584,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <zorder>fondoOla</zorder>
     <zorder>lblTituloUsuarios</zorder>
     <zorder>lblSubUsuarios</zorder>
-    <zorder>btnNuevoUsuario</zorder>
     <zorder>cardResumen</zorder>
     <zorder>cardNuevos</zorder>
     <zorder>cardTabla</zorder>

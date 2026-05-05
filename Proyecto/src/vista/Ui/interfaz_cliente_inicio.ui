@@ -41,7 +41,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -63,9 +63,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="scaledContents">
       <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="labelStayFitHeader">
@@ -117,9 +114,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="scaledContents">
       <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="lblNombreCliente">
@@ -178,7 +172,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -399,7 +393,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblBienvenida">
      <property name="geometry">
@@ -508,9 +502,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="scaledContents">
        <bool>true</bool>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
      </widget>
      <widget class="QLabel" name="label_7">
       <property name="geometry">
@@ -556,9 +547,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="text">
        <string/>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
      </widget>
      <widget class="QLabel" name="lblTituloPago">
       <property name="geometry">
@@ -581,7 +569,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <rect>
         <x>70</x>
         <y>45</y>
-        <width>95</width>
+        <width>121</width>
         <height>28</height>
        </rect>
       </property>
@@ -652,16 +640,13 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="text">
        <string/>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
      </widget>
      <widget class="QLabel" name="lblTituloCal">
       <property name="geometry">
        <rect>
         <x>70</x>
         <y>20</y>
-        <width>100</width>
+        <width>121</width>
         <height>20</height>
        </rect>
       </property>
@@ -748,9 +733,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <property name="text">
        <string/>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
      </widget>
      <widget class="QLabel" name="lblTituloAs">
       <property name="geometry">
@@ -825,8 +807,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <rect>
        <x>30</x>
        <y>223</y>
-       <width>430</width>
-       <height>238</height>
+       <width>501</width>
+       <height>361</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblTituloTabla">
@@ -850,9 +832,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <rect>
         <x>20</x>
         <y>50</y>
-        <width>391</width>
-        <height>130</height>
+        <width>461</width>
+        <height>301</height>
        </rect>
+      </property>
+      <property name="rowCount">
+       <number>20</number>
       </property>
       <row>
        <property name="text">
@@ -869,6 +854,23 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         <string>3</string>
        </property>
       </row>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <column>
        <property name="text">
         <string>Clase</string>
@@ -889,19 +891,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         <string>Sala</string>
        </property>
       </column>
-     </widget>
-     <widget class="QPushButton" name="btnVerInscripciones">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>193</y>
-        <width>391</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ver todas mis inscripciones</string>
-      </property>
      </widget>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
@@ -926,9 +915,9 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="cardPago">
      <property name="geometry">
       <rect>
-       <x>480</x>
-       <y>223</y>
-       <width>430</width>
+       <x>540</x>
+       <y>220</y>
+       <width>371</width>
        <height>120</height>
       </rect>
      </property>
@@ -1012,19 +1001,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string>Pendiente</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnMini">
-      <property name="geometry">
-       <rect>
-        <x>105</x>
-        <y>94</y>
-        <width>150</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ver historial de pagos</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
@@ -1039,115 +1015,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
       <property name="pixmap">
        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardActividad">
-     <property name="geometry">
-      <rect>
-       <x>480</x>
-       <y>360</y>
-       <width>430</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblTituloAct">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>12</y>
-        <width>150</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 10pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Resumen de actividad</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblEntrenos">
-      <property name="geometry">
-       <rect>
-        <x>25</x>
-        <y>48</y>
-        <width>70</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>5\nEntrenamientos</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblTiempo">
-      <property name="geometry">
-       <rect>
-        <x>105</x>
-        <y>48</y>
-        <width>70</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>4h 30m\nTiempo total</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCalAct">
-      <property name="geometry">
-       <rect>
-        <x>185</x>
-        <y>48</y>
-        <width>70</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>1.250\nCalorías</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblObjetivo">
-      <property name="geometry">
-       <rect>
-        <x>265</x>
-        <y>48</y>
-        <width>65</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>80%\nObjetivo</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_13">
-      <property name="geometry">
-       <rect>
-        <x>15</x>
-        <y>15</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1212,6 +1079,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
     </widget>
     <zorder>label_17</zorder>
+    <zorder>label_3</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>card1</zorder>
@@ -1220,9 +1088,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <zorder>card4</zorder>
     <zorder>cardTabla</zorder>
     <zorder>cardPago</zorder>
-    <zorder>cardActividad</zorder>
     <zorder>label_16</zorder>
-    <zorder>label_3</zorder>
    </widget>
   </widget>
  </widget>

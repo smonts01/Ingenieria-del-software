@@ -411,7 +411,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <rect>
         <x>16</x>
         <y>14</y>
-        <width>135</width>
+        <width>151</width>
         <height>24</height>
        </rect>
       </property>

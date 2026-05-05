@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1207</width>
-    <height>700</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1624,38 +1624,6 @@ border:None</string>
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>640</x>
-       <y>20</y>
-       <width>271</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #00BFA6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px;
-}
-
-QPushButton:hover {
-    background-color: #009E8A;
-}
-
-QPushButton:pressed {
-    background-color: #008C7A;
-}</string>
-     </property>
-     <property name="text">
-      <string>⟳     Actualizar ocupación</string>
-     </property>
-    </widget>
     <zorder>label_19</zorder>
     <zorder>label_18</zorder>
     <zorder>lblBienvenida</zorder>
@@ -1667,7 +1635,6 @@ QPushButton:pressed {
     <zorder>frame</zorder>
     <zorder>tablaOcupacionClases</zorder>
     <zorder>frame_2</zorder>
-    <zorder>pushButton</zorder>
    </widget>
   </widget>
  </widget>

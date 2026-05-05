@@ -1218,6 +1218,9 @@ QPushButton:checked {
         <height>131</height>
        </rect>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
       <row>
        <property name="text">
         <string/>

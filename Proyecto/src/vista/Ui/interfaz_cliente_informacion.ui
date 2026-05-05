@@ -681,254 +681,12 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
 28001 Madrid</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnMapa">
-      <property name="geometry">
-       <rect>
-        <x>93</x>
-        <y>135</y>
-        <width>130</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ver en el mapa</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardServicios">
-     <property name="geometry">
-      <rect>
-       <x>35</x>
-       <y>315</y>
-       <width>340</width>
-       <height>285</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblServiciosTitulo">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>18</y>
-        <width>250</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Servicios incluidos en tu membresía</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCheck1">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>60</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>✓</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serv1">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>60</y>
-        <width>250</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>Acceso ilimitado al gimnasio</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCheck2">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>88</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>✓</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serv2">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>88</y>
-        <width>270</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>Clases dirigidas (yoga, spinning, pilates, etc.)</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCheck3">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>116</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>✓</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serv3">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>116</y>
-        <width>250</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>Rutinas personalizadas</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCheck4">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>144</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>✓</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serv4">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>144</y>
-        <width>250</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>Zona de pesas y cardio</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCheck5">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>172</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>✓</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serv5">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>172</y>
-        <width>250</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>Taquillas y vestuarios</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCheck6">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>200</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>✓</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serv6">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>200</y>
-        <width>250</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>Asesoramiento nutricional básico</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblCheck7">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>228</y>
-        <width>22</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>✓</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="serv7">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>228</y>
-        <width>250</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>App con seguimiento de progreso</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="cardNormas">
      <property name="geometry">
       <rect>
-       <x>395</x>
-       <y>315</y>
+       <x>30</x>
+       <y>310</y>
        <width>550</width>
        <height>205</height>
       </rect>
@@ -1098,8 +856,8 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
     <widget class="QFrame" name="cardContacto">
      <property name="geometry">
       <rect>
-       <x>395</x>
-       <y>535</y>
+       <x>30</x>
+       <y>530</y>
        <width>550</width>
        <height>65</height>
       </rect>
@@ -1107,8 +865,8 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      <widget class="QLabel" name="lblContactoTitulo">
       <property name="geometry">
        <rect>
-        <x>22</x>
-        <y>10</y>
+        <x>20</x>
+        <y>0</y>
         <width>180</width>
         <height>22</height>
        </rect>
@@ -1123,8 +881,8 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      <widget class="QLabel" name="lblContactoSub">
       <property name="geometry">
        <rect>
-        <x>22</x>
-        <y>32</y>
+        <x>20</x>
+        <y>20</y>
         <width>350</width>
         <height>18</height>
        </rect>
@@ -1139,8 +897,8 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      <widget class="QLabel" name="lblEmail">
       <property name="geometry">
        <rect>
-        <x>22</x>
-        <y>50</y>
+        <x>20</x>
+        <y>40</y>
         <width>150</width>
         <height>15</height>
        </rect>
@@ -1156,7 +914,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <property name="geometry">
        <rect>
         <x>190</x>
-        <y>50</y>
+        <y>40</y>
         <width>120</width>
         <height>15</height>
        </rect>
@@ -1172,7 +930,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <property name="geometry">
        <rect>
         <x>330</x>
-        <y>50</y>
+        <y>40</y>
         <width>130</width>
         <height>15</height>
        </rect>
@@ -1211,7 +969,6 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
     <zorder>cardSobre</zorder>
     <zorder>cardHorario</zorder>
     <zorder>cardUbicacion</zorder>
-    <zorder>cardServicios</zorder>
     <zorder>cardNormas</zorder>
     <zorder>cardContacto</zorder>
    </widget>

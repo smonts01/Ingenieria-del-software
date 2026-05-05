@@ -742,38 +742,6 @@ QPushButton:checked {
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerDetallesIngresos">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>80</y>
-        <width>91</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    color: #00BFA6;
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    text-align: left;
-}
-
-QPushButton:hover {
-    color: #009E8A;
-}</string>
-      </property>
-      <property name="text">
-       <string>Ver detalles →</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="card3">
      <property name="geometry">
@@ -862,38 +830,6 @@ QPushButton:hover {
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="buttonVerDetalles_Tarifas">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>80</y>
-        <width>91</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    color: #00BFA6;
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    text-align: left;
-}
-
-QPushButton:hover {
-    color: #009E8A;
-}</string>
-      </property>
-      <property name="text">
-       <string>Ver detalles →</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -986,38 +922,6 @@ QPushButton:hover {
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerDetalles_Informes">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>80</y>
-        <width>91</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    color: #00BFA6;
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    text-align: left;
-}
-
-QPushButton:hover {
-    color: #009E8A;
-}</string>
-      </property>
-      <property name="text">
-       <string>Ver detalles →</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="cardTabla">
      <property name="geometry">
@@ -1025,7 +929,7 @@ QPushButton:hover {
        <x>40</x>
        <y>230</y>
        <width>481</width>
-       <height>251</height>
+       <height>341</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblTituloTabla">
@@ -1063,45 +967,13 @@ QPushButton:hover {
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerTodosPagos">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>10</y>
-        <width>91</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    color: #00BFA6;
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    text-align: left;
-}
-
-QPushButton:hover {
-    color: #009E8A;
-}</string>
-      </property>
-      <property name="text">
-       <string>Ver todos →</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
      <widget class="QTableWidget" name="tablaUltimosPagos">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>60</y>
         <width>451</width>
-        <height>161</height>
+        <height>251</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1127,11 +999,14 @@ QTableWidget::item {
     border-bottom: 1px solid #E5E7EB;
 }</string>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="rowCount">
-       <number>4</number>
+       <number>20</number>
       </property>
       <property name="columnCount">
        <number>10</number>
@@ -1145,6 +1020,22 @@ QTableWidget::item {
       <attribute name="verticalHeaderVisible">
        <bool>false</bool>
       </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <row/>
       <row/>
       <row/>
@@ -1212,7 +1103,7 @@ QTableWidget::item {
        <x>540</x>
        <y>230</y>
        <width>401</width>
-       <height>251</height>
+       <height>341</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1254,45 +1145,13 @@ QTableWidget::item {
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="buttonVerTodasClases_2">
-      <property name="geometry">
-       <rect>
-        <x>320</x>
-        <y>10</y>
-        <width>71</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    color: #00BFA6;
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    text-align: left;
-}
-
-QPushButton:hover {
-    color: #009E8A;
-}</string>
-      </property>
-      <property name="text">
-       <string>Ver lista →</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
      <widget class="QTableWidget" name="tablaClientesPagosPendientes">
       <property name="geometry">
        <rect>
         <x>30</x>
         <y>60</y>
         <width>351</width>
-        <height>161</height>
+        <height>251</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1318,11 +1177,14 @@ QTableWidget::item {
     border-bottom: 1px solid #E5E7EB;
 }</string>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="rowCount">
-       <number>4</number>
+       <number>20</number>
       </property>
       <property name="columnCount">
        <number>3</number>
@@ -1336,6 +1198,22 @@ QTableWidget::item {
       <attribute name="verticalHeaderVisible">
        <bool>false</bool>
       </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <row/>
       <row/>
       <row/>
@@ -1449,38 +1327,6 @@ QTableWidget::item {
       </property>
       <property name="text">
        <string>clientes con deuda</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="buttonVerDetalles_PagosPend">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>80</y>
-        <width>91</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-    color: #00BFA6;
-    background: transparent;
-    border: none;
-    font-weight: bold;
-    text-align: left;
-}
-
-QPushButton:hover {
-    color: #009E8A;
-}</string>
-      </property>
-      <property name="text">
-       <string>Ver detalles →</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="lblIconAs_2">

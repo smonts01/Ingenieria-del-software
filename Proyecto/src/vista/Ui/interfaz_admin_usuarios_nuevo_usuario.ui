@@ -707,7 +707,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
        <x>500</x>
        <y>90</y>
        <width>321</width>
-       <height>230</height>
+       <height>271</height>
       </rect>
      </property>
      <widget class="QLabel" name="iconFondoAcceso">
@@ -810,7 +810,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
        </rect>
       </property>
       <property name="echoMode">
-       <enum>QLineEdit::EchoMode::Password</enum>
+       <enum>QLineEdit::Normal</enum>
       </property>
       <property name="placeholderText">
        <string>Introduce la contraseña</string>
@@ -842,189 +842,18 @@ QRadioButton::indicator { width: 16px; height: 16px; }
        </rect>
       </property>
       <property name="echoMode">
-       <enum>QLineEdit::EchoMode::Password</enum>
+       <enum>QLineEdit::Normal</enum>
       </property>
       <property name="placeholderText">
        <string>Confirma la contraseña</string>
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardTipoCliente">
+    <widget class="QFrame" name="cardRolUsuario">
      <property name="geometry">
       <rect>
        <x>30</x>
        <y>370</y>
-       <width>441</width>
-       <height>171</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="iconFondoTipo">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>10</y>
-        <width>50</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#D8F4F0; border-radius:22px;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="icoTipo">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>20</y>
-        <width>31</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="pixmap">
-       <pixmap>../imagenes/clientes.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblTituloTipo">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>25</y>
-        <width>270</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: bold 13pt &quot;Segoe UI&quot;; color: #1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Tipo de cliente</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="rbAdulto">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>82</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Adulto</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblAdulto">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>92</y>
-        <width>150</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Cliente mayor de edad</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="rbMenor">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>120</y>
-        <width>82</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Menor</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblMenor">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>142</y>
-        <width>150</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Cliente menor de edad</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblDniTutor">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>70</y>
-        <width>100</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>DNI tutor</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="txtDniTutor">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>90</y>
-        <width>181</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="placeholderText">
-       <string>DNI del tutor</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblNombreTutor">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>120</y>
-        <width>100</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Nombre tutor</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="txtNombreTutor">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>140</y>
-        <width>181</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="placeholderText">
-       <string>Nombre del tutor</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardRolUsuario">
-     <property name="geometry">
-      <rect>
-       <x>500</x>
-       <y>330</y>
        <width>321</width>
        <height>211</height>
       </rect>
@@ -1101,11 +930,6 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </property>
       <item>
        <property name="text">
-        <string>Cliente</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
         <string>Entrenador</string>
        </property>
       </item>
@@ -1148,8 +972,8 @@ QRadioButton::indicator { width: 16px; height: 16px; }
     <widget class="QPushButton" name="btnCancelar">
      <property name="geometry">
       <rect>
-       <x>500</x>
-       <y>560</y>
+       <x>610</x>
+       <y>540</y>
        <width>150</width>
        <height>36</height>
       </rect>
@@ -1161,8 +985,8 @@ QRadioButton::indicator { width: 16px; height: 16px; }
     <widget class="QPushButton" name="btnRegistrarUsuario">
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>560</y>
+       <x>380</x>
+       <y>540</y>
        <width>190</width>
        <height>36</height>
       </rect>
@@ -1192,7 +1016,6 @@ QRadioButton::indicator { width: 16px; height: 16px; }
     <zorder>lblBienvenida</zorder>
     <zorder>cardDatosPersonales</zorder>
     <zorder>cardDatosAcceso</zorder>
-    <zorder>cardTipoCliente</zorder>
     <zorder>cardRolUsuario</zorder>
     <zorder>btnCancelar</zorder>
     <zorder>btnRegistrarUsuario</zorder>

@@ -756,7 +756,11 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background: #FFFFFF;border-radius: 12px;</string>
+       <string notr="true">#card2_2 {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+}</string>
       </property>
       <widget class="QLabel" name="lblTituloproxclase_2">
        <property name="geometry">
@@ -1428,6 +1432,7 @@ border: None;</string>
       </property>
      </widget>
     </widget>
+    <zorder>label_18</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>label_17</zorder>
@@ -1435,7 +1440,6 @@ border: None;</string>
     <zorder>frame</zorder>
     <zorder>frame_2</zorder>
     <zorder>frameAvisoPerfil_2</zorder>
-    <zorder>label_18</zorder>
    </widget>
   </widget>
  </widget>

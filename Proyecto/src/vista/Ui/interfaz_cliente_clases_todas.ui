@@ -157,9 +157,6 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
      <property name="scaledContents">
       <bool>true</bool>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
     </widget>
    </widget>
    <widget class="QFrame" name="frameMenu">
@@ -993,55 +990,11 @@ Sala 3</string>
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardHorario">
-     <property name="geometry">
-      <rect>
-       <x>660</x>
-       <y>240</y>
-       <width>285</width>
-       <height>130</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblHorarioSem">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>20</y>
-        <width>180</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Tu horario semanal</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblDias">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>60</y>
-        <width>220</width>
-        <height>55</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#00A896;</string>
-      </property>
-      <property name="text">
-       <string>Lun   Mar   Mié   Jue   Vie   Sáb   Dom
-●     ●     ○     ●     ●     ●     ○
-●     ○     ○     ●     ●     ○     ○</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="cardProxima">
      <property name="geometry">
       <rect>
        <x>660</x>
-       <y>390</y>
+       <y>230</y>
        <width>285</width>
        <height>110</height>
       </rect>
@@ -1149,7 +1102,6 @@ Sala 1</string>
     <zorder>cardClase3</zorder>
     <zorder>cardClase4</zorder>
     <zorder>cardFiltros</zorder>
-    <zorder>cardHorario</zorder>
     <zorder>cardProxima</zorder>
    </widget>
   </widget>

@@ -606,7 +606,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;background:transparent</string>
+        <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;background:transparent; border: None</string>
        </property>
        <property name="text">
         <string>Ingresos este mes</string>
@@ -774,7 +774,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background:transparent</string>
+        <string notr="true">background:transparent; border: None</string>
        </property>
        <property name="pixmap">
         <pixmap>../imagenes/tabla-de-ingresos.png</pixmap>
@@ -793,7 +793,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;background:transparent</string>
+        <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;background:transparent; border: None</string>
        </property>
        <property name="text">
         <string>Ingresos este año</string>
