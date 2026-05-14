@@ -3,12 +3,12 @@ from src.modelo.vo.UsuarioVO import UsuarioVO
 from src.modelo.dao.UsuarioDao import UsuarioDao
 
 class UsuarioDaoJDBC(UsuarioDao, Conexion):
-    SQL_SELECT = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
-    SQL_SELECT_BY_ID = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
+    SQL_SELECT             = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
+    SQL_SELECT_BY_ID       = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
     SQL_SELECT_BY_USERNAME = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ?"
-    SQL_INSERT = "INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    SQL_UPDATE = "UPDATE usuarios SET dni=?, nombre=?, telefono=?, email=?, username=?, password_hash=?, id_rol=?, direccion=?, fecha_nacimiento=? WHERE id_usuario=?"
-    SQL_DELETE = "DELETE FROM usuarios WHERE id_usuario = ?"
+    SQL_INSERT             = "INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_UPDATE             = "UPDATE usuarios SET dni=?, nombre=?, telefono=?, email=?, username=?, password_hash=?, id_rol=?, direccion=?, fecha_nacimiento=? WHERE id_usuario=?"
+    SQL_DELETE             = "DELETE FROM usuarios WHERE id_usuario = ?"
 
     def select(self) -> list[UsuarioVO]:
         cursor = self.getCursor()
