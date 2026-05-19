@@ -1,4 +1,4 @@
-from src.modelo.vo.UsuarioVO import UsuarioVO
+from src.modelo.VO.UsuarioVO import UsuarioVO
 
 class UsuarioDao:
     def select(self) -> list[UsuarioVO]:
