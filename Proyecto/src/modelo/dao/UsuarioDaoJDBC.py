@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.UsuarioVO import UsuarioVO
 from src.modelo.dao.UsuarioDao import UsuarioDao
 
-class UsuarioDaoJDBC(UsuarioDao, Conexion):
+class UsuarioDaoJDBC(UsuarioVO, Conexion):
     SQL_SELECT             = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
     SQL_SELECT_BY_ID       = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
     SQL_SELECT_BY_USERNAME = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ?"
@@ -11,6 +11,7 @@ class UsuarioDaoJDBC(UsuarioDao, Conexion):
     SQL_DELETE             = "DELETE FROM usuarios WHERE id_usuario = ?"
 
     def select(self) -> list[UsuarioVO]:
+        """Recupera todos los usuarios de la base de datos"""
         cursor = self.getCursor()
         usuarios = []
         try:
@@ -27,6 +28,7 @@ class UsuarioDaoJDBC(UsuarioDao, Conexion):
         return usuarios
 
     def selectById(self, id_usuario: int) -> UsuarioVO:
+        """Recupera un usuario por su ID."""
         cursor = self.getCursor()
         usuario = None
         try:
@@ -42,6 +44,7 @@ class UsuarioDaoJDBC(UsuarioDao, Conexion):
         return usuario
 
     def selectByUsername(self, username: str) -> UsuarioVO:
+        """Recupera un usuario por su username."""
         cursor = self.getCursor()
         usuario = None
         try:
@@ -57,6 +60,7 @@ class UsuarioDaoJDBC(UsuarioDao, Conexion):
         return usuario
 
     def insert(self, usuario: UsuarioVO) -> int:
+        """Inserta un nuevo usuario. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
@@ -74,6 +78,7 @@ class UsuarioDaoJDBC(UsuarioDao, Conexion):
         return rows
 
     def update(self, usuario: UsuarioVO) -> int:
+        """Actualiza un usuario existente. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
@@ -92,6 +97,7 @@ class UsuarioDaoJDBC(UsuarioDao, Conexion):
         return rows
 
     def delete(self, id_usuario: int) -> int:
+        """Elimina un usuario por su ID. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
