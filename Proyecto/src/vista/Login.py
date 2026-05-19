@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLineEdit
 from PyQt5 import uic
 
 # Cargar la interfaz generada desde el archivo .ui
-Form, Window = uic.loadUiType("./src/vista/Ui/Login.ui")
+Form, Window = uic.loadUiType("./src/vista/Ui/interfaz_grafica.ui")
 
 
 class MiVentana(QMainWindow, Form):
@@ -31,7 +31,7 @@ class MiVentana(QMainWindow, Form):
         if usuario == "" or contrasena == "":
             QMessageBox.warning(self, "Error", "Debes completar usuario y contraseña")
         else:
-            QMessageBox.information(self, "Login", "Datos introducidos correctamente")
+            self.controlador.iniciar_sesion(usuario, contrasena)
 
     def mostrar_ocultar_contrasena(self):
         if self.txtContrasea.echoMode() == QLineEdit.Password:

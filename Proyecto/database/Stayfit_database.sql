@@ -1,20 +1,16 @@
-IF DB_ID('Stayfit') IS NULL
-BEGIN
-    CREATE DATABASE Stayfit;
-END;
-GO
+CREATE DATABASE IF NOT EXISTS Stayfit_database
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
 
-USE stayfit;
-GO
+USE Stayfit_database;
 
 CREATE TABLE roles (
-    id_rol INT IDENTITY(1,1) PRIMARY KEY,
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
     nombre_rol VARCHAR(30) NOT NULL UNIQUE,
     CONSTRAINT chk_roles_nombre CHECK (
         nombre_rol IN ('cliente', 'entrenador', 'recepcionista', 'administrador', 'contable')
     )
 );
-GO
 
 INSERT INTO roles (nombre_rol) VALUES
 ('cliente'),
@@ -22,10 +18,9 @@ INSERT INTO roles (nombre_rol) VALUES
 ('recepcionista'),
 ('administrador'),
 ('contable');
-GO
 
 CREATE TABLE usuarios (
-    id_usuario INT IDENTITY(1,1) PRIMARY KEY,
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     dni VARCHAR(9) NOT NULL UNIQUE,
     nombre VARCHAR(50) NOT NULL,
     telefono VARCHAR(15) NOT NULL,
@@ -34,20 +29,19 @@ CREATE TABLE usuarios (
     password_hash VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
     direccion VARCHAR(150) NOT NULL,
-    fecha_registro DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     fecha_nacimiento DATE NOT NULL,
 
     CONSTRAINT fk_usuario_rol
         FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
         ON UPDATE CASCADE
-        ON DELETE NO ACTION
+        ON DELETE RESTRICT
 );
-GO
 
 CREATE TABLE registro_acceso (
-    id_registro INT IDENTITY(1,1) PRIMARY KEY,
+    id_registro INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
-    fecha_hora_registro DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_hora_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     tipo_acceso VARCHAR(20) NOT NULL,
 
     CONSTRAINT chk_registro_tipo_acceso CHECK (tipo_acceso IN ('entrada', 'salida')),
@@ -57,7 +51,6 @@ CREATE TABLE registro_acceso (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE clientes (
     id_cliente INT PRIMARY KEY,
@@ -72,7 +65,6 @@ CREATE TABLE clientes (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE empleados (
     id_empleado INT PRIMARY KEY,
@@ -85,7 +77,6 @@ CREATE TABLE empleados (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE menor (
     id_cliente INT PRIMARY KEY,
@@ -97,7 +88,6 @@ CREATE TABLE menor (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE adulto (
     id_cliente INT PRIMARY KEY,
@@ -107,7 +97,6 @@ CREATE TABLE adulto (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE administrador (
     id_administrador INT PRIMARY KEY,
@@ -117,7 +106,6 @@ CREATE TABLE administrador (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE entrenador (
     id_entrenador INT PRIMARY KEY,
@@ -131,10 +119,9 @@ CREATE TABLE entrenador (
 
     CONSTRAINT fk_entrenador_administrador
         FOREIGN KEY (id_administrador_registra) REFERENCES administrador(id_administrador)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
 );
-GO
 
 CREATE TABLE recepcionista (
     id_recepcionista INT PRIMARY KEY,
@@ -148,10 +135,9 @@ CREATE TABLE recepcionista (
 
     CONSTRAINT fk_recepcionista_administrador
         FOREIGN KEY (id_administrador_registra) REFERENCES administrador(id_administrador)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
 );
-GO
 
 CREATE TABLE contable (
     id_contable INT PRIMARY KEY,
@@ -165,23 +151,21 @@ CREATE TABLE contable (
 
     CONSTRAINT fk_contable_administrador
         FOREIGN KEY (id_administrador_registra) REFERENCES administrador(id_administrador)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
 );
-GO
 
 CREATE TABLE sala (
-    id_sala INT IDENTITY(1,1) PRIMARY KEY,
+    id_sala INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(80) NOT NULL UNIQUE,
     aforo_maximo INT NOT NULL,
     tipo_zona VARCHAR(50) NOT NULL,
 
     CONSTRAINT chk_sala_aforo CHECK (aforo_maximo > 0)
 );
-GO
 
 CREATE TABLE clase (
-    id_clase INT IDENTITY(1,1) PRIMARY KEY,
+    id_clase INT AUTO_INCREMENT PRIMARY KEY,
     id_entrenador INT NOT NULL,
     id_sala INT NOT NULL,
     nombre_actividad VARCHAR(80) NOT NULL,
@@ -201,18 +185,17 @@ CREATE TABLE clase (
 
     CONSTRAINT fk_clase_entrenador
         FOREIGN KEY (id_entrenador) REFERENCES entrenador(id_entrenador)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
 
     CONSTRAINT fk_clase_sala
         FOREIGN KEY (id_sala) REFERENCES sala(id_sala)
         ON UPDATE CASCADE
-        ON DELETE NO ACTION
+        ON DELETE RESTRICT
 );
-GO
 
 CREATE TABLE asistencia (
-    id_asistencia INT IDENTITY(1,1) PRIMARY KEY,
+    id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     id_clase INT NOT NULL,
     fecha DATE NOT NULL,
@@ -227,16 +210,15 @@ CREATE TABLE asistencia (
 
     CONSTRAINT fk_asistencia_clase
         FOREIGN KEY (id_clase) REFERENCES clase(id_clase)
-        ON UPDATE NO ACTION
+        ON UPDATE RESTRICT
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE inscripcion (
-    id_inscripcion INT IDENTITY(1,1) PRIMARY KEY,
+    id_inscripcion INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     id_clase INT NOT NULL,
-    fecha_inscripcion DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_inscripcion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(20) NOT NULL DEFAULT 'inscrito',
 
     CONSTRAINT chk_inscripcion_estado CHECK (estado IN ('inscrito', 'cancelado')),
@@ -249,29 +231,27 @@ CREATE TABLE inscripcion (
 
     CONSTRAINT fk_inscripcion_clase
         FOREIGN KEY (id_clase) REFERENCES clase(id_clase)
-        ON UPDATE NO ACTION
+        ON UPDATE RESTRICT
         ON DELETE CASCADE
 );
-GO
 
 CREATE TABLE tarifa (
-    id_tarifa INT IDENTITY(1,1) PRIMARY KEY,
+    id_tarifa INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE,
     precio_mensual DECIMAL(10,2) NOT NULL,
-    servicios_incluidos VARCHAR(MAX) NOT NULL,
+    servicios_incluidos TEXT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NULL,
 
     CONSTRAINT chk_tarifa_precio CHECK (precio_mensual > 0),
     CONSTRAINT chk_tarifa_fechas CHECK (fecha_fin IS NULL OR fecha_fin >= fecha_inicio)
 );
-GO
 
 CREATE TABLE cliente_tarifa (
-    id_cliente_tarifa INT IDENTITY(1,1) PRIMARY KEY,
+    id_cliente_tarifa INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     id_tarifa INT NOT NULL,
-    fecha_contratacion DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
+    fecha_contratacion DATE NOT NULL DEFAULT (CURRENT_DATE),
     estado VARCHAR(20) NOT NULL DEFAULT 'activa',
 
     CONSTRAINT chk_cliente_tarifa_estado CHECK (estado IN ('activa', 'caducada', 'cancelada')),
@@ -284,18 +264,17 @@ CREATE TABLE cliente_tarifa (
     CONSTRAINT fk_cliente_tarifa_tarifa
         FOREIGN KEY (id_tarifa) REFERENCES tarifa(id_tarifa)
         ON UPDATE CASCADE
-        ON DELETE NO ACTION
+        ON DELETE RESTRICT
 );
-GO
 
 CREATE TABLE pago (
-    id_pago INT IDENTITY(1,1) PRIMARY KEY,
+    id_pago INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
     id_contable INT NOT NULL,
     id_tarifa INT NOT NULL,
     importe DECIMAL(10,2) NOT NULL,
     metodo_pago VARCHAR(30) NOT NULL,
-    fecha_pago DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_pago DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
     tipo_cuota VARCHAR(50) NOT NULL,
 
@@ -310,60 +289,47 @@ CREATE TABLE pago (
 
     CONSTRAINT fk_pago_contable
         FOREIGN KEY (id_contable) REFERENCES contable(id_contable)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
 
     CONSTRAINT fk_pago_tarifa
         FOREIGN KEY (id_tarifa) REFERENCES tarifa(id_tarifa)
         ON UPDATE CASCADE
-        ON DELETE NO ACTION
+        ON DELETE RESTRICT
 );
-GO
 
 CREATE TABLE informe (
-    id_informe INT IDENTITY(1,1) PRIMARY KEY,
+    id_informe INT AUTO_INCREMENT PRIMARY KEY,
     id_contable INT NOT NULL,
     tipo_informe VARCHAR(80) NOT NULL,
-    fecha_generacion DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_generacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_informe_contable
         FOREIGN KEY (id_contable) REFERENCES contable(id_contable)
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
 );
-GO
+
+DELIMITER //
 
 CREATE TRIGGER trg_clasificar_cliente
-ON clientes
-AFTER INSERT
-AS
+AFTER INSERT ON clientes
+FOR EACH ROW
 BEGIN
-    SET NOCOUNT ON;
+    DECLARE edad INT;
 
-    INSERT INTO menor (id_cliente, dni_tutor, nombre_tutor)
-    SELECT 
-        i.id_cliente,
-        'PENDIENTE',
-        'PENDIENTE'
-    FROM inserted i
-    INNER JOIN usuarios u ON i.id_cliente = u.id_usuario
-    WHERE 
-        DATEDIFF(YEAR, u.fecha_nacimiento, GETDATE())
-        - CASE 
-            WHEN DATEADD(YEAR, DATEDIFF(YEAR, u.fecha_nacimiento, GETDATE()), u.fecha_nacimiento) > GETDATE()
-            THEN 1 ELSE 0
-          END < 18;
+    SELECT TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE())
+    INTO edad
+    FROM usuarios
+    WHERE id_usuario = NEW.id_cliente;
 
-    INSERT INTO adulto (id_cliente)
-    SELECT 
-        i.id_cliente
-    FROM inserted i
-    INNER JOIN usuarios u ON i.id_cliente = u.id_usuario
-    WHERE 
-        DATEDIFF(YEAR, u.fecha_nacimiento, GETDATE())
-        - CASE 
-            WHEN DATEADD(YEAR, DATEDIFF(YEAR, u.fecha_nacimiento, GETDATE()), u.fecha_nacimiento) > GETDATE()
-            THEN 1 ELSE 0
-          END >= 18;
-END;
-GO
+    IF edad < 18 THEN
+        INSERT INTO menor (id_cliente, dni_tutor, nombre_tutor)
+        VALUES (NEW.id_cliente, 'PENDIENTE', 'PENDIENTE');
+    ELSE
+        INSERT INTO adulto (id_cliente)
+        VALUES (NEW.id_cliente);
+    END IF;
+END//
+
+DELIMITER ;
