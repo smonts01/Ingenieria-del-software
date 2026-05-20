@@ -1,28 +1,33 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.VO.UsuarioVO import UsuarioVO
+from src.modelo.vo.UsuarioVO import UsuarioVO
+
 
 class UsuarioDaoJDBC(Conexion):
+
     SQL_SELECT             = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
     SQL_SELECT_BY_ID       = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
     SQL_SELECT_BY_USERNAME = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ?"
+    SQL_CHECK_LOGIN        = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ? AND password_hash = ?"
     SQL_INSERT             = "INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     SQL_UPDATE             = "UPDATE usuarios SET dni=?, nombre=?, telefono=?, email=?, username=?, password_hash=?, id_rol=?, direccion=?, fecha_nacimiento=? WHERE id_usuario=?"
     SQL_DELETE             = "DELETE FROM usuarios WHERE id_usuario = ?"
 
+    def _rowToVO(self, row) -> UsuarioVO:
+        id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento = row
+        return UsuarioVO(id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento)
+
     def select(self) -> list[UsuarioVO]:
-        """Recupera todos los usuarios de la base de datos"""
+        """Recupera todos los usuarios."""
         cursor = self.getCursor()
         usuarios = []
         try:
             cursor.execute(self.SQL_SELECT)
-            rows = cursor.fetchall()
-            for row in rows:
-                id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento = row
-                usuarios.append(UsuarioVO(id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento))
+            for row in cursor.fetchall():
+                usuarios.append(self._rowToVO(row))
         except Exception as e:
             print("Error al seleccionar usuarios:", e)
         finally:
-            if cursor: cursor.close()
+            cursor.close()
             self.closeConnection()
         return usuarios
 
@@ -34,11 +39,11 @@ class UsuarioDaoJDBC(Conexion):
             cursor.execute(self.SQL_SELECT_BY_ID, (id_usuario,))
             row = cursor.fetchone()
             if row:
-                usuario = UsuarioVO(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10])
+                usuario = self._rowToVO(row)
         except Exception as e:
             print("Error al seleccionar usuario por ID:", e)
         finally:
-            if cursor: cursor.close()
+            cursor.close()
             self.closeConnection()
         return usuario
 
@@ -50,11 +55,27 @@ class UsuarioDaoJDBC(Conexion):
             cursor.execute(self.SQL_SELECT_BY_USERNAME, (username,))
             row = cursor.fetchone()
             if row:
-                usuario = UsuarioVO(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10])
+                usuario = self._rowToVO(row)
         except Exception as e:
             print("Error al seleccionar usuario por username:", e)
         finally:
-            if cursor: cursor.close()
+            cursor.close()
+            self.closeConnection()
+        return usuario
+
+    def checkLogin(self, username: str, password_hash: str) -> UsuarioVO:
+        """Verifica credenciales. Retorna UsuarioVO si son correctas, None si no."""
+        cursor = self.getCursor()
+        usuario = None
+        try:
+            cursor.execute(self.SQL_CHECK_LOGIN, (username, password_hash))
+            row = cursor.fetchone()
+            if row:
+                usuario = self._rowToVO(row)
+        except Exception as e:
+            print("Error al verificar login:", e)
+        finally:
+            cursor.close()
             self.closeConnection()
         return usuario
 
@@ -64,15 +85,15 @@ class UsuarioDaoJDBC(Conexion):
         rows = 0
         try:
             cursor.execute(self.SQL_INSERT, (
-                usuario._dni, usuario._nombre, usuario._telefono,
-                usuario._email, usuario._username, usuario._password_hash,
-                usuario._id_rol, usuario._direccion, usuario._fecha_nacimiento
+                usuario.dni, usuario.nombre, usuario.telefono,
+                usuario.email, usuario.username, usuario.password_hash,
+                usuario.id_rol, usuario.direccion, usuario.fecha_nacimiento
             ))
             rows = cursor.rowcount
         except Exception as e:
             print("Error al insertar usuario:", e)
         finally:
-            if cursor: cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows
 
@@ -82,16 +103,16 @@ class UsuarioDaoJDBC(Conexion):
         rows = 0
         try:
             cursor.execute(self.SQL_UPDATE, (
-                usuario._dni, usuario._nombre, usuario._telefono,
-                usuario._email, usuario._username, usuario._password_hash,
-                usuario._id_rol, usuario._direccion, usuario._fecha_nacimiento,
-                usuario._id_usuario
+                usuario.dni, usuario.nombre, usuario.telefono,
+                usuario.email, usuario.username, usuario.password_hash,
+                usuario.id_rol, usuario.direccion, usuario.fecha_nacimiento,
+                usuario.id_usuario
             ))
             rows = cursor.rowcount
         except Exception as e:
             print("Error al actualizar usuario:", e)
         finally:
-            if cursor: cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows
 
@@ -105,6 +126,6 @@ class UsuarioDaoJDBC(Conexion):
         except Exception as e:
             print("Error al eliminar usuario:", e)
         finally:
-            if cursor: cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows
