@@ -1,8 +1,7 @@
 from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.UsuarioVO import UsuarioVO
-from src.modelo.dao.UsuarioDao import UsuarioDao
 
-class UsuarioDaoJDBC(UsuarioVO, Conexion):
+class UsuarioDaoJDBC(Conexion):
     SQL_SELECT             = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
     SQL_SELECT_BY_ID       = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
     SQL_SELECT_BY_USERNAME = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ?"
