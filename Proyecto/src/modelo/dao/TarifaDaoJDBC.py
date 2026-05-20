@@ -4,11 +4,11 @@ from src.modelo.vo.TarifaVO import TarifaVO
 
 class TarifaDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_tarifa, nombre, precio_mensual, servicios_incluidos, fecha_inicio, fecha_fin FROM tarifa"
+    SQL_SELECT = "SELECT id_tarifa, nombre, precio_mensual, servicios_incluidos, fecha_inicio, fecha_fin FROM tarifa"
     SQL_SELECT_BY_ID = "SELECT id_tarifa, nombre, precio_mensual, servicios_incluidos, fecha_inicio, fecha_fin FROM tarifa WHERE id_tarifa = ?"
-    SQL_INSERT       = "INSERT INTO tarifa (nombre, precio_mensual, servicios_incluidos, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?, ?)"
-    SQL_UPDATE       = "UPDATE tarifa SET nombre=?, precio_mensual=?, servicios_incluidos=?, fecha_inicio=?, fecha_fin=? WHERE id_tarifa=?"
-    SQL_DELETE       = "DELETE FROM tarifa WHERE id_tarifa = ?"
+    SQL_INSERT = "INSERT INTO tarifa (nombre, precio_mensual, servicios_incluidos, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE tarifa SET nombre=?, precio_mensual=?, servicios_incluidos=?, fecha_inicio=?, fecha_fin=? WHERE id_tarifa=?"
+    SQL_DELETE = "DELETE FROM tarifa WHERE id_tarifa = ?"
 
     def _rowToVO(self, row) -> TarifaVO:
         id_tarifa, nombre, precio_mensual, servicios_incluidos, fecha_inicio, fecha_fin = row

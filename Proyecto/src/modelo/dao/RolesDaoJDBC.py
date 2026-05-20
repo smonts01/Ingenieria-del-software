@@ -4,11 +4,11 @@ from src.modelo.vo.RolesVO import RolesVO
 
 class RolesDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_rol, nombre_rol FROM roles"
+    SQL_SELECT = "SELECT id_rol, nombre_rol FROM roles"
     SQL_SELECT_BY_ID = "SELECT id_rol, nombre_rol FROM roles WHERE id_rol = ?"
-    SQL_INSERT       = "INSERT INTO roles (nombre_rol) VALUES (?)"
-    SQL_UPDATE       = "UPDATE roles SET nombre_rol=? WHERE id_rol=?"
-    SQL_DELETE       = "DELETE FROM roles WHERE id_rol = ?"
+    SQL_INSERT = "INSERT INTO roles (nombre_rol) VALUES (?)"
+    SQL_UPDATE = "UPDATE roles SET nombre_rol=? WHERE id_rol=?"
+    SQL_DELETE = "DELETE FROM roles WHERE id_rol = ?"
 
     def _rowToVO(self, row) -> RolesVO:
         id_rol, nombre_rol = row

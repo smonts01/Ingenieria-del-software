@@ -4,11 +4,11 @@ from src.modelo.vo.ContableVO import ContableVO
 
 class ContableDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_contable, titulacion, id_administrador_registra FROM contable"
+    SQL_SELECT = "SELECT id_contable, titulacion, id_administrador_registra FROM contable"
     SQL_SELECT_BY_ID = "SELECT id_contable, titulacion, id_administrador_registra FROM contable WHERE id_contable = ?"
-    SQL_INSERT       = "INSERT INTO contable (titulacion, id_administrador_registra) VALUES (?, ?)"
-    SQL_UPDATE       = "UPDATE contable SET titulacion=?, id_administrador_registra=? WHERE id_contable=?"
-    SQL_DELETE       = "DELETE FROM contable WHERE id_contable = ?"
+    SQL_INSERT = "INSERT INTO contable (titulacion, id_administrador_registra) VALUES (?, ?)"
+    SQL_UPDATE = "UPDATE contable SET titulacion=?, id_administrador_registra=? WHERE id_contable=?"
+    SQL_DELETE = "DELETE FROM contable WHERE id_contable = ?"
 
     def _rowToVO(self, row) -> ContableVO:
         id_contable, titulacion, id_administrador_registra = row

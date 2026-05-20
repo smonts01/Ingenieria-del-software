@@ -4,11 +4,11 @@ from src.modelo.vo.SalaVO import SalaVO
 
 class SalaDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_sala, nombre, aforo_maximo, tipo_zona FROM sala"
+    SQL_SELECT = "SELECT id_sala, nombre, aforo_maximo, tipo_zona FROM sala"
     SQL_SELECT_BY_ID = "SELECT id_sala, nombre, aforo_maximo, tipo_zona FROM sala WHERE id_sala = ?"
-    SQL_INSERT       = "INSERT INTO sala (nombre, aforo_maximo, tipo_zona) VALUES (?, ?, ?)"
-    SQL_UPDATE       = "UPDATE sala SET nombre=?, aforo_maximo=?, tipo_zona=? WHERE id_sala=?"
-    SQL_DELETE       = "DELETE FROM sala WHERE id_sala = ?"
+    SQL_INSERT = "INSERT INTO sala (nombre, aforo_maximo, tipo_zona) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE sala SET nombre=?, aforo_maximo=?, tipo_zona=? WHERE id_sala=?"
+    SQL_DELETE = "DELETE FROM sala WHERE id_sala = ?"
 
     def _rowToVO(self, row) -> SalaVO:
         id_sala, nombre, aforo_maximo, tipo_zona = row

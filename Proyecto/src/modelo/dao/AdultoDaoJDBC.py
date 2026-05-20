@@ -4,10 +4,10 @@ from src.modelo.vo.AdultoVO import AdultoVO
 
 class AdultoDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_cliente FROM adulto"
+    SQL_SELECT = "SELECT id_cliente FROM adulto"
     SQL_SELECT_BY_ID = "SELECT id_cliente FROM adulto WHERE id_cliente = ?"
-    SQL_INSERT       = "INSERT INTO adulto (id_cliente) VALUES (?)"
-    SQL_DELETE       = "DELETE FROM adulto WHERE id_cliente = ?"
+    SQL_INSERT = "INSERT INTO adulto (id_cliente) VALUES (?)"
+    SQL_DELETE = "DELETE FROM adulto WHERE id_cliente = ?"
 
     def _rowToVO(self, row) -> AdultoVO:
         return AdultoVO(row[0])

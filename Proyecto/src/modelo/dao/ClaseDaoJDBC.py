@@ -4,13 +4,13 @@ from src.modelo.vo.ClaseVO import ClaseVO
 
 class ClaseDaoJDBC(Conexion):
 
-    SQL_SELECT               = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase"
-    SQL_SELECT_BY_ID         = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_clase = ?"
+    SQL_SELECT = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase"
+    SQL_SELECT_BY_ID = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_clase = ?"
     SQL_SELECT_BY_ENTRENADOR = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_entrenador = ?"
-    SQL_SELECT_BY_SALA       = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_sala = ?"
-    SQL_INSERT               = "INSERT INTO clase (id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    SQL_UPDATE               = "UPDATE clase SET id_entrenador=?, id_sala=?, nombre_actividad=?, calorias_estimadas=?, dia_semana=?, hora_inicio=?, hora_fin=?, duracion=?, aforo_maximo=?, nivel_intensidad=? WHERE id_clase=?"
-    SQL_DELETE               = "DELETE FROM clase WHERE id_clase = ?"
+    SQL_SELECT_BY_SALA = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_sala = ?"
+    SQL_INSERT = "INSERT INTO clase (id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE clase SET id_entrenador=?, id_sala=?, nombre_actividad=?, calorias_estimadas=?, dia_semana=?, hora_inicio=?, hora_fin=?, duracion=?, aforo_maximo=?, nivel_intensidad=? WHERE id_clase=?"
+    SQL_DELETE = "DELETE FROM clase WHERE id_clase = ?"
 
     def _rowToVO(self, row) -> ClaseVO:
         id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad = row

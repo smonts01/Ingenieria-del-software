@@ -4,11 +4,11 @@ from src.modelo.vo.EntrenadorVO import EntrenadorVO
 
 class EntrenadorDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_entrenador, especialidad, id_administrador_registra FROM entrenador"
+    SQL_SELECT = "SELECT id_entrenador, especialidad, id_administrador_registra FROM entrenador"
     SQL_SELECT_BY_ID = "SELECT id_entrenador, especialidad, id_administrador_registra FROM entrenador WHERE id_entrenador = ?"
-    SQL_INSERT       = "INSERT INTO entrenador (id_entrenador, especialidad, id_administrador_registra) VALUES (?, ?, ?)"
-    SQL_UPDATE       = "UPDATE entrenador SET especialidad=?, id_administrador_registra=? WHERE id_entrenador=?"
-    SQL_DELETE       = "DELETE FROM entrenador WHERE id_entrenador = ?"
+    SQL_INSERT = "INSERT INTO entrenador (id_entrenador, especialidad, id_administrador_registra) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE entrenador SET especialidad=?, id_administrador_registra=? WHERE id_entrenador=?"
+    SQL_DELETE = "DELETE FROM entrenador WHERE id_entrenador = ?"
 
     def _rowToVO(self, row) -> EntrenadorVO:
         id_entrenador, especialidad, id_administrador_registra = row

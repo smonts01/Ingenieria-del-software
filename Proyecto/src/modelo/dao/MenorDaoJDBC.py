@@ -4,11 +4,11 @@ from src.modelo.vo.MenorVO import MenorVO
 
 class MenorDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_cliente, dni_tutor, nombre_tutor FROM menor"
+    SQL_SELECT = "SELECT id_cliente, dni_tutor, nombre_tutor FROM menor"
     SQL_SELECT_BY_ID = "SELECT id_cliente, dni_tutor, nombre_tutor FROM menor WHERE id_cliente = ?"
-    SQL_INSERT       = "INSERT INTO menor (id_cliente, dni_tutor, nombre_tutor) VALUES (?, ?, ?)"
-    SQL_UPDATE       = "UPDATE menor SET dni_tutor=?, nombre_tutor=? WHERE id_cliente=?"
-    SQL_DELETE       = "DELETE FROM menor WHERE id_cliente = ?"
+    SQL_INSERT = "INSERT INTO menor (id_cliente, dni_tutor, nombre_tutor) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE menor SET dni_tutor=?, nombre_tutor=? WHERE id_cliente=?"
+    SQL_DELETE = "DELETE FROM menor WHERE id_cliente = ?"
 
     def _rowToVO(self, row) -> MenorVO:
         id_cliente, dni_tutor, nombre_tutor = row

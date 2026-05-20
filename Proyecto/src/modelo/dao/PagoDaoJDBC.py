@@ -4,13 +4,13 @@ from src.modelo.vo.PagoVO import PagoVO
 
 class PagoDaoJDBC(Conexion):
 
-    SQL_SELECT            = "SELECT id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota FROM pago"
-    SQL_SELECT_BY_ID      = "SELECT id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota FROM pago WHERE id_pago = ?"
+    SQL_SELECT = "SELECT id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota FROM pago"
+    SQL_SELECT_BY_ID = "SELECT id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota FROM pago WHERE id_pago = ?"
     SQL_SELECT_BY_CLIENTE = "SELECT id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota FROM pago WHERE id_cliente = ?"
-    SQL_INSERT            = "INSERT INTO pago (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-    SQL_UPDATE            = "UPDATE pago SET id_cliente=?, id_contable=?, id_tarifa=?, importe=?, metodo_pago=?, fecha_pago=?, estado=?, tipo_cuota=? WHERE id_pago=?"
-    SQL_UPDATE_ESTADO     = "UPDATE pago SET estado=? WHERE id_pago=?"
-    SQL_DELETE            = "DELETE FROM pago WHERE id_pago = ?"
+    SQL_INSERT = "INSERT INTO pago (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE pago SET id_cliente=?, id_contable=?, id_tarifa=?, importe=?, metodo_pago=?, fecha_pago=?, estado=?, tipo_cuota=? WHERE id_pago=?"
+    SQL_UPDATE_ESTADO = "UPDATE pago SET estado=? WHERE id_pago=?"
+    SQL_DELETE = "DELETE FROM pago WHERE id_pago = ?"
 
     def _rowToVO(self, row) -> PagoVO:
         id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota = row

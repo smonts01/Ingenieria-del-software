@@ -4,13 +4,13 @@ from src.modelo.vo.UsuarioVO import UsuarioVO
 
 class UsuarioDaoJDBC(Conexion):
 
-    SQL_SELECT             = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
-    SQL_SELECT_BY_ID       = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
+    SQL_SELECT = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
+    SQL_SELECT_BY_ID = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
     SQL_SELECT_BY_USERNAME = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ?"
-    SQL_CHECK_LOGIN        = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ? AND password_hash = ?"
-    SQL_INSERT             = "INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    SQL_UPDATE             = "UPDATE usuarios SET dni=?, nombre=?, telefono=?, email=?, username=?, password_hash=?, id_rol=?, direccion=?, fecha_nacimiento=? WHERE id_usuario=?"
-    SQL_DELETE             = "DELETE FROM usuarios WHERE id_usuario = ?"
+    SQL_CHECK_LOGIN = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ? AND password_hash = ?"
+    SQL_INSERT = "INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE usuarios SET dni=?, nombre=?, telefono=?, email=?, username=?, password_hash=?, id_rol=?, direccion=?, fecha_nacimiento=? WHERE id_usuario=?"
+    SQL_DELETE = "DELETE FROM usuarios WHERE id_usuario = ?"
 
     def _rowToVO(self, row) -> UsuarioVO:
         id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento = row

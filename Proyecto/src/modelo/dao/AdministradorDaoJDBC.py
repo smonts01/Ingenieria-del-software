@@ -4,10 +4,10 @@ from src.modelo.vo.AdminitradorVO import AdminitradorVO
 
 class AdministradorDaoJDBC(Conexion):
 
-    SQL_SELECT      = "SELECT id_administrador FROM administrador"
+    SQL_SELECT = "SELECT id_administrador FROM administrador"
     SQL_SELECT_BY_ID = "SELECT id_administrador FROM administrador WHERE id_administrador = ?"
-    SQL_INSERT      = "INSERT INTO administrador (id_administrador) VALUES (?)"
-    SQL_DELETE      = "DELETE FROM administrador WHERE id_administrador = ?"
+    SQL_INSERT = "INSERT INTO administrador (id_administrador) VALUES (?)"
+    SQL_DELETE = "DELETE FROM administrador WHERE id_administrador = ?"
 
     def _rowToVO(self, row) -> AdminitradorVO:
         return AdminitradorVO(row[0])

@@ -4,12 +4,12 @@ from src.modelo.vo.InformeVO import InformeVO
 
 class InformeDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_informe, id_contable, tipo_informe, fecha_generacion FROM informe"
+    SQL_SELECT = "SELECT id_informe, id_contable, tipo_informe, fecha_generacion FROM informe"
     SQL_SELECT_BY_ID = "SELECT id_informe, id_contable, tipo_informe, fecha_generacion FROM informe WHERE id_informe = ?"
     SQL_SELECT_BY_CONTABLE = "SELECT id_informe, id_contable, tipo_informe, fecha_generacion FROM informe WHERE id_contable = ?"
-    SQL_INSERT       = "INSERT INTO informe (id_contable, tipo_informe, fecha_generacion) VALUES (?, ?, ?)"
-    SQL_UPDATE       = "UPDATE informe SET id_contable=?, tipo_informe=?, fecha_generacion=? WHERE id_informe=?"
-    SQL_DELETE       = "DELETE FROM informe WHERE id_informe = ?"
+    SQL_INSERT = "INSERT INTO informe (id_contable, tipo_informe, fecha_generacion) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE informe SET id_contable=?, tipo_informe=?, fecha_generacion=? WHERE id_informe=?"
+    SQL_DELETE = "DELETE FROM informe WHERE id_informe = ?"
 
     def _rowToVO(self, row) -> InformeVO:
         id_informe, id_contable, tipo_informe, fecha_generacion = row

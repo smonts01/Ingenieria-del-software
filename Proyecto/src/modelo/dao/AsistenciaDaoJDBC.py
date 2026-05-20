@@ -4,13 +4,13 @@ from src.modelo.vo.AsistenciaVO import AsistenciaVO
 
 class AsistenciaDaoJDBC(Conexion):
 
-    SQL_SELECT            = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia"
-    SQL_SELECT_BY_ID      = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_asistencia = ?"
+    SQL_SELECT = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia"
+    SQL_SELECT_BY_ID = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_asistencia = ?"
     SQL_SELECT_BY_CLIENTE = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_cliente = ?"
-    SQL_SELECT_BY_CLASE   = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_clase = ?"
-    SQL_INSERT            = "INSERT INTO asistencia (id_cliente, id_clase, fecha, presente) VALUES (?, ?, ?, ?)"
-    SQL_UPDATE            = "UPDATE asistencia SET presente=? WHERE id_asistencia=?"
-    SQL_DELETE            = "DELETE FROM asistencia WHERE id_asistencia = ?"
+    SQL_SELECT_BY_CLASE = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_clase = ?"
+    SQL_INSERT = "INSERT INTO asistencia (id_cliente, id_clase, fecha, presente) VALUES (?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE asistencia SET presente=? WHERE id_asistencia=?"
+    SQL_DELETE = "DELETE FROM asistencia WHERE id_asistencia = ?"
 
     def _rowToVO(self, row) -> AsistenciaVO:
         id_asistencia, id_cliente, id_clase, fecha, presente = row

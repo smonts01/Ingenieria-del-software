@@ -4,13 +4,13 @@ from src.modelo.vo.ClientesVO import ClientesVO
 
 class ClienteDaoJDBC(Conexion):
 
-    SQL_SELECT          = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes"
-    SQL_SELECT_BY_ID    = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes WHERE id_cliente = ?"
-    SQL_INSERT          = "INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES (?, ?, ?)"
-    SQL_UPDATE          = "UPDATE clientes SET estado_pagado=?, calorias_acumuladas=? WHERE id_cliente=?"
-    SQL_UPDATE_ESTADO   = "UPDATE clientes SET estado_pagado=? WHERE id_cliente=?"
+    SQL_SELECT = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes"
+    SQL_SELECT_BY_ID = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes WHERE id_cliente = ?"
+    SQL_INSERT = "INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE clientes SET estado_pagado=?, calorias_acumuladas=? WHERE id_cliente=?"
+    SQL_UPDATE_ESTADO = "UPDATE clientes SET estado_pagado=? WHERE id_cliente=?"
     SQL_UPDATE_CALORIAS = "UPDATE clientes SET calorias_acumuladas=? WHERE id_cliente=?"
-    SQL_DELETE          = "DELETE FROM clientes WHERE id_cliente = ?"
+    SQL_DELETE = "DELETE FROM clientes WHERE id_cliente = ?"
 
     def _rowToVO(self, row) -> ClientesVO:
         id_cliente, estado_pagado, calorias_acumuladas = row

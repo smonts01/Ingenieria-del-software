@@ -5,13 +5,13 @@ from src.modelo.vo.Cliente_tarifaVO import ClienteTarifaVO
 class ClienteTarifaDaoJDBC(Conexion):
     """DAO para la tabla cliente_tarifa (relación M:N entre clientes y tarifas)."""
 
-    SQL_SELECT            = "SELECT id_cliente, id_tarifa, fecha_inicio, fecha_fin FROM cliente_tarifa"
+    SQL_SELECT = "SELECT id_cliente, id_tarifa, fecha_inicio, fecha_fin FROM cliente_tarifa"
     SQL_SELECT_BY_CLIENTE = "SELECT id_cliente, id_tarifa, fecha_inicio, fecha_fin FROM cliente_tarifa WHERE id_cliente = ?"
-    SQL_SELECT_BY_TARIFA  = "SELECT id_cliente, id_tarifa, fecha_inicio, fecha_fin FROM cliente_tarifa WHERE id_tarifa = ?"
-    SQL_SELECT_BY_PK      = "SELECT id_cliente, id_tarifa, fecha_inicio, fecha_fin FROM cliente_tarifa WHERE id_cliente = ? AND id_tarifa = ?"
-    SQL_INSERT            = "INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?)"
-    SQL_UPDATE            = "UPDATE cliente_tarifa SET fecha_inicio=?, fecha_fin=? WHERE id_cliente=? AND id_tarifa=?"
-    SQL_DELETE            = "DELETE FROM cliente_tarifa WHERE id_cliente = ? AND id_tarifa = ?"
+    SQL_SELECT_BY_TARIFA = "SELECT id_cliente, id_tarifa, fecha_inicio, fecha_fin FROM cliente_tarifa WHERE id_tarifa = ?"
+    SQL_SELECT_BY_PK = "SELECT id_cliente, id_tarifa, fecha_inicio, fecha_fin FROM cliente_tarifa WHERE id_cliente = ? AND id_tarifa = ?"
+    SQL_INSERT = "INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE cliente_tarifa SET fecha_inicio=?, fecha_fin=? WHERE id_cliente=? AND id_tarifa=?"
+    SQL_DELETE = "DELETE FROM cliente_tarifa WHERE id_cliente = ? AND id_tarifa = ?"
 
     def _rowToVO(self, row) -> ClienteTarifaVO:
         id_cliente, id_tarifa, fecha_inicio, fecha_fin = row

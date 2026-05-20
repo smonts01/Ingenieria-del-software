@@ -4,12 +4,12 @@ from src.modelo.vo.Registro_accesoVO import RegistroAccesoVO
 
 class RegistroAccesoDaoJDBC(Conexion):
 
-    SQL_SELECT            = "SELECT id_registro, id_usuario, fecha_hora_registro, tipo_acceso FROM registro_acceso"
-    SQL_SELECT_BY_ID      = "SELECT id_registro, id_usuario, fecha_hora_registro, tipo_acceso FROM registro_acceso WHERE id_registro = ?"
+    SQL_SELECT = "SELECT id_registro, id_usuario, fecha_hora_registro, tipo_acceso FROM registro_acceso"
+    SQL_SELECT_BY_ID = "SELECT id_registro, id_usuario, fecha_hora_registro, tipo_acceso FROM registro_acceso WHERE id_registro = ?"
     SQL_SELECT_BY_USUARIO = "SELECT id_registro, id_usuario, fecha_hora_registro, tipo_acceso FROM registro_acceso WHERE id_usuario = ?"
-    SQL_INSERT            = "INSERT INTO registro_acceso (id_usuario, fecha_hora_registro, tipo_acceso) VALUES (?, ?, ?)"
-    SQL_UPDATE            = "UPDATE registro_acceso SET id_usuario=?, fecha_hora_registro=?, tipo_acceso=? WHERE id_registro=?"
-    SQL_DELETE            = "DELETE FROM registro_acceso WHERE id_registro = ?"
+    SQL_INSERT = "INSERT INTO registro_acceso (id_usuario, fecha_hora_registro, tipo_acceso) VALUES (?, ?, ?)"
+    SQL_UPDATE = "UPDATE registro_acceso SET id_usuario=?, fecha_hora_registro=?, tipo_acceso=? WHERE id_registro=?"
+    SQL_DELETE = "DELETE FROM registro_acceso WHERE id_registro = ?"
 
     def _rowToVO(self, row) -> RegistroAccesoVO:
         id_registro, id_usuario, fecha_hora_registro, tipo_acceso = row

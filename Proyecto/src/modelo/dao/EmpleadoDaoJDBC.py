@@ -4,11 +4,11 @@ from src.modelo.vo.EmpleadosVO import EmpleadoVO
 
 class EmpleadoDaoJDBC(Conexion):
 
-    SQL_SELECT       = "SELECT id_empleado, salario FROM empleados"
+    SQL_SELECT = "SELECT id_empleado, salario FROM empleados"
     SQL_SELECT_BY_ID = "SELECT id_empleado, salario FROM empleados WHERE id_empleado = ?"
-    SQL_INSERT       = "INSERT INTO empleados (id_empleado, salario) VALUES (?, ?)"
-    SQL_UPDATE       = "UPDATE empleados SET salario=? WHERE id_empleado=?"
-    SQL_DELETE       = "DELETE FROM empleados WHERE id_empleado = ?"
+    SQL_INSERT = "INSERT INTO empleados (id_empleado, salario) VALUES (?, ?)"
+    SQL_UPDATE = "UPDATE empleados SET salario=? WHERE id_empleado=?"
+    SQL_DELETE = "DELETE FROM empleados WHERE id_empleado = ?"
 
     def _rowToVO(self, row) -> EmpleadoVO:
         id_empleado, salario = row

@@ -4,13 +4,13 @@ from src.modelo.vo.InscripcionVO import InscripcionVO
 
 class InscripcionDaoJDBC(Conexion):
 
-    SQL_SELECT            = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion"
-    SQL_SELECT_BY_ID      = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_inscripcion = ?"
+    SQL_SELECT = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion"
+    SQL_SELECT_BY_ID = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_inscripcion = ?"
     SQL_SELECT_BY_CLIENTE = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_cliente = ?"
-    SQL_SELECT_BY_CLASE   = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_clase = ?"
-    SQL_INSERT            = "INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES (?, ?, ?)"
-    SQL_UPDATE_ESTADO     = "UPDATE inscripcion SET estado=? WHERE id_inscripcion=?"
-    SQL_DELETE            = "DELETE FROM inscripcion WHERE id_inscripcion = ?"
+    SQL_SELECT_BY_CLASE = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_clase = ?"
+    SQL_INSERT = "INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES (?, ?, ?)"
+    SQL_UPDATE_ESTADO = "UPDATE inscripcion SET estado=? WHERE id_inscripcion=?"
+    SQL_DELETE = "DELETE FROM inscripcion WHERE id_inscripcion = ?"
 
     def _rowToVO(self, row) -> InscripcionVO:
         id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado = row
