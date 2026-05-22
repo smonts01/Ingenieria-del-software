@@ -18,7 +18,7 @@ class MiVentana(QMainWindow, Form):
         self.txtContrasea.setEchoMode(QLineEdit.Password)
         self.btnOjo.setStyleSheet("""
         QToolButton {
-            image: url(./src/vista/imagenes/ojo_abierto.png);
+            image: url(./src/vista/imagenes/ojo_abierto.jpg);
             background: transparent;
             border: none;
         }
@@ -39,7 +39,7 @@ class MiVentana(QMainWindow, Form):
             self.txtContrasea.setEchoMode(QLineEdit.Normal)
             self.btnOjo.setStyleSheet("""
             QToolButton {
-                image: url(./src/vista/imagenes/ojo_cerrado.png);
+                image: url(./src/vista/imagenes/ojo_cerrado.jpg);
                 background: transparent;
                 border: none;
             }
