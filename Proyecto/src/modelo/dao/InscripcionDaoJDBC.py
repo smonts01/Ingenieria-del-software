@@ -1,107 +1,120 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.AsistenciaVO import AsistenciaVO
+from src.modelo.vo.InscripcionVO import InscripcionVO
 
-class AsistenciaDaoJDBC(AsistenciaVO, Conexion):
-    SQL_SELECT           = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia"
-    SQL_SELECT_BY_CLIENTE = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_cliente = ?"
-    SQL_SELECT_BY_CLASE  = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_clase = ?"
-    SQL_INSERT           = "INSERT INTO asistencia (id_cliente, id_clase, fecha, presente) VALUES (?, ?, ?, ?)"
-    SQL_UPDATE           = "UPDATE asistencia SET presente=? WHERE id_asistencia=?"
-    SQL_DELETE           = "DELETE FROM asistencia WHERE id_asistencia = ?"
 
-    def _rowToVO(self, row) -> AsistenciaVO:
-        id_asistencia, id_cliente, id_clase, fecha, presente = row
-        return AsistenciaVO(id_asistencia, id_cliente, id_clase, fecha, presente)
+class InscripcionDaoJDBC(Conexion):
 
-    def select(self) -> list[AsistenciaVO]:
+    SQL_SELECT = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion"
+    SQL_SELECT_BY_ID = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_inscripcion = ?"
+    SQL_SELECT_BY_CLIENTE = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_cliente = ?"
+    SQL_SELECT_BY_CLASE = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_clase = ?"
+    SQL_INSERT = "INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES (?, ?, ?)"
+    SQL_UPDATE_ESTADO = "UPDATE inscripcion SET estado=? WHERE id_inscripcion=?"
+    SQL_DELETE = "DELETE FROM inscripcion WHERE id_inscripcion = ?"
+
+    def _rowToVO(self, row) -> InscripcionVO:
+        id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado = row
+        return InscripcionVO(id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado)
+
+    def select(self) -> list[InscripcionVO]:
+        """Recupera todas las inscripciones."""
         cursor = self.getCursor()
-        asistencias = []
+        inscripciones = []
         try:
             cursor.execute(self.SQL_SELECT)
-            rows = cursor.fetchall()
-            for row in rows:
-                asistencias.append(self._rowToVO(row))
+            for row in cursor.fetchall():
+                inscripciones.append(self._rowToVO(row))
         except Exception as e:
-            print("Error al seleccionar asistencias:", e)
+            print("Error al seleccionar inscripciones:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
-        return asistencias
+        return inscripciones
 
-    def selectByCliente(self, id_cliente: int) -> list[AsistenciaVO]:
+    def selectById(self, id_inscripcion: int) -> InscripcionVO:
+        """Recupera una inscripción por su ID."""
         cursor = self.getCursor()
-        asistencias = []
+        inscripcion = None
+        try:
+            cursor.execute(self.SQL_SELECT_BY_ID, (id_inscripcion,))
+            row = cursor.fetchone()
+            if row:
+                inscripcion = self._rowToVO(row)
+        except Exception as e:
+            print("Error al seleccionar inscripción por ID:", e)
+        finally:
+            cursor.close()
+            self.closeConnection()
+        return inscripcion
+
+    def selectByCliente(self, id_cliente: int) -> list[InscripcionVO]:
+        """Recupera todas las inscripciones de un cliente."""
+        cursor = self.getCursor()
+        inscripciones = []
         try:
             cursor.execute(self.SQL_SELECT_BY_CLIENTE, (id_cliente,))
-            rows = cursor.fetchall()
-            for row in rows:
-                asistencias.append(self._rowToVO(row))
+            for row in cursor.fetchall():
+                inscripciones.append(self._rowToVO(row))
         except Exception as e:
-            print("Error al seleccionar asistencias por cliente:", e)
+            print("Error al seleccionar inscripciones por cliente:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
-        return asistencias
+        return inscripciones
 
-    def selectByClase(self, id_clase: int) -> list[AsistenciaVO]:
+    def selectByClase(self, id_clase: int) -> list[InscripcionVO]:
+        """Recupera todas las inscripciones de una clase."""
         cursor = self.getCursor()
-        asistencias = []
+        inscripciones = []
         try:
             cursor.execute(self.SQL_SELECT_BY_CLASE, (id_clase,))
-            rows = cursor.fetchall()
-            for row in rows:
-                asistencias.append(self._rowToVO(row))
+            for row in cursor.fetchall():
+                inscripciones.append(self._rowToVO(row))
         except Exception as e:
-            print("Error al seleccionar asistencias por clase:", e)
+            print("Error al seleccionar inscripciones por clase:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
-        return asistencias
+        return inscripciones
 
-    def insert(self, asistencia: AsistenciaVO) -> int:
+    def insert(self, vo: InscripcionVO) -> int:
+        """Inserta una nueva inscripción. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
-            cursor.execute(self.SQL_INSERT, (
-                asistencia.id_cliente, asistencia.id_clase,
-                asistencia.fecha, asistencia.presente
-            ))
+            cursor.execute(self.SQL_INSERT, (vo.id_cliente, vo.id_clase, vo.estado))
             rows = cursor.rowcount
         except Exception as e:
-            print("Error al insertar asistencia:", e)
+            print("Error al insertar inscripción:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows
 
-    def update(self, asistencia: AsistenciaVO) -> int:
+    def updateEstado(self, id_inscripcion: int, estado: str) -> int:
+        """Actualiza el estado de una inscripción ('inscrito'/'cancelado'). Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
-            cursor.execute(self.SQL_UPDATE, (asistencia.presente, asistencia.id_asistencia))
+            cursor.execute(self.SQL_UPDATE_ESTADO, (estado, id_inscripcion))
             rows = cursor.rowcount
         except Exception as e:
-            print("Error al actualizar asistencia:", e)
+            print("Error al actualizar estado de inscripción:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows
 
-    def delete(self, id_asistencia: int) -> int:
+    def delete(self, id_inscripcion: int) -> int:
+        """Elimina una inscripción por su ID. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
-            cursor.execute(self.SQL_DELETE, (id_asistencia,))
+            cursor.execute(self.SQL_DELETE, (id_inscripcion,))
             rows = cursor.rowcount
         except Exception as e:
-            print("Error al eliminar asistencia:", e)
+            print("Error al eliminar inscripción:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows

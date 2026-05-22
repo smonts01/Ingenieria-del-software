@@ -1,36 +1,38 @@
 from src.modelo.conexion.Conexion import Conexion
 from src.modelo.vo.ClaseVO import ClaseVO
 
-class ClaseDaoJDBC(ClaseVO, Conexion):
-    SQL_SELECT              = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase"
-    SQL_SELECT_BY_ID        = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_clase = ?"
+
+class ClaseDaoJDBC(Conexion):
+
+    SQL_SELECT = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase"
+    SQL_SELECT_BY_ID = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_clase = ?"
     SQL_SELECT_BY_ENTRENADOR = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_entrenador = ?"
-    SQL_SELECT_BY_SALA      = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_sala = ?"
-    SQL_INSERT              = "INSERT INTO clase (id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    SQL_UPDATE              = "UPDATE clase SET id_entrenador=?, id_sala=?, nombre_actividad=?, calorias_estimadas=?, dia_semana=?, hora_inicio=?, hora_fin=?, duracion=?, aforo_maximo=?, nivel_intensidad=? WHERE id_clase=?"
-    SQL_DELETE              = "DELETE FROM clase WHERE id_clase = ?"
+    SQL_SELECT_BY_SALA = "SELECT id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad FROM clase WHERE id_sala = ?"
+    SQL_INSERT = "INSERT INTO clase (id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    SQL_UPDATE = "UPDATE clase SET id_entrenador=?, id_sala=?, nombre_actividad=?, calorias_estimadas=?, dia_semana=?, hora_inicio=?, hora_fin=?, duracion=?, aforo_maximo=?, nivel_intensidad=? WHERE id_clase=?"
+    SQL_DELETE = "DELETE FROM clase WHERE id_clase = ?"
 
     def _rowToVO(self, row) -> ClaseVO:
         id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad = row
         return ClaseVO(id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad)
 
     def select(self) -> list[ClaseVO]:
+        """Recupera todas las clases."""
         cursor = self.getCursor()
         clases = []
         try:
             cursor.execute(self.SQL_SELECT)
-            rows = cursor.fetchall()
-            for row in rows:
+            for row in cursor.fetchall():
                 clases.append(self._rowToVO(row))
         except Exception as e:
             print("Error al seleccionar clases:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return clases
 
     def selectById(self, id_clase: int) -> ClaseVO:
+        """Recupera una clase por su ID."""
         cursor = self.getCursor()
         clase = None
         try:
@@ -41,81 +43,79 @@ class ClaseDaoJDBC(ClaseVO, Conexion):
         except Exception as e:
             print("Error al seleccionar clase por ID:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return clase
 
     def selectByEntrenador(self, id_entrenador: int) -> list[ClaseVO]:
+        """Recupera todas las clases de un entrenador."""
         cursor = self.getCursor()
         clases = []
         try:
             cursor.execute(self.SQL_SELECT_BY_ENTRENADOR, (id_entrenador,))
-            rows = cursor.fetchall()
-            for row in rows:
+            for row in cursor.fetchall():
                 clases.append(self._rowToVO(row))
         except Exception as e:
             print("Error al seleccionar clases por entrenador:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return clases
 
     def selectBySala(self, id_sala: int) -> list[ClaseVO]:
+        """Recupera todas las clases de una sala."""
         cursor = self.getCursor()
         clases = []
         try:
             cursor.execute(self.SQL_SELECT_BY_SALA, (id_sala,))
-            rows = cursor.fetchall()
-            for row in rows:
+            for row in cursor.fetchall():
                 clases.append(self._rowToVO(row))
         except Exception as e:
             print("Error al seleccionar clases por sala:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return clases
 
-    def insert(self, clase: ClaseVO) -> int:
+    def insert(self, vo: ClaseVO) -> int:
+        """Inserta una nueva clase. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_INSERT, (
-                clase.id_entrenador, clase.id_sala, clase.nombre_actividad,
-                clase.calorias_estimadas, clase.dia_semana, clase.hora_inicio,
-                clase.hora_fin, clase.duracion, clase.aforo_maximo, clase.nivel_intensidad
+                vo.id_entrenador, vo.id_sala, vo.nombre_actividad,
+                vo.calorias_estimadas, vo.dia_semana, vo.hora_inicio,
+                vo.hora_fin, vo.duracion, vo.aforo_maximo, vo.nivel_intensidad
             ))
             rows = cursor.rowcount
         except Exception as e:
             print("Error al insertar clase:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows
 
-    def update(self, clase: ClaseVO) -> int:
+    def update(self, vo: ClaseVO) -> int:
+        """Actualiza una clase existente. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_UPDATE, (
-                clase.id_entrenador, clase.id_sala, clase.nombre_actividad,
-                clase.calorias_estimadas, clase.dia_semana, clase.hora_inicio,
-                clase.hora_fin, clase.duracion, clase.aforo_maximo,
-                clase.nivel_intensidad, clase.id_clase
+                vo.id_entrenador, vo.id_sala, vo.nombre_actividad,
+                vo.calorias_estimadas, vo.dia_semana, vo.hora_inicio,
+                vo.hora_fin, vo.duracion, vo.aforo_maximo,
+                vo.nivel_intensidad, vo.id_clase
             ))
             rows = cursor.rowcount
         except Exception as e:
             print("Error al actualizar clase:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows
 
     def delete(self, id_clase: int) -> int:
+        """Elimina una clase por su ID. Retorna filas afectadas."""
         cursor = self.getCursor()
         rows = 0
         try:
@@ -124,7 +124,6 @@ class ClaseDaoJDBC(ClaseVO, Conexion):
         except Exception as e:
             print("Error al eliminar clase:", e)
         finally:
-            if cursor:
-                cursor.close()
+            cursor.close()
             self.closeConnection()
         return rows

@@ -1,4 +1,13 @@
 from PyQt5.QtWidgets import QMessageBox
+<<<<<<< HEAD
+=======
+from PyQt5 import uic
+import os
+import datetime
+
+from src.controlador.ControladorAdministrador import ControladorAdministrador
+
+>>>>>>> 53426b5126746eedd29d2824852763c3ebbc5ce2
 
 class ControladorPrincipal:
 
