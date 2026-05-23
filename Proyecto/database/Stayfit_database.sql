@@ -3,6 +3,25 @@ CREATE DATABASE IF NOT EXISTS Stayfit_database
     COLLATE utf8mb4_unicode_ci;
 
 USE Stayfit_database;
+SELECT 'ROLES' as tabla; SELECT * FROM roles;
+SELECT 'USUARIOS' as tabla; SELECT * FROM usuarios;
+SELECT 'CLIENTES' as tabla; SELECT * FROM clientes;
+SELECT 'EMPLEADOS' as tabla; SELECT * FROM empleados;
+SELECT 'ADMINISTRADOR' as tabla; SELECT * FROM administrador;
+SELECT 'ENTRENADOR' as tabla; SELECT * FROM entrenador;
+SELECT 'RECEPCIONISTA' as tabla; SELECT * FROM recepcionista;
+SELECT 'CONTABLE' as tabla; SELECT * FROM contable;
+SELECT 'SALA' as tabla; SELECT * FROM sala;
+SELECT 'CLASE' as tabla; SELECT * FROM clase;
+SELECT 'INSCRIPCION' as tabla; SELECT * FROM inscripcion;
+SELECT 'ASISTENCIA' as tabla; SELECT * FROM asistencia;
+SELECT 'TARIFA' as tabla; SELECT * FROM tarifa;
+SELECT 'CLIENTE_TARIFA' as tabla; SELECT * FROM cliente_tarifa;
+SELECT 'PAGO' as tabla; SELECT * FROM pago;
+SELECT 'INFORME' as tabla; SELECT * FROM informe;
+SELECT 'REGISTRO_ACCESO' as tabla; SELECT * FROM registro_acceso;
+SELECT 'MENOR' as tabla; SELECT * FROM menor;
+SELECT 'ADULTO' as tabla; SELECT * FROM adulto;
 
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
