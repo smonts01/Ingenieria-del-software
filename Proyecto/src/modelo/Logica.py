@@ -588,6 +588,22 @@ class Logica:
             ORDER BY ocupacion DESC
         """
         return self.consultar(sql)
+    
+    #consultadar clases entrenador 
+    def ocupacion_clases_entrenador(self, id_entrenador):
+        sql = """
+            SELECT c.id_clase, c.nombre_actividad,
+                COUNT(i.id_inscripcion) AS inscritos,
+                c.aforo_maximo,
+                CAST(COUNT(i.id_inscripcion) * 100.0 / c.aforo_maximo AS DECIMAL(5,2)) AS ocupacion
+            FROM clase c
+            LEFT JOIN inscripcion i
+                ON c.id_clase = i.id_clase AND i.estado = 'inscrito'
+            WHERE c.id_entrenador = ?
+            GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo
+            ORDER BY ocupacion DESC
+        """
+        return self.consultar(sql, (id_entrenador,))
 
     def calcular_calorias_cliente(self, id_cliente):
         sql = """

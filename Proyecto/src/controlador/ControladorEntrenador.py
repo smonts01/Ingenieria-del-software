@@ -61,11 +61,22 @@ class ControladorEntrenador:
         if hasattr(v, "tablaMisClases"):
             self.rellenar_tabla(v.tablaMisClases, self.modelo.clases_de_entrenador(id_u))
         if hasattr(v, "tablaOcupacionClases"):
-            self.rellenar_tabla(v.tablaOcupacionClases, self.modelo.ocupacion_clases())
-        if hasattr(v, "tablaInscritos"):
+            self.rellenar_tabla(v.tablaOcupacionClases, self.modelo.ocupacion_clases_entrenador(id_u))
+        
+        if hasattr(v, "comboClasesInscritos"):
             clases = self.modelo.clases_de_entrenador(id_u)
-            if clases:
-                self.rellenar_tabla(v.tablaInscritos, self.modelo.clientes_inscritos_clase(clases[0][0]))
+            v.comboClasesInscritos.clear()
+
+            for clase in clases:
+                v.comboClasesInscritos.addItem(str(clase[1]), clase[0])
+
+            try:
+                v.comboClasesInscritos.currentIndexChanged.disconnect()
+            except Exception:
+                pass
+
+            v.comboClasesInscritos.currentIndexChanged.connect(self.cargar_clientes_inscritos)
+            self.cargar_clientes_inscritos()
 
         if hasattr(v, "txtNombre"):
             perfil = self.modelo.perfil_usuario(id_u)
@@ -85,6 +96,31 @@ class ControladorEntrenador:
                 pass
             v.comboSeleccionarClase.currentIndexChanged.connect(self.cargar_inscritos_asistencia)
             self.cargar_inscritos_asistencia()
+
+
+    def cargar_clientes_inscritos(self):
+        v = self.ventana
+
+        if not hasattr(v, "comboClasesInscritos"):
+            return
+
+        id_clase = v.comboClasesInscritos.currentData()
+
+        if not id_clase:
+            return
+
+        datos = self.modelo.clientes_inscritos_clase(id_clase)
+
+        if hasattr(v, "tablaInscritos"):
+            self.rellenar_tabla(v.tablaInscritos, datos)
+
+        if hasattr(v, "label_numInscritos_ins"):
+            v.label_numInscritos_ins.setText(str(len(datos)))
+
+        if hasattr(v, "label_total_inscritos"):
+            v.label_total_inscritos.setText(str(len(datos)))
+
+            
 
     def cargar_inscritos_asistencia(self):
         v = self.ventana
