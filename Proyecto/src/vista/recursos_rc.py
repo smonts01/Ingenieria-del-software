@@ -1,1 +1,1 @@
-from src.vista.imagenes.recursos_rc import *
+# Recursos cargados por ruta directa desde src/vista/imagenes/

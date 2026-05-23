@@ -3698,7 +3698,6 @@ Sala 1</string>
   </widget>
  </widget>
  <resources>
-  <include location="../imagenes/recursos.qrc"/>
  </resources>
  <connections/>
 </ui>
