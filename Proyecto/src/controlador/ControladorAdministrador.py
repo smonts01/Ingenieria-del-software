@@ -78,7 +78,7 @@ class ControladorAdministrador:
     def cargar_datos(self):
         v = self.ventana
 
-        # Contadores del panel de inicio
+        # --- Contadores tarjetas superiores ---
         if hasattr(v, "lblUsuariosNum"):
             v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
         if hasattr(v, "lblClasesNum"):
@@ -88,6 +88,36 @@ class ControladorAdministrador:
         if hasattr(v, "lblIngresosNum"):
             total = self.modelo.total_ingresos()
             v.lblIngresosNum.setText(f"{float(total):.2f} €")
+
+        # --- Inscripciones por clase ---
+        clases_labels = [
+            ("lblClasesNum_2", "spinning"),
+            ("lblClasesNum_3", "zumba"),
+            ("lblClasesNum_4", "yoga"),
+            ("lblClasesNum_5", "pilates"),
+            ("lblClasesNum_6", "crossfit"),
+        ]
+        for lbl_name, clase in clases_labels:
+            if hasattr(v, lbl_name):
+                getattr(v, lbl_name).setText(str(self.modelo.contar_inscripciones_clase(clase)))
+
+        # --- Planes basico / premium ---
+        if hasattr(v, "lblClasesNum_7"):
+            v.lblClasesNum_7.setText(str(self.modelo.contar_clientes_tarifa("basico")))
+        if hasattr(v, "lblClasesNum_8"):
+            v.lblClasesNum_8.setText(str(self.modelo.contar_clientes_tarifa("premium")))
+
+        # --- Tabla inscripciones ---
+        if hasattr(v, "tablaInscripciones"):
+            self.rellenar_tabla(v.tablaInscripciones, self.modelo.listar_inscripciones_resumen())
+
+        # --- Tabla pagos pendientes ---
+        if hasattr(v, "tablaClientesPagosPendientes"):
+            self.rellenar_tabla(v.tablaClientesPagosPendientes, self.modelo.pagos_pendientes())
+
+        # --- Gráfico de barras por clase ---
+        if hasattr(v, "graficoFake"):
+            self._dibujar_grafico(v.graficoFake)
 
 
         if hasattr(v, "tablaInscripciones"):
@@ -243,6 +273,46 @@ class ControladorAdministrador:
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro):
                 tabla.setItem(fila, col, QTableWidgetItem(str(valor) if valor is not None else ""))
+
+
+    def _dibujar_grafico(self, label):
+        try:
+            import matplotlib
+            matplotlib.use("Agg")
+            import matplotlib.pyplot as plt
+            import io
+            from PyQt5.QtGui import QPixmap
+
+            datos = self.modelo.inscripciones_por_clase()
+            clases_fijas = ["Spinning", "Zumba", "Yoga", "Pilates", "Crossfit"]
+            dict_datos = {str(r[0]).capitalize(): int(r[1]) for r in datos}
+            valores = [dict_datos.get(c, 0) for c in clases_fijas]
+            colores = ["#00BFA5", "#26C6DA", "#42A5F5", "#7E57C2", "#EF5350"]
+
+            fig, ax = plt.subplots(figsize=(4, 2.2), dpi=90)
+            fig.patch.set_facecolor("#F5F5F5")
+            ax.set_facecolor("#F5F5F5")
+            bars = ax.bar(clases_fijas, valores, color=colores, width=0.5, edgecolor="white")
+            ax.set_ylabel("Inscritos", fontsize=8)
+            ax.set_title("Inscripciones por clase", fontsize=9, fontweight="bold")
+            ax.tick_params(axis="x", labelsize=7)
+            ax.tick_params(axis="y", labelsize=7)
+            for bar, val in zip(bars, valores):
+                ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.1,
+                        str(val), ha="center", va="bottom", fontsize=7)
+            plt.tight_layout()
+
+            buf = io.BytesIO()
+            plt.savefig(buf, format="png")
+            plt.close(fig)
+            buf.seek(0)
+
+            pixmap = QPixmap()
+            pixmap.loadFromData(buf.read())
+            label.setPixmap(pixmap.scaled(label.width(), label.height(),
+                            aspectRatioMode=1))
+        except Exception as e:
+            label.setText(f"Gráfico no disponible\n(pip install matplotlib)")
 
     def cerrar_sesion(self):
         self.ventana.close()

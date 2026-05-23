@@ -663,7 +663,7 @@ class Logica:
         return self.ejecutar(sql, (nueva_cifrada, id_usuario))
 
     def contar_usuarios(self):
-        datos = self.consultar("SELECT COUNT(*) FROM clientes")
+        datos = self.consultar("SELECT COUNT(*) FROM usuarios")
         return datos[0][0] if datos else 0
 
     def contar_clases(self):
@@ -677,3 +677,41 @@ class Logica:
     def total_ingresos(self):
         datos = self.consultar("SELECT COALESCE(SUM(importe), 0) FROM pago WHERE estado = 'abonado'")
         return datos[0][0] if datos else 0
+
+    def contar_inscripciones_clase(self, nombre_actividad):
+        datos = self.consultar("""
+            SELECT COUNT(*) FROM inscripcion i
+            JOIN clase c ON i.id_clase = c.id_clase
+            WHERE LOWER(c.nombre_actividad) LIKE %s AND i.estado = 'inscrito'
+        """, (f"%{nombre_actividad.lower()}%",))
+        return datos[0][0] if datos else 0
+
+    def contar_clientes_tarifa(self, nombre_tarifa):
+        datos = self.consultar("""
+            SELECT COUNT(*) FROM cliente_tarifa ct
+            JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
+            WHERE LOWER(t.nombre) LIKE %s AND ct.estado = 'activa'
+        """, (f"%{nombre_tarifa.lower()}%",))
+        return datos[0][0] if datos else 0
+
+    def listar_inscripciones_resumen(self):
+        return self.consultar("""
+            SELECT u.nombre, c.nombre_actividad, i.fecha_inscripcion, i.estado
+            FROM inscripcion i
+            JOIN clientes cl ON i.id_cliente = cl.id_cliente
+            JOIN usuarios u ON cl.id_cliente = u.id_usuario
+            JOIN clase c ON i.id_clase = c.id_clase
+            WHERE i.estado = 'inscrito'
+            ORDER BY i.fecha_inscripcion DESC
+            LIMIT 50
+        """)
+
+    def inscripciones_por_clase(self):
+        return self.consultar("""
+            SELECT c.nombre_actividad, COUNT(*) as total
+            FROM inscripcion i
+            JOIN clase c ON i.id_clase = c.id_clase
+            WHERE i.estado = 'inscrito'
+            GROUP BY c.nombre_actividad
+            ORDER BY total DESC
+        """)
