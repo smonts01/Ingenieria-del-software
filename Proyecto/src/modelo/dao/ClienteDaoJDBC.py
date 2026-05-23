@@ -13,7 +13,7 @@ class ClienteDaoJDBC(Conexion):
     SQL_UPDATE_CALORIAS = "UPDATE clientes SET calorias_acumuladas=? WHERE id_cliente=?"
     SQL_DELETE = "DELETE FROM clientes WHERE id_cliente = ?"
 
-    # ── Consultas para ClienteInicioVO ─────────────────────────────────────
+    # Consultas para ClienteInicioVO
 
     # Datos del usuario y del cliente en una sola consulta
     _SQL_INICIO_BASE = """
@@ -167,7 +167,7 @@ class ClienteDaoJDBC(Conexion):
         ORDER BY total DESC
     """
 
-    # ── Métodos originales ─────────────────────────────────────────────────
+    # Métodos originales
 
     def _rowToVO(self, row) -> ClientesVO:
         id_cliente, estado_pagado, calorias_acumuladas = row
