@@ -647,7 +647,7 @@ class Logica:
         return self.ejecutar(sql, (nueva_cifrada, id_usuario))
 
     def contar_usuarios(self):
-        datos = self.consultar("SELECT COUNT(*) FROM usuarios")
+        datos = self.consultar("SELECT COUNT(*) FROM clientes")
         return datos[0][0] if datos else 0
 
     def contar_clases(self):
