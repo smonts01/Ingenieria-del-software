@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.AsistenciaVO import AsistenciaVO
+from src.modelo.VO.AsistenciaVO import AsistenciaVO
 
 
 class AsistenciaDaoJDBC(Conexion):

@@ -1,6 +1,6 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.ClientesVO import ClientesVO
-from src.modelo.vo.ClienteInicioVO import ClienteInicioVO
+from src.modelo.VO.ClientesVO import ClientesVO
+from src.modelo.VO.ClienteInicioVO import ClienteInicioVO
 
 
 class ClienteDaoJDBC(Conexion):

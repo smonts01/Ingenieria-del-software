@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.AdminitradorVO import AdminitradorVO
+from src.modelo.VO.AdminitradorVO import AdminitradorVO
 
 
 class AdministradorDaoJDBC(Conexion):
