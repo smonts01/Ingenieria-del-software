@@ -663,7 +663,7 @@ class Logica:
         return self.ejecutar(sql, (nueva_cifrada, id_usuario))
 
     def contar_usuarios(self):
-        datos = self.consultar("SELECT COUNT(*) FROM usuarios")
+        datos = self.consultar("SELECT COUNT(*) FROM clientes")
         return datos[0][0] if datos else 0
 
     def contar_clases(self):
@@ -674,24 +674,23 @@ class Logica:
         datos = self.consultar("SELECT COUNT(*) FROM inscripcion WHERE estado = 'inscrito'")
         return datos[0][0] if datos else 0
 
-    def total_ingresos(self):
-        datos = self.consultar("SELECT COALESCE(SUM(importe), 0) FROM pago WHERE estado = 'abonado'")
-        return datos[0][0] if datos else 0
 
     def contar_inscripciones_clase(self, nombre_actividad):
-        datos = self.consultar("""
+        like = f"%{nombre_actividad.lower()}%"
+        datos = self.consultar(f"""
             SELECT COUNT(*) FROM inscripcion i
             JOIN clase c ON i.id_clase = c.id_clase
-            WHERE LOWER(c.nombre_actividad) LIKE %s AND i.estado = 'inscrito'
-        """, (f"%{nombre_actividad.lower()}%",))
+            WHERE LOWER(c.nombre_actividad) LIKE '{like}' AND i.estado = 'inscrito'
+        """)
         return datos[0][0] if datos else 0
 
     def contar_clientes_tarifa(self, nombre_tarifa):
-        datos = self.consultar("""
+        like = f"%{nombre_tarifa.lower()}%"
+        datos = self.consultar(f"""
             SELECT COUNT(*) FROM cliente_tarifa ct
             JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
-            WHERE LOWER(t.nombre) LIKE %s AND ct.estado = 'activa'
-        """, (f"%{nombre_tarifa.lower()}%",))
+            WHERE LOWER(t.nombre) LIKE '{like}' AND ct.estado = 'activa'
+        """)
         return datos[0][0] if datos else 0
 
     def listar_inscripciones_resumen(self):
@@ -715,3 +714,15 @@ class Logica:
             GROUP BY c.nombre_actividad
             ORDER BY total DESC
         """)
+
+    def ingresos_por_mes(self):
+        return self.consultar("""
+            SELECT DATE_FORMAT(fecha_pago, '%Y-%m') as mes,
+                   SUM(importe) as total
+            FROM pago
+            WHERE estado = 'abonado'
+            GROUP BY mes
+            ORDER BY mes DESC
+            LIMIT 6
+        """)
+
