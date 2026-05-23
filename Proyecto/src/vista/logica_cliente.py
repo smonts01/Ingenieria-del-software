@@ -32,10 +32,10 @@ class VentanaCliente(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # ── Carga del .ui ───────────────────────────────────────────────
+        # Carga del .ui 
         uic.loadUi("interfaz_cliente_unificada.ui", self)
 
-        # ── Lista de (botón, índice de página) para iterar ─────────────
+        # ── Lista de (botón, índice de página) para iterar 
         self._nav_buttons = [
             (self.btnInicio,       PAGE_INICIO),
             (self.btnClases,       PAGE_CLASES),
@@ -44,17 +44,17 @@ class VentanaCliente(QMainWindow):
             (self.btnInformacion,  PAGE_INFORMACION),
         ]
 
-        # ── Conectar señales ────────────────────────────────────────────
+        # Conectar señales 
         for btn, page_idx in self._nav_buttons:
             # Captura por valor con argumento predeterminado
             btn.clicked.connect(lambda checked, p=page_idx: self._cambiar_pagina(p))
 
         self.btnCerrarSesion.clicked.connect(self._cerrar_sesion)
 
-        # ── Mostrar Inicio al arrancar ──────────────────────────────────
+        # Mostrar Inicio al arrancar 
         self._cambiar_pagina(PAGE_INICIO)
 
-    # ── Métodos privados ────────────────────────────────────────────────
+    # Métodos privados
 
     def _cambiar_pagina(self, indice: int):
         """Cambia la página visible y actualiza el estilo activo del menú."""
@@ -78,7 +78,7 @@ class VentanaCliente(QMainWindow):
         """Cierra la ventana (o navega a la pantalla de login)."""
         self.close()
 
-    # ── API pública para rellenar datos del cliente ─────────────────────
+    # API pública para rellenar datos del cliente
 
     def set_datos_cliente(self, nombre: str, fecha_alta: str):
         """Actualiza nombre y fecha de alta en el header."""
@@ -105,24 +105,24 @@ class VentanaCliente(QMainWindow):
     def inicializar(self, vo) -> None:
         """Rellena todos los widgets de la interfaz con los datos del VO."""
 
-        # ── Header ──────────────────────────────────────────────────────
+        # Header
         self.lblNombreCliente.setText(f"Hola, {vo.nombre}")
         self.lblFechaAltaCliente.setText(f"Cliente desde {vo.fecha_registro}")
         self.lblBienvenida.setText(f"Bienvenida, {vo.nombre}")
         self.lblNombrePerfil.setText(vo.nombre)
 
-        # ── Inicio — cards ───────────────────────────────────────────────
+        # Inicio — cards
         self.lblEstadoPago.setText(vo.estado_pagado.capitalize())
         self.lblCaloriasSemana.setText(f"{vo.calorias_semana:,} kcal".replace(",", "."))
         self.lblAsistencias.setText(vo.get_asistencias_str())
 
-        # ── Inicio — cardPago ────────────────────────────────────────────
+        # Inicio — cardPago
         self.lblCuota.setText(vo.nombre_tarifa)
         self.lblCantidadPago.setText(vo.get_precio_str())
         self.lblMesPago.setText(vo.ultimo_pago_fecha)
         self.lblPendientePago.setText(vo.ultimo_pago_estado.capitalize())
 
-        # ── Inicio — tabla próximas clases ───────────────────────────────
+        # Inicio — tabla próximas clases
         self.tablaProximasClases.setRowCount(0)
         for fila in vo.proximas_clases:
             row = self.tablaProximasClases.rowCount()
@@ -132,7 +132,7 @@ class VentanaCliente(QMainWindow):
             self.tablaProximasClases.setItem(row, 2, QTableWidgetItem(fila["hora_inicio"]))
             self.tablaProximasClases.setItem(row, 3, QTableWidgetItem(fila["nombre_sala"]))
 
-        # ── Estadísticas ─────────────────────────────────────────────────
+        # Estadísticas
         self.lblNumEntrenos.setText(str(vo.entrenos_semana))
         self.lblSubEntrenos.setText(vo.get_delta_entrenos_str())
         self.lblNumTiempo.setText(vo.get_tiempo_semana_str())
@@ -140,7 +140,7 @@ class VentanaCliente(QMainWindow):
         self.lblNumRacha.setText(str(vo.racha_dias))
         self.lblTextoRacha.setText(f"Llevas {vo.racha_dias} días consecutivos entrenando.")
 
-        # ── Perfil ───────────────────────────────────────────────────────
+        # Perfil
         self.set_datos_perfil(
             nombre=vo.nombre,
             email=vo.email,
@@ -150,7 +150,7 @@ class VentanaCliente(QMainWindow):
         )
 
 
-# ── Punto de entrada ────────────────────────────────────────────────────
+# Punto de entrada
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

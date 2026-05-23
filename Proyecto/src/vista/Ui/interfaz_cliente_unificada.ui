@@ -146,7 +146,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/logo_stayfit.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -197,7 +197,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/usuario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -271,7 +271,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -300,7 +300,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/calendario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -329,7 +329,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/grafico-de-barras.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -358,7 +358,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/usuario.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -387,7 +387,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/newPrefix/informacion.png</pixmap>
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -465,7 +465,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="pageInicio">
      <widget class="QLabel" name="fondoOlaInicio">
@@ -481,7 +481,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/reborde_ola.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -554,7 +554,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/calendario.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -644,7 +644,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/pagos.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -734,7 +734,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/fuego.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -824,7 +824,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/marca-de-verificacion.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/marca-de-verificacion.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -898,7 +898,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/calendario.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1005,7 +1005,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/pagos.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1107,7 +1107,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/reborde_ola.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1202,7 +1202,7 @@ QLabel#lblNorma4, QLabel#lblNorma5, QLabel#lblNorma6 {
         <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/peso.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/peso.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1316,7 +1316,7 @@ Sala 1</string>
         <string notr="true">background-color:#FF9F2E; border-radius:20px;</string>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/yoga.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/yoga.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1430,7 +1430,7 @@ Sala 2</string>
         <string notr="true">background-color:#8E6CFF; border-radius:20px;</string>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/bicicleta.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/bicicleta.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1544,7 +1544,7 @@ Sala 1</string>
         <string notr="true">background-color:#2F80ED; border-radius:20px;</string>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/pilates.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pilates.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1766,7 +1766,7 @@ Sala 3</string>
         <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/peso.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/peso.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1806,7 +1806,7 @@ Sala 1</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/reborde_ola.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1889,7 +1889,7 @@ Sala 1</string>
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/pesa.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pesa.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1976,7 +1976,7 @@ Sala 1</string>
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/reloj.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reloj.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -2063,7 +2063,7 @@ Sala 1</string>
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/fuego.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -2150,7 +2150,7 @@ Sala 1</string>
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/marca-de-verificacion.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/marca-de-verificacion.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -2652,7 +2652,7 @@ Sala 1</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/reborde_ola.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -2712,7 +2712,7 @@ Sala 1</string>
         <string notr="true">background-color:#18B7A5; border-radius:45px;</string>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/usuario.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -3153,7 +3153,7 @@ Sala 1</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>:/newPrefix/reborde_ola.png</pixmap>
+       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -3226,7 +3226,7 @@ Sala 1</string>
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/logo_stayfit.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -3303,7 +3303,7 @@ Sala 1</string>
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/reloj.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reloj.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -3377,7 +3377,7 @@ Sala 1</string>
         </rect>
        </property>
        <property name="pixmap">
-        <pixmap>:/newPrefix/alfiler.png</pixmap>
+        <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/alfiler.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -3698,6 +3698,7 @@ Sala 1</string>
   </widget>
  </widget>
  <resources>
+  <include location="../imagenes/recursos.qrc"/>
  </resources>
  <connections/>
 </ui>
