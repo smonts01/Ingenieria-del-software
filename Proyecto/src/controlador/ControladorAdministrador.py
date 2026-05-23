@@ -139,7 +139,7 @@ class ControladorAdministrador:
 
         for fila, registro in enumerate(datos):
             for columna, valor in enumerate(registro):
-                tabla.setItem(fila, columna, QTableWidgetItem(str(valor)))
+                tabla.setItem(fila, columna, QTableWidgetItem(str(valor) if valor is not None else ""))
 
     def cerrar_sesion(self):
         self.ventana.close()

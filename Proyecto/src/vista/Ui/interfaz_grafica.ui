@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>597</width>
+    <width>575</width>
     <height>607</height>
    </rect>
   </property>
@@ -121,6 +121,7 @@
     <string>Usuario</string>
    </property>
   </widget>
+<<<<<<< Updated upstream
   <widget class="QLineEdit" name="txtContrasea">
    <property name="geometry">
     <rect>
@@ -147,6 +148,8 @@
     <string>        Contraseña</string>
    </property>
   </widget>
+=======
+>>>>>>> Stashed changes
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
@@ -195,18 +198,43 @@ QPushButton:hover {
     <string>Iniciar sesión</string>
    </property>
   </widget>
+<<<<<<< Updated upstream
+=======
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>20</y>
+     <width>331</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>331</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image:url(./src/vista/imagenes/logo_stayfit.png)</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+>>>>>>> Stashed changes
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>166</x>
      <y>270</y>
-     <width>20</width>
-     <height>20</height>
+     <width>22</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QLabel {
-    image: url(:/prefijoNuevo/icono_usuario.png);
+    image: url(./src/vista/imagenes/icono_usuario.png);
     background-color: transparent;
     border: none;
     padding: 3px;
@@ -225,15 +253,19 @@ QPushButton:hover {
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
+<<<<<<< Updated upstream
      <x>165</x>
+=======
+     <x>166</x>
+>>>>>>> Stashed changes
      <y>330</y>
-     <width>31</width>
+     <width>22</width>
      <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QLabel {
-    image: url(:/prefijoNuevo/contrasenia.jpg);
+    image: url(./src/vista/imagenes/contrasenia.jpg);
     background-color: transparent;
     border: none;
     padding: 3px;
@@ -252,15 +284,22 @@ QPushButton:hover {
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
+<<<<<<< Updated upstream
      <x>-230</x>
      <y>210</y>
      <width>791</width>
      <height>391</height>
+=======
+     <x>-210</x>
+     <y>160</y>
+     <width>921</width>
+     <height>471</height>
+>>>>>>> Stashed changes
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QLabel {
-    image: url(:/fondo_app.png);
+    image: url(./src/vista/imagenes/fondo_app.png);
     background-color: transparent;
     border: none;
     padding: 3px;
@@ -269,27 +308,37 @@ QPushButton:hover {
    <property name="text">
     <string/>
    </property>
+   <property name="pixmap">
+    <pixmap>src/vista/imagenes/fondo_app.png</pixmap>
+   </property>
   </widget>
-  <widget class="QToolButton" name="btnOjo">
+  <widget class="QLineEdit" name="txtContrasea">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>330</y>
-     <width>21</width>
-     <height>21</height>
+     <x>160</x>
+     <y>320</y>
+     <width>225</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QToolButton {
-    image: url(:/prefijoNuevo/ojo_abierto.jpg);
-    background: transparent;
-    border: none;
+    <string notr="true">QLineEdit {
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    background-color: white;
+    padding-left: 35px;
+    font: 9pt &quot;Segoe UI&quot;;
+    color: #333333;
 }</string>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="placeholderText">
+    <string>Contraseña</string>
+   </property>
   </widget>
+<<<<<<< Updated upstream
   <widget class="QLabel" name="label_9">
    <property name="geometry">
     <rect>
@@ -318,11 +367,28 @@ QPushButton:hover {
    </property>
    <property name="pixmap">
     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fondo_app.png</pixmap>
+=======
+  <widget class="QLabel" name="imgUsuarios">
+   <property name="geometry">
+    <rect>
+     <x>115</x>
+     <y>265</y>
+     <width>30</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background:transparent;image:url(./src/vista/imagenes/icono_usuario.png)</string>
+   </property>
+   <property name="pixmap">
+    <pixmap>src/vista/imagenes/icono_usuario.png</pixmap>
+>>>>>>> Stashed changes
    </property>
    <property name="scaledContents">
     <bool>true</bool>
    </property>
   </widget>
+<<<<<<< Updated upstream
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
@@ -337,27 +403,85 @@ QPushButton:hover {
    </property>
    <property name="pixmap">
     <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+=======
+  <widget class="QLabel" name="imgUsuarios_2">
+   <property name="geometry">
+    <rect>
+     <x>115</x>
+     <y>325</y>
+     <width>30</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background:transparent;image:url(./src/vista/imagenes/candado.png)</string>
+   </property>
+   <property name="pixmap">
+    <pixmap>src/vista/imagenes/candado.png</pixmap>
+>>>>>>> Stashed changes
    </property>
    <property name="scaledContents">
     <bool>true</bool>
    </property>
   </widget>
+<<<<<<< Updated upstream
+=======
+  <widget class="QLabel" name="imgUsuarios_3">
+   <property name="geometry">
+    <rect>
+     <x>-50</x>
+     <y>50</y>
+     <width>671</width>
+     <height>601</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background:transparent</string>
+   </property>
+   <property name="pixmap">
+    <pixmap>src/vista/imagenes/fondo_app.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="btnOjo">
+   <property name="geometry">
+    <rect>
+     <x>393</x>
+     <y>330</y>
+     <width>28</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background:transparent</string>
+   </property>
+  </widget>
+  <zorder>imgUsuarios_3</zorder>
+>>>>>>> Stashed changes
   <zorder>label_8</zorder>
+  <zorder>label_5</zorder>
   <zorder>label</zorder>
   <zorder>label_2</zorder>
   <zorder>label_3</zorder>
-  <zorder>txtUsuario</zorder>
-  <zorder>txtContrasea</zorder>
   <zorder>label_4</zorder>
+<<<<<<< Updated upstream
   <zorder>pushButton</zorder>
+=======
+>>>>>>> Stashed changes
   <zorder>label_6</zorder>
   <zorder>label_7</zorder>
+  <zorder>txtUsuario</zorder>
+  <zorder>pushButton</zorder>
+  <zorder>txtContrasea</zorder>
+  <zorder>imgUsuarios</zorder>
+  <zorder>imgUsuarios_2</zorder>
   <zorder>btnOjo</zorder>
   <zorder>label_9</zorder>
   <zorder>label_5</zorder>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
+

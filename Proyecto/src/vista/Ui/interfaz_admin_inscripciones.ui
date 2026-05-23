@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -320,7 +320,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -336,7 +336,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuarios.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuarios.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -352,7 +352,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -368,7 +368,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
+      <pixmap>./src/vista/imagenes/inscripcion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -384,7 +384,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+      <pixmap>./src/vista/imagenes/pagos.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -400,7 +400,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -422,7 +422,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ajuste.png</pixmap>
+      <pixmap>./src/vista/imagenes/ajuste.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -874,7 +874,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">background-color:#D8F4F0; border-radius:24px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
+       <pixmap>./src/vista/imagenes/inscripcion.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -971,7 +971,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/entrenador/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -990,7 +990,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1006,7 +1006,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/usuarios.png)</string>
+      <string notr="true">image: url(./src/vista/imagenes/usuarios.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -1099,7 +1099,7 @@ border: None;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/advertencia.png);
+        <string notr="true">image:url(./src/vista/imagenes/advertencia.png);
 background: transparent;
 border: None</string>
        </property>
@@ -1159,7 +1159,7 @@ border: None</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/informacion.png);
+        <string notr="true">image:url(./src/vista/imagenes/informacion.png);
 background: transparent;
 border: None</string>
        </property>
@@ -1221,7 +1221,7 @@ border: None</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/cancelar.png);
+        <string notr="true">image:url(./src/vista/imagenes/cancelar.png);
 background: transparent;
 border: None</string>
        </property>
@@ -1240,7 +1240,7 @@ border: None</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/campana.png);
+       <string notr="true">image: url(./src/vista/imagenes/campana.png);
 background: transparent;
 border: None</string>
       </property>
@@ -1392,7 +1392,7 @@ border: None</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image: url(:/newPrefix/estrella_pop.png);
+        <string notr="true">image: url(./src/vista/imagenes/estrella_pop.png);
 background: transparent;
 border: None;</string>
        </property>
@@ -1500,7 +1500,7 @@ border: None;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image: url(:/newPrefix/dos-personas.png);
+        <string notr="true">image: url(./src/vista/imagenes/dos-personas.png);
 background: transparent;
 border: None;</string>
        </property>
@@ -1630,7 +1630,7 @@ border: None;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image: url(:/newPrefix/decreciente.png);
+        <string notr="true">image: url(./src/vista/imagenes/decreciente.png);
 background: transparent;
 border: None;</string>
        </property>
@@ -1738,7 +1738,7 @@ border: None;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/cancelar.png);
+        <string notr="true">image:url(./src/vista/imagenes/cancelar.png);
 background: transparent;
 border: None;</string>
        </property>
@@ -1764,8 +1764,7 @@ border: None;</string>
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

@@ -98,7 +98,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/reborde_ola.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -114,7 +114,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/reborde_ola.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -152,7 +152,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/avatar_entrenadora_chica.png);
+       <string notr="true">image: url(./src/vista/imagenes/avatar_entrenadora_chica.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -317,7 +317,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/correo-electronico.png);
+       <string notr="true">image: url(./src/vista/imagenes/correo-electronico.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -335,7 +335,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/telefono.png);
+       <string notr="true">image: url(./src/vista/imagenes/telefono.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -353,7 +353,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/marcador-de-posicion.png);
+       <string notr="true">image:url(./src/vista/imagenes/marcador-de-posicion.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -371,7 +371,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/calendario_miembro.png);
+       <string notr="true">image: url(./src/vista/imagenes/calendario_miembro.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -455,7 +455,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/informacion.png)</string>
+       <string notr="true">image:url(./src/vista/imagenes/informacion.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -677,7 +677,7 @@ border: None;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -802,7 +802,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -866,7 +866,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -875,8 +875,7 @@ QPushButton:checked {
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

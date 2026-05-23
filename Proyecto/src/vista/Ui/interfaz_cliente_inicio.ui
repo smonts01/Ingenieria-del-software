@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -300,7 +300,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -319,7 +319,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -338,7 +338,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -357,7 +357,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -376,7 +376,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -516,7 +516,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+       <pixmap>./src/vista/imagenes/calendario.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -609,7 +609,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+       <pixmap>./src/vista/imagenes/pagos.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -702,7 +702,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/fuego.png</pixmap>
+       <pixmap>./src/vista/imagenes/fuego.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -795,7 +795,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/marca-de-verificacion.png</pixmap>
+       <pixmap>./src/vista/imagenes/marca-de-verificacion.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -905,7 +905,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+       <pixmap>./src/vista/imagenes/calendario.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1014,7 +1014,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+       <pixmap>./src/vista/imagenes/pagos.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1034,7 +1034,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1053,7 +1053,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/entrenador/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1072,7 +1072,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1092,8 +1092,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -302,7 +302,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -321,7 +321,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -340,7 +340,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -359,7 +359,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -375,7 +375,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/lista-de-verificacion.png)</string>
+      <string notr="true">image: url(./src/vista/imagenes/lista-de-verificacion.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -391,7 +391,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/newPrefix/anadir-grupo.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/anadir-grupo.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -407,7 +407,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
+      <string notr="true">image: url(./src/vista/imagenes/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -678,7 +678,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/reborde_ola.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -694,7 +694,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/reborde_ola.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -797,7 +797,7 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/tendencia.png);
+       <string notr="true">image: url(./src/vista/imagenes/tendencia.png);
 background:transparent;
 border:None
 </string>
@@ -925,7 +925,7 @@ border:None
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/estrella.png);
+       <string notr="true">image: url(./src/vista/imagenes/estrella.png);
 background:transparent;
 border:None</string>
       </property>
@@ -1052,7 +1052,7 @@ border:None</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/silla-de-campamento.png);
+       <string notr="true">image: url(./src/vista/imagenes/silla-de-campamento.png);
 background:transparent;
 border:None</string>
       </property>
@@ -1597,7 +1597,7 @@ QTableWidget::item {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/dos-personas.png);
+       <string notr="true">image:url(./src/vista/imagenes/dos-personas.png);
 background:transparent;
 border:None</string>
       </property>
@@ -1615,7 +1615,7 @@ border:None</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/grafico-circular.png);
+       <string notr="true">image:url(./src/vista/imagenes/grafico-circular.png);
 background:transparent;
 border:None</string>
       </property>
@@ -1638,8 +1638,7 @@ border:None</string>
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

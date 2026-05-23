@@ -54,7 +54,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -102,7 +102,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       <string notr="true">background-color: #18B7A5; border-radius: 22px;</string>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -312,7 +312,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -328,7 +328,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuarios.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuarios.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -344,7 +344,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -360,7 +360,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/inscripcion.png</pixmap>
+      <pixmap>./src/vista/imagenes/inscripcion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -376,7 +376,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/pagos.png</pixmap>
+      <pixmap>./src/vista/imagenes/pagos.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -392,7 +392,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -408,7 +408,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/ajuste.png</pixmap>
+      <pixmap>./src/vista/imagenes/ajuste.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -434,7 +434,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>:/entrenador/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -450,7 +450,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -504,7 +504,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+       <pixmap>./src/vista/imagenes/usuario.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -881,7 +881,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuarios.png</pixmap>
+       <pixmap>./src/vista/imagenes/usuarios.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1023,8 +1023,7 @@ QRadioButton::indicator { width: 16px; height: 16px; }
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

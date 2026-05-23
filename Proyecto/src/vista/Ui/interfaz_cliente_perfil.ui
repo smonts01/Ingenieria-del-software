@@ -57,7 +57,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -108,7 +108,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -295,7 +295,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -311,7 +311,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -327,7 +327,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -343,7 +343,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -359,7 +359,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -391,7 +391,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/entrenador/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -451,7 +451,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        <string notr="true">background-color:#18B7A5; border-radius:45px;</string>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+       <pixmap>./src/vista/imagenes/usuario.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -877,7 +877,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -893,8 +893,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

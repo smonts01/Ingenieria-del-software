@@ -54,7 +54,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -105,7 +105,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -295,7 +295,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -314,7 +314,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -333,7 +333,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/grafico-de-barras.png</pixmap>
+      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -352,7 +352,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -371,7 +371,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -403,7 +403,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/entrenador/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -479,7 +479,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/logo_stayfit.png</pixmap>
+       <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -562,7 +562,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reloj.png</pixmap>
+       <pixmap>./src/vista/imagenes/reloj.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -642,7 +642,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/alfiler.png</pixmap>
+       <pixmap>./src/vista/imagenes/alfiler.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -956,7 +956,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -974,8 +974,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

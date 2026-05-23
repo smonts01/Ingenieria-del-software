@@ -1,10 +1,16 @@
+import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLineEdit
 from PyQt5 import uic
 import os
 
+<<<<<<< Updated upstream
 # Carga la interfaz desde el archivo .ui
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 Form, Window = uic.loadUiType(os.path.join(_BASE_DIR, "Ui", "interfaz_grafica.ui"))
+=======
+_ui_path = os.path.join("src", "vista", "Ui", "interfaz_grafica.ui")
+Form, Window = uic.loadUiType(_ui_path)
+>>>>>>> Stashed changes
 
 
 class MiVentana(QMainWindow, Form):
@@ -16,6 +22,7 @@ class MiVentana(QMainWindow, Form):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+<<<<<<< Updated upstream
         self.controlador = None
 
         # Normalizar nombres de widgets para que el controlador encuentre siempre
@@ -83,3 +90,45 @@ if __name__ == "__main__":
     ventana = MiVentana()
     ventana.show()
     app.exec_()
+=======
+
+        self.btnOjo.setStyleSheet("""
+            QToolButton {
+                image: url(./src/vista/imagenes/ojo_abierto.jpg);
+                background: transparent;
+                border: none;
+            }
+        """)
+
+        self.pushButton.clicked.connect(self.iniciar_sesion)
+        self.btnOjo.clicked.connect(self.mostrar_ocultar_contrasena)
+        self.txtContrasea.setEchoMode(QLineEdit.Password)
+
+    def iniciar_sesion(self):
+        usuario = self.txtUsuario.text().strip()
+        contrasena = self.txtContrasea.text().strip()
+        if not usuario or not contrasena:
+            QMessageBox.warning(self, "Error", "Debes completar usuario y contraseña")
+        else:
+            self.controlador.iniciarSesion()
+
+    def mostrar_ocultar_contrasena(self):
+        if self.txtContrasea.echoMode() == QLineEdit.Password:
+            self.txtContrasea.setEchoMode(QLineEdit.Normal)
+            self.btnOjo.setStyleSheet("""
+                QToolButton {
+                    image: url(./src/vista/imagenes/ojo_cerrado.jpg);
+                    background: transparent;
+                    border: none;
+                }
+            """)
+        else:
+            self.txtContrasea.setEchoMode(QLineEdit.Password)
+            self.btnOjo.setStyleSheet("""
+                QToolButton {
+                    image: url(./src/vista/imagenes/ojo_abierto.jpg);
+                    background: transparent;
+                    border: none;
+                }
+            """)
+>>>>>>> Stashed changes

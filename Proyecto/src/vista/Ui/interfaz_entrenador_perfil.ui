@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>:/prefijoNuevo/logo_stayfit.png</pixmap>
+      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -268,7 +268,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/casa_inicio.png</pixmap>
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -287,7 +287,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/usuario.png</pixmap>
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -306,7 +306,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/informacion.png</pixmap>
+      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -325,7 +325,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/calendario.png</pixmap>
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -341,7 +341,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/lista-de-verificacion.png)</string>
+      <string notr="true">image: url(./src/vista/imagenes/lista-de-verificacion.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -357,7 +357,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/newPrefix/anadir-grupo.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/anadir-grupo.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -373,7 +373,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
+      <string notr="true">image: url(./src/vista/imagenes/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -686,7 +686,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/reborde_ola.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -702,7 +702,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(:/entrenador/reborde_ola.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -740,7 +740,7 @@ QPushButton:checked {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/avatar_entrenadora_chica.png);
+       <string notr="true">image: url(./src/vista/imagenes/avatar_entrenadora_chica.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -905,7 +905,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/correo-electronico.png);
+       <string notr="true">image: url(./src/vista/imagenes/correo-electronico.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -923,7 +923,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/telefono.png);
+       <string notr="true">image: url(./src/vista/imagenes/telefono.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -941,7 +941,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/marcador-de-posicion.png);
+       <string notr="true">image:url(./src/vista/imagenes/marcador-de-posicion.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -959,7 +959,7 @@ border: None;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image: url(:/newPrefix/calendario_miembro.png);
+       <string notr="true">image: url(./src/vista/imagenes/calendario_miembro.png);
 background: transparent;
 border: None;</string>
       </property>
@@ -1053,7 +1053,7 @@ border: None;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/dos-personas.png);
+        <string notr="true">image:url(./src/vista/imagenes/dos-personas.png);
 background:transparent;
 border:None</string>
        </property>
@@ -1152,7 +1152,7 @@ border:None</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/calendario.png);
+        <string notr="true">image:url(./src/vista/imagenes/calendario.png);
 background:transparent;
 border:None</string>
        </property>
@@ -1272,7 +1272,7 @@ border:None</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/dos-personas.png);
+        <string notr="true">image:url(./src/vista/imagenes/dos-personas.png);
 background:transparent;
 border:None</string>
        </property>
@@ -1408,7 +1408,7 @@ border:None</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image: url(:/newPrefix/incrementar.png);
+        <string notr="true">image: url(./src/vista/imagenes/incrementar.png);
 background:transparent;
 border:None</string>
        </property>
@@ -1563,7 +1563,7 @@ border:None</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">image:url(:/newPrefix/informacion.png)</string>
+       <string notr="true">image:url(./src/vista/imagenes/informacion.png)</string>
       </property>
       <property name="text">
        <string/>
@@ -1581,8 +1581,7 @@ border:None</string>
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="../imagenes/recursos.qrc"/>
- </resources>
+ <resources></resources>
  <connections/>
 </ui>
+

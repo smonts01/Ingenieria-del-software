@@ -1,53 +1,63 @@
+<<<<<<< Updated upstream
 from PyQt5.QtWidgets import QMessageBox
 from src.modelo.dao.ClienteDaoJDBC import ClienteDaoJDBC
 from src.modelo.vo.ClienteInicioVO import ClienteInicioVO
 from src.vista.Ui.InterfazClienteUnificada import interfaz_cliente_inicio
+=======
+import os
+from PyQt5.QtWidgets import QMessageBox
+
+from src.controlador.ControladorAdministrador import ControladorAdministrador
+from src.controlador.ControladorCliente import ControladorCliente
+from src.controlador.ControladorEntrenador import ControladorEntrenador
+from src.controlador.ControladorContable import ControladorContable
+from src.controlador.ControladorRecepcionista import ControladorRecepcionista
+
+>>>>>>> Stashed changes
 
 class ControladorPrincipal:
 
     def __init__(self, vista, modelo):
-
         self.vista = vista
         self.modelo = modelo
+        # Ruta base a los ficheros .ui (relativa al directorio de trabajo = raíz del proyecto)
+        self.ruta_ui = os.path.join("src", "vista", "Ui")
 
     def abrirIniciarSesion(self):
-
-        self.vista.botonEntrar.clicked.connect(
-            self.iniciarSesion
-        )
-
+        self.vista.pushButton.clicked.connect(self.iniciarSesion)
         self.vista.show()
 
-
     def iniciarSesion(self):
+        usuario = self.vista.txtUsuario.text().strip()
+        password = self.vista.txtContrasea.text().strip()
 
-        usuario = self.vista.txtUsuario.text()
-        password = self.vista.txtPassword.text()
-
-        if usuario == "" or password == "":
-
-            QMessageBox.warning(
-                self.vista,
-                "Error",
-                "Completa todos los campos"
-            )
-
+        if not usuario or not password:
+            QMessageBox.warning(self.vista, "Error", "Completa usuario y contraseña")
             return
 
-        rol = self.modelo.validarLogin(
-            usuario,
-            password
-        )
+        datos_usuario = self.modelo.iniciar_sesion(usuario, password)
 
-        if rol:
+        if not datos_usuario:
+            QMessageBox.warning(self.vista, "Error", "Usuario o contraseña incorrectos")
+            return
 
-            QMessageBox.information(
-                self.vista,
-                "Correcto",
-                f"Bienvenido {usuario}\nRol: {rol}"
-            )
+        rol = datos_usuario["rol"]
+        self.vista.hide()
 
+        controladores = {
+            "administrador": ControladorAdministrador,
+            "cliente":       ControladorCliente,
+            "entrenador":    ControladorEntrenador,
+            "contable":      ControladorContable,
+            "recepcionista": ControladorRecepcionista,
+        }
+
+        ClaseControlador = controladores.get(rol)
+        if ClaseControlador:
+            ctrl = ClaseControlador(self.modelo, datos_usuario, self.ruta_ui, self.vista)
+            ctrl.abrir()
         else:
+<<<<<<< Updated upstream
 
             QMessageBox.warning(
                 self.vista,
@@ -95,3 +105,7 @@ def abrirInterfazCliente(self, id_cliente: int) -> None:
 
     # 3. Mostrar 
     self.ventana_cliente.show()
+=======
+            QMessageBox.warning(self.vista, "Error", f"Rol desconocido: {rol}")
+            self.vista.show()
+>>>>>>> Stashed changes

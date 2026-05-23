@@ -47,10 +47,10 @@ class ControladorContable:
             v.btnInscritos.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_informes.ui"))
 
         if hasattr(v, "btnRegistroAsistencia"):
-            v.btnRegistroAsistencia.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_registrar pago.ui"))
+            v.btnRegistroAsistencia.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_registrar_pago.ui"))
 
         if hasattr(v, "btnClases_2"):
-            v.btnClases_2.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_gestion_econ#U00f3mica.ui"))
+            v.btnClases_2.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_gestion_economica.ui"))
 
         if hasattr(v, "btnOcupacion_2"):
             v.btnOcupacion_2.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_informes_de_pagos.ui"))
@@ -62,10 +62,13 @@ class ControladorContable:
             v.btnOcupacion_5.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_informes_balance_mensual.ui"))
 
         if hasattr(v, "btnOcupacion_6"):
-            v.btnOcupacion_6.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_informes_gestion_econ#U00f3mica.ui"))
+            v.btnOcupacion_6.clicked.connect(lambda: self.abrir_pantalla("interfaz_contable_informes_gestion_economica.ui"))
 
         if hasattr(v, "btnCalorias_2"):
             v.btnCalorias_2.clicked.connect(self.registrar_pago)
+
+        if hasattr(v, "btnMarcarAbonado"):
+            v.btnMarcarAbonado.clicked.connect(self.marcar_abonado)
 
     def cargar_datos(self):
         v = self.ventana
@@ -86,13 +89,18 @@ class ControladorContable:
             datos = self.modelo.informe_pagos_realizados()
             self.rellenar_tabla(v.tableWidget_2, datos)
 
+        if hasattr(v, "tablaInformes"):
+            datos = self.modelo.listar_informes()
+            self.rellenar_tabla(v.tablaInformes, datos)
+
     def registrar_pago(self):
         v = self.ventana
-
         try:
             id_cliente = int(v.lineEdit.text())
-            id_tarifa = int(v.comboBox.currentText())
-            importe = float(v.lineEdit_2.text())
+            id_tarifa = 1
+            if hasattr(v, "comboBox") and v.comboBox.count() > 0:
+                id_tarifa = int(v.comboBox.currentText())
+            importe = float(v.lineEdit_2.text()) if hasattr(v, "lineEdit_2") else 0.0
 
             self.modelo.registrar_pago(
                 id_cliente,
@@ -102,9 +110,21 @@ class ControladorContable:
                 "efectivo",
                 "mensual"
             )
+            QMessageBox.information(v, "Correcto", "Pago registrado correctamente")
+            self.cargar_datos()
+        except Exception as e:
+            QMessageBox.warning(v, "Error", str(e))
 
-            QMessageBox.information(v, "Correcto", "Pago registrado")
-
+    def marcar_abonado(self):
+        v = self.ventana
+        try:
+            if hasattr(v, "tableWidget"):
+                fila = v.tableWidget.currentRow()
+                if fila >= 0:
+                    id_pago = int(v.tableWidget.item(fila, 0).text())
+                    self.modelo.marcar_pago_abonado(id_pago)
+                    QMessageBox.information(v, "Correcto", "Pago marcado como abonado")
+                    self.cargar_datos()
         except Exception as e:
             QMessageBox.warning(v, "Error", str(e))
 
@@ -112,10 +132,9 @@ class ControladorContable:
         tabla.setRowCount(len(datos))
         if datos:
             tabla.setColumnCount(len(datos[0]))
-
         for fila, registro in enumerate(datos):
             for columna, valor in enumerate(registro):
-                tabla.setItem(fila, columna, QTableWidgetItem(str(valor)))
+                tabla.setItem(fila, columna, QTableWidgetItem(str(valor) if valor is not None else ""))
 
     def cerrar_sesion(self):
         self.ventana.close()
