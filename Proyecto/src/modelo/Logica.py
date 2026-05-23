@@ -645,3 +645,19 @@ class Logica:
             WHERE id_usuario = ?
         """
         return self.ejecutar(sql, (nueva_cifrada, id_usuario))
+
+    def contar_usuarios(self):
+        datos = self.consultar("SELECT COUNT(*) FROM usuarios")
+        return datos[0][0] if datos else 0
+
+    def contar_clases(self):
+        datos = self.consultar("SELECT COUNT(*) FROM clase")
+        return datos[0][0] if datos else 0
+
+    def contar_inscripciones(self):
+        datos = self.consultar("SELECT COUNT(*) FROM inscripcion WHERE estado = 'inscrito'")
+        return datos[0][0] if datos else 0
+
+    def total_ingresos(self):
+        datos = self.consultar("SELECT COALESCE(SUM(importe), 0) FROM pago WHERE estado = 'abonado'")
+        return datos[0][0] if datos else 0

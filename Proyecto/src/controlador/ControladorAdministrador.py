@@ -78,6 +78,18 @@ class ControladorAdministrador:
     def cargar_datos(self):
         v = self.ventana
 
+        # Contadores del panel de inicio
+        if hasattr(v, "lblUsuariosNum"):
+            v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
+        if hasattr(v, "lblClasesNum"):
+            v.lblClasesNum.setText(str(self.modelo.contar_clases()))
+        if hasattr(v, "lblInsNum"):
+            v.lblInsNum.setText(str(self.modelo.contar_inscripciones()))
+        if hasattr(v, "lblIngresosNum"):
+            total = self.modelo.total_ingresos()
+            v.lblIngresosNum.setText(f"{float(total):.2f} €")
+
+
         if hasattr(v, "tablaInscripciones"):
             self.rellenar_tabla(v.tablaInscripciones, self.modelo.ocupacion_clases())
         if hasattr(v, "tablaClientesPagosPendientes"):
