@@ -27,22 +27,7 @@ class ControladorCliente:
 
     def cargar_datos(self):
         v = self.ventana
-        
-        # INICIO
-        def cargar_proximas_clases():
-            pass
-        def cargar_estado_pagos():
-            pass
-        def cargar_calorias_semanales():
-            pass
-        def cargar_asistencias():
-            pass
-        def ultimo_pago():
-            
-        # CLASES
-        # ESTADISTICAS
-        # PERFIL
-        # INFORMACION
+
         if hasattr(v, "tablaProximasClases"):
             datos = self.modelo.clases_inscritas_cliente(self.usuario["id_usuario"])
             self.rellenar_tabla(v.tablaProximasClases, datos)
@@ -54,8 +39,27 @@ class ControladorCliente:
                 v.txtTelefono.setText(str(perfil[3]))
                 v.txtEmail.setText(str(perfil[4]))
                 v.txtDireccion.setText(str(perfil[7]))
+
     def conectar_botones(self):
         v = self.ventana
+
+        if hasattr(v, "btnCerrarSesion"):
+            v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
+
+        if hasattr(v, "btnInicio"):
+            v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_inicio.ui"))
+
+        if hasattr(v, "btnClases"):
+            v.btnClases.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_clases_todas.ui"))
+
+        if hasattr(v, "btnEstadisticas"):
+            v.btnEstadisticas.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_estadisticas.ui"))
+
+        if hasattr(v, "btnPerfil"):
+            v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_perfil.ui"))
+
+        if hasattr(v, "btnInformacion"):
+            v.btnInformacion.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_informacion.ui"))
 
         if hasattr(v, "btnReservar1"):
             v.btnReservar1.clicked.connect(lambda: self.reservar_clase(1))
@@ -68,6 +72,7 @@ class ControladorCliente:
 
         if hasattr(v, "btnReservar4"):
             v.btnReservar4.clicked.connect(lambda: self.reservar_clase(4))
+
     def reservar_clase(self, id_clase):
         try:
             self.modelo.inscribirse_clase(self.usuario["id_usuario"], id_clase)
