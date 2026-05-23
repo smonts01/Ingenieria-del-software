@@ -1,27 +1,9 @@
-CREATE DATABASE IF NOT EXISTS Stayfit_database
+DROP DATABASE IF EXISTS Stayfit_database;
+CREATE DATABASE Stayfit_database
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
 USE Stayfit_database;
-SELECT 'ROLES' as tabla; SELECT * FROM roles;
-SELECT 'USUARIOS' as tabla; SELECT * FROM usuarios;
-SELECT 'CLIENTES' as tabla; SELECT * FROM clientes;
-SELECT 'EMPLEADOS' as tabla; SELECT * FROM empleados;
-SELECT 'ADMINISTRADOR' as tabla; SELECT * FROM administrador;
-SELECT 'ENTRENADOR' as tabla; SELECT * FROM entrenador;
-SELECT 'RECEPCIONISTA' as tabla; SELECT * FROM recepcionista;
-SELECT 'CONTABLE' as tabla; SELECT * FROM contable;
-SELECT 'SALA' as tabla; SELECT * FROM sala;
-SELECT 'CLASE' as tabla; SELECT * FROM clase;
-SELECT 'INSCRIPCION' as tabla; SELECT * FROM inscripcion;
-SELECT 'ASISTENCIA' as tabla; SELECT * FROM asistencia;
-SELECT 'TARIFA' as tabla; SELECT * FROM tarifa;
-SELECT 'CLIENTE_TARIFA' as tabla; SELECT * FROM cliente_tarifa;
-SELECT 'PAGO' as tabla; SELECT * FROM pago;
-SELECT 'INFORME' as tabla; SELECT * FROM informe;
-SELECT 'REGISTRO_ACCESO' as tabla; SELECT * FROM registro_acceso;
-SELECT 'MENOR' as tabla; SELECT * FROM menor;
-SELECT 'ADULTO' as tabla; SELECT * FROM adulto;
 
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
@@ -352,3 +334,48 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+
+INSERT INTO usuarios
+(id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
+VALUES
+(1, '00000001A', 'Admin Principal', '600000001', 'admin@stayfit.com', 'admin', 'admin1', 4, 'Calle Admin 1', '1980-01-01'),
+(2, '00000002B', 'Carlos Entrenador', '600000002', 'carlos@stayfit.com', 'entrenador', 'entrenador1', 2, 'Calle Entrenador 2', '1990-02-02'),
+(10, '11111111A', 'Marta González', '600111111', 'marta@stayfit.com', 'marta', 'marta1', 1, 'Calle Uno', '2000-05-10'),
+(11, '22222222B', 'Pablo Ruiz', '600222222', 'pablo@stayfit.com', 'pablo', 'pablo1', 1, 'Calle Dos', '1998-03-15'),
+(12, '33333333C', 'Lucía Pérez', '600333333', 'lucia@stayfit.com', 'lucia', 'lucia1', 1, 'Calle Tres', '2001-07-20');
+
+INSERT INTO empleados (id_empleado, salario) VALUES
+(1, 2000.00),
+(2, 1600.00);
+
+INSERT INTO administrador (id_administrador) VALUES
+(1);
+
+INSERT INTO entrenador (id_entrenador, especialidad, id_administrador_registra) VALUES
+(2, 'Fitness y clases dirigidas', 1);
+
+INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES
+(10, 'abonado', 0),
+(11, 'abonado', 0),
+(12, 'pendiente', 0);
+
+INSERT INTO sala (id_sala, nombre, aforo_maximo, tipo_zona) VALUES
+(1, 'Sala Agility', 25, 'Agility'),
+(2, 'Zona Speed', 19, 'Speed'),
+(3, 'Zona Cross', 12, 'Cross');
+
+INSERT INTO clase
+(id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad)
+VALUES
+(1, 2, 1, 'Yoga Matutino', 250, 'lunes', '09:00:00', '10:00:00', 60, 25, 'media'),
+(2, 2, 2, 'Spinning Intenso', 500, 'miércoles', '18:00:00', '19:00:00', 60, 19, 'alta'),
+(3, 2, 1, 'Pilates', 300, 'viernes', '11:00:00', '12:00:00', 60, 25, 'media');
+
+INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES
+(10, 1, 'inscrito'),
+(11, 1, 'inscrito'),
+(12, 1, 'inscrito'),
+(10, 2, 'inscrito'),
+(11, 3, 'inscrito');

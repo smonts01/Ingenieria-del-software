@@ -22,7 +22,12 @@ class Logica:
         cursor = self.conexion.getCursor()
         try:
             cursor.execute(sql, parametros)
-            self.conexion.conexion.commit()
+
+            try:
+                self.conexion.conexion.commit()
+            except Exception:
+                pass
+
             return cursor.rowcount
         finally:
             cursor.close()
@@ -284,6 +289,29 @@ class Logica:
             FROM clase
             WHERE id_entrenador = ?
             ORDER BY dia_semana, hora_inicio
+        """
+        return self.consultar(sql, (id_entrenador,))
+    
+    def clases_entrenador_tabla(self, id_entrenador):
+        sql = """
+            SELECT c.nombre_actividad,
+                s.nombre AS sala,
+                CONCAT(c.hora_inicio, ' - ', c.hora_fin) AS horario,
+                c.dia_semana,
+                CONCAT(
+                    COUNT(i.id_inscripcion),
+                    '/',
+                    c.aforo_maximo
+                ) AS capacidad
+            FROM clase c
+            INNER JOIN sala s ON c.id_sala = s.id_sala
+            LEFT JOIN inscripcion i 
+                ON c.id_clase = i.id_clase 
+                AND i.estado = 'inscrito'
+            WHERE c.id_entrenador = ?
+            GROUP BY c.id_clase, c.nombre_actividad, s.nombre,
+                    c.hora_inicio, c.hora_fin, c.dia_semana, c.aforo_maximo
+            ORDER BY c.dia_semana, c.hora_inicio
         """
         return self.consultar(sql, (id_entrenador,))
 

@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -159,6 +159,22 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="text">
       <string>Cerrar sesión</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_18">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>60</y>
+       <width>1391</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -471,11 +487,11 @@ QPushButton:checked {
        <height>20</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/lista-de-verificacion.png)</string>
-     </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/lista-de-verificacion.png</pixmap>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -488,11 +504,13 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-image: url(:/newPrefix/anadir-grupo.png);</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/anadir-grupo.png</pixmap>
      </property>
     </widget>
     <widget class="QLabel" name="label_8">
@@ -505,7 +523,7 @@ image: url(:/newPrefix/anadir-grupo.png);</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(./src/vista/imagenes/grafico-circular.png)</string>
+      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -1028,7 +1046,7 @@ QPushButton:checked {
       </column>
       <column>
        <property name="text">
-        <string>Fecha</string>
+        <string>Sala</string>
        </property>
       </column>
       <column>
@@ -1038,7 +1056,7 @@ QPushButton:checked {
       </column>
       <column>
        <property name="text">
-        <string>Sala</string>
+        <string>Dia</string>
        </property>
       </column>
       <column>
@@ -1053,7 +1071,7 @@ QPushButton:checked {
       </item>
       <item row="0" column="1">
        <property name="text">
-        <string>28 may 2026</string>
+        <string>Sala 1</string>
        </property>
       </item>
       <item row="0" column="2">
@@ -1063,7 +1081,7 @@ QPushButton:checked {
       </item>
       <item row="0" column="3">
        <property name="text">
-        <string>Sala 1</string>
+        <string>28 may 2026</string>
        </property>
       </item>
       <item row="0" column="4">
@@ -1078,7 +1096,7 @@ QPushButton:checked {
       </item>
       <item row="1" column="1">
        <property name="text">
-        <string>28 may 2026</string>
+        <string>Sala 2</string>
        </property>
       </item>
       <item row="1" column="2">
@@ -1088,7 +1106,7 @@ QPushButton:checked {
       </item>
       <item row="1" column="3">
        <property name="text">
-        <string>Sala 2</string>
+        <string>28 may 2026</string>
        </property>
       </item>
       <item row="1" column="4">
@@ -1103,7 +1121,7 @@ QPushButton:checked {
       </item>
       <item row="2" column="1">
        <property name="text">
-        <string>28 may 2026</string>
+        <string>Sala 1</string>
        </property>
       </item>
       <item row="2" column="2">
@@ -1113,7 +1131,7 @@ QPushButton:checked {
       </item>
       <item row="2" column="3">
        <property name="text">
-        <string>Sala 1</string>
+        <string>28 may 2026</string>
        </property>
       </item>
       <item row="2" column="4">
@@ -1363,33 +1381,6 @@ QPushButton:checked {
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label_18">
-     <property name="geometry">
-      <rect>
-       <x>-180</x>
-       <y>0</y>
-       <width>1391</width>
-       <height>621</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">image:url(./src/vista/imagenes/reborde_ola.png)</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <zorder>label_18</zorder>
-    <zorder>lblBienvenida</zorder>
-    <zorder>lblResumen</zorder>
-    <zorder>card2</zorder>
-    <zorder>card3</zorder>
-    <zorder>card4</zorder>
-    <zorder>cardTabla</zorder>
-    <zorder>cardConsejo</zorder>
-    <zorder>label_16</zorder>
-    <zorder>card2_2</zorder>
-    <zorder>label_17</zorder>
    </widget>
   </widget>
  </widget>
