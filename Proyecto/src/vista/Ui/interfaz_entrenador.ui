@@ -418,7 +418,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -437,7 +437,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>../imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -456,7 +456,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>../imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -472,7 +472,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(./src/vista/imagenes/lista-de-verificacion.png)</string>
+      <string notr="true">image: url(:/newPrefix/lista-de-verificacion.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -488,7 +488,8 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image:url(./src/vista/imagenes/anadir-grupo.png)</string>
+      <string notr="true">
+image: url(:/newPrefix/anadir-grupo.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -1392,6 +1393,8 @@ QPushButton:checked {
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../imagenes/recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>
