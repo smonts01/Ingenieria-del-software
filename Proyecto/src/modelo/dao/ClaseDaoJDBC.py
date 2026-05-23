@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.ClaseVO import ClaseVO
+from src.modelo.VO.ClaseVO import ClaseVO
 
 
 class ClaseDaoJDBC(Conexion):
