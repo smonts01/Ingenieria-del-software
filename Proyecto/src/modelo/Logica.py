@@ -246,6 +246,35 @@ class Logica:
         """
         datos = self.consultar(sql, (id_clase,))
         return datos[0] if datos else None
+    
+
+    # ============================================================
+    # FUNCIONES DEL PANEL ENTRENADOR
+    # ============================================================
+
+    def informacion_clase_con_sala(self, id_clase):
+        """
+        Devuelve la información completa de una clase junto con el nombre de la sala.
+        Se usa en el panel del entrenador para actualizar la tarjeta de información
+        cuando se selecciona una clase en Clientes inscritos o Registrar asistencia.
+        """
+        sql = """
+            SELECT c.nombre_actividad,
+                   s.nombre,
+                   c.dia_semana,
+                   c.hora_inicio,
+                   c.hora_fin,
+                   c.aforo_maximo
+            FROM clase c
+            INNER JOIN sala s ON c.id_sala = s.id_sala
+            WHERE c.id_clase = ?
+        """
+        datos = self.consultar(sql, (id_clase,))
+        return datos[0] if datos else None
+
+    # ============================================================
+    # ============================================================
+
 
     def registrar_clase(self, id_entrenador, id_sala, nombre_actividad,
                         calorias_estimadas, dia_semana, hora_inicio,

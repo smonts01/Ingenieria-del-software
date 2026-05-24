@@ -3,6 +3,7 @@ from datetime import date
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QCheckBox
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
 
 
 class ControladorEntrenador:
@@ -59,11 +60,108 @@ class ControladorEntrenador:
 
         if hasattr(v, "tablaProximasClasesEntrenador"):
             self.rellenar_tabla(v.tablaProximasClasesEntrenador, self.modelo.clases_entrenador_tabla(id_u))
+
+        if hasattr(v, "labelNumClases"):
+            clases = self.modelo.clases_de_entrenador(id_u)
+            v.labelNumClases.setText(str(len(clases)))
+
+        if hasattr(v, "labelClase") or hasattr(v, "labelHora"):
+            clases = self.modelo.clases_de_entrenador(id_u)
+
+            if clases:
+                primera_clase = clases[0]
+
+                nombre = primera_clase[1]
+                hora_inicio = primera_clase[3]
+                hora_fin = primera_clase[4]
+
+                if hasattr(v, "labelClase"):
+                    v.labelClase.setText(str(nombre))
+
+                if hasattr(v, "labelHora"):
+                    v.labelHora.setText(f"{hora_inicio} - {hora_fin}")
+
+        if hasattr(v, "labelNumAsistencias"):
+            clases = self.modelo.clases_de_entrenador(id_u)
+            total_pendientes = 0
+
+            for clase in clases:
+                inscritos = self.modelo.clientes_inscritos_clase(clase[0])
+                total_pendientes += len(inscritos)
+
+            v.labelNumAsistencias.setText(str(total_pendientes))
+
+        if hasattr(v, "lblPorcentajeOcupacion"):
+            ocupaciones = self.modelo.ocupacion_clases_entrenador(id_u)
+
+            if ocupaciones:
+                suma = 0
+
+                for ocupacion in ocupaciones:
+                    suma += float(ocupacion[4])
+
+                media = round(suma / len(ocupaciones), 2)
+                v.lblPorcentajeOcupacion.setText(f"{media}%")
+
+
+
         if hasattr(v, "tablaMisClases"):
             self.rellenar_tabla(v.tablaMisClases, self.modelo.clases_entrenador_tabla(id_u))
         if hasattr(v, "tablaOcupacionClases"):
-            self.rellenar_tabla(v.tablaOcupacionClases, self.modelo.ocupacion_clases_entrenador(id_u))
-        
+            datos_ocupacion = self.modelo.ocupacion_clases_entrenador(id_u)
+
+            tabla = v.tablaOcupacionClases
+            tabla.clear()
+            tabla.setRowCount(len(datos_ocupacion))
+            tabla.setColumnCount(5)
+            tabla.setHorizontalHeaderLabels(["ID", "Clase", "Inscritos", "Aforo", "Ocupación %"])
+
+            for fila, dato in enumerate(datos_ocupacion):
+                for col, valor in enumerate(dato):
+                    tabla.setItem(fila, col, QTableWidgetItem(str(valor)))
+
+            if datos_ocupacion:
+                total_ocupacion = 0
+                clases_llenas = 0
+                clase_mas_llena = datos_ocupacion[0]
+
+                for dato in datos_ocupacion:
+                    inscritos = int(dato[2])
+                    aforo = int(dato[3])
+                    ocupacion = float(dato[4])
+
+                    total_ocupacion += ocupacion
+
+                    if inscritos >= aforo:
+                        clases_llenas += 1
+
+                ocupacion_media = round(total_ocupacion / len(datos_ocupacion), 2)
+
+                nombre_clase_mas_llena = clase_mas_llena[1]
+                inscritos_mas_llena = clase_mas_llena[2]
+                aforo_mas_llena = clase_mas_llena[3]
+                plazas_libres = int(aforo_mas_llena) - int(inscritos_mas_llena)
+
+                if hasattr(v, "label_Porcentaje_Ocupacion"):
+                    v.label_Porcentaje_Ocupacion.setText(f"{ocupacion_media}%")
+
+                if hasattr(v, "label_Clase_masLlena"):
+                    v.label_Clase_masLlena.setText(str(nombre_clase_mas_llena))
+
+                if hasattr(v, "label_inscritos"):
+                    v.label_inscritos.setText(f"{inscritos_mas_llena}/{aforo_mas_llena} inscritos")
+
+                if hasattr(v, "label_plazasLibres"):
+                    v.label_plazasLibres.setText(str(plazas_libres))
+
+                if hasattr(v, "label_Num_Clases"):
+                    v.label_Num_Clases.setText(str(clases_llenas))
+
+                if hasattr(v, "label_Porcentaje_Ocupacion_2"):
+                    v.label_Porcentaje_Ocupacion_2.setText(f"{ocupacion_media}%")
+
+
+
         if hasattr(v, "comboClasesInscritos"):
             clases = self.modelo.clases_de_entrenador(id_u)
             v.comboClasesInscritos.clear()
@@ -102,6 +200,44 @@ class ControladorEntrenador:
 
                 if hasattr(v, "labelFechaAltaEntrenadorPerfil"):
                     v.labelFechaAltaEntrenadorPerfil.setText(str(perfil[8] or ""))
+
+        if hasattr(v, "label_Num_Clases_semana"):
+            clases = self.modelo.clases_de_entrenador(id_u)
+            v.label_Num_Clases_semana.setText(str(len(clases)))
+
+        if hasattr(v, "label_Num_Clases_Hoy"):
+            clases = self.modelo.clases_de_entrenador(id_u)
+            v.label_Num_Clases_Hoy.setText(str(len(clases)))
+
+        if hasattr(v, "label_Num_Clientes_Total"):
+            clases = self.modelo.clases_de_entrenador(id_u)
+            total_clientes = 0
+
+            for clase in clases:
+                inscritos = self.modelo.clientes_inscritos_clase(clase[0])
+                total_clientes += len(inscritos)
+
+            v.label_Num_Clientes_Total.setText(str(total_clientes))
+
+        if hasattr(v, "label_Porcentaje_Asistencia"):
+            clases = self.modelo.clases_de_entrenador(id_u)
+            total_registros = 0
+            total_presentes = 0
+
+            for clase in clases:
+                asistencias = self.modelo.consultar_asistencia_clase(clase[0])
+
+                for asistencia in asistencias:
+                    total_registros += 1
+                    if asistencia[2] == "si":
+                        total_presentes += 1
+
+            if total_registros > 0:
+                porcentaje = round((total_presentes * 100) / total_registros, 2)
+            else:
+                porcentaje = 0
+
+            v.label_Porcentaje_Asistencia.setText(f"{porcentaje}%")
 
         if hasattr(v, "comboSeleccionarClase"):
             clases = self.modelo.clases_de_entrenador(id_u)
@@ -142,13 +278,47 @@ class ControladorEntrenador:
         datos = self.modelo.clientes_inscritos_clase(id_clase)
 
         if hasattr(v, "tablaInscritos"):
-            self.rellenar_tabla(v.tablaInscritos, datos)
+            tabla = v.tablaInscritos
+            tabla.clear()
+            tabla.setRowCount(len(datos))
+            tabla.setColumnCount(3)
+            tabla.setHorizontalHeaderLabels(["Cliente", "Teléfono", "Email"])
+
+            for fila, cliente in enumerate(datos):
+                nombre = cliente[1]
+                telefono = cliente[2]
+                email = cliente[3]
+
+                tabla.setItem(fila, 0, QTableWidgetItem(str(nombre)))
+                tabla.setItem(fila, 1, QTableWidgetItem(str(telefono)))
+                tabla.setItem(fila, 2, QTableWidgetItem(str(email)))
 
         if hasattr(v, "label_numInscritos_ins"):
             v.label_numInscritos_ins.setText(str(len(datos)))
 
         if hasattr(v, "label_total_inscritos"):
             v.label_total_inscritos.setText(str(len(datos)))
+
+        info = self.modelo.informacion_clase_con_sala(id_clase)
+
+        if info:
+            nombre_clase = info[0]
+            sala = info[1]
+            dia = info[2]
+            hora_inicio = info[3]
+            hora_fin = info[4]
+
+            if hasattr(v, "label_nombreclase_ins"):
+                v.label_nombreclase_ins.setText(str(nombre_clase))
+
+            if hasattr(v, "lblSalaClase_ins"):
+                v.lblSalaClase_ins.setText(str(sala))
+
+            if hasattr(v, "label_fecha_ins"):
+                v.label_fecha_ins.setText(str(dia))
+
+            if hasattr(v, "lblHorarioClase_ins"):
+                v.lblHorarioClase_ins.setText(f"{hora_inicio} - {hora_fin}")
 
             
 
@@ -197,6 +367,22 @@ class ControladorEntrenador:
         if hasattr(v, "label_numAus"):
             v.label_numAus.setText("0")
 
+        clase = self.modelo.buscar_clase(id_clase)
+
+        if clase:
+            nombre = clase[3]
+            dia = clase[5]
+            hora_inicio = clase[6]
+            hora_fin = clase[7]
+
+            if hasattr(v, "label_nombreclase"):
+                v.label_nombreclase.setText(str(nombre))
+
+            if hasattr(v, "label_fecha"):
+                v.label_fecha.setText(str(dia))
+
+            if hasattr(v, "lblHorarioClase"):
+                v.lblHorarioClase.setText(f"{hora_inicio} - {hora_fin}")
 
     def actualizar_resumen_asistencia(self):
         v = self.ventana
