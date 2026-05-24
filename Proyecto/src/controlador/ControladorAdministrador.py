@@ -479,14 +479,21 @@ class ControladorAdministrador:
         except Exception:
             pass
 
-    def rellenar_tabla(self, tabla, datos):
+    def _rellenar_tabla_editable(self, tabla, datos):
+        from PyQt5.QtWidgets import QTableWidgetItem
+        from PyQt5.QtCore import Qt
+        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
+        tabla.setSelectionBehavior(tabla.SelectRows)
+        headers = ["ID", "DNI", "Nombre", "Teléfono", "Email", "Usuario", "Rol", "Dirección", "Fecha Nac."]
+        tabla.setColumnCount(len(headers))
+        tabla.setHorizontalHeaderLabels(headers)
         tabla.setRowCount(len(datos))
-        if datos:
-            tabla.setColumnCount(len(datos[0]))
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro):
-                tabla.setItem(fila, col, QTableWidgetItem(
-                    str(valor) if valor is not None else ""))
+                item = QTableWidgetItem(str(valor) if valor is not None else "")
+                if col in (0, 6):
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                tabla.setItem(fila, col, item)
 
     def cerrar_sesion(self):
         self.ventana.close()
