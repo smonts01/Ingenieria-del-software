@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -405,7 +405,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../imagenes/icono_usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -424,7 +424,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>../imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -491,7 +491,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -658,9 +658,9 @@ QPushButton:checked {
     <widget class="QFrame" name="card2">
      <property name="geometry">
       <rect>
-       <x>500</x>
+       <x>480</x>
        <y>98</y>
-       <width>451</width>
+       <width>471</width>
        <height>101</height>
       </rect>
      </property>
@@ -723,7 +723,7 @@ QPushButton:checked {
        <rect>
         <x>200</x>
         <y>60</y>
-        <width>61</width>
+        <width>101</width>
         <height>20</height>
        </rect>
       </property>
@@ -753,7 +753,7 @@ QPushButton:checked {
      <widget class="QLabel" name="label_fecha">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>195</x>
         <y>30</y>
         <width>111</width>
         <height>41</height>
