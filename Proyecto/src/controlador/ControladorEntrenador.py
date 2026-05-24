@@ -335,6 +335,15 @@ class ControladorEntrenador:
 
         datos = self.modelo.clientes_inscritos_clase(id_clase)
 
+        fecha = date.today().isoformat()
+        asistencias_guardadas = self.modelo.asistencia_clase_fecha(id_clase, fecha)
+        mapa_asistencia = {}
+
+        for asistencia in asistencias_guardadas:
+            id_cliente_guardado = asistencia[0]
+            presente = asistencia[1]
+            mapa_asistencia[id_cliente_guardado] = presente
+
         if not hasattr(v, "tablaInscritosAsistencia"):
             return
 
@@ -348,8 +357,17 @@ class ControladorEntrenador:
             id_cliente = cliente[0]
             nombre = cliente[1]
 
+            estado_guardado = mapa_asistencia.get(id_cliente, "pendiente")
+
+            if estado_guardado == "si":
+                estado_mostrar = "si"
+            elif estado_guardado == "no":
+                estado_mostrar = "no"
+            else:
+                estado_mostrar = "Pendiente"
+
             tabla.setItem(fila, 0, QTableWidgetItem(f"{id_cliente} - {nombre}"))
-            tabla.setItem(fila, 1, QTableWidgetItem("Pendiente"))
+            tabla.setItem(fila, 1, QTableWidgetItem(estado_mostrar))
             tabla.setItem(fila, 2, QTableWidgetItem("Escribe si o no"))
 
         if hasattr(v, "label_TotalInscritos"):
@@ -431,8 +449,8 @@ class ControladorEntrenador:
                 return
 
             fecha = date.today().isoformat()
-            presentes = []
             total = 0
+            presentes = 0
             ausencias = 0
             pendientes = 0
 
@@ -443,25 +461,27 @@ class ControladorEntrenador:
                     item_cliente = tabla.item(fila, 0)
                     item_estado = tabla.item(fila, 1)
 
-                    if not item_cliente:
+                    if not item_cliente or not item_estado:
                         continue
 
                     total += 1
 
                     id_cliente = int(item_cliente.text().split(" - ")[0])
-                    estado = item_estado.text().strip().lower() if item_estado else ""
+                    estado = item_estado.text().strip().lower()
 
                     if estado in ["si", "sí", "asistio", "asistió"]:
-                        presentes.append(id_cliente)
+                        self.modelo.registrar_asistencia(id_cliente, id_clase, fecha, "si")
+                        presentes += 1
+
                     elif estado in ["no", "ausencia", "ausente"]:
+                        self.modelo.registrar_asistencia(id_cliente, id_clase, fecha, "no")
                         ausencias += 1
+
                     else:
                         pendientes += 1
 
-            self.modelo.registrar_asistencia_lista(id_clase, fecha, presentes)
-
             if hasattr(v, "label_numAsist"):
-                v.label_numAsist.setText(str(len(presentes)))
+                v.label_numAsist.setText(str(presentes))
 
             if hasattr(v, "label_numPend"):
                 v.label_numPend.setText(str(pendientes))
@@ -475,12 +495,11 @@ class ControladorEntrenador:
             QMessageBox.information(
                 v,
                 "Correcto",
-                f"Asistencia guardada correctamente.\nAsistieron: {len(presentes)}"
+                f"Asistencia guardada correctamente.\nAsistieron: {presentes}"
             )
 
         except Exception as e:
             QMessageBox.warning(v, "Error", str(e))
-
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))

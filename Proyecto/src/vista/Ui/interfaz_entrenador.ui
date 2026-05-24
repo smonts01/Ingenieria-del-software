@@ -487,11 +487,12 @@ QPushButton:checked {
        <height>20</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">
+image:url(./src/vista/imagenes/lista-de-verificacion.png)</string>
+     </property>
      <property name="text">
       <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/lista-de-verificacion.png</pixmap>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -504,13 +505,10 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">image:url(./src/vista/imagenes/anadir-grupo.png)</string>
      </property>
      <property name="text">
       <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/anadir-grupo.png</pixmap>
      </property>
     </widget>
     <widget class="QLabel" name="label_8">
@@ -523,7 +521,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
+      <string notr="true">image:url(./src/vista/imagenes/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -675,9 +673,9 @@ QPushButton:checked {
     <widget class="QFrame" name="card2">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>98</y>
-       <width>181</width>
+       <x>270</x>
+       <y>100</y>
+       <width>251</width>
        <height>110</height>
       </rect>
      </property>
@@ -718,7 +716,7 @@ QPushButton:checked {
        <rect>
         <x>70</x>
         <y>30</y>
-        <width>95</width>
+        <width>171</width>
         <height>28</height>
        </rect>
       </property>
@@ -781,8 +779,8 @@ QPushButton:checked {
     <widget class="QFrame" name="card3">
      <property name="geometry">
       <rect>
-       <x>500</x>
-       <y>98</y>
+       <x>570</x>
+       <y>100</y>
        <width>181</width>
        <height>110</height>
       </rect>
@@ -871,8 +869,8 @@ QPushButton:checked {
     <widget class="QFrame" name="card4">
      <property name="geometry">
       <rect>
-       <x>750</x>
-       <y>98</y>
+       <x>800</x>
+       <y>100</y>
        <width>161</width>
        <height>110</height>
       </rect>

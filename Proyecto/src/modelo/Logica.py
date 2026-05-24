@@ -456,6 +456,19 @@ class Logica:
         """
         return self.consultar(sql, (id_clase,))
 
+
+    def asistencia_clase_fecha(self, id_clase, fecha):
+        """
+        Devuelve la asistencia registrada de una clase en una fecha concreta.
+        Se usa para que el entrenador vea si ya marcó si/no al volver a abrir la pantalla.
+        """
+        sql = """
+            SELECT id_cliente, presente
+            FROM asistencia
+            WHERE id_clase = ? AND fecha = ?
+        """
+        return self.consultar(sql, (id_clase, fecha))
+
     def listar_tarifas(self):
         sql = """
             SELECT id_tarifa, nombre, precio_mensual, servicios_incluidos,

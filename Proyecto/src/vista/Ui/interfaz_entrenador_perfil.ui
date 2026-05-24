@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -268,7 +268,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -287,7 +287,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -306,7 +306,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>../imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -325,7 +325,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>../imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1127,130 +1127,10 @@ border:None</string>
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_4">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>40</y>
-        <width>151</width>
-        <height>141</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QLabel" name="label_28">
-       <property name="geometry">
-        <rect>
-         <x>55</x>
-         <y>20</y>
-         <width>40</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">image:url(./src/vista/imagenes/calendario.png);
-background:transparent;
-border:None</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_Num_Clases_Hoy">
-       <property name="geometry">
-        <rect>
-         <x>65</x>
-         <y>60</y>
-         <width>21</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: rgb(170, 85, 255);
-    font-size: 26px;
-    font-weight: bold;
-}</string>
-       </property>
-       <property name="text">
-        <string>3</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_29">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>90</y>
-         <width>41</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: bold;
-}</string>
-       </property>
-       <property name="text">
-        <string>Clases </string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_30">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>110</y>
-         <width>101</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    background: transparent;
-    border: none;
-    color: #6B7280;
-    font-size: 12px;
-}</string>
-       </property>
-       <property name="text">
-        <string>Esta semana</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lblIconCal">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>10</y>
-         <width>51</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:#E8DEFF; border-radius:22px; font:17pt &quot;Segoe UI Emoji&quot;;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <zorder>lblIconCal</zorder>
-      <zorder>label_28</zorder>
-      <zorder>label_Num_Clases_Hoy</zorder>
-      <zorder>label_29</zorder>
-      <zorder>label_30</zorder>
-     </widget>
      <widget class="QFrame" name="frame_5">
       <property name="geometry">
        <rect>
-        <x>460</x>
+        <x>300</x>
         <y>40</y>
         <width>151</width>
         <height>141</height>
@@ -1370,7 +1250,7 @@ border:None</string>
      <widget class="QFrame" name="frame_6">
       <property name="geometry">
        <rect>
-        <x>690</x>
+        <x>600</x>
         <y>40</y>
         <width>151</width>
         <height>141</height>
@@ -1484,7 +1364,6 @@ border:None</string>
      </widget>
      <zorder>frame_3</zorder>
      <zorder>label_24</zorder>
-     <zorder>frame_4</zorder>
      <zorder>frame_5</zorder>
      <zorder>frame_6</zorder>
     </widget>
