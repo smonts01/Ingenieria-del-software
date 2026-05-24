@@ -20,34 +20,18 @@ class ControladorAdministrador:
             self.ventana.close()
         ruta = os.path.join(self.ruta_ui, archivo)
         self.ventana = uic.loadUi(ruta)
-        self.aplicar_imagenes()
         self.conectar_botones()
         self.cargar_datos()
         self.ventana.show()
 
-    def aplicar_imagenes(self):
-        img = "./src/vista/imagenes"
-        v = self.ventana
-        # Apply stylesheet images to labels by name
-        estilos = {
-            "lblLogo": f"image: url({img}/logo_stayfit.png);",
-            "lblOla":  f"image: url({img}/ola.png);",
-        }
-        for nombre, estilo in estilos.items():
-            if hasattr(v, nombre):
-                getattr(v, nombre).setStyleSheet(estilo)
-
     def conectar_botones(self):
         v = self.ventana
-
         if hasattr(v, "btnCerrarSesion"):
             v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
         if hasattr(v, "btnInicio"):
             v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_inicio.ui"))
         if hasattr(v, "btnUsuarios"):
             v.btnUsuarios.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_usuarios_clientes.ui"))
-        if hasattr(v, "btnTrabajadores"):
-            v.btnTrabajadores.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_usuarios_trabajadores.ui"))
         if hasattr(v, "btnClases"):
             v.btnClases.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_clases.ui"))
         if hasattr(v, "btnInscripciones"):
@@ -58,8 +42,6 @@ class ControladorAdministrador:
             v.btnEstadisticas.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_estadisticas.ui"))
         if hasattr(v, "btnConfiguracion"):
             v.btnConfiguracion.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_configuracion.ui"))
-        if hasattr(v, "btnNuevoUsuario"):
-            v.btnNuevoUsuario.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_usuarios_nuevo_usuario.ui"))
         if hasattr(v, "btnRegistrarUsuario"):
             v.btnRegistrarUsuario.clicked.connect(self.registrar_usuario)
         if hasattr(v, "btnNuevaClase"):
@@ -78,18 +60,21 @@ class ControladorAdministrador:
     def cargar_datos(self):
         v = self.ventana
 
-        # --- Contadores tarjetas superiores ---
+        # 1. Total clientes
         if hasattr(v, "lblUsuariosNum"):
-            v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
-        if hasattr(v, "lblClasesNum"):
-            v.lblClasesNum.setText(str(self.modelo.contar_clases()))
-        if hasattr(v, "lblInsNum"):
-            v.lblInsNum.setText(str(self.modelo.contar_inscripciones()))
-        if hasattr(v, "lblIngresosNum"):
-            total = self.modelo.total_ingresos()
-            v.lblIngresosNum.setText(f"{float(total):.2f} €")
+            try:
+                v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
+            except Exception:
+                v.lblUsuariosNum.setText("0")
 
-        # --- Inscripciones por clase ---
+        # 2. Total clases
+        if hasattr(v, "lblClasesNum"):
+            try:
+                v.lblClasesNum.setText(str(self.modelo.contar_clases()))
+            except Exception:
+                v.lblClasesNum.setText("0")
+
+        # 3. Inscripciones por clase
         clases_labels = [
             ("lblClasesNum_2", "spinning"),
             ("lblClasesNum_3", "zumba"),
@@ -99,55 +84,146 @@ class ControladorAdministrador:
         ]
         for lbl_name, clase in clases_labels:
             if hasattr(v, lbl_name):
-                getattr(v, lbl_name).setText(str(self.modelo.contar_inscripciones_clase(clase)))
+                try:
+                    n = self.modelo.contar_inscripciones_clase(clase)
+                    getattr(v, lbl_name).setText(str(n))
+                except Exception:
+                    getattr(v, lbl_name).setText("0")
 
-        # --- Planes basico / premium ---
-        if hasattr(v, "lblClasesNum_7"):
-            v.lblClasesNum_7.setText(str(self.modelo.contar_clientes_tarifa("basico")))
-        if hasattr(v, "lblClasesNum_8"):
-            v.lblClasesNum_8.setText(str(self.modelo.contar_clientes_tarifa("premium")))
+        # 4. Clientes por plan
+        if hasattr(v, "clientesbasico"):
+            try:
+                v.clientesbasico.setText(str(self.modelo.contar_clientes_tarifa("basico")))
+            except Exception:
+                v.clientesbasico.setText("0")
 
-        # --- Tabla inscripciones ---
+        if hasattr(v, "ClientesPremium"):
+            try:
+                v.ClientesPremium.setText(str(self.modelo.contar_clientes_tarifa("premium")))
+            except Exception:
+                v.ClientesPremium.setText("0")
+
+        # 5. Tabla inscripciones recientes
         if hasattr(v, "tablaInscripciones"):
-            self.rellenar_tabla(v.tablaInscripciones, self.modelo.listar_inscripciones_resumen())
+            try:
+                self.rellenar_tabla(v.tablaInscripciones,
+                                    self.modelo.listar_inscripciones_resumen())
+            except Exception:
+                pass
 
-        # --- Tabla pagos pendientes ---
+        # 6. Tabla pagos pendientes
         if hasattr(v, "tablaClientesPagosPendientes"):
-            self.rellenar_tabla(v.tablaClientesPagosPendientes, self.modelo.pagos_pendientes())
+            try:
+                self.rellenar_tabla(v.tablaClientesPagosPendientes,
+                                    self.modelo.pagos_pendientes())
+            except Exception:
+                pass
 
-        # --- Gráfico de barras por clase ---
+        # 7. Gráfico ingresos por mes
         if hasattr(v, "graficoFake"):
-            self._dibujar_grafico(v.graficoFake)
+            self._dibujar_grafico_ingresos(v.graficoFake)
 
-
-        if hasattr(v, "tablaInscripciones"):
-            self.rellenar_tabla(v.tablaInscripciones, self.modelo.ocupacion_clases())
-        if hasattr(v, "tablaClientesPagosPendientes"):
-            self.rellenar_tabla(v.tablaClientesPagosPendientes, self.modelo.pagos_pendientes())
+        # 8. Otras tablas (pantallas secundarias)
         if hasattr(v, "tablaClientes_2"):
-            self.rellenar_tabla(v.tablaClientes_2, self.modelo.listar_clientes())
+            try:
+                self.rellenar_tabla(v.tablaClientes_2, self.modelo.listar_clientes())
+            except Exception:
+                pass
         if hasattr(v, "tablaTrabajadores_2"):
-            self.rellenar_tabla(v.tablaTrabajadores_2, self.modelo.listar_empleados())
+            try:
+                self.rellenar_tabla(v.tablaTrabajadores_2, self.modelo.listar_empleados())
+            except Exception:
+                pass
         if hasattr(v, "tablaClases"):
-            self.rellenar_tabla(v.tablaClases, self.modelo.listar_clases())
+            try:
+                self.rellenar_tabla(v.tablaClases, self.modelo.listar_clases())
+            except Exception:
+                pass
         if hasattr(v, "tableWidget"):
-            self.rellenar_tabla(v.tableWidget, self.modelo.listar_pagos())
+            try:
+                self.rellenar_tabla(v.tableWidget, self.modelo.listar_pagos())
+            except Exception:
+                pass
         if hasattr(v, "tablaRanking"):
-            self.rellenar_tabla(v.tablaRanking, self.modelo.ranking_clientes_activos())
+            try:
+                self.rellenar_tabla(v.tablaRanking, self.modelo.ranking_clientes_activos())
+            except Exception:
+                pass
+
+    def _dibujar_grafico_ingresos(self, label):
+        try:
+            import matplotlib
+            matplotlib.use("Agg")
+            import matplotlib.pyplot as plt
+            import io
+            from PyQt5.QtGui import QPixmap
+
+            datos = self.modelo.ingresos_por_mes()
+            if not datos:
+                label.setText("Sin datos de ingresos aún")
+                return
+
+            # datos: (anio, mes, total) - ya vienen en orden DESC, invertir para mostrar cronológico
+            meses_nombres = ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun",
+                             "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+            etiquetas = [f"{meses_nombres[int(r[1])]}\n{str(r[0])[-2:]}" for r in datos][::-1]
+            valores   = [float(r[2]) for r in datos][::-1]
+
+            fig, ax = plt.subplots(figsize=(4.0, 2.3), dpi=92)
+            fig.patch.set_facecolor("#F8F9FA")
+            ax.set_facecolor("#F8F9FA")
+
+            colores = ["#00BFA5" if v == max(valores) else "#80CBC4" for v in valores]
+            bars = ax.bar(etiquetas, valores, color=colores, width=0.55, edgecolor="white", linewidth=0.5)
+
+            ax.set_ylabel("€", fontsize=8)
+            ax.set_title("Ingresos por mes", fontsize=9, fontweight="bold", color="#333333", pad=6)
+            ax.tick_params(axis="x", labelsize=7)
+            ax.tick_params(axis="y", labelsize=7)
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_alpha(0.3)
+            ax.spines["bottom"].set_alpha(0.3)
+
+            max_val = max(valores) if valores else 1
+            for bar, val in zip(bars, valores):
+                ax.text(bar.get_x() + bar.get_width() / 2,
+                        bar.get_height() + max_val * 0.03,
+                        f"{val:.0f}€",
+                        ha="center", va="bottom", fontsize=6.5, color="#333")
+
+            plt.tight_layout(pad=0.5)
+            buf = io.BytesIO()
+            plt.savefig(buf, format="png", bbox_inches="tight", dpi=92)
+            plt.close(fig)
+            buf.seek(0)
+
+            pixmap = QPixmap()
+            pixmap.loadFromData(buf.read())
+            w = label.width()  or 391
+            h = label.height() or 231
+            label.setPixmap(pixmap.scaled(w, h, 1))  # 1 = KeepAspectRatio
+
+        except ImportError:
+            label.setText("Instala matplotlib:\npip install matplotlib")
+        except Exception as e:
+            label.setText(f"Error gráfico:\n{str(e)[:60]}")
+
+    # ── CRUD usuarios ──────────────────────────────────────────────
 
     def registrar_usuario(self):
         v = self.ventana
         try:
-            dni      = v.txtDni.text().strip()
-            nombre   = v.txtNombre.text().strip()
-            telefono = v.txtTelefono.text().strip()
-            email    = v.txtEmail.text().strip()
-            direccion= v.txtDireccion.text().strip()
-            fecha    = v.txtFechaNacimiento.text().strip()
-            username = v.txtUsuario.text().strip()
-            password = v.txtPassword.text().strip()
-            confirmar= v.txtConfirmarPassword.text().strip()
-            rol      = v.cmbRolUsuario.currentIndex() + 1
+            dni      = v.txtDni.text().strip()      if hasattr(v, "txtDni")      else ""
+            nombre   = v.txtNombre.text().strip()    if hasattr(v, "txtNombre")   else ""
+            telefono = v.txtTelefono.text().strip()  if hasattr(v, "txtTelefono") else ""
+            email    = v.txtEmail.text().strip()     if hasattr(v, "txtEmail")    else ""
+            direccion= v.txtDireccion.text().strip() if hasattr(v, "txtDireccion")else ""
+            fecha    = v.txtFechaNacimiento.text().strip() if hasattr(v, "txtFechaNacimiento") else "2000-01-01"
+            username = v.txtUsuario.text().strip()   if hasattr(v, "txtUsuario")  else ""
+            password = v.txtPassword.text().strip()  if hasattr(v, "txtPassword") else ""
+            confirmar= v.txtConfirmarPassword.text().strip() if hasattr(v, "txtConfirmarPassword") else password
+            rol      = v.cmbRolUsuario.currentIndex() + 1   if hasattr(v, "cmbRolUsuario")        else 1
 
             if not all([dni, nombre, telefono, email, username, password]):
                 QMessageBox.warning(v, "Error", "Completa todos los campos obligatorios")
@@ -165,14 +241,11 @@ class ControladorAdministrador:
     def modificar_usuario(self):
         v = self.ventana
         try:
-            tabla = v.tablaClientes_2 if hasattr(v, "tablaClientes_2") else None
-            if not tabla:
-                return
-            fila = tabla.currentRow()
-            if fila < 0:
+            tabla = getattr(v, "tablaClientes_2", None)
+            if not tabla or tabla.currentRow() < 0:
                 QMessageBox.warning(v, "Error", "Selecciona un usuario primero")
                 return
-            id_usuario = int(tabla.item(fila, 0).text())
+            id_usuario = int(tabla.item(tabla.currentRow(), 0).text())
             telefono = v.txtTelefono.text().strip() if hasattr(v, "txtTelefono") else ""
             email    = v.txtEmail.text().strip()    if hasattr(v, "txtEmail")    else ""
             direccion= v.txtDireccion.text().strip() if hasattr(v, "txtDireccion") else ""
@@ -185,43 +258,37 @@ class ControladorAdministrador:
     def eliminar_usuario(self):
         v = self.ventana
         try:
-            tabla = v.tablaClientes_2 if hasattr(v, "tablaClientes_2") else None
-            if not tabla:
-                return
-            fila = tabla.currentRow()
-            if fila < 0:
+            tabla = getattr(v, "tablaClientes_2", None)
+            if not tabla or tabla.currentRow() < 0:
                 QMessageBox.warning(v, "Error", "Selecciona un usuario primero")
                 return
-            id_usuario = int(tabla.item(fila, 0).text())
-            resp = QMessageBox.question(v, "Confirmar", "¿Eliminar este usuario?",
-                                        QMessageBox.Yes | QMessageBox.No)
-            if resp == QMessageBox.Yes:
+            id_usuario = int(tabla.item(tabla.currentRow(), 0).text())
+            if QMessageBox.question(v, "Confirmar", "¿Eliminar este usuario?",
+                                    QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
                 self.modelo.eliminar_usuario(id_usuario)
                 QMessageBox.information(v, "Correcto", "Usuario eliminado")
                 self.cargar_datos()
         except Exception as e:
             QMessageBox.warning(v, "Error", str(e))
 
+    # ── CRUD clases ────────────────────────────────────────────────
+
     def registrar_clase(self):
         v = self.ventana
         try:
-            nombre     = v.txtNombreClase.text().strip()   if hasattr(v, "txtNombreClase")     else ""
-            dia        = v.txtDiaSemana.text().strip()     if hasattr(v, "txtDiaSemana")       else "lunes"
-            hora_ini   = v.txtHoraInicio.text().strip()    if hasattr(v, "txtHoraInicio")      else "09:00"
-            hora_fin   = v.txtHoraFin.text().strip()       if hasattr(v, "txtHoraFin")         else "10:00"
-            duracion   = int(v.txtDuracion.text())         if hasattr(v, "txtDuracion")        else 60
-            aforo      = int(v.txtAforo.text())            if hasattr(v, "txtAforo")           else 20
-            calorias   = int(v.txtCalorias.text())         if hasattr(v, "txtCalorias")        else 300
-            nivel      = v.cmbNivel.currentText()          if hasattr(v, "cmbNivel")           else "media"
-            id_sala    = 1
-            id_entren  = self.usuario["id_usuario"]
-
+            nombre   = v.txtNombreClase.text().strip() if hasattr(v, "txtNombreClase") else ""
+            dia      = v.txtDiaSemana.text().strip()   if hasattr(v, "txtDiaSemana")   else "lunes"
+            hora_ini = v.txtHoraInicio.text().strip()  if hasattr(v, "txtHoraInicio")  else "09:00"
+            hora_fin = v.txtHoraFin.text().strip()     if hasattr(v, "txtHoraFin")     else "10:00"
+            duracion = int(v.txtDuracion.text())       if hasattr(v, "txtDuracion")    else 60
+            aforo    = int(v.txtAforo.text())          if hasattr(v, "txtAforo")       else 20
+            calorias = int(v.txtCalorias.text())       if hasattr(v, "txtCalorias")    else 300
+            nivel    = v.cmbNivel.currentText()        if hasattr(v, "cmbNivel")       else "media"
             if not nombre:
                 QMessageBox.warning(v, "Error", "Introduce el nombre de la clase")
                 return
-
-            self.modelo.registrar_clase(id_entren, id_sala, nombre, calorias,
-                                        dia, hora_ini, hora_fin, duracion, aforo, nivel)
+            self.modelo.registrar_clase(self.usuario["id_usuario"], 1, nombre,
+                                        calorias, dia, hora_ini, hora_fin, duracion, aforo, nivel)
             QMessageBox.information(v, "Correcto", "Clase registrada correctamente")
             self.cargar_datos()
         except Exception as e:
@@ -230,15 +297,12 @@ class ControladorAdministrador:
     def modificar_clase(self):
         v = self.ventana
         try:
-            tabla = v.tablaClases if hasattr(v, "tablaClases") else None
-            if not tabla:
-                return
-            fila = tabla.currentRow()
-            if fila < 0:
+            tabla = getattr(v, "tablaClases", None)
+            if not tabla or tabla.currentRow() < 0:
                 QMessageBox.warning(v, "Error", "Selecciona una clase primero")
                 return
-            id_clase = int(tabla.item(fila, 0).text())
-            nombre   = v.txtNombreClase.text().strip() if hasattr(v, "txtNombreClase") else tabla.item(fila, 1).text()
+            id_clase = int(tabla.item(tabla.currentRow(), 0).text())
+            nombre   = v.txtNombreClase.text().strip() if hasattr(v, "txtNombreClase") else tabla.item(tabla.currentRow(), 1).text()
             self.modelo.modificar_clase(id_clase, self.usuario["id_usuario"], 1,
                                         nombre, 300, "lunes", "09:00", "10:00", 60, 20, "media")
             QMessageBox.information(v, "Correcto", "Clase modificada")
@@ -249,22 +313,20 @@ class ControladorAdministrador:
     def eliminar_clase(self):
         v = self.ventana
         try:
-            tabla = v.tablaClases if hasattr(v, "tablaClases") else None
-            if not tabla:
-                return
-            fila = tabla.currentRow()
-            if fila < 0:
+            tabla = getattr(v, "tablaClases", None)
+            if not tabla or tabla.currentRow() < 0:
                 QMessageBox.warning(v, "Error", "Selecciona una clase primero")
                 return
-            id_clase = int(tabla.item(fila, 0).text())
-            resp = QMessageBox.question(v, "Confirmar", "¿Eliminar esta clase?",
-                                        QMessageBox.Yes | QMessageBox.No)
-            if resp == QMessageBox.Yes:
+            id_clase = int(tabla.item(tabla.currentRow(), 0).text())
+            if QMessageBox.question(v, "Confirmar", "¿Eliminar esta clase?",
+                                    QMessageBox.Yes | QMessageBox.No) == QMessageBox.Yes:
                 self.modelo.eliminar_clase(id_clase)
                 QMessageBox.information(v, "Correcto", "Clase eliminada")
                 self.cargar_datos()
         except Exception as e:
             QMessageBox.warning(v, "Error", str(e))
+
+    # ── Utilidades ─────────────────────────────────────────────────
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))
@@ -272,47 +334,8 @@ class ControladorAdministrador:
             tabla.setColumnCount(len(datos[0]))
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro):
-                tabla.setItem(fila, col, QTableWidgetItem(str(valor) if valor is not None else ""))
-
-
-    def _dibujar_grafico(self, label):
-        try:
-            import matplotlib
-            matplotlib.use("Agg")
-            import matplotlib.pyplot as plt
-            import io
-            from PyQt5.QtGui import QPixmap
-
-            datos = self.modelo.inscripciones_por_clase()
-            clases_fijas = ["Spinning", "Zumba", "Yoga", "Pilates", "Crossfit"]
-            dict_datos = {str(r[0]).capitalize(): int(r[1]) for r in datos}
-            valores = [dict_datos.get(c, 0) for c in clases_fijas]
-            colores = ["#00BFA5", "#26C6DA", "#42A5F5", "#7E57C2", "#EF5350"]
-
-            fig, ax = plt.subplots(figsize=(4, 2.2), dpi=90)
-            fig.patch.set_facecolor("#F5F5F5")
-            ax.set_facecolor("#F5F5F5")
-            bars = ax.bar(clases_fijas, valores, color=colores, width=0.5, edgecolor="white")
-            ax.set_ylabel("Inscritos", fontsize=8)
-            ax.set_title("Inscripciones por clase", fontsize=9, fontweight="bold")
-            ax.tick_params(axis="x", labelsize=7)
-            ax.tick_params(axis="y", labelsize=7)
-            for bar, val in zip(bars, valores):
-                ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.1,
-                        str(val), ha="center", va="bottom", fontsize=7)
-            plt.tight_layout()
-
-            buf = io.BytesIO()
-            plt.savefig(buf, format="png")
-            plt.close(fig)
-            buf.seek(0)
-
-            pixmap = QPixmap()
-            pixmap.loadFromData(buf.read())
-            label.setPixmap(pixmap.scaled(label.width(), label.height(),
-                            aspectRatioMode=1))
-        except Exception as e:
-            label.setText(f"Gráfico no disponible\n(pip install matplotlib)")
+                tabla.setItem(fila, col, QTableWidgetItem(
+                    str(valor) if valor is not None else ""))
 
     def cerrar_sesion(self):
         self.ventana.close()

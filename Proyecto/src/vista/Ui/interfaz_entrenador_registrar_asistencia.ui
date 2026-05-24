@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -151,7 +151,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QPushButton" name="btnCerrarSesion">
      <property name="geometry">
       <rect>
-       <x>860</x>
+       <x>1000</x>
        <y>27</y>
        <width>115</width>
        <height>36</height>
@@ -386,7 +386,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -405,7 +405,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/icono_usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -424,7 +424,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -443,7 +443,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>../imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -491,7 +491,7 @@ QPushButton:checked {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(./src/vista/imagenes/grafico-circular.png)</string>
+      <string notr="true">image: url(:/newPrefix/grafico-circular.png)</string>
      </property>
      <property name="text">
       <string/>
@@ -1103,107 +1103,107 @@ QTableWidget::item {
      </column>
      <item row="0" column="0">
       <property name="text">
-       <string>MG  Marta González</string>
+       <string/>
       </property>
      </item>
      <item row="0" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string/>
       </property>
      </item>
      <item row="0" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string/>
       </property>
      </item>
      <item row="1" column="0">
       <property name="text">
-       <string>PR  Pablo Ruiz</string>
+       <string/>
       </property>
      </item>
      <item row="1" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string/>
       </property>
      </item>
      <item row="1" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string/>
       </property>
      </item>
      <item row="2" column="0">
       <property name="text">
-       <string>LP  Lucía Pérez</string>
+       <string/>
       </property>
      </item>
      <item row="2" column="1">
       <property name="text">
-       <string>Pendiente</string>
+       <string/>
       </property>
      </item>
      <item row="2" column="2">
       <property name="text">
-       <string>✓ Marcar asistencia    Marcar ausencia</string>
+       <string/>
       </property>
      </item>
      <item row="3" column="0">
       <property name="text">
-       <string>JA  Javier Alonso</string>
+       <string/>
       </property>
      </item>
      <item row="3" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string/>
       </property>
      </item>
      <item row="3" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string/>
       </property>
      </item>
      <item row="4" column="0">
       <property name="text">
-       <string>AS  Ana Sánchez</string>
+       <string/>
       </property>
      </item>
      <item row="4" column="1">
       <property name="text">
-       <string>Pendiente</string>
+       <string/>
       </property>
      </item>
      <item row="4" column="2">
       <property name="text">
-       <string>✓ Marcar asistencia    Marcar ausencia</string>
+       <string/>
       </property>
      </item>
      <item row="5" column="0">
       <property name="text">
-       <string>CR  Carlos Romero</string>
+       <string/>
       </property>
      </item>
      <item row="5" column="1">
       <property name="text">
-       <string>Pendiente</string>
+       <string/>
       </property>
      </item>
      <item row="5" column="2">
       <property name="text">
-       <string>✓ Marcar asistencia    Marcar ausencia</string>
+       <string/>
       </property>
      </item>
      <item row="6" column="0">
       <property name="text">
-       <string> ME  María Esteban</string>
+       <string/>
       </property>
      </item>
      <item row="6" column="1">
       <property name="text">
-       <string>Asistió</string>
+       <string/>
       </property>
      </item>
      <item row="6" column="2">
       <property name="text">
-       <string>✓  Marcar ausencia</string>
+       <string/>
       </property>
      </item>
     </widget>
@@ -1501,7 +1501,8 @@ QTableWidget::item {
    </widget>
   </widget>
  </widget>
- <resources></resources>
+ <resources>
+  <include location="../imagenes/recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>
-

@@ -22,7 +22,12 @@ class Logica:
         cursor = self.conexion.getCursor()
         try:
             cursor.execute(sql, parametros)
-            self.conexion.conexion.commit()
+
+            try:
+                self.conexion.conexion.commit()
+            except Exception:
+                pass
+
             return cursor.rowcount
         finally:
             cursor.close()
@@ -284,6 +289,29 @@ class Logica:
             FROM clase
             WHERE id_entrenador = ?
             ORDER BY dia_semana, hora_inicio
+        """
+        return self.consultar(sql, (id_entrenador,))
+    
+    def clases_entrenador_tabla(self, id_entrenador):
+        sql = """
+            SELECT c.nombre_actividad,
+                s.nombre AS sala,
+                CONCAT(c.hora_inicio, ' - ', c.hora_fin) AS horario,
+                c.dia_semana,
+                CONCAT(
+                    COUNT(i.id_inscripcion),
+                    '/',
+                    c.aforo_maximo
+                ) AS capacidad
+            FROM clase c
+            INNER JOIN sala s ON c.id_sala = s.id_sala
+            LEFT JOIN inscripcion i 
+                ON c.id_clase = i.id_clase 
+                AND i.estado = 'inscrito'
+            WHERE c.id_entrenador = ?
+            GROUP BY c.id_clase, c.nombre_actividad, s.nombre,
+                    c.hora_inicio, c.hora_fin, c.dia_semana, c.aforo_maximo
+            ORDER BY c.dia_semana, c.hora_inicio
         """
         return self.consultar(sql, (id_entrenador,))
 
@@ -662,8 +690,10 @@ class Logica:
         """
         return self.ejecutar(sql, (nueva_cifrada, id_usuario))
 
+# Funciones interfaz_admin.ui 
+
     def contar_usuarios(self):
-        datos = self.consultar("SELECT COUNT(*) FROM usuarios")
+        datos = self.consultar("SELECT COUNT(*) FROM clientes")
         return datos[0][0] if datos else 0
 
     def contar_clases(self):
@@ -674,24 +704,22 @@ class Logica:
         datos = self.consultar("SELECT COUNT(*) FROM inscripcion WHERE estado = 'inscrito'")
         return datos[0][0] if datos else 0
 
-    def total_ingresos(self):
-        datos = self.consultar("SELECT COALESCE(SUM(importe), 0) FROM pago WHERE estado = 'abonado'")
-        return datos[0][0] if datos else 0
-
     def contar_inscripciones_clase(self, nombre_actividad):
-        datos = self.consultar("""
+        like = f"%{nombre_actividad.lower()}%"
+        datos = self.consultar(f"""
             SELECT COUNT(*) FROM inscripcion i
             JOIN clase c ON i.id_clase = c.id_clase
-            WHERE LOWER(c.nombre_actividad) LIKE %s AND i.estado = 'inscrito'
-        """, (f"%{nombre_actividad.lower()}%",))
+            WHERE LOWER(c.nombre_actividad) LIKE '{like}' AND i.estado = 'inscrito'
+        """)
         return datos[0][0] if datos else 0
 
     def contar_clientes_tarifa(self, nombre_tarifa):
-        datos = self.consultar("""
+        like = f"%{nombre_tarifa.lower()}%"
+        datos = self.consultar(f"""
             SELECT COUNT(*) FROM cliente_tarifa ct
             JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
-            WHERE LOWER(t.nombre) LIKE %s AND ct.estado = 'activa'
-        """, (f"%{nombre_tarifa.lower()}%",))
+            WHERE LOWER(t.nombre) LIKE '{like}' AND ct.estado = 'activa'
+        """)
         return datos[0][0] if datos else 0
 
     def listar_inscripciones_resumen(self):
@@ -715,3 +743,23 @@ class Logica:
             GROUP BY c.nombre_actividad
             ORDER BY total DESC
         """)
+
+    def ingresos_por_mes(self):
+        return self.consultar("""
+            SELECT YEAR(fecha_pago) as anio, MONTH(fecha_pago) as mes,
+                   SUM(importe) as total
+            FROM pago
+            WHERE estado = 'abonado'
+            GROUP BY YEAR(fecha_pago), MONTH(fecha_pago)
+            ORDER BY anio DESC, mes DESC
+            LIMIT 6
+        """)
+
+    def pagos_pendientes(self):
+        sql = """
+            SELECT u.id_usuario, u.nombre, u.email, u.telefono, c.estado_pagado
+            FROM clientes c
+            INNER JOIN usuarios u ON c.id_cliente = u.id_usuario
+            WHERE c.estado_pagado = 'pendiente'
+        """
+        return self.consultar(sql)
