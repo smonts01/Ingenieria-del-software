@@ -1,7 +1,8 @@
 import os
 from datetime import date
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QCheckBox
+from PyQt5.QtCore import Qt
 
 
 class ControladorEntrenador:
@@ -57,9 +58,9 @@ class ControladorEntrenador:
         id_u = self.usuario["id_usuario"]
 
         if hasattr(v, "tablaProximasClasesEntrenador"):
-            self.rellenar_tabla(v.tablaProximasClasesEntrenador, self.modelo.clases_de_entrenador(id_u))
+            self.rellenar_tabla(v.tablaProximasClasesEntrenador, self.modelo.clases_entrenador_tabla(id_u))
         if hasattr(v, "tablaMisClases"):
-            self.rellenar_tabla(v.tablaMisClases, self.modelo.clases_de_entrenador(id_u))
+            self.rellenar_tabla(v.tablaMisClases, self.modelo.clases_entrenador_tabla(id_u))
         if hasattr(v, "tablaOcupacionClases"):
             self.rellenar_tabla(v.tablaOcupacionClases, self.modelo.ocupacion_clases_entrenador(id_u))
         
@@ -85,19 +86,48 @@ class ControladorEntrenador:
                 if hasattr(v, "txtTelefono"): v.txtTelefono.setText(str(perfil[3] or ""))
                 if hasattr(v, "txtEmail"):    v.txtEmail.setText(str(perfil[4] or ""))
 
+        if hasattr(v, "label_Nombre"):
+            perfil = self.modelo.perfil_usuario(id_u)
+            if perfil:
+                v.label_Nombre.setText(str(perfil[2]))
+
+                if hasattr(v, "labelCorreoEntrenador"):
+                    v.labelCorreoEntrenador.setText(str(perfil[4] or ""))
+
+                if hasattr(v, "labelTelefonoEntrenador"):
+                    v.labelTelefonoEntrenador.setText(str(perfil[3] or ""))
+
+                if hasattr(v, "labelDireccionEntrenador"):
+                    v.labelDireccionEntrenador.setText(str(perfil[7] or ""))
+
+                if hasattr(v, "labelFechaAltaEntrenadorPerfil"):
+                    v.labelFechaAltaEntrenadorPerfil.setText(str(perfil[8] or ""))
+
         if hasattr(v, "comboSeleccionarClase"):
             clases = self.modelo.clases_de_entrenador(id_u)
-            v.comboSeleccionarClase.clear()
-            for clase in clases:
-                v.comboSeleccionarClase.addItem(str(clase[1]), clase[0])
+
             try:
                 v.comboSeleccionarClase.currentIndexChanged.disconnect()
             except Exception:
                 pass
+
+            v.comboSeleccionarClase.clear()
+
+            for clase in clases:
+                id_clase = clase[0]
+                nombre = clase[1]
+                dia = clase[2]
+                hora_inicio = clase[3]
+                hora_fin = clase[4]
+
+                v.comboSeleccionarClase.addItem(
+                    f"{nombre} - {dia} {hora_inicio} - {hora_fin}",
+                    id_clase
+                )
+
             v.comboSeleccionarClase.currentIndexChanged.connect(self.cargar_inscritos_asistencia)
             self.cargar_inscritos_asistencia()
-
-
+       
     def cargar_clientes_inscritos(self):
         v = self.ventana
 
@@ -124,44 +154,147 @@ class ControladorEntrenador:
 
     def cargar_inscritos_asistencia(self):
         v = self.ventana
+
         if not hasattr(v, "comboSeleccionarClase"):
             return
+
         id_clase = v.comboSeleccionarClase.currentData()
-        if not id_clase:
+
+        if id_clase is None:
             return
+
         datos = self.modelo.clientes_inscritos_clase(id_clase)
+
         if not hasattr(v, "tablaInscritosAsistencia"):
             return
+
         tabla = v.tablaInscritosAsistencia
+        tabla.clear()
         tabla.setRowCount(len(datos))
-        tabla.setColumnCount(5)
+        tabla.setColumnCount(3)
+        tabla.setHorizontalHeaderLabels(["Cliente", "Estado", "Acción"])
+
         for fila, cliente in enumerate(datos):
-            for col in range(min(4, len(cliente))):
-                tabla.setItem(fila, col, QTableWidgetItem(str(cliente[col]) if cliente[col] is not None else ""))
-            tabla.setItem(fila, 4, QTableWidgetItem("si"))
+            id_cliente = cliente[0]
+            nombre = cliente[1]
+
+            tabla.setItem(fila, 0, QTableWidgetItem(f"{id_cliente} - {nombre}"))
+            tabla.setItem(fila, 1, QTableWidgetItem("Pendiente"))
+            tabla.setItem(fila, 2, QTableWidgetItem("Escribe si o no"))
+
+        if hasattr(v, "label_TotalInscritos"):
+            v.label_TotalInscritos.setText(str(len(datos)))
+
+        if hasattr(v, "label_numInscritos"):
+            v.label_numInscritos.setText(str(len(datos)))
+
+        if hasattr(v, "label_numAsist"):
+            v.label_numAsist.setText("0")
+
+        if hasattr(v, "label_numPend"):
+            v.label_numPend.setText(str(len(datos)))
+
+        if hasattr(v, "label_numAus"):
+            v.label_numAus.setText("0")
+
+
+    def actualizar_resumen_asistencia(self):
+        v = self.ventana
+
+        if not hasattr(v, "tablaInscritosAsistencia"):
+            return
+
+        tabla = v.tablaInscritosAsistencia
+        total = tabla.rowCount()
+        asistieron = 0
+
+        for fila in range(total):
+            check = tabla.cellWidget(fila, 4)
+            if check and check.isChecked():
+                asistieron += 1
+
+        ausencias = total - asistieron
+
+        if hasattr(v, "label_numAsist"):
+            v.label_numAsist.setText(str(asistieron))
+
+        if hasattr(v, "label_numAus"):
+            v.label_numAus.setText(str(ausencias))
+
+        if hasattr(v, "label_numPend"):
+            v.label_numPend.setText("0")
+
+        if hasattr(v, "label_TotalInscritos"):
+            v.label_TotalInscritos.setText(str(total))
+
+        if hasattr(v, "label_numInscritos"):
+            v.label_numInscritos.setText(str(total))
 
     def guardar_asistencia(self):
         v = self.ventana
+
         try:
             if not hasattr(v, "comboSeleccionarClase"):
-                QMessageBox.warning(v, "Error", "No hay clase seleccionada")
+                QMessageBox.warning(v, "Error", "No hay selector de clase")
                 return
+
             id_clase = v.comboSeleccionarClase.currentData()
-            if not id_clase:
+
+            if id_clase is None:
                 QMessageBox.warning(v, "Error", "Selecciona una clase")
                 return
+
             fecha = date.today().isoformat()
             presentes = []
+            total = 0
+            ausencias = 0
+            pendientes = 0
+
             if hasattr(v, "tablaInscritosAsistencia"):
-                for fila in range(v.tablaInscritosAsistencia.rowCount()):
-                    item_id      = v.tablaInscritosAsistencia.item(fila, 0)
-                    item_presente= v.tablaInscritosAsistencia.item(fila, 4)
-                    if item_id and item_presente and item_presente.text().lower() == "si":
-                        presentes.append(int(item_id.text()))
+                tabla = v.tablaInscritosAsistencia
+
+                for fila in range(tabla.rowCount()):
+                    item_cliente = tabla.item(fila, 0)
+                    item_estado = tabla.item(fila, 1)
+
+                    if not item_cliente:
+                        continue
+
+                    total += 1
+
+                    id_cliente = int(item_cliente.text().split(" - ")[0])
+                    estado = item_estado.text().strip().lower() if item_estado else ""
+
+                    if estado in ["si", "sí", "asistio", "asistió"]:
+                        presentes.append(id_cliente)
+                    elif estado in ["no", "ausencia", "ausente"]:
+                        ausencias += 1
+                    else:
+                        pendientes += 1
+
             self.modelo.registrar_asistencia_lista(id_clase, fecha, presentes)
-            QMessageBox.information(v, "Correcto", f"Asistencia guardada ({len(presentes)} presentes)")
+
+            if hasattr(v, "label_numAsist"):
+                v.label_numAsist.setText(str(len(presentes)))
+
+            if hasattr(v, "label_numPend"):
+                v.label_numPend.setText(str(pendientes))
+
+            if hasattr(v, "label_numAus"):
+                v.label_numAus.setText(str(ausencias))
+
+            if hasattr(v, "label_TotalInscritos"):
+                v.label_TotalInscritos.setText(str(total))
+
+            QMessageBox.information(
+                v,
+                "Correcto",
+                f"Asistencia guardada correctamente.\nAsistieron: {len(presentes)}"
+            )
+
         except Exception as e:
             QMessageBox.warning(v, "Error", str(e))
+
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))

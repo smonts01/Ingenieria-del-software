@@ -151,7 +151,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QPushButton" name="btnCerrarSesion">
      <property name="geometry">
       <rect>
-       <x>860</x>
+       <x>1000</x>
        <y>27</y>
        <width>115</width>
        <height>36</height>
