@@ -805,3 +805,85 @@ class Logica:
             WHERE c.estado_pagado = 'pendiente'
         """
         return self.consultar(sql)
+
+    def contar_trabajadores(self):
+        datos = self.consultar("SELECT COUNT(*) FROM empleados")
+        return datos[0][0] if datos else 0
+
+    def contar_por_rol(self, nombre_rol):
+        datos = self.consultar(f"""
+            SELECT COUNT(*) FROM usuarios u
+            JOIN roles r ON u.id_rol = r.id_rol
+            WHERE LOWER(r.nombre_rol) = '{nombre_rol.lower()}'
+        """)
+        return datos[0][0] if datos else 0
+
+    def listar_trabajadores_completo(self):
+        return self.consultar("""
+            SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email,
+                   u.username, r.nombre_rol, u.direccion, u.fecha_nacimiento
+            FROM usuarios u
+            JOIN roles r ON u.id_rol = r.id_rol
+            WHERE r.nombre_rol IN ('entrenador','recepcionista','contable','administrador')
+            ORDER BY r.nombre_rol, u.nombre
+        """)
+
+    def buscar_trabajadores(self, texto):
+        t = texto.lower()
+        return self.consultar(f"""
+            SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email,
+                   u.username, r.nombre_rol, u.direccion, u.fecha_nacimiento
+            FROM usuarios u
+            JOIN roles r ON u.id_rol = r.id_rol
+            WHERE r.nombre_rol IN ('entrenador','recepcionista','contable','administrador')
+            AND (LOWER(u.nombre) LIKE '%{t}%' OR LOWER(u.username) LIKE '%{t}%'
+                 OR LOWER(u.dni) LIKE '%{t}%')
+            ORDER BY u.nombre
+        """)
+
+    def buscar_trabajadores_rol(self, rol):
+        return self.consultar(f"""
+            SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email,
+                   u.username, r.nombre_rol, u.direccion, u.fecha_nacimiento
+            FROM usuarios u
+            JOIN roles r ON u.id_rol = r.id_rol
+            WHERE LOWER(r.nombre_rol) = '{rol.lower()}'
+            ORDER BY u.nombre
+        """)
+
+    def listar_clientes_completo(self):
+        return self.consultar("""
+            SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email,
+                   u.username, c.estado_pagado, u.direccion, u.fecha_nacimiento
+            FROM usuarios u
+            JOIN clientes c ON u.id_usuario = c.id_cliente
+            ORDER BY u.nombre
+        """)
+
+    def buscar_clientes(self, texto):
+        t = texto.lower()
+        return self.consultar(f"""
+            SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email,
+                   u.username, c.estado_pagado, u.direccion, u.fecha_nacimiento
+            FROM usuarios u
+            JOIN clientes c ON u.id_usuario = c.id_cliente
+            WHERE LOWER(u.nombre) LIKE '%{t}%' OR LOWER(u.username) LIKE '%{t}%'
+               OR LOWER(u.dni) LIKE '%{t}%'
+            ORDER BY u.nombre
+        """)
+
+    def buscar_clientes_estado(self, estado):
+        return self.consultar(f"""
+            SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email,
+                   u.username, c.estado_pagado, u.direccion, u.fecha_nacimiento
+            FROM usuarios u
+            JOIN clientes c ON u.id_usuario = c.id_cliente
+            WHERE LOWER(c.estado_pagado) = '{estado.lower()}'
+            ORDER BY u.nombre
+        """)
+
+    def guardar_cambios_trabajador(self, id_usuario, nombre, telefono, email, direccion):
+        self.ejecutar("""
+            UPDATE usuarios SET nombre=%s, telefono=%s, email=%s, direccion=%s
+            WHERE id_usuario=%s
+        """, (nombre, telefono, email, direccion, id_usuario))

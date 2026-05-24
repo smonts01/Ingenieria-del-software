@@ -1347,7 +1347,7 @@ QTableWidget::item {
        <number>4</number>
       </property>
       <property name="columnCount">
-       <number>3</number>
+       <number>5</number>
       </property>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>120</number>
@@ -1364,17 +1364,27 @@ QTableWidget::item {
       <row/>
       <column>
        <property name="text">
-        <string>Cliente</string>
+        <string>Id Cliente</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Importe Pendiente</string>
+        <string>Nombre </string>
        </property>
       </column>
       <column>
        <property name="text">
         <string>Fecha límite</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Correo</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Estado pago</string>
        </property>
       </column>
       <item row="0" column="0">

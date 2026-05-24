@@ -3,7 +3,9 @@ CREATE DATABASE Stayfit_database
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
-USE Stayfit_database;
+USE stayfit_database;
+
+
 
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
@@ -366,12 +368,14 @@ INSERT INTO sala (id_sala, nombre, aforo_maximo, tipo_zona) VALUES
 (2, 'Zona Speed', 19, 'Speed'),
 (3, 'Zona Cross', 12, 'Cross');
 
-INSERT INTO clase
-(id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad)
-VALUES
-(1, 2, 1, 'Yoga Matutino', 250, 'lunes', '09:00:00', '10:00:00', 60, 25, 'media'),
-(2, 2, 2, 'Spinning Intenso', 500, 'miércoles', '18:00:00', '19:00:00', 60, 19, 'alta'),
-(3, 2, 1, 'Pilates', 300, 'viernes', '11:00:00', '12:00:00', 60, 25, 'media');
+
+-- Insertar solo las 5 clases correctas
+INSERT INTO clase (id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad) VALUES
+(2, 1, 'Yoga',     200, 'lunes',     '09:00', '10:00', 60, 20, 'baja'),
+(2, 1, 'Pilates',  250, 'martes',    '10:00', '11:00', 60, 20, 'baja'),
+(2, 1, 'Spinning', 450, 'miercoles', '09:00', '10:00', 60, 20, 'alta'),
+(2, 1, 'Zumba',    350, 'jueves',    '10:00', '11:00', 60, 20, 'media'),
+(2, 1, 'Crossfit', 600, 'viernes',   '09:00', '10:00', 60, 20, 'alta');
 
 INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES
 (10, 1, 'inscrito'),
@@ -379,3 +383,20 @@ INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES
 (12, 1, 'inscrito'),
 (10, 2, 'inscrito'),
 (11, 3, 'inscrito');
+
+INSERT INTO tarifa (nombre, precio_mensual, servicios_incluidos, fecha_inicio) VALUES
+('Basico',  30.00, 'Acceso a instalaciones y clases grupales', '2026-01-01'),
+('Premium', 45.00, 'Acceso ilimitado, clases y entrenador personal', '2026-01-01');
+
+
+INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado) VALUES
+(10, 1, '2026-01-01', 'activa'),
+(11, 2, '2026-01-01', 'activa'),
+(12, 1, '2026-01-01', 'activa');
+
+
+SHOW TABLES;
+SELECT * FROM usuarios;
+SELECT * FROM clase;
+SELECT * FROM cliente_tarifa;
+SELECT * FROM tarifa;

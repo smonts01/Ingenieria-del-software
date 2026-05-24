@@ -44,6 +44,28 @@ class ControladorAdministrador:
             v.btnConfiguracion.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_configuracion.ui"))
         if hasattr(v, "btnRegistrarUsuario"):
             v.btnRegistrarUsuario.clicked.connect(self.registrar_usuario)
+
+        # Pantalla trabajadores
+        if hasattr(v, "lblTabClientes"):
+            v.lblTabClientes.mousePressEvent = lambda e: self.abrir_pantalla("interfaz_admin_usuarios_clientes.ui")
+        if hasattr(v, "lblTabTrabajadores"):
+            v.lblTabTrabajadores.mousePressEvent = lambda e: self.abrir_pantalla("interfaz_admin_usuarios_trabajadores.ui")
+        if hasattr(v, "txtBuscarTrabajador"):
+            v.txtBuscarTrabajador.textChanged.connect(self.filtrar_trabajadores)
+        if hasattr(v, "cmbRoles"):
+            v.cmbRoles.currentIndexChanged.connect(self.filtrar_por_rol)
+            if v.cmbRoles.count() == 0:
+                v.cmbRoles.addItems(["Todos", "entrenador", "recepcionista", "contable", "administrador"])
+        if hasattr(v, "btnGuardarCambios_2"):
+            v.btnGuardarCambios_2.clicked.connect(self.guardar_cambios_trabajador)
+
+        # Pantalla clientes
+        if hasattr(v, "txtBuscarCliente"):
+            v.txtBuscarCliente.textChanged.connect(self.filtrar_clientes)
+        if hasattr(v, "cmbEstado_2"):
+            v.cmbEstado_2.currentIndexChanged.connect(self.filtrar_clientes_estado)
+            if v.cmbEstado_2.count() == 0:
+                v.cmbEstado_2.addItems(["Todos", "abonado", "pendiente"])
         if hasattr(v, "btnNuevaClase"):
             v.btnNuevaClase.clicked.connect(self.registrar_clase)
         if hasattr(v, "btnModificarClase"):
@@ -123,15 +145,48 @@ class ControladorAdministrador:
         if hasattr(v, "graficoFake"):
             self._dibujar_grafico_ingresos(v.graficoFake)
 
-        # 8. Otras tablas (pantallas secundarias)
-        if hasattr(v, "tablaClientes_2"):
+        # 8. Pantalla trabajadores
+        if hasattr(v, "lblNumTrabajadores"):
             try:
-                self.rellenar_tabla(v.tablaClientes_2, self.modelo.listar_clientes())
+                v.lblNumTrabajadores.setText(str(self.modelo.contar_trabajadores()))
             except Exception:
-                pass
+                v.lblNumTrabajadores.setText("0")
+        if hasattr(v, "Entrenadores"):
+            try:
+                v.Entrenadores.setText(str(self.modelo.contar_por_rol("entrenador")))
+            except Exception:
+                v.Entrenadores.setText("0")
+        if hasattr(v, "Recepcionista"):
+            try:
+                v.Recepcionista.setText(str(self.modelo.contar_por_rol("recepcionista")))
+            except Exception:
+                v.Recepcionista.setText("0")
+        if hasattr(v, "Contables"):
+            try:
+                v.Contables.setText(str(self.modelo.contar_por_rol("contable")))
+            except Exception:
+                v.Contables.setText("0")
         if hasattr(v, "tablaTrabajadores_2"):
             try:
-                self.rellenar_tabla(v.tablaTrabajadores_2, self.modelo.listar_empleados())
+                datos = self.modelo.listar_trabajadores_completo()
+                self._rellenar_tabla_editable(v.tablaTrabajadores_2, datos)
+                if hasattr(v, "lblMostrando_2"):
+                    v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
+            except Exception:
+                pass
+
+        # 9. Pantalla clientes
+        if hasattr(v, "lblNumUsuarios"):
+            try:
+                v.lblNumUsuarios.setText(str(self.modelo.contar_usuarios()))
+            except Exception:
+                v.lblNumUsuarios.setText("0")
+        if hasattr(v, "tablaClientes_2"):
+            try:
+                datos = self.modelo.listar_clientes_completo()
+                self.rellenar_tabla(v.tablaClientes_2, datos)
+                if hasattr(v, "lblMostrando_2"):
+                    v.lblMostrando_2.setText(f"Mostrando {len(datos)} clientes")
             except Exception:
                 pass
         if hasattr(v, "tablaClases"):
@@ -327,6 +382,102 @@ class ControladorAdministrador:
             QMessageBox.warning(v, "Error", str(e))
 
     # ── Utilidades ─────────────────────────────────────────────────
+
+
+    def _rellenar_tabla_editable(self, tabla, datos):
+        from PyQt5.QtWidgets import QTableWidgetItem
+        from PyQt5.QtCore import Qt
+        headers = ["ID", "DNI", "Nombre", "Teléfono", "Email", "Usuario", "Rol", "Dirección", "Fecha Nac."]
+        tabla.setColumnCount(len(headers))
+        tabla.setHorizontalHeaderLabels(headers)
+        tabla.setRowCount(len(datos))
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro):
+                item = QTableWidgetItem(str(valor) if valor is not None else "")
+                # ID y Rol no editables
+                if col in (0, 6):
+                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                tabla.setItem(fila, col, item)
+
+    def filtrar_trabajadores(self):
+        v = self.ventana
+        if not hasattr(v, "txtBuscarTrabajador") or not hasattr(v, "tablaTrabajadores_2"):
+            return
+        texto = v.txtBuscarTrabajador.text().strip()
+        try:
+            if texto:
+                datos = self.modelo.buscar_trabajadores(texto)
+            else:
+                datos = self.modelo.listar_trabajadores_completo()
+            self._rellenar_tabla_editable(v.tablaTrabajadores_2, datos)
+            if hasattr(v, "lblMostrando_2"):
+                v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
+        except Exception as e:
+            pass
+
+    def filtrar_por_rol(self):
+        v = self.ventana
+        if not hasattr(v, "cmbRoles") or not hasattr(v, "tablaTrabajadores_2"):
+            return
+        rol = v.cmbRoles.currentText()
+        try:
+            if rol == "Todos":
+                datos = self.modelo.listar_trabajadores_completo()
+            else:
+                datos = self.modelo.buscar_trabajadores_rol(rol)
+            self._rellenar_tabla_editable(v.tablaTrabajadores_2, datos)
+            if hasattr(v, "lblMostrando_2"):
+                v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
+        except Exception:
+            pass
+
+    def guardar_cambios_trabajador(self):
+        v = self.ventana
+        if not hasattr(v, "tablaTrabajadores_2"):
+            return
+        tabla = v.tablaTrabajadores_2
+        try:
+            guardados = 0
+            for fila in range(tabla.rowCount()):
+                id_item = tabla.item(fila, 0)
+                if not id_item or not id_item.text():
+                    continue
+                id_usuario = int(id_item.text())
+                nombre    = tabla.item(fila, 2).text() if tabla.item(fila, 2) else ""
+                telefono  = tabla.item(fila, 3).text() if tabla.item(fila, 3) else ""
+                email     = tabla.item(fila, 4).text() if tabla.item(fila, 4) else ""
+                direccion = tabla.item(fila, 7).text() if tabla.item(fila, 7) else ""
+                self.modelo.guardar_cambios_trabajador(id_usuario, nombre, telefono, email, direccion)
+                guardados += 1
+            from PyQt5.QtWidgets import QMessageBox
+            QMessageBox.information(v, "Correcto", f"Cambios guardados para {guardados} trabajadores")
+        except Exception as e:
+            from PyQt5.QtWidgets import QMessageBox
+            QMessageBox.warning(v, "Error", str(e))
+
+    def filtrar_clientes(self):
+        v = self.ventana
+        if not hasattr(v, "txtBuscarCliente") or not hasattr(v, "tablaClientes_2"):
+            return
+        texto = v.txtBuscarCliente.text().strip()
+        try:
+            datos = self.modelo.buscar_clientes(texto) if texto else self.modelo.listar_clientes_completo()
+            self.rellenar_tabla(v.tablaClientes_2, datos)
+            if hasattr(v, "lblMostrando_2"):
+                v.lblMostrando_2.setText(f"Mostrando {len(datos)} clientes")
+        except Exception:
+            pass
+
+    def filtrar_clientes_estado(self):
+        v = self.ventana
+        if not hasattr(v, "cmbEstado_2") or not hasattr(v, "tablaClientes_2"):
+            return
+        estado = v.cmbEstado_2.currentText()
+        try:
+            datos = self.modelo.listar_clientes_completo() if estado == "Todos" else self.modelo.buscar_clientes_estado(estado)
+            self.rellenar_tabla(v.tablaClientes_2, datos)
+        except Exception:
+            pass
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))

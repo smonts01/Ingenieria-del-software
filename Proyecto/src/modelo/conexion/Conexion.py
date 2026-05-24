@@ -1,7 +1,7 @@
 import jaydebeapi
 
 class Conexion:
-    def __init__(self, host='localhost', database='Stayfit_database', user='root', password='1234'):
+    def __init__(self, host='localhost', database='stayfit_database', user='root', password='250706'):
         self._host = host
         self._database = database
         self._user = user
@@ -14,7 +14,7 @@ class Conexion:
             jar_file = "lib/mysql-connector-j-9.7.0.jar"
             self.conexion = jaydebeapi.connect(
                 jdbc_driver,
-                f"jdbc:mysql://{self._host}/{self._database}",
+                f"jdbc:mysql://{self._host}/{self._database}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC",
                 [self._user, self._password],
                 jar_file
             )
