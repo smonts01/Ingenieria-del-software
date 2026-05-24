@@ -50,4 +50,5 @@ class ControladorPrincipal:
             ctrl.abrir()
         else:
             QMessageBox.warning(self.vista, "Error", f"Rol desconocido: {rol}")
+            self.vista.showMaximized()
             self.vista.show()
