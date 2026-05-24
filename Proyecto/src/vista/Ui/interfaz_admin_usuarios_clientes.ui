@@ -696,67 +696,67 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </column>
       <item row="0" column="1">
        <property name="text">
-        <string>Ana García</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="2">
        <property name="text">
-        <string>600 123 456</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="3">
        <property name="text">
-        <string>ana.garcia@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="6">
        <property name="text">
-        <string>15/01/2026</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="7">
        <property name="text">
-        <string>Pago al día</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="1">
        <property name="text">
-        <string>Carlos López</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="2">
        <property name="text">
-        <string>600 234 567</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="3">
        <property name="text">
-        <string>carlos.lopez@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="6">
        <property name="text">
-        <string>18/01/2026</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="7">
@@ -766,67 +766,67 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="2" column="1">
        <property name="text">
-        <string>Javier Ruiz</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="2">
        <property name="text">
-        <string>600 456 789</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="3">
        <property name="text">
-        <string>javier.ruiz@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="5">
        <property name="text">
-        <string>Inactivo</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="6">
        <property name="text">
-        <string>22/01/2026</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="7">
        <property name="text">
-        <string>Revisar renovación</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="1">
        <property name="text">
-        <string>Laura Sánchez</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="2">
        <property name="text">
-        <string>600 567 890</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="3">
        <property name="text">
-        <string>laura.sanchez@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="4">
        <property name="text">
-        <string>Anual</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="6">
        <property name="text">
-        <string>25/01/2026</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="7">
@@ -836,67 +836,67 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="4" column="1">
        <property name="text">
-        <string>Sofía Herrera</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="2">
        <property name="text">
-        <string>600 789 012</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="3">
        <property name="text">
-        <string>sofia.herrera@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="5">
        <property name="text">
-        <string>Pendiente</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="6">
        <property name="text">
-        <string>30/01/2026</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="7">
        <property name="text">
-        <string>Pago pendiente</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="1">
        <property name="text">
-        <string>Diego Navarro</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="2">
        <property name="text">
-        <string>600 890 123</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="3">
        <property name="text">
-        <string>diego.navarro@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="4">
        <property name="text">
-        <string>Trimestral</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="6">
        <property name="text">
-        <string>02/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="7">
@@ -906,32 +906,32 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="6" column="1">
        <property name="text">
-        <string>Marta López</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="2">
        <property name="text">
-        <string>611 123 222</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="3">
        <property name="text">
-        <string>marta.lopez@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="6">
        <property name="text">
-        <string>05/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="7">
@@ -941,32 +941,32 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="7" column="1">
        <property name="text">
-        <string>Luis Fernández</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="2">
        <property name="text">
-        <string>611 234 333</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="3">
        <property name="text">
-        <string>luis.fernandez@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="6">
        <property name="text">
-        <string>07/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="7">
@@ -976,32 +976,32 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="8" column="1">
        <property name="text">
-        <string>Elena Martín</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="2">
        <property name="text">
-        <string>611 345 444</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="3">
        <property name="text">
-        <string>elena.martin@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="4">
        <property name="text">
-        <string>Anual</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="6">
        <property name="text">
-        <string>10/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="7">
@@ -1011,67 +1011,67 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="9" column="1">
        <property name="text">
-        <string>Pablo Serrano</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="2">
        <property name="text">
-        <string>611 456 555</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="3">
        <property name="text">
-        <string>pablo.serrano@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="5">
        <property name="text">
-        <string>Inactivo</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="6">
        <property name="text">
-        <string>12/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="7">
        <property name="text">
-        <string>Baja temporal</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="1">
        <property name="text">
-        <string>Lucía Torres</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="2">
        <property name="text">
-        <string>611 567 666</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="3">
        <property name="text">
-        <string>lucia.torres@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="4">
        <property name="text">
-        <string>Trimestral</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="6">
        <property name="text">
-        <string>15/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="7">
@@ -1081,67 +1081,67 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="11" column="1">
        <property name="text">
-        <string>Álvaro Gómez</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="2">
        <property name="text">
-        <string>611 678 777</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="3">
        <property name="text">
-        <string>alvaro.gomez@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="5">
        <property name="text">
-        <string>Pendiente</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="6">
        <property name="text">
-        <string>18/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="7">
        <property name="text">
-        <string>Falta documentación</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="1">
        <property name="text">
-        <string>Nuria Castro</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="2">
        <property name="text">
-        <string>611 789 888</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="3">
        <property name="text">
-        <string>nuria.castro@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="4">
        <property name="text">
-        <string>Anual</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="6">
        <property name="text">
-        <string>20/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="7">
@@ -1151,32 +1151,32 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="13" column="1">
        <property name="text">
-        <string>Mario Díaz</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="2">
        <property name="text">
-        <string>611 890 999</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="3">
        <property name="text">
-        <string>mario.diaz@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="6">
        <property name="text">
-        <string>22/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="7">
@@ -1186,32 +1186,32 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="14" column="1">
        <property name="text">
-        <string>Irene Molina</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="2">
        <property name="text">
-        <string>622 111 222</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="3">
        <property name="text">
-        <string>irene.molina@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="4">
        <property name="text">
-        <string>Mensual</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="6">
        <property name="text">
-        <string>25/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="7">
@@ -1221,32 +1221,32 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
       <item row="15" column="1">
        <property name="text">
-        <string>Hugo Romero</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="2">
        <property name="text">
-        <string>622 222 333</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="3">
        <property name="text">
-        <string>hugo.romero@email.com</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="4">
        <property name="text">
-        <string>Trimestral</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="5">
        <property name="text">
-        <string>Activo</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="6">
        <property name="text">
-        <string>28/02/2026</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="7">

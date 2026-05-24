@@ -58,7 +58,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -109,7 +109,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -325,7 +325,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -347,7 +347,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuarios.png</pixmap>
+      <pixmap>../imagenes/usuarios.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -363,7 +363,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>../imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -379,7 +379,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/inscripcion.png</pixmap>
+      <pixmap>../imagenes/inscripcion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -395,7 +395,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/pagos.png</pixmap>
+      <pixmap>../imagenes/pagos.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -411,7 +411,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
+      <pixmap>../imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -433,7 +433,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/ajuste.png</pixmap>
+      <pixmap>../imagenes/ajuste.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -605,7 +605,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
+      <pixmap>src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -747,578 +747,562 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </column>
       <item row="0" column="0">
        <property name="text">
-        <string>1</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="1">
        <property name="text">
-        <string>Body Pump</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="2">
        <property name="text">
-        <string>Fuerza</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="3">
        <property name="text">
-        <string>María López</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="4">
        <property name="text">
-        <string>Lun, Mié, Vie
-18:00 - 19:00</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="0" column="6">
        <property name="text">
-        <string>8 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="0">
        <property name="text">
-        <string>2</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="1">
        <property name="text">
-        <string>Yoga</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="2">
        <property name="text">
-        <string>Bienestar</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="3">
        <property name="text">
-        <string>Laura Sánchez</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="4">
        <property name="text">
-        <string>Mar, Jue
-19:30 - 20:30</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="5">
        <property name="text">
-        <string>Sala 2</string>
+        <string/>
        </property>
       </item>
       <item row="1" column="6">
        <property name="text">
-        <string>10 / 20</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="0">
        <property name="text">
-        <string>3</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="1">
        <property name="text">
-        <string>Spinning</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="2">
        <property name="text">
-        <string>Cardio</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="3">
        <property name="text">
-        <string>Carlos Ruiz</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="4">
        <property name="text">
-        <string>Lun, Mié, Vie
-17:00 - 18:00</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="2" column="6">
        <property name="text">
-        <string>5 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="0">
        <property name="text">
-        <string>4</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="1">
        <property name="text">
-        <string>Pilates</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="2">
        <property name="text">
-        <string>Bienestar</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="3">
        <property name="text">
-        <string>Ana Torres</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="4">
        <property name="text">
-        <string>Mar, Jue
-10:00 - 11:00</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="5">
        <property name="text">
-        <string>Sala 3</string>
+        <string/>
        </property>
       </item>
       <item row="3" column="6">
        <property name="text">
-        <string>9 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="0">
        <property name="text">
-        <string>5</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="1">
        <property name="text">
-        <string>Zumba</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="2">
        <property name="text">
-        <string>Baile</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="3">
        <property name="text">
-        <string>Javier Martín</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="4">
        <property name="text">
-        <string>Lun, Mié
-20:00 - 21:00</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="5">
        <property name="text">
-        <string>Sala 2</string>
+        <string/>
        </property>
       </item>
       <item row="4" column="6">
        <property name="text">
-        <string>12 / 25</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="0">
        <property name="text">
-        <string>6</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="1">
        <property name="text">
-        <string>Boxeo</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="2">
        <property name="text">
-        <string>Combate</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="3">
        <property name="text">
-        <string>David Pérez</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="4">
        <property name="text">
-        <string>Mar, Jue
-18:30 - 19:30</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="5" column="6">
        <property name="text">
-        <string>6 / 12</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="0">
        <property name="text">
-        <string>7</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="1">
        <property name="text">
-        <string>Stretching</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="2">
        <property name="text">
-        <string>Bienestar</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="3">
        <property name="text">
-        <string>Elena Gómez</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="4">
        <property name="text">
-        <string>Sáb
-11:00 - 12:00</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="5">
        <property name="text">
-        <string>Sala 3</string>
+        <string/>
        </property>
       </item>
       <item row="6" column="6">
        <property name="text">
-        <string>7 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="0">
        <property name="text">
-        <string>8</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="1">
        <property name="text">
-        <string>HIIT</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="2">
        <property name="text">
-        <string>Cardio</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="3">
        <property name="text">
-        <string>Carlos Ruiz</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="4">
        <property name="text">
-        <string>Vie
-19:00 - 20:00</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="7" column="6">
        <property name="text">
-        <string>3 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="0">
        <property name="text">
-        <string>9</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="1">
        <property name="text">
-        <string>GAP</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="2">
        <property name="text">
-        <string>Fuerza</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="3">
        <property name="text">
-        <string>Marta Gil</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="4">
        <property name="text">
-        <string>Lun, Mié
-09:00 - 10:00</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="5">
        <property name="text">
-        <string>Sala 2</string>
+        <string/>
        </property>
       </item>
       <item row="8" column="6">
        <property name="text">
-        <string>11 / 20</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="0">
        <property name="text">
-        <string>10</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="1">
        <property name="text">
-        <string>Running Indoor</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="2">
        <property name="text">
-        <string>Cardio</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="3">
        <property name="text">
-        <string>Sergio Díaz</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="4">
        <property name="text">
-        <string>Mar, Jue
-08:00 - 09:00</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="9" column="6">
        <property name="text">
-        <string>14 / 18</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="0">
        <property name="text">
-        <string>11</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="1">
        <property name="text">
-        <string>Yoga Relax</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="2">
        <property name="text">
-        <string>Bienestar</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="3">
        <property name="text">
-        <string>Laura Sánchez</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="4">
        <property name="text">
-        <string>Vie
-20:00 - 21:00</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="5">
        <property name="text">
-        <string>Sala 3</string>
+        <string/>
        </property>
       </item>
       <item row="10" column="6">
        <property name="text">
-        <string>6 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="0">
        <property name="text">
-        <string>12</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="1">
        <property name="text">
-        <string>Cross Training</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="2">
        <property name="text">
-        <string>Fuerza</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="3">
        <property name="text">
-        <string>David Pérez</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="4">
        <property name="text">
-        <string>Lun, Mié, Vie
-07:30 - 08:30</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="11" column="6">
        <property name="text">
-        <string>10 / 16</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="0">
        <property name="text">
-        <string>13</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="1">
        <property name="text">
-        <string>Core</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="2">
        <property name="text">
-        <string>Fuerza</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="3">
        <property name="text">
-        <string>Ana Torres</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="4">
        <property name="text">
-        <string>Jue
-17:30 - 18:15</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="5">
        <property name="text">
-        <string>Sala 2</string>
+        <string/>
        </property>
       </item>
       <item row="12" column="6">
        <property name="text">
-        <string>8 / 12</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="0">
        <property name="text">
-        <string>14</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="1">
        <property name="text">
-        <string>Spinning Pro</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="2">
        <property name="text">
-        <string>Cardio</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="3">
        <property name="text">
-        <string>Carlos Ruiz</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="4">
        <property name="text">
-        <string>Sáb
-10:00 - 11:00</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="13" column="6">
        <property name="text">
-        <string>13 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="0">
        <property name="text">
-        <string>15</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="1">
        <property name="text">
-        <string>Mindfulness</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="2">
        <property name="text">
-        <string>Bienestar</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="3">
        <property name="text">
-        <string>Elena Gómez</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="4">
        <property name="text">
-        <string>Dom
-11:30 - 12:15</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="5">
        <property name="text">
-        <string>Sala 3</string>
+        <string/>
        </property>
       </item>
       <item row="14" column="6">
        <property name="text">
-        <string>4 / 15</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="0">
        <property name="text">
-        <string>16</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="1">
        <property name="text">
-        <string>Kick Boxing</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="2">
        <property name="text">
-        <string>Combate</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="3">
        <property name="text">
-        <string>David Pérez</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="4">
        <property name="text">
-        <string>Mié
-20:00 - 21:00</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="5">
        <property name="text">
-        <string>Sala 1</string>
+        <string/>
        </property>
       </item>
       <item row="15" column="6">
        <property name="text">
-        <string>7 / 12</string>
+        <string/>
        </property>
       </item>
      </widget>
@@ -1393,7 +1377,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">background-color:#D8F4F0; border-radius:24px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>./src/vista/imagenes/calendario.png</pixmap>
+       <pixmap>../imagenes/calendario.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1445,7 +1429,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
    </widget>
   </widget>
  </widget>
- <resources></resources>
+ <resources/>
  <connections/>
 </ui>
-
