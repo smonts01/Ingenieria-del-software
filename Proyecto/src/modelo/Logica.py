@@ -690,9 +690,11 @@ class Logica:
         """
         return self.ejecutar(sql, (nueva_cifrada, id_usuario))
 
+# Funciones interfaz_admin.ui 
+
     def contar_usuarios(self):
-        datos = self.consultar("SELECT COUNT(*) FROM clientes")
-        return datos[0][0] if datos else 0
+            datos = self.consultar("SELECT COUNT(*) FROM clientes")
+            return datos[0][0] if datos else 0
 
     def contar_clases(self):
         datos = self.consultar("SELECT COUNT(*) FROM clase")
@@ -701,7 +703,6 @@ class Logica:
     def contar_inscripciones(self):
         datos = self.consultar("SELECT COUNT(*) FROM inscripcion WHERE estado = 'inscrito'")
         return datos[0][0] if datos else 0
-
 
     def contar_inscripciones_clase(self, nombre_actividad):
         like = f"%{nombre_actividad.lower()}%"
@@ -745,12 +746,20 @@ class Logica:
 
     def ingresos_por_mes(self):
         return self.consultar("""
-            SELECT DATE_FORMAT(fecha_pago, '%Y-%m') as mes,
+            SELECT YEAR(fecha_pago) as anio, MONTH(fecha_pago) as mes,
                    SUM(importe) as total
             FROM pago
             WHERE estado = 'abonado'
-            GROUP BY mes
-            ORDER BY mes DESC
+            GROUP BY YEAR(fecha_pago), MONTH(fecha_pago)
+            ORDER BY anio DESC, mes DESC
             LIMIT 6
         """)
 
+    def pagos_pendientes(self):
+        sql = """
+            SELECT u.id_usuario, u.nombre, u.email, u.telefono, c.estado_pagado
+            FROM clientes c
+            INNER JOIN usuarios u ON c.id_cliente = u.id_usuario
+            WHERE c.estado_pagado = 'pendiente'
+        """
+        return self.consultar(sql)
