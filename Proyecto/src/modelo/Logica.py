@@ -693,8 +693,8 @@ class Logica:
 # Funciones interfaz_admin.ui 
 
     def contar_usuarios(self):
-            datos = self.consultar("SELECT COUNT(*) FROM clientes")
-            return datos[0][0] if datos else 0
+        datos = self.consultar("SELECT COUNT(*) FROM clientes")
+        return datos[0][0] if datos else 0
 
     def contar_clases(self):
         datos = self.consultar("SELECT COUNT(*) FROM clase")
