@@ -1387,12 +1387,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </column>
       <column>
        <property name="text">
-        <string>Fecha límite</string>
+        <string>Correo</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Correo</string>
+        <string>Teléfono</string>
        </property>
       </column>
       <column>
