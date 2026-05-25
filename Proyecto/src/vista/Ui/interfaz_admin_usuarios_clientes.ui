@@ -593,7 +593,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string notr="true">font:bold 11pt &quot;Segoe UI&quot;; color:#1F2937;</string>
       </property>
       <property name="text">
-       <string>Listado editable de clientes</string>
+       <string>Listado de clientes</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="tablaClientes_2">
@@ -627,7 +627,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <number>16</number>
       </property>
       <property name="columnCount">
-       <number>8</number>
+       <number>9</number>
       </property>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>95</number>
@@ -661,12 +661,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </column>
       <column>
        <property name="text">
-        <string>Nombre Completo</string>
+        <string>DNI</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Correo</string>
+        <string>Nombre</string>
        </property>
       </column>
       <column>
@@ -676,7 +676,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </column>
       <column>
        <property name="text">
-        <string>Tarifa</string>
+        <string>Correo</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Usuario</string>
        </property>
       </column>
       <column>
@@ -686,12 +691,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </column>
       <column>
        <property name="text">
-        <string>Fecha</string>
+        <string>Direccion</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Observaciones</string>
+        <string>Fecha</string>
        </property>
       </column>
       <item row="0" column="1">
@@ -719,12 +724,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="0" column="6">
+      <item row="0" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="0" column="7">
+      <item row="0" column="8">
        <property name="text">
         <string/>
        </property>
@@ -754,12 +759,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="1" column="6">
+      <item row="1" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="1" column="7">
+      <item row="1" column="8">
        <property name="text">
         <string/>
        </property>
@@ -789,12 +794,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="2" column="6">
+      <item row="2" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="2" column="7">
+      <item row="2" column="8">
        <property name="text">
         <string/>
        </property>
@@ -824,12 +829,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="3" column="6">
+      <item row="3" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="3" column="7">
+      <item row="3" column="8">
        <property name="text">
         <string/>
        </property>
@@ -859,12 +864,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="4" column="6">
+      <item row="4" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="4" column="7">
+      <item row="4" column="8">
        <property name="text">
         <string/>
        </property>
@@ -894,12 +899,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="5" column="6">
+      <item row="5" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="5" column="7">
+      <item row="5" column="8">
        <property name="text">
         <string/>
        </property>
@@ -929,12 +934,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="6" column="6">
+      <item row="6" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="6" column="7">
+      <item row="6" column="8">
        <property name="text">
         <string/>
        </property>
@@ -964,12 +969,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="7" column="6">
+      <item row="7" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="7" column="7">
+      <item row="7" column="8">
        <property name="text">
         <string/>
        </property>
@@ -999,12 +1004,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="8" column="6">
+      <item row="8" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="8" column="7">
+      <item row="8" column="8">
        <property name="text">
         <string/>
        </property>
@@ -1034,12 +1039,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="9" column="6">
+      <item row="9" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="9" column="7">
+      <item row="9" column="8">
        <property name="text">
         <string/>
        </property>
@@ -1069,12 +1074,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="10" column="6">
+      <item row="10" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="10" column="7">
+      <item row="10" column="8">
        <property name="text">
         <string/>
        </property>
@@ -1104,12 +1109,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="11" column="6">
+      <item row="11" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="11" column="7">
+      <item row="11" column="8">
        <property name="text">
         <string/>
        </property>
@@ -1139,12 +1144,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="12" column="6">
+      <item row="12" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="12" column="7">
+      <item row="12" column="8">
        <property name="text">
         <string/>
        </property>
@@ -1174,12 +1179,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="13" column="6">
+      <item row="13" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="13" column="7">
+      <item row="13" column="8">
        <property name="text">
         <string/>
        </property>
@@ -1209,12 +1214,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="14" column="6">
+      <item row="14" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="14" column="7">
+      <item row="14" column="8">
        <property name="text">
         <string/>
        </property>
@@ -1244,12 +1249,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
         <string/>
        </property>
       </item>
-      <item row="15" column="6">
+      <item row="15" column="7">
        <property name="text">
         <string/>
        </property>
       </item>
-      <item row="15" column="7">
+      <item row="15" column="8">
        <property name="text">
         <string/>
        </property>

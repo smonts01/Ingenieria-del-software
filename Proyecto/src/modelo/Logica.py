@@ -899,3 +899,48 @@ class Logica:
             UPDATE usuarios SET nombre=%s, telefono=%s, email=%s, direccion=%s
             WHERE id_usuario=%s
         """, (nombre, telefono, email, direccion, id_usuario))
+
+    def buscar_clases(self, texto):
+        t = texto.lower()
+        return self.consultar(f"""
+            SELECT id_clase, nombre_actividad, dia_semana, hora_inicio,
+                   hora_fin, aforo_maximo, nivel_intensidad, calorias_estimadas
+            FROM clase
+            WHERE LOWER(nombre_actividad) LIKE '%{t}%'
+            ORDER BY nombre_actividad
+        """)
+
+    def estadisticas_inscripciones(self):
+        total = self.consultar("SELECT COUNT(*) FROM inscripcion WHERE estado = 'inscrito'")
+        
+        mas = self.consultar("""
+            SELECT c.nombre_actividad, COUNT(*) as n
+            FROM inscripcion i JOIN clase c ON i.id_clase = c.id_clase
+            WHERE i.estado = 'inscrito'
+            GROUP BY c.nombre_actividad ORDER BY n DESC LIMIT 1
+        """)
+        
+        menos = self.consultar("""
+            SELECT c.nombre_actividad, COUNT(*) as n
+            FROM inscripcion i JOIN clase c ON i.id_clase = c.id_clase
+            WHERE i.estado = 'inscrito'
+            GROUP BY c.nombre_actividad ORDER BY n ASC LIMIT 1
+        """)
+        
+        ocupacion = self.consultar("""
+            SELECT ROUND(AVG(porcentaje), 1) FROM (
+                SELECT (COUNT(i.id_inscripcion) * 100.0 / c.aforo_maximo) as porcentaje
+                FROM clase c LEFT JOIN inscripcion i 
+                ON c.id_clase = i.id_clase AND i.estado = 'inscrito'
+                GROUP BY c.id_clase, c.aforo_maximo
+            ) t
+        """)
+        
+        return {
+            "total":      total[0][0] if total else 0,
+            "clase_mas":  mas[0][0]   if mas   else "-",
+            "num_mas":    mas[0][1]   if mas   else 0,
+            "clase_menos":menos[0][0] if menos else "-",
+            "num_menos":  menos[0][1] if menos else 0,
+            "ocupacion":  ocupacion[0][0] if ocupacion and ocupacion[0][0] else 0,
+        }

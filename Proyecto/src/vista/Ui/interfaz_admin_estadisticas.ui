@@ -245,7 +245,7 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       <string>Estadísticas</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnInformes">
+    <widget class="QPushButton" name="btnConfiguracion">
      <property name="geometry">
       <rect>
        <x>45</x>

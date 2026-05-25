@@ -674,23 +674,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;color:#1F2937;</string>
       </property>
       <property name="text">
-       <string>Listado editable de trabajadores</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblAyuda_2">
-      <property name="geometry">
-       <rect>
-        <x>260</x>
-        <y>10</y>
-        <width>350</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;;color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Doble clic sobre una celda para editar la información.</string>
+       <string>Listado de trabajadores</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="tablaTrabajadores_2">
@@ -956,19 +940,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>Mostrando todos los trabajadores · usa la barra lateral para subir y bajar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnGuardarCambios_2">
-      <property name="geometry">
-       <rect>
-        <x>595</x>
-        <y>356</y>
-        <width>160</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Guardar cambios</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QLabel" name="lblTabClientes">
      <property name="geometry">
@@ -1050,6 +1021,19 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </property>
      </item>
     </widget>
+    <widget class="QPushButton" name="btnNuevoTrabajador">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>145</y>
+       <width>131</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>+ Nuevo Trabajador</string>
+     </property>
+    </widget>
     <zorder>label</zorder>
     <zorder>lblTituloUsuarios</zorder>
     <zorder>lblSubUsuarios</zorder>
@@ -1059,6 +1043,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <zorder>lblTabTrabajadores</zorder>
     <zorder>txtBuscarTrabajador</zorder>
     <zorder>cmbRoles</zorder>
+    <zorder>btnNuevoTrabajador</zorder>
    </widget>
   </widget>
  </widget>

@@ -18,6 +18,8 @@ class Conexion:
                 [self._user, self._password],
                 jar_file
             )
+            # AÑADE ESTA LÍNEA:
+            self.conexion.jconn.setAutoCommit(True)
             return self.conexion
         except Exception as e:
             print("Error creando conexión:", e)

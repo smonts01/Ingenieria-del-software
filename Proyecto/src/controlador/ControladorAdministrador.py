@@ -47,6 +47,19 @@ class ControladorAdministrador:
             v.btnConfiguracion.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_configuracion.ui"))
         if hasattr(v, "btnActualizar"):
             v.btnActualizar.clicked.connect(self.cargar_datos)
+        if hasattr(v, "btnNuevoTrabajador"):
+            v.btnNuevoTrabajador.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_usuarios_nuevo_usuario.ui"))
+
+        if hasattr(v, "btnRegistrarUsuario"):
+            v.btnRegistrarUsuario.clicked.connect(self.registrar_usuario)
+        
+        if hasattr(v, "cmbRolUsuario") and v.cmbRolUsuario.count() == 0:
+            v.cmbRolUsuario.addItems(["Cliente", "Entrenador", "Recepcionista", "Administrador", "Contable"])
+
+        if hasattr(v, "txtBuscar"):
+            v.txtBuscar.textChanged.connect(self.filtrar_clases)
+        if hasattr(v, "btnGuardarCambios"):
+            v.btnGuardarCambios.clicked.connect(self.guardar_cambios_clase)
 
         # Tabs clientes/trabajadores
         if hasattr(v, "lblTabClientes"):
@@ -96,6 +109,10 @@ class ControladorAdministrador:
         if hasattr(v, "lblClasesNum"):
             try: v.lblClasesNum.setText(str(self.modelo.contar_clases()))
             except: v.lblClasesNum.setText("0")
+
+        if hasattr(v, "lblTotalClases"):
+            try: v.lblTotalClases.setText(str(self.modelo.contar_clases()))
+            except: v.lblTotalClases.setText("0")
 
         for lbl, clase in [("lblClasesNum_2","spinning"),("lblClasesNum_3","zumba"),
                             ("lblClasesNum_4","yoga"),("lblClasesNum_5","pilates"),
@@ -175,8 +192,15 @@ class ControladorAdministrador:
         # ── OTRAS PANTALLAS ──────────────────────────────────────────
 
         if hasattr(v, "tablaClases"):
-            try: self._rellenar(v.tablaClases, self.modelo.listar_clases())
-            except: pass
+            try:
+                datos = self.modelo.listar_clases()
+                self._rellenar_tabla_editable(v.tablaClases, datos)
+                if hasattr(v, "lblClasesTotales"):
+                    v.lblClasesTotales.setText(str(len(datos)))
+                if hasattr(v, "lblMostrando"):
+                    v.lblMostrando.setText(f"Mostrando {len(datos)} clases")
+            except Exception as e:
+                print(f"Error tablaClases: {e}")
 
         if hasattr(v, "tableWidget"):
             try: self._rellenar(v.tableWidget, self.modelo.listar_pagos())
@@ -186,6 +210,23 @@ class ControladorAdministrador:
             try: self._rellenar(v.tablaRanking, self.modelo.ranking_clientes_activos())
             except: pass
 
+        if hasattr(v, "tablaInscripciones") and hasattr(v, "lblTotal"):
+            try:
+                self._rellenar(v.tablaInscripciones, self.modelo.listar_inscripciones_resumen())
+                stats = self.modelo.estadisticas_inscripciones()
+                v.lblTotal.setText(str(stats["total"]))
+                if hasattr(v, "label_4"):
+                    v.label_4.setText(str(stats["clase_mas"]))
+                if hasattr(v, "label_5"):
+                    v.label_5.setText(str(stats["num_mas"]))
+                if hasattr(v, "label_8"):
+                    v.label_8.setText(str(stats["clase_menos"]))
+                if hasattr(v, "label_9"):
+                    v.label_9.setText(str(stats["num_menos"]))
+                if hasattr(v, "label_15"):
+                    v.label_15.setText(f"{stats['ocupacion']}%")
+            except Exception as e:
+                print(f"Error inscripciones stats: {e}")
     # ── Gráfico ──────────────────────────────────────────────────────
 
     def _dibujar_grafico_ingresos(self, label):
@@ -328,26 +369,90 @@ class ControladorAdministrador:
     def registrar_usuario(self):
         v = self.ventana
         try:
-            dni      = v.txtDni.text().strip()      if hasattr(v,"txtDni")      else ""
-            nombre   = v.txtNombre.text().strip()    if hasattr(v,"txtNombre")   else ""
-            telefono = v.txtTelefono.text().strip()  if hasattr(v,"txtTelefono") else ""
-            email    = v.txtEmail.text().strip()     if hasattr(v,"txtEmail")    else ""
-            direccion= v.txtDireccion.text().strip() if hasattr(v,"txtDireccion")else ""
-            fecha    = v.txtFechaNacimiento.text().strip() if hasattr(v,"txtFechaNacimiento") else "2000-01-01"
-            username = v.txtUsuario.text().strip()   if hasattr(v,"txtUsuario")  else ""
-            password = v.txtPassword.text().strip()  if hasattr(v,"txtPassword") else ""
-            confirmar= v.txtConfirmarPassword.text().strip() if hasattr(v,"txtConfirmarPassword") else password
-            rol      = v.cmbRolUsuario.currentIndex()+1 if hasattr(v,"cmbRolUsuario") else 1
-            if not all([dni,nombre,telefono,email,username,password]):
-                QMessageBox.warning(v,"Error","Completa todos los campos obligatorios")
+            dni       = v.txtDni.text().strip()              if hasattr(v,"txtDni")             else ""
+            nombre    = v.txtNombre.text().strip()            if hasattr(v,"txtNombre")          else ""
+            telefono  = v.txtTelefono.text().strip()          if hasattr(v,"txtTelefono")        else ""
+            email     = v.txtEmail.text().strip()             if hasattr(v,"txtEmail")           else ""
+            direccion = v.txtDireccion.text().strip()         if hasattr(v,"txtDireccion")       else ""
+            fecha     = v.txtFechaNacimiento.text().strip()   if hasattr(v,"txtFechaNacimiento") else "01/01/2000"
+            username  = v.txtUsuario.text().strip()           if hasattr(v,"txtUsuario")         else ""
+            password  = v.txtPassword.text().strip()          if hasattr(v,"txtPassword")        else ""
+            confirmar = v.txtConfirmarPassword.text().strip() if hasattr(v,"txtConfirmarPassword") else ""
+            rol_texto = v.cmbRolUsuario.currentText()         if hasattr(v,"cmbRolUsuario")      else "cliente"
+
+            if not all([dni, nombre, telefono, email, username, password]):
+                QMessageBox.warning(v, "Error", "Todos los campos son obligatorios")
                 return
             if password != confirmar:
-                QMessageBox.warning(v,"Error","Las contraseñas no coinciden")
+                QMessageBox.warning(v, "Error", "Las contraseñas no coinciden")
                 return
-            self.modelo.registrar_usuario(dni,nombre,telefono,email,username,password,rol,direccion,fecha)
-            QMessageBox.information(v,"Correcto","Usuario registrado correctamente")
+            if len(password) < 4:
+                QMessageBox.warning(v, "Error", "La contraseña debe tener al menos 4 caracteres")
+                return
+
+            # Convertir DD/MM/YYYY a YYYY-MM-DD antes de enviar a MySQL
+            from datetime import datetime
+            try:
+                fecha = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
+            except ValueError:
+                QMessageBox.warning(v, "Error", "Formato de fecha incorrecto. Usa DD/MM/YYYY (ej: 25/07/2001)")
+                return
+
+            roles_map = {"Cliente":1, "Entrenador":2, "Recepcionista":3, "Administrador":4, "Contable":5}
+            id_rol = roles_map.get(rol_texto, 1)
+
+            self.modelo.registrar_usuario(dni, nombre, telefono, email,
+                                          username, password, id_rol, direccion, fecha)
+
+            datos = self.modelo.consultar(
+                f"SELECT id_usuario FROM usuarios WHERE username = '{username}'"
+            )
+            if not datos:
+                QMessageBox.warning(v, "Error", "No se pudo obtener el ID del usuario")
+                return
+            id_nuevo = datos[0][0]
+
+            if id_rol == 1:
+                self.modelo.ejecutar(
+                    "INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES (?,?,?)",
+                    (id_nuevo, "pendiente", 0)
+                )
+            else:
+                self.modelo.ejecutar(
+                    "INSERT INTO empleados (id_empleado, salario) VALUES (?,?)",
+                    (id_nuevo, 0.00)
+                )
+                if id_rol == 2:
+                    self.modelo.ejecutar(
+                        "INSERT INTO entrenador (id_entrenador, especialidad, id_administrador_registra) VALUES (?,?,?)",
+                        (id_nuevo, "General", self.usuario["id_usuario"])
+                    )
+                elif id_rol == 3:
+                    self.modelo.ejecutar(
+                        "INSERT INTO recepcionista (id_recepcionista, turno, id_administrador_registra) VALUES (?,?,?)",
+                        (id_nuevo, "mañana", self.usuario["id_usuario"])
+                    )
+                elif id_rol == 4:
+                    self.modelo.ejecutar(
+                        "INSERT INTO administrador (id_administrador) VALUES (?)",
+                        (id_nuevo,)
+                    )
+                elif id_rol == 5:
+                    self.modelo.ejecutar(
+                        "INSERT INTO contable (id_contable, titulacion, id_administrador_registra) VALUES (?,?,?)",
+                        (id_nuevo, "ADE", self.usuario["id_usuario"])
+                    )
+
+            QMessageBox.information(v, "Correcto",
+                f"Usuario '{username}' registrado correctamente como {rol_texto}")
+
+            for campo in ["txtDni","txtNombre","txtTelefono","txtEmail","txtDireccion",
+                          "txtFechaNacimiento","txtUsuario","txtPassword","txtConfirmarPassword"]:
+                if hasattr(v, campo):
+                    getattr(v, campo).clear()
+
         except Exception as e:
-            QMessageBox.warning(v,"Error",str(e))
+            QMessageBox.warning(v, "Error", f"Error al registrar: {str(e)}")
 
     def modificar_usuario(self):
         v = self.ventana
@@ -454,3 +559,46 @@ class ControladorAdministrador:
     def cerrar_sesion(self):
         self.ventana.close()
         self.vista_login.show()
+
+    def filtrar_clases(self):
+        v = self.ventana
+        if not hasattr(v, "tablaClases"):
+            return
+        texto = v.txtBuscar.text().strip() if hasattr(v, "txtBuscar") else ""
+        try:
+            if texto:
+                datos = self.modelo.buscar_clases(texto)
+            else:
+                datos = self.modelo.listar_clases()
+            self._rellenar_tabla_editable(v.tablaClases, datos)
+            if hasattr(v, "lblMostrando"):
+                v.lblMostrando.setText(f"Mostrando {len(datos)} clases")
+        except Exception as e:
+            print(f"Error filtrar_clases: {e}")
+
+    def guardar_cambios_clase(self):
+        v = self.ventana
+        if not hasattr(v, "tablaClases"):
+            return
+        tabla = v.tablaClases
+        try:
+            for fila in range(tabla.rowCount()):
+                id_item = tabla.item(fila, 0)
+                if not id_item or not id_item.text():
+                    continue
+                id_clase  = int(id_item.text())
+                nombre    = tabla.item(fila, 1).text() if tabla.item(fila, 1) else ""
+                dia       = tabla.item(fila, 2).text() if tabla.item(fila, 2) else ""
+                hora_ini  = tabla.item(fila, 3).text() if tabla.item(fila, 3) else ""
+                hora_fin  = tabla.item(fila, 4).text() if tabla.item(fila, 4) else ""
+                aforo     = tabla.item(fila, 5).text() if tabla.item(fila, 5) else "20"
+                nivel     = tabla.item(fila, 6).text() if tabla.item(fila, 6) else "media"
+                self.modelo.ejecutar("""
+                    UPDATE clase SET nombre_actividad=?, dia_semana=?,
+                    hora_inicio=?, hora_fin=?, aforo_maximo=?, nivel_intensidad=?
+                    WHERE id_clase=?
+                """, (nombre, dia, hora_ini, hora_fin, int(aforo), nivel, id_clase))
+            QMessageBox.information(v, "Correcto", "Cambios guardados correctamente")
+            self.cargar_datos()
+        except Exception as e:
+            QMessageBox.warning(v, "Error", str(e))

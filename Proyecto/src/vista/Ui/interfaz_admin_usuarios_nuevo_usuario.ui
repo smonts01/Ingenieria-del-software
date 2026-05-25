@@ -969,19 +969,6 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="btnCancelar">
-     <property name="geometry">
-      <rect>
-       <x>610</x>
-       <y>540</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cancelar</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="btnRegistrarUsuario">
      <property name="geometry">
       <rect>
@@ -1017,7 +1004,6 @@ QRadioButton::indicator { width: 16px; height: 16px; }
     <zorder>cardDatosPersonales</zorder>
     <zorder>cardDatosAcceso</zorder>
     <zorder>cardRolUsuario</zorder>
-    <zorder>btnCancelar</zorder>
     <zorder>btnRegistrarUsuario</zorder>
     <zorder>lblResumen</zorder>
    </widget>
