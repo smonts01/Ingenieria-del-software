@@ -565,7 +565,8 @@ class Logica:
         return self.consultar(sql, (id_cliente,))
 
     def pagos_pendientes(self):
-        sql = """
+        # Primero busca en tabla pago, si no hay datos busca en clientes por estado
+        sql_pago = """
             SELECT p.id_pago, u.nombre, t.nombre, p.importe,
                    p.fecha_pago, p.tipo_cuota
             FROM pago p
@@ -574,7 +575,18 @@ class Logica:
             WHERE p.estado = 'pendiente'
             ORDER BY p.fecha_pago
         """
-        return self.consultar(sql)
+        datos = self.consultar(sql_pago)
+        if datos:
+            return datos
+        # Fallback: clientes con estado_pagado pendiente
+        sql_clientes = """
+            SELECT c.id_cliente, u.nombre, 'Sin tarifa', 0,
+                   u.fecha_registro, 'mensual'
+            FROM clientes c
+            JOIN usuarios u ON c.id_cliente = u.id_usuario
+            WHERE c.estado_pagado = 'pendiente'
+        """
+        return self.consultar(sql_clientes)
 
     def marcar_pago_abonado(self, id_pago):
         sql = """

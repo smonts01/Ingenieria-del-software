@@ -1313,50 +1313,52 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string>Clientes con pagos pendientes</string>
       </property>
      </widget>
+     <widget class="QLabel" name="icoUsuarios_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>5</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../imagenes/tarjeta-de-credito.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
      <widget class="QTableWidget" name="tablaClientesPagosPendientes">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>30</x>
         <y>50</y>
         <width>351</width>
         <height>131</height>
        </rect>
       </property>
-      <property name="styleSheet">
-       <string notr="true">QTableWidget {
-    background-color: white;
-    border: none;
-    gridline-color: #E5E7EB;
-    color: #1F2937;
-    font-size: 12px;
-}
-
-QHeaderView::section {
-    background-color: #F7F9FA;
-    color: #1F2937;
-    font-weight: bold;
-    border: none;
-    border-bottom: 1px solid #E5E7EB;
-    padding: 7px;
-}
-
-QTableWidget::item {
-    padding: 7px;
-    border-bottom: 1px solid #E5E7EB;
-}</string>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectItems</enum>
       </property>
       <property name="rowCount">
-       <number>4</number>
+       <number>10</number>
       </property>
       <property name="columnCount">
        <number>5</number>
       </property>
-      <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>120</number>
-      </attribute>
       <attribute name="horizontalHeaderStretchLastSection">
        <bool>true</bool>
       </attribute>
@@ -1367,14 +1369,20 @@ QTableWidget::item {
       <row/>
       <row/>
       <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <column>
        <property name="text">
-        <string>Id Cliente</string>
+        <string>ID</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Nombre </string>
+        <string>Nombre</string>
        </property>
       </column>
       <column>
@@ -1389,7 +1397,7 @@ QTableWidget::item {
       </column>
       <column>
        <property name="text">
-        <string>Estado pago</string>
+        <string>Estado Pago</string>
        </property>
       </column>
       <item row="0" column="0">
@@ -1407,22 +1415,91 @@ QTableWidget::item {
         <string/>
        </property>
       </item>
-     </widget>
-     <widget class="QLabel" name="icoUsuarios_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>5</y>
-        <width>41</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="pixmap">
-       <pixmap>../imagenes/tarjeta-de-credito.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
+      <item row="0" column="3">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="1" column="0">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="1" column="1">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="1" column="2">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="1" column="3">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="1" column="4">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="2" column="0">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="2" column="1">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="2" column="2">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="2" column="3">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="2" column="4">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="3" column="0">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="3" column="1">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="3" column="2">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="3" column="3">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="3" column="4">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
      </widget>
     </widget>
     <zorder>label</zorder>

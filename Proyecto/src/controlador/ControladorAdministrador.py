@@ -134,9 +134,9 @@ class ControladorAdministrador:
                 pass
 
         # 6. Tabla pagos pendientes
-        if hasattr(v, "tablaClientesPagosPendientes"):
+        if hasattr(v, "tablaPendientes"):
             try:
-                self.rellenar_tabla(v.tablaClientesPagosPendientes,
+                self.rellenar_tabla(v.tablaPendientes,
                                     self.modelo.pagos_pendientes())
             except Exception:
                 pass

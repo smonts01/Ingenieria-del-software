@@ -395,10 +395,13 @@ INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado) V
 (12, 1, '2026-01-01', 'activa');
 
 
-
 -- Crear usuario contable
 INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
-VALUES ('99999999Z', 'Marta Contable', '600000099', 'contable@stayfit.com', 'contable', SHA2('contable123', 256), 5, 'Calle Contable 1', '1988-07-10');
+VALUES ('99999999Z', 'Marta Contable', '600000099', 'contable@stayfit.com', 'contable', 'contable1' , 5, 'Calle Contable 1', '1988-07-10');
+
+-- Crear usuario recepcionista
+INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
+VALUES ('72260110K', 'Sonia Recepcionista', '600555099', 'recepcionista@stayfit.com', 'recepcionista', 'recepcionista1' , 3, 'Calle Recepcion 1', '1998-08-10');
 
 -- Crear empleado y contable con el id que acaba de crearse
 INSERT INTO empleados (id_empleado, salario) VALUES (LAST_INSERT_ID(), 2500.00);
@@ -408,7 +411,6 @@ INSERT INTO contable (id_contable, titulacion, id_administrador_registra) VALUES
 INSERT INTO pago (id_cliente, id_contable, id_tarifa, importe, metodo_pago, estado, tipo_cuota)
 SELECT 12, id_contable, 1, 30.00, 'efectivo', 'pendiente', 'mensual' FROM contable LIMIT 1;
 
-SELECT id_usuario, nombre FROM usuarios WHERE id_rol = 5;
 SHOW TABLES;
 SELECT * FROM usuarios;
 SELECT * FROM clase;
