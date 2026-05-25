@@ -15,7 +15,6 @@ class ControladorCliente:
         self.vista       = None
         self._vo         = None
 
-    # ── Apertura ────────────────────────────────────────────────────────────
 
     def abrir(self):
         id_cliente = self.usuario["id_usuario"]
@@ -40,12 +39,9 @@ class ControladorCliente:
         self.vista.cambiar_pagina(0)
         self.vista.show()
 
-    # ── Navegación ──────────────────────────────────────────────────────────
-
     def _cambiar_pagina(self, indice: int):
         self.vista.cambiar_pagina(indice)
 
-    # ── Acciones de la página Clases ────────────────────────────────────────
 
     def _reservar_clase_card(self, numero_card: int):
         nombre = self.vista.get_nombre_clase_card(numero_card)
@@ -61,7 +57,6 @@ class ControladorCliente:
         except Exception as e:
             QMessageBox.warning(self.vista.ventana, "Error al reservar", str(e))
 
-    # ── Acciones de la página Perfil ────────────────────────────────────────
 
     def _guardar_perfil(self):
         datos = self.vista.get_datos_perfil()
@@ -85,7 +80,7 @@ class ControladorCliente:
         except Exception as e:
             QMessageBox.warning(self.vista.ventana, "Error al guardar", str(e))
 
-    # ── Refresco de datos ───────────────────────────────────────────────────
+
 
     def _refrescar_datos(self):
         dao = ClienteDaoJDBC()
@@ -96,7 +91,6 @@ class ControladorCliente:
             self.vista.inicializar(self._vo)
             self.vista.cambiar_pagina(pagina_actual)
 
-    # ── Cerrar sesión ───────────────────────────────────────────────────────
 
     def _cerrar_sesion(self):
         self.vista.close()

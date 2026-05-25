@@ -248,10 +248,6 @@ class Logica:
         return datos[0] if datos else None
     
 
-    # ============================================================
-    # FUNCIONES DEL PANEL ENTRENADOR
-    # ============================================================
-
     def informacion_clase_con_sala(self, id_clase):
         """
         Devuelve la información completa de una clase junto con el nombre de la sala.
@@ -272,8 +268,7 @@ class Logica:
         datos = self.consultar(sql, (id_clase,))
         return datos[0] if datos else None
 
-    # ============================================================
-    # ============================================================
+
 
 
     def registrar_clase(self, id_entrenador, id_sala, nombre_actividad,

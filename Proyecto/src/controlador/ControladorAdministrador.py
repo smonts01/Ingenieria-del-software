@@ -100,8 +100,6 @@ class ControladorAdministrador:
     def cargar_datos(self):
         v = self.ventana
 
-        # ── PANTALLA INICIO ──────────────────────────────────────────
-
         if hasattr(v, "lblUsuariosNum"):
             try: v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
             except: v.lblUsuariosNum.setText("0")
@@ -147,7 +145,6 @@ class ControladorAdministrador:
         if hasattr(v, "graficoFake"):
             self._dibujar_grafico_ingresos(v.graficoFake)
 
-        # ── PANTALLA TRABAJADORES ────────────────────────────────────
 
         if hasattr(v, "lblNumTrabajadores"):
             try: v.lblNumTrabajadores.setText(str(self.modelo.contar_trabajadores()))
@@ -174,8 +171,6 @@ class ControladorAdministrador:
             except Exception as e:
                 print(f"Error tablaTrabajadores_2: {e}")
 
-        # ── PANTALLA CLIENTES ────────────────────────────────────────
-
         if hasattr(v, "lblNumUsuarios"):
             try: v.lblNumUsuarios.setText(str(self.modelo.contar_usuarios()))
             except: v.lblNumUsuarios.setText("0")
@@ -189,7 +184,6 @@ class ControladorAdministrador:
             except Exception as e:
                 print(f"Error tablaClientes_2: {e}")
 
-        # ── OTRAS PANTALLAS ──────────────────────────────────────────
 
         if hasattr(v, "tablaClases"):
             try:
@@ -227,7 +221,7 @@ class ControladorAdministrador:
                     v.label_15.setText(f"{stats['ocupacion']}%")
             except Exception as e:
                 print(f"Error inscripciones stats: {e}")
-    # ── Gráfico ──────────────────────────────────────────────────────
+
 
     def _dibujar_grafico_ingresos(self, label):
         try:
@@ -276,7 +270,7 @@ class ControladorAdministrador:
         except Exception as e:
             label.setText(f"Error gráfico:\n{str(e)[:60]}")
 
-    # ── Trabajadores ─────────────────────────────────────────────────
+
 
     def _rellenar_tabla_editable(self, tabla, datos):
         headers = ["ID","DNI","Nombre","Teléfono","Email","Usuario","Rol","Dirección","Fecha Nac."]
@@ -338,7 +332,7 @@ class ControladorAdministrador:
         except Exception as e:
             QMessageBox.warning(v, "Error", str(e))
 
-    # ── Clientes ─────────────────────────────────────────────────────
+
 
     def filtrar_clientes(self):
         v = self.ventana
@@ -364,7 +358,7 @@ class ControladorAdministrador:
         except Exception as e:
             print(f"Error filtrar_clientes_estado: {e}")
 
-    # ── CRUD usuarios ─────────────────────────────────────────────────
+
 
     def registrar_usuario(self):
         v = self.ventana
@@ -390,7 +384,7 @@ class ControladorAdministrador:
                 QMessageBox.warning(v, "Error", "La contraseña debe tener al menos 4 caracteres")
                 return
 
-            # Convertir DD/MM/YYYY a YYYY-MM-DD antes de enviar a MySQL
+        
             from datetime import datetime
             try:
                 fecha = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
@@ -487,7 +481,6 @@ class ControladorAdministrador:
         except Exception as e:
             QMessageBox.warning(v,"Error",str(e))
 
-    # ── CRUD clases ───────────────────────────────────────────────────
 
     def registrar_clase(self):
         v = self.ventana
@@ -542,7 +535,7 @@ class ControladorAdministrador:
         except Exception as e:
             QMessageBox.warning(v,"Error",str(e))
 
-    # ── Utilidades ────────────────────────────────────────────────────
+ 
 
     def _rellenar(self, tabla, datos):
         tabla.setRowCount(len(datos))
