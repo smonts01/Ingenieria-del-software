@@ -313,17 +313,37 @@ class ServicioProyectoDaoJDBC:
     def registrar_clase(self, id_entrenador, id_sala, nombre_actividad,
                         calorias_estimadas, dia_semana, hora_inicio, hora_fin,
                         duracion, aforo_maximo, nivel_intensidad):
-        vo = ClaseVO(None, id_entrenador, id_sala, nombre_actividad,
-                     calorias_estimadas, dia_semana, hora_inicio, hora_fin,
-                     duracion, aforo_maximo, nivel)
+        vo = ClaseVO(
+            None,
+            id_entrenador,
+            id_sala,
+            nombre_actividad,
+            calorias_estimadas,
+            dia_semana,
+            hora_inicio,
+            hora_fin,
+            duracion,
+            aforo_maximo,
+            nivel_intensidad
+        )
         return self._clase_dao.insert(vo)
 
     def modificar_clase(self, id_clase, id_entrenador, id_sala, nombre_actividad,
                         calorias_estimadas, dia_semana, hora_inicio, hora_fin,
                         duracion, aforo_maximo, nivel_intensidad):
-        vo = ClaseVO(id_clase, id_entrenador, id_sala, nombre_actividad,
-                     calorias_estimadas, dia_semana, hora_inicio, hora_fin,
-                     duracion, aforo_maximo, nivel)
+        vo = ClaseVO(
+            id_clase,
+            id_entrenador,
+            id_sala,
+            nombre_actividad,
+            calorias_estimadas,
+            dia_semana,
+            hora_inicio,
+            hora_fin,
+            duracion,
+            aforo_maximo,
+            nivel_intensidad
+        )
         return self._clase_dao.update(vo)
 
     def eliminar_clase(self, id_clase: int):
@@ -644,22 +664,24 @@ class ServicioProyectoDaoJDBC:
         return usuario_vo.id_usuario
 
     def guardar_cambios_clase_tabla(self, id_clase, nombre, dia, hora_ini, hora_fin, aforo, nivel):
-        """Actualización simplificada desde la tabla editable de clases."""
         clase = self._clase_dao.selectById(int(id_clase))
         if clase is None:
             raise ValueError("Clase no encontrada")
+
         vo = ClaseVO(
             clase.id_clase,
             clase.id_entrenador,
             clase.id_sala,
             nombre,
+            clase.calorias_estimadas,
             dia,
             hora_ini,
             hora_fin,
+            clase.duracion,
             int(aforo),
-            nivel,
-            clase.calorias_estimadas,
+            nivel
         )
+
         return self._clase_dao.update(vo)
 
     # ── CAMBIO DE CONTRASEÑA ────────────────────────────────────────────────

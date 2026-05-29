@@ -547,7 +547,7 @@ class ControladorAdministrador:
 
         except Exception as e:
             print(f"Error filtrar_clases: {e}")
-
+            
     def guardar_cambios_clase(self):
         v = self.ventana
 
@@ -593,20 +593,18 @@ class ControladorAdministrador:
                         int(id_texto), nombre, dia, hora_ini, hora_fin, aforo, nivel
                     )
                 else:
-                    print("INSERTANDO CLASE NUEVA:", nombre, dia, hora_ini, hora_fin, aforo, nivel)
-
-            self.modelo.registrar_clase(
-                2,
-                1,
-                nombre,
-                300,
-                dia,
-                hora_ini,
-                hora_fin,
-                60,
-                aforo,
-                nivel_intensidad
-            )
+                    self.modelo.registrar_clase(
+                        2,
+                        1,
+                        nombre,
+                        300,
+                        dia,
+                        hora_ini,
+                        hora_fin,
+                        60,
+                        aforo,
+                        nivel
+                    )
 
             MensajeView.information(v, "Correcto", "Clases guardadas correctamente")
 
