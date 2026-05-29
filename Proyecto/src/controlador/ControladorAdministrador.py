@@ -1,7 +1,11 @@
 import os
-from PyQt5 import uic
-from src.vista.componentes import MensajeView as QMessageBox, TablaItem as QTableWidgetItem
-from PyQt5.QtCore import Qt
+from src.vista.componentes import (
+    CargadorVista,
+    MensajeView as QMessageBox,
+    TablaItem as QTableWidgetItem,
+    ImagenView,
+    ConstantesVista,
+)
 
 
 class ControladorAdministrador:
@@ -20,7 +24,7 @@ class ControladorAdministrador:
         if self.ventana:
             self.ventana.close()
         ruta = os.path.join(self.ruta_ui, archivo)
-        self.ventana = uic.loadUi(ruta)
+        self.ventana = CargadorVista.cargar(ruta)
         self.conectar_botones()
         self.cargar_datos()
         self.ventana.show()
@@ -229,7 +233,6 @@ class ControladorAdministrador:
             matplotlib.use("Agg")
             import matplotlib.pyplot as plt
             import io
-            from PyQt5.QtGui import QPixmap
 
             datos = self.modelo.ingresos_por_mes()
             if not datos:
@@ -262,8 +265,7 @@ class ControladorAdministrador:
             plt.savefig(buf, format="png", bbox_inches="tight", dpi=92)
             plt.close(fig)
             buf.seek(0)
-            pixmap = QPixmap()
-            pixmap.loadFromData(buf.read())
+            pixmap = ImagenView.desde_bytes(buf.read())
             label.setPixmap(pixmap.scaled(label.width() or 391, label.height() or 231, 1))
         except ImportError:
             label.setText("pip install matplotlib")
@@ -283,7 +285,7 @@ class ControladorAdministrador:
             for col, valor in enumerate(registro):
                 item = QTableWidgetItem(str(valor) if valor is not None else "")
                 if col in (0, 6):
-                    item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                    item.setFlags(item.flags() & ~ConstantesVista.ItemIsEditable)
                 tabla.setItem(fila, col, item)
 
     def filtrar_trabajadores(self):

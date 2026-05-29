@@ -1,9 +1,6 @@
 import os
 from datetime import date
-from PyQt5 import uic
-from src.vista.componentes import MensajeView as QMessageBox, TablaItem as QTableWidgetItem, CheckBoxView as QCheckBox
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+from src.vista.componentes import CargadorVista, MensajeView as QMessageBox, TablaItem as QTableWidgetItem, CheckBoxView as QCheckBox
 
 
 class ControladorEntrenador:
@@ -22,7 +19,7 @@ class ControladorEntrenador:
         if self.ventana:
             self.ventana.close()
         ruta = os.path.join(self.ruta_ui, archivo)
-        self.ventana = uic.loadUi(ruta)
+        self.ventana = CargadorVista.cargar(ruta)
         self.conectar_botones()
         self.cargar_datos()
         self.ventana.show()
