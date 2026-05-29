@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import MensajeView as QMessageBox
+from src.vista.componentes import MensajeView
 
 from src.controlador.ControladorAdministrador import ControladorAdministrador
 from src.controlador.ControladorCliente import ControladorCliente
@@ -24,13 +24,13 @@ class ControladorPrincipal:
         password = self.vista.txtPassword.text().strip()
 
         if not usuario or not password:
-            QMessageBox.warning(self.vista, "Error", "Completa usuario y contraseña")
+            MensajeView.warning(self.vista, "Error", "Completa usuario y contraseña")
             return
 
         datos_usuario = self.modelo.iniciar_sesion(usuario, password)
 
         if not datos_usuario:
-            QMessageBox.warning(self.vista, "Error", "Usuario o contraseña incorrectos")
+            MensajeView.warning(self.vista, "Error", "Usuario o contraseña incorrectos")
             return
 
         rol = datos_usuario["rol"]
@@ -49,6 +49,6 @@ class ControladorPrincipal:
             ctrl = ClaseControlador(self.modelo, datos_usuario, self.ruta_ui, self.vista)
             ctrl.abrir()
         else:
-            QMessageBox.warning(self.vista, "Error", f"Rol desconocido: {rol}")
+            MensajeView.warning(self.vista, "Error", f"Rol desconocido: {rol}")
             self.vista.showMaximized()
             self.vista.show()

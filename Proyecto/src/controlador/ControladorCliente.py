@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import MensajeView as QMessageBox
+from src.vista.componentes import MensajeView
 
 from src.modelo.dao.ClienteDaoJDBC import ClienteDaoJDBC
 from src.vista.logica_cliente import VentanaCliente
@@ -23,7 +23,7 @@ class ControladorCliente:
         self._vo = dao.selectInicioCliente(id_cliente)
 
         if self._vo is None:
-            QMessageBox.critical(
+            MensajeView.critical(
                 None, "Error",
                 f"No se pudieron cargar los datos del cliente (id={id_cliente})."
             )
@@ -49,19 +49,19 @@ class ControladorCliente:
             self.modelo.inscribirse_clase_por_nombre(
                 self.usuario["id_usuario"], nombre
             )
-            QMessageBox.information(
+            MensajeView.information(
                 self.vista.ventana, "Reserva confirmada",
                 f"Te has inscrito en {nombre}."
             )
             self._refrescar_datos()
         except Exception as e:
-            QMessageBox.warning(self.vista.ventana, "Error al reservar", str(e))
+            MensajeView.warning(self.vista.ventana, "Error al reservar", str(e))
 
 
     def _guardar_perfil(self):
         datos = self.vista.get_datos_perfil()
         if not datos["email"]:
-            QMessageBox.warning(
+            MensajeView.warning(
                 self.vista.ventana, "Error", "El email no puede estar vacío."
             )
             return
@@ -72,13 +72,13 @@ class ControladorCliente:
                 datos["email"],
                 datos["direccion"],
             )
-            QMessageBox.information(
+            MensajeView.information(
                 self.vista.ventana, "Perfil actualizado",
                 "Los cambios se han guardado correctamente."
             )
             self._refrescar_datos()
         except Exception as e:
-            QMessageBox.warning(self.vista.ventana, "Error al guardar", str(e))
+            MensajeView.warning(self.vista.ventana, "Error al guardar", str(e))
 
 
 

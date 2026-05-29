@@ -1,6 +1,6 @@
 import os
 from datetime import date
-from src.vista.componentes import CargadorVista, MensajeView as QMessageBox, TablaItem as QTableWidgetItem, CheckBoxView as QCheckBox
+from src.vista.componentes import CargadorVista, MensajeView, TablaView
 
 
 class ControladorEntrenador:
@@ -115,7 +115,7 @@ class ControladorEntrenador:
 
             for fila, dato in enumerate(datos_ocupacion):
                 for col, valor in enumerate(dato):
-                    tabla.setItem(fila, col, QTableWidgetItem(str(valor)))
+                    tabla.setItem(fila, col, TablaView.crear_item(str(valor)))
 
             if datos_ocupacion:
                 total_ocupacion = 0
@@ -286,9 +286,9 @@ class ControladorEntrenador:
                 telefono = cliente[2]
                 email = cliente[3]
 
-                tabla.setItem(fila, 0, QTableWidgetItem(str(nombre)))
-                tabla.setItem(fila, 1, QTableWidgetItem(str(telefono)))
-                tabla.setItem(fila, 2, QTableWidgetItem(str(email)))
+                tabla.setItem(fila, 0, TablaView.crear_item(str(nombre)))
+                tabla.setItem(fila, 1, TablaView.crear_item(str(telefono)))
+                tabla.setItem(fila, 2, TablaView.crear_item(str(email)))
 
         if hasattr(v, "label_numInscritos_ins"):
             v.label_numInscritos_ins.setText(str(len(datos)))
@@ -363,9 +363,9 @@ class ControladorEntrenador:
             else:
                 estado_mostrar = "Pendiente"
 
-            tabla.setItem(fila, 0, QTableWidgetItem(f"{id_cliente} - {nombre}"))
-            tabla.setItem(fila, 1, QTableWidgetItem(estado_mostrar))
-            tabla.setItem(fila, 2, QTableWidgetItem("Escribe si o no"))
+            tabla.setItem(fila, 0, TablaView.crear_item(f"{id_cliente} - {nombre}"))
+            tabla.setItem(fila, 1, TablaView.crear_item(estado_mostrar))
+            tabla.setItem(fila, 2, TablaView.crear_item("Escribe si o no"))
 
         if hasattr(v, "label_TotalInscritos"):
             v.label_TotalInscritos.setText(str(len(datos)))
@@ -436,13 +436,13 @@ class ControladorEntrenador:
 
         try:
             if not hasattr(v, "comboSeleccionarClase"):
-                QMessageBox.warning(v, "Error", "No hay selector de clase")
+                MensajeView.warning(v, "Error", "No hay selector de clase")
                 return
 
             id_clase = v.comboSeleccionarClase.currentData()
 
             if id_clase is None:
-                QMessageBox.warning(v, "Error", "Selecciona una clase")
+                MensajeView.warning(v, "Error", "Selecciona una clase")
                 return
 
             fecha = date.today().isoformat()
@@ -489,14 +489,14 @@ class ControladorEntrenador:
             if hasattr(v, "label_TotalInscritos"):
                 v.label_TotalInscritos.setText(str(total))
 
-            QMessageBox.information(
+            MensajeView.information(
                 v,
                 "Correcto",
                 f"Asistencia guardada correctamente.\nAsistieron: {presentes}"
             )
 
         except Exception as e:
-            QMessageBox.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", str(e))
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))
@@ -504,7 +504,7 @@ class ControladorEntrenador:
             tabla.setColumnCount(len(datos[0]))
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro):
-                tabla.setItem(fila, col, QTableWidgetItem(str(valor) if valor is not None else ""))
+                tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else ""))
 
     def cerrar_sesion(self):
         self.ventana.close()

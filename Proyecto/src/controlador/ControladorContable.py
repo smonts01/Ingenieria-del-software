@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import CargadorVista, MensajeView as QMessageBox, TablaItem as QTableWidgetItem
+from src.vista.componentes import CargadorVista, MensajeView, TablaView
 
 
 class ControladorContable:
@@ -89,7 +89,7 @@ class ControladorContable:
             campo_metodo  = getattr(v, "cmbMetodo",    None) or getattr(v, "comboBox",   None)
 
             if not campo_cliente or not campo_cliente.text().strip():
-                QMessageBox.warning(v, "Error", "Introduce el ID del cliente")
+                MensajeView.warning(v, "Error", "Introduce el ID del cliente")
                 return
 
             id_cliente = int(campo_cliente.text().strip())
@@ -98,19 +98,19 @@ class ControladorContable:
             metodo     = campo_metodo.currentText() if campo_metodo and hasattr(campo_metodo, "currentText") else "efectivo"
 
             if importe <= 0:
-                QMessageBox.warning(v, "Error", "El importe debe ser mayor que 0")
+                MensajeView.warning(v, "Error", "El importe debe ser mayor que 0")
                 return
 
             self.modelo.registrar_pago(
                 id_cliente, self.usuario["id_usuario"],
                 id_tarifa, importe, metodo, "mensual"
             )
-            QMessageBox.information(v, "Correcto", "Pago registrado correctamente")
+            MensajeView.information(v, "Correcto", "Pago registrado correctamente")
             self.cargar_datos()
         except ValueError:
-            QMessageBox.warning(v, "Error", "Los valores numéricos no son válidos")
+            MensajeView.warning(v, "Error", "Los valores numéricos no son válidos")
         except Exception as e:
-            QMessageBox.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", str(e))
 
     def marcar_abonado(self):
         v = self.ventana
@@ -122,12 +122,12 @@ class ControladorContable:
                     if fila >= 0 and tabla.item(fila, 0):
                         id_pago = int(tabla.item(fila, 0).text())
                         self.modelo.marcar_pago_abonado(id_pago)
-                        QMessageBox.information(v, "Correcto", "Pago marcado como abonado")
+                        MensajeView.information(v, "Correcto", "Pago marcado como abonado")
                         self.cargar_datos()
                         return
-            QMessageBox.warning(v, "Error", "Selecciona un pago primero")
+            MensajeView.warning(v, "Error", "Selecciona un pago primero")
         except Exception as e:
-            QMessageBox.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", str(e))
 
     def generar_informe(self):
         v = self.ventana
@@ -136,10 +136,10 @@ class ControladorContable:
             if hasattr(v, "cmbTipoInforme"):
                 tipo = v.cmbTipoInforme.currentText()
             self.modelo.generar_informe(self.usuario["id_usuario"], tipo)
-            QMessageBox.information(v, "Correcto", f"Informe '{tipo}' generado correctamente")
+            MensajeView.information(v, "Correcto", f"Informe '{tipo}' generado correctamente")
             self.cargar_datos()
         except Exception as e:
-            QMessageBox.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", str(e))
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))
@@ -147,7 +147,7 @@ class ControladorContable:
             tabla.setColumnCount(len(datos[0]))
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro):
-                tabla.setItem(fila, col, QTableWidgetItem(str(valor) if valor is not None else ""))
+                tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else ""))
 
     def cerrar_sesion(self):
         self.ventana.close()

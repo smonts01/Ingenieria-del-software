@@ -1,12 +1,16 @@
 """Elementos de vista reutilizables.
 
-Esta capa es la única que conoce PyQt5. Los controladores deben usar estos
+Esta capa es la única que conoce PyQt5. Los controladores usan estos
 adaptadores para respetar MVC: controlador coordina, vista dibuja.
 """
 from PyQt5 import uic as _uic
 from PyQt5.QtCore import Qt as _Qt
 from PyQt5.QtGui import QPixmap as _QPixmap
-from PyQt5.QtWidgets import QMessageBox as _QMessageBox, QTableWidgetItem as _QTableWidgetItem, QCheckBox as _QCheckBox
+from PyQt5.QtWidgets import (
+    QMessageBox as _QMessageBox,
+    QTableWidgetItem as _QTableWidgetItem,
+    QCheckBox as _QCheckBox,
+)
 
 
 class CargadorVista:
@@ -16,8 +20,8 @@ class CargadorVista:
 
 
 class MensajeView:
-    Yes = _QMessageBox.Yes
-    No = _QMessageBox.No
+    SI = _QMessageBox.Yes
+    NO = _QMessageBox.No
 
     @staticmethod
     def information(parent, title, text):
@@ -36,8 +40,27 @@ class MensajeView:
         return _QMessageBox.question(parent, title, text, buttons)
 
 
-class TablaItem(_QTableWidgetItem):
-    pass
+class TablaView:
+    @staticmethod
+    def crear_item(valor, editable=True):
+        item = _QTableWidgetItem(str(valor) if valor is not None else "")
+        if not editable:
+            item.setFlags(item.flags() & ~_Qt.ItemIsEditable)
+        return item
+
+    @staticmethod
+    def poner_item(tabla, fila, columna, valor, editable=True):
+        tabla.setItem(fila, columna, TablaView.crear_item(valor, editable))
+
+    @staticmethod
+    def configurar_columnas(tabla, cabeceras):
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+
+    @staticmethod
+    def activar_edicion_por_click(tabla):
+        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
+        tabla.setSelectionBehavior(tabla.SelectRows)
 
 
 class CheckBoxView(_QCheckBox):
@@ -50,7 +73,3 @@ class ImagenView:
         pixmap = _QPixmap()
         pixmap.loadFromData(datos)
         return pixmap
-
-
-class ConstantesVista:
-    ItemIsEditable = _Qt.ItemIsEditable

@@ -484,8 +484,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QLineEdit" name="txtBuscar">
      <property name="geometry">
       <rect>
-       <x>75</x>
-       <y>150</y>
+       <x>70</x>
+       <y>110</y>
        <width>160</width>
        <height>32</height>
       </rect>
@@ -498,7 +498,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="geometry">
       <rect>
        <x>260</x>
-       <y>150</y>
+       <y>110</y>
        <width>95</width>
        <height>32</height>
       </rect>
@@ -529,8 +529,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <widget class="QFrame" name="cardTabla">
      <property name="geometry">
       <rect>
-       <x>75</x>
-       <y>200</y>
+       <x>70</x>
+       <y>160</y>
        <width>721</width>
        <height>390</height>
       </rect>
@@ -548,23 +548,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string notr="true">font:bold 11pt &quot;Segoe UI&quot;; color:#1F2937;</string>
       </property>
       <property name="text">
-       <string>Listado editable de clases</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblAyudaEdicion">
-      <property name="geometry">
-       <rect>
-        <x>265</x>
-        <y>12</y>
-        <width>460</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Doble clic sobre una celda para modificar los datos de la clase.</string>
+       <string>Listado de clases</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="tablaClases">
@@ -1007,28 +991,12 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string>Mostrando todas las clases · usa la barra lateral para subir y bajar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="btnGuardarCambios">
-      <property name="geometry">
-       <rect>
-        <x>560</x>
-        <y>395</y>
-        <width>170</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; color:white; border:none; border-radius:8px; font:bold 9pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Guardar cambios</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="cardResumen">
      <property name="geometry">
       <rect>
-       <x>620</x>
-       <y>20</y>
+       <x>560</x>
+       <y>40</y>
        <width>171</width>
        <height>100</height>
       </rect>
@@ -1085,6 +1053,19 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       </property>
      </widget>
     </widget>
+    <widget class="QPushButton" name="btnGuardarCambios">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>110</y>
+       <width>111</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Guardar cambios</string>
+     </property>
+    </widget>
     <zorder>label</zorder>
     <zorder>cardTabla</zorder>
     <zorder>lblTitulo</zorder>
@@ -1092,6 +1073,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
     <zorder>txtBuscar</zorder>
     <zorder>btnNuevaClase</zorder>
     <zorder>cardResumen</zorder>
+    <zorder>btnGuardarCambios</zorder>
    </widget>
   </widget>
  </widget>

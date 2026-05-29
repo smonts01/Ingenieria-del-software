@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import CargadorVista, MensajeView as QMessageBox, TablaItem as QTableWidgetItem
+from src.vista.componentes import CargadorVista, MensajeView, TablaView
 
 
 class ControladorRecepcionista:
@@ -79,16 +79,16 @@ class ControladorRecepcionista:
                     campo = getattr(v, nombre)
                     break
             if not campo or not campo.text().strip():
-                QMessageBox.warning(v, "Error", "Introduce el ID del usuario")
+                MensajeView.warning(v, "Error", "Introduce el ID del usuario")
                 return
             id_usuario = int(campo.text().strip())
             self.modelo.registrar_acceso(id_usuario, tipo)
-            QMessageBox.information(v, "Correcto", f"{'Entrada' if tipo == 'entrada' else 'Salida'} registrada")
+            MensajeView.information(v, "Correcto", f"{'Entrada' if tipo == 'entrada' else 'Salida'} registrada")
             self.cargar_datos()
         except ValueError:
-            QMessageBox.warning(v, "Error", "El ID debe ser un número")
+            MensajeView.warning(v, "Error", "El ID debe ser un número")
         except Exception as e:
-            QMessageBox.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", str(e))
 
     def registrar_cliente(self):
         v = self.ventana
@@ -120,16 +120,16 @@ class ControladorRecepcionista:
                 vals = vals_list
 
             if not vals[0] or not vals[6] or not vals[7]:
-                QMessageBox.warning(v, "Error", "DNI, usuario y contraseña son obligatorios")
+                MensajeView.warning(v, "Error", "DNI, usuario y contraseña son obligatorios")
                 return
 
             self.modelo.registrar_usuario(
                 vals[0], vals[1], vals[2], vals[3],
                 vals[6], vals[7], 1, vals[4], vals[5]
             )
-            QMessageBox.information(v, "Correcto", "Cliente registrado correctamente")
+            MensajeView.information(v, "Correcto", "Cliente registrado correctamente")
         except Exception as e:
-            QMessageBox.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", str(e))
 
     def actualizar_cliente(self):
         v = self.ventana
@@ -139,17 +139,17 @@ class ControladorRecepcionista:
                 return
             fila = tabla.currentRow()
             if fila < 0:
-                QMessageBox.warning(v, "Error", "Selecciona un cliente")
+                MensajeView.warning(v, "Error", "Selecciona un cliente")
                 return
             id_cliente = int(tabla.item(fila, 0).text())
             telefono = v.txtTelefono.text().strip() if hasattr(v, "txtTelefono") else ""
             email    = v.txtEmail.text().strip()    if hasattr(v, "txtEmail")    else ""
             direccion= v.txtDireccion.text().strip() if hasattr(v, "txtDireccion") else ""
             self.modelo.modificar_usuario(id_cliente, telefono, email, direccion)
-            QMessageBox.information(v, "Correcto", "Cliente actualizado")
+            MensajeView.information(v, "Correcto", "Cliente actualizado")
             self.cargar_datos()
         except Exception as e:
-            QMessageBox.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", str(e))
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))
@@ -157,7 +157,7 @@ class ControladorRecepcionista:
             tabla.setColumnCount(len(datos[0]))
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro):
-                tabla.setItem(fila, col, QTableWidgetItem(str(valor) if valor is not None else ""))
+                tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else ""))
 
     def cerrar_sesion(self):
         self.ventana.close()

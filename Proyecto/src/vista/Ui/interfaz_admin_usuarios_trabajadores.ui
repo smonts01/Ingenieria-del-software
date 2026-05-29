@@ -497,10 +497,10 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <widget class="QFrame" name="cardResumen">
      <property name="geometry">
       <rect>
-       <x>840</x>
+       <x>824</x>
        <y>195</y>
-       <width>125</width>
-       <height>210</height>
+       <width>141</width>
+       <height>241</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblResumen">
@@ -615,7 +615,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      <widget class="QLabel" name="Entrenadores">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>120</x>
         <y>125</y>
         <width>71</width>
         <height>18</height>
@@ -628,7 +628,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      <widget class="QLabel" name="Recepcionista">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>120</x>
         <y>150</y>
         <width>71</width>
         <height>18</height>
@@ -641,8 +641,34 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
      <widget class="QLabel" name="Contables">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>120</x>
         <y>174</y>
+        <width>71</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>20</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Admin">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>195</y>
+        <width>91</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Administradores</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Administradores">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>195</y>
         <width>71</width>
         <height>18</height>
        </rect>

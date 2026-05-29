@@ -141,7 +141,7 @@ class ServicioProyectoDaoJDBC:
 
     def registrar_empleado(self, id_empleado: int, salario: float = 0.0):
         """Crea un EmpleadosVO e inserta el empleado mediante el DAO."""
-        vo = EmpleadosVO(id_empleado=id_empleado, salario=salario)
+        vo = EmpleadoVO(id_empleado=id_empleado, salario=salario)
         return self._empleado_dao.insert(vo)
 
     def registrar_entrenador(self, id_entrenador: int, especialidad: str,
@@ -315,7 +315,7 @@ class ServicioProyectoDaoJDBC:
                         duracion, aforo_maximo, nivel_intensidad):
         vo = ClaseVO(None, id_entrenador, id_sala, nombre_actividad,
                      calorias_estimadas, dia_semana, hora_inicio, hora_fin,
-                     duracion, aforo_maximo, nivel_intensidad)
+                     duracion, aforo_maximo, nivel)
         return self._clase_dao.insert(vo)
 
     def modificar_clase(self, id_clase, id_entrenador, id_sala, nombre_actividad,
@@ -323,7 +323,7 @@ class ServicioProyectoDaoJDBC:
                         duracion, aforo_maximo, nivel_intensidad):
         vo = ClaseVO(id_clase, id_entrenador, id_sala, nombre_actividad,
                      calorias_estimadas, dia_semana, hora_inicio, hora_fin,
-                     duracion, aforo_maximo, nivel_intensidad)
+                     duracion, aforo_maximo, nivel)
         return self._clase_dao.update(vo)
 
     def eliminar_clase(self, id_clase: int):
