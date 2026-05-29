@@ -1,7 +1,7 @@
 import os
 from datetime import date
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QCheckBox
+from src.vista.componentes import MensajeView as QMessageBox, TablaItem as QTableWidgetItem, CheckBoxView as QCheckBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 

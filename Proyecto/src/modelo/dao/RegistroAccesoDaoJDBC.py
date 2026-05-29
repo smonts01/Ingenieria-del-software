@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.Registro_accesoVO import RegistroAccesoVO
+from src.modelo.VO.Registro_accesoVO import RegistroAccesoVO
 
 
 class RegistroAccesoDaoJDBC(Conexion):

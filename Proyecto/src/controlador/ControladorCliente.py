@@ -1,5 +1,5 @@
 import os
-from PyQt5.QtWidgets import QMessageBox
+from src.vista.componentes import MensajeView as QMessageBox
 
 from src.modelo.dao.ClienteDaoJDBC import ClienteDaoJDBC
 from src.vista.logica_cliente import VentanaCliente

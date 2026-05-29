@@ -1,5 +1,5 @@
 import os
-from PyQt5.QtWidgets import QMessageBox
+from src.vista.componentes import MensajeView as QMessageBox
 
 from src.controlador.ControladorAdministrador import ControladorAdministrador
 from src.controlador.ControladorCliente import ControladorCliente

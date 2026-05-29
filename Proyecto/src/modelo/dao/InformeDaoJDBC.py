@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.InformeVO import InformeVO
+from src.modelo.VO.InformeVO import InformeVO
 
 
 class InformeDaoJDBC(Conexion):

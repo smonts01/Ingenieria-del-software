@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.MenorVO import MenorVO
+from src.modelo.VO.MenorVO import MenorVO
 
 
 class MenorDaoJDBC(Conexion):

@@ -1,6 +1,6 @@
 import os
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
+from src.vista.componentes import MensajeView as QMessageBox, TablaItem as QTableWidgetItem
 
 
 class ControladorRecepcionista:

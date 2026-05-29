@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.PagoVO import PagoVO
+from src.modelo.VO.PagoVO import PagoVO
 
 
 class PagoDaoJDBC(Conexion):

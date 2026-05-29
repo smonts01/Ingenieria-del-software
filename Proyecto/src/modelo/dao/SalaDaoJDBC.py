@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.SalaVO import SalaVO
+from src.modelo.VO.SalaVO import SalaVO
 
 
 class SalaDaoJDBC(Conexion):

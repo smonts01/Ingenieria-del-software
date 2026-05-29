@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.RecepcionistaVO import RecepcionistaVO
+from src.modelo.VO.RecepcionistaVO import RecepcionistaVO
 
 
 class RecepcionistaDaoJDBC(Conexion):

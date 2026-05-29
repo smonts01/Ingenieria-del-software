@@ -1,6 +1,6 @@
 import os
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
+from src.vista.componentes import MensajeView as QMessageBox, TablaItem as QTableWidgetItem
 from PyQt5.QtCore import Qt
 
 
@@ -395,47 +395,10 @@ class ControladorAdministrador:
             roles_map = {"Cliente":1, "Entrenador":2, "Recepcionista":3, "Administrador":4, "Contable":5}
             id_rol = roles_map.get(rol_texto, 1)
 
-            self.modelo.registrar_usuario(dni, nombre, telefono, email,
-                                          username, password, id_rol, direccion, fecha)
-
-            datos = self.modelo.consultar(
-                f"SELECT id_usuario FROM usuarios WHERE username = '{username}'"
+            self.modelo.crear_usuario_completo(
+                dni, nombre, telefono, email, username, password,
+                id_rol, direccion, fecha, self.usuario["id_usuario"]
             )
-            if not datos:
-                QMessageBox.warning(v, "Error", "No se pudo obtener el ID del usuario")
-                return
-            id_nuevo = datos[0][0]
-
-            if id_rol == 1:
-                self.modelo.ejecutar(
-                    "INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES (?,?,?)",
-                    (id_nuevo, "pendiente", 0)
-                )
-            else:
-                self.modelo.ejecutar(
-                    "INSERT INTO empleados (id_empleado, salario) VALUES (?,?)",
-                    (id_nuevo, 0.00)
-                )
-                if id_rol == 2:
-                    self.modelo.ejecutar(
-                        "INSERT INTO entrenador (id_entrenador, especialidad, id_administrador_registra) VALUES (?,?,?)",
-                        (id_nuevo, "General", self.usuario["id_usuario"])
-                    )
-                elif id_rol == 3:
-                    self.modelo.ejecutar(
-                        "INSERT INTO recepcionista (id_recepcionista, turno, id_administrador_registra) VALUES (?,?,?)",
-                        (id_nuevo, "mañana", self.usuario["id_usuario"])
-                    )
-                elif id_rol == 4:
-                    self.modelo.ejecutar(
-                        "INSERT INTO administrador (id_administrador) VALUES (?)",
-                        (id_nuevo,)
-                    )
-                elif id_rol == 5:
-                    self.modelo.ejecutar(
-                        "INSERT INTO contable (id_contable, titulacion, id_administrador_registra) VALUES (?,?,?)",
-                        (id_nuevo, "ADE", self.usuario["id_usuario"])
-                    )
 
             QMessageBox.information(v, "Correcto",
                 f"Usuario '{username}' registrado correctamente como {rol_texto}")
@@ -586,11 +549,9 @@ class ControladorAdministrador:
                 hora_fin  = tabla.item(fila, 4).text() if tabla.item(fila, 4) else ""
                 aforo     = tabla.item(fila, 5).text() if tabla.item(fila, 5) else "20"
                 nivel     = tabla.item(fila, 6).text() if tabla.item(fila, 6) else "media"
-                self.modelo.ejecutar("""
-                    UPDATE clase SET nombre_actividad=?, dia_semana=?,
-                    hora_inicio=?, hora_fin=?, aforo_maximo=?, nivel_intensidad=?
-                    WHERE id_clase=?
-                """, (nombre, dia, hora_ini, hora_fin, int(aforo), nivel, id_clase))
+                self.modelo.guardar_cambios_clase_tabla(
+                    id_clase, nombre, dia, hora_ini, hora_fin, int(aforo), nivel
+                )
             QMessageBox.information(v, "Correcto", "Cambios guardados correctamente")
             self.cargar_datos()
         except Exception as e:

@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.RolesVO import RolesVO
+from src.modelo.VO.RolesVO import RolesVO
 
 
 class RolesDaoJDBC(Conexion):

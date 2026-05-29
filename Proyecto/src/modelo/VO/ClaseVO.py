@@ -30,7 +30,7 @@ class ClaseVO:
     
     @property
     def calorias_estimadas(self):
-        return self._calorias_estimasdas
+        return self._calorias_estimadas
     
     @property
     def dia_semana(self):

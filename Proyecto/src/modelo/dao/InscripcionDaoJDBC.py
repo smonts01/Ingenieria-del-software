@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.InscripcionVO import InscripcionVO
+from src.modelo.VO.InscripcionVO import InscripcionVO
 
 
 class InscripcionDaoJDBC(Conexion):

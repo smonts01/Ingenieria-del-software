@@ -1,5 +1,5 @@
 from src.modelo.conexion.Conexion import Conexion
-from src.modelo.vo.TarifaVO import TarifaVO
+from src.modelo.VO.TarifaVO import TarifaVO
 
 
 class TarifaDaoJDBC(Conexion):
