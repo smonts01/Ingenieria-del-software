@@ -824,8 +824,7 @@ class ServicioProyectoDaoJDBC:
     def estadisticas_admin(self):
         clientes_activos = self.consultar("""
             SELECT COUNT(*)
-            FROM usuarios u
-            JOIN cliente c ON u.id_usuario = c.id_cliente
+            FROM clientes
         """)
 
         reservas = self.consultar("""
@@ -836,7 +835,8 @@ class ServicioProyectoDaoJDBC:
 
         asistencias = self.consultar("""
             SELECT COUNT(*)
-            FROM registro_acceso
+            FROM asistencia
+            WHERE presente = 'si'
         """)
 
         clases_activas = self.consultar("""
@@ -879,13 +879,16 @@ class ServicioProyectoDaoJDBC:
         return self.consultar("""
             SELECT 
                 u.nombre,
-                COUNT(r.id_registro) AS asistencias,
+                COUNT(a.id_asistencia) AS asistencias,
                 COALESCE(MAX(c.nombre_actividad), '-') AS ultima_clase,
                 'Activo' AS estado
             FROM usuarios u
-            JOIN cliente cli ON u.id_usuario = cli.id_cliente
-            LEFT JOIN registro_acceso r ON u.id_usuario = r.id_cliente
-            LEFT JOIN clase c ON r.id_clase = c.id_clase
+            JOIN clientes cli ON u.id_usuario = cli.id_cliente
+            LEFT JOIN asistencia a 
+                ON cli.id_cliente = a.id_cliente
+            AND a.presente = 'si'
+            LEFT JOIN clase c 
+                ON a.id_clase = c.id_clase
             GROUP BY u.id_usuario, u.nombre
             ORDER BY asistencias DESC, u.nombre ASC
             LIMIT 8

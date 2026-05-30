@@ -471,7 +471,7 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       <rect>
        <x>30</x>
        <y>110</y>
-       <width>130</width>
+       <width>161</width>
        <height>105</height>
       </rect>
      </property>
@@ -511,9 +511,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <widget class="QFrame" name="cardResumen2">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>230</x>
        <y>110</y>
-       <width>130</width>
+       <width>171</width>
        <height>105</height>
       </rect>
      </property>
@@ -566,70 +566,12 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardResumen3">
-     <property name="geometry">
-      <rect>
-       <x>330</x>
-       <y>110</y>
-       <width>130</width>
-       <height>105</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblR3">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>16</y>
-        <width>120</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Ocupación media</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblNumR3">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>42</y>
-        <width>110</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 22pt &quot;Segoe UI&quot;; color:#8E6CFF;</string>
-      </property>
-      <property name="text">
-       <string>78%</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSubR3">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>75</y>
-        <width>130</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>aforo mensual</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="cardResumen4">
      <property name="geometry">
       <rect>
-       <x>480</x>
+       <x>440</x>
        <y>110</y>
-       <width>130</width>
+       <width>171</width>
        <height>105</height>
       </rect>
      </property>
@@ -1188,144 +1130,11 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="cardGrafico">
-     <property name="geometry">
-      <rect>
-       <x>645</x>
-       <y>235</y>
-       <width>300</width>
-       <height>165</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblGrafico">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>12</y>
-        <width>180</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &amp;quot;Segoe UI&amp;quot;;</string>
-      </property>
-      <property name="text">
-       <string>Actividad semanal</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="bar1">
-      <property name="geometry">
-       <rect>
-        <x>35</x>
-        <y>102</y>
-        <width>18</width>
-        <height>42</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; border-radius:5px;</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="bar2">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>84</y>
-        <width>18</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; border-radius:5px;</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="bar3">
-      <property name="geometry">
-       <rect>
-        <x>105</x>
-        <y>62</y>
-        <width>18</width>
-        <height>82</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; border-radius:5px;</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="bar4">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>76</y>
-        <width>18</width>
-        <height>68</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; border-radius:5px;</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="bar5">
-      <property name="geometry">
-       <rect>
-        <x>175</x>
-        <y>50</y>
-        <width>18</width>
-        <height>94</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#FF9F2E; border-radius:5px;</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="bar6">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>92</y>
-        <width>18</width>
-        <height>52</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; border-radius:5px;</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="bar7">
-      <property name="geometry">
-       <rect>
-        <x>245</x>
-        <y>110</y>
-        <width>18</width>
-        <height>34</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; border-radius:5px;</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblDias">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>145</y>
-        <width>245</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:7pt &amp;quot;Segoe UI&amp;quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Lun    Mar    Mié    Jue    Vie    Sáb    Dom</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="cardOcupacion">
      <property name="geometry">
       <rect>
        <x>645</x>
-       <y>415</y>
+       <y>240</y>
        <width>300</width>
        <height>165</height>
       </rect>
@@ -1580,10 +1389,8 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <zorder>lblSubtitulo</zorder>
     <zorder>cardResumen1</zorder>
     <zorder>cardResumen2</zorder>
-    <zorder>cardResumen3</zorder>
     <zorder>cardResumen4</zorder>
     <zorder>cardRanking</zorder>
-    <zorder>cardGrafico</zorder>
     <zorder>cardOcupacion</zorder>
     <zorder>cardActividad</zorder>
    </widget>

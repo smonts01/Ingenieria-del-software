@@ -225,11 +225,6 @@ class ControladorAdministrador:
             except Exception as e:
                 print(f"Error tablaClases: {e}")
 
-
-        if hasattr(v, "tablaRanking"):
-            try: self._rellenar(v.tablaRanking, self.modelo.ranking_clientes_activos())
-            except: pass
-
         if hasattr(v, "tablaInscripciones") and hasattr(v, "lblTotal"):
             try:
                 self._rellenar(v.tablaInscripciones, self.modelo.listar_inscripciones_resumen())
