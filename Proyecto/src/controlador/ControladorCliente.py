@@ -36,7 +36,7 @@ class ControladorCliente:
         self.vista.conectar_guardar_perfil(self._guardar_perfil)
 
         self.vista.inicializar(self._vo)
-        self.vista.cambiar_pagina(0)
+        self.vista.cambiar_pagina(1)
         self.vista.show()
 
     def _cambiar_pagina(self, indice: int):

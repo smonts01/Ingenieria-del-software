@@ -1049,3 +1049,179 @@ class ServicioProyectoDaoJDBC:
             VALUES (?, ?, ?, ?)
         """
         return self.ejecutar(sql_insert, (id_cliente, id_clase, fecha, presente))
+    
+    #CONTABLE
+
+    def ultimos_pagos_inicio_contable(self):
+        """
+        Devuelve los últimos pagos para la tabla de inicio del contable.
+        Formato:
+        Cliente, Tarifa, Importe, Fecha, Estado
+        """
+        sql = """
+            SELECT u.nombre AS cliente,
+                   t.nombre AS tarifa,
+                   CONCAT(p.importe, ' €') AS importe,
+                   DATE(p.fecha_pago) AS fecha,
+                   p.estado
+            FROM pago p
+            INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
+            INNER JOIN tarifa t ON p.id_tarifa = t.id_tarifa
+            ORDER BY p.fecha_pago DESC
+            LIMIT 10
+        """
+        return self.consultar(sql)
+
+    def pagos_pendientes_inicio_contable(self):
+        """
+        Devuelve los clientes con pagos pendientes para la tabla de inicio.
+        Formato:
+        Cliente, Importe pendiente, Fecha límite
+        """
+        sql = """
+            SELECT u.nombre AS cliente,
+                   CONCAT(p.importe, ' €') AS importe_pendiente,
+                   DATE(p.fecha_pago) AS fecha_limite
+            FROM pago p
+            INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
+            WHERE p.estado = 'pendiente'
+            ORDER BY p.fecha_pago ASC
+        """
+        return self.consultar(sql)
+
+    def num_pagos_pendientes_contable(self):
+        """
+        Cuenta los pagos pendientes registrados.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM pago
+            WHERE estado = 'pendiente'
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def ingresos_mes_contable(self):
+        """
+        Calcula los ingresos abonados del mes actual.
+        """
+        sql = """
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE estado = 'abonado'
+              AND YEAR(fecha_pago) = YEAR(CURRENT_DATE)
+              AND MONTH(fecha_pago) = MONTH(CURRENT_DATE)
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def num_tarifas_activas_contable(self):
+        """
+        Cuenta las tarifas activas.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM tarifa
+            WHERE fecha_fin IS NULL OR fecha_fin >= CURRENT_DATE
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def num_informes_mes_contable(self):
+        """
+        Cuenta los informes generados durante el mes actual.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM informe
+            WHERE YEAR(fecha_generacion) = YEAR(CURRENT_DATE)
+              AND MONTH(fecha_generacion) = MONTH(CURRENT_DATE)
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+    
+
+
+    def buscar_cliente_tarifa_por_dni(self, dni):
+        """
+        Busca un cliente por DNI y devuelve su tarifa activa.
+        Formato:
+        id_cliente, nombre, dni, id_tarifa, nombre_tarifa, precio_mensual
+        """
+        sql = """
+            SELECT u.id_usuario,
+                   u.nombre,
+                   u.dni,
+                   t.id_tarifa,
+                   t.nombre,
+                   t.precio_mensual
+            FROM usuarios u
+            INNER JOIN clientes c ON u.id_usuario = c.id_cliente
+            INNER JOIN cliente_tarifa ct ON c.id_cliente = ct.id_cliente
+            INNER JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
+            WHERE u.dni = ?
+              AND ct.estado = 'activa'
+            LIMIT 1
+        """
+        datos = self.consultar(sql, (dni,))
+        return datos[0] if datos else None
+
+    def registrar_pago_contable(self, dni_cliente, id_contable, metodo_pago, fecha_pago):
+        """
+        Registra el pago de un cliente usando su DNI.
+        Si ya existe un pago pendiente, lo actualiza a abonado.
+        Si no existe pago pendiente, crea un pago nuevo.
+        """
+        cliente = self.buscar_cliente_tarifa_por_dni(dni_cliente)
+
+        if not cliente:
+            return False, "No se ha encontrado ningún cliente con ese DNI o no tiene tarifa activa."
+
+        id_cliente = cliente[0]
+        nombre_cliente = cliente[1]
+        id_tarifa = cliente[3]
+        nombre_tarifa = cliente[4]
+        importe = cliente[5]
+
+        # Buscar si ya existe un pago pendiente de ese cliente
+        sql_pendiente = """
+            SELECT id_pago
+            FROM pago
+            WHERE id_cliente = ?
+              AND estado = 'pendiente'
+            ORDER BY fecha_pago DESC
+            LIMIT 1
+        """
+        pendiente = self.consultar(sql_pendiente, (id_cliente,))
+
+        if pendiente:
+            id_pago = pendiente[0][0]
+
+            sql_update = """
+                UPDATE pago
+                SET estado = 'abonado',
+                    metodo_pago = ?,
+                    fecha_pago = ?,
+                    id_contable = ?
+                WHERE id_pago = ?
+            """
+            self.ejecutar(sql_update, (metodo_pago, fecha_pago, id_contable, id_pago))
+
+        else:
+            sql_insert = """
+                INSERT INTO pago
+                (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+                VALUES (?, ?, ?, ?, ?, ?, 'abonado', 'mensual')
+            """
+            self.ejecutar(sql_insert, (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago))
+
+        # Actualizar estado del cliente
+        sql_cliente = """
+            UPDATE clientes
+            SET estado_pagado = 'abonado'
+            WHERE id_cliente = ?
+        """
+        self.ejecutar(sql_cliente, (id_cliente,))
+
+        mensaje = f"Pago registrado correctamente para {nombre_cliente}.\nTarifa: {nombre_tarifa}\nImporte: {importe} €"
+        return True, mensaje

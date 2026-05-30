@@ -56,7 +56,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string/>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -152,7 +156,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string/>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/usuario.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -291,7 +299,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -307,7 +319,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/calendario.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -323,7 +339,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/grafico-de-barras.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -339,7 +359,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/usuario.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -355,7 +379,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/informacion.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -460,7 +488,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
        <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
+<<<<<<< Updated upstream
        <pixmap>src/vista/imagenes/peso.png</pixmap>
+=======
+       <pixmap>./src/vista/imagenes/peso.png</pixmap>
+>>>>>>> Stashed changes
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -479,7 +511,11 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
        <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
+<<<<<<< Updated upstream
        <string>Zumba</string>
+=======
+       <string>Body Pump</string>
+>>>>>>> Stashed changes
       </property>
      </widget>
      <widget class="QLabel" name="lblDesc1">
@@ -575,7 +611,11 @@ Sala 1</string>
        <string notr="true">background-color:#FF9F2E; border-radius:20px;</string>
       </property>
       <property name="pixmap">
+<<<<<<< Updated upstream
        <pixmap>src/vista/imagenes/yoga.png</pixmap>
+=======
+       <pixmap>./src/vista/imagenes/yoga.png</pixmap>
+>>>>>>> Stashed changes
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -690,7 +730,11 @@ Sala 2</string>
        <string notr="true">background-color:#8E6CFF; border-radius:20px;</string>
       </property>
       <property name="pixmap">
+<<<<<<< Updated upstream
        <pixmap>src/vista/imagenes/bicicleta.png</pixmap>
+=======
+       <pixmap>./src/vista/imagenes/bicicleta.png</pixmap>
+>>>>>>> Stashed changes
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -805,7 +849,11 @@ Sala 1</string>
        <string notr="true">background-color:#2F80ED; border-radius:20px;</string>
       </property>
       <property name="pixmap">
+<<<<<<< Updated upstream
        <pixmap>src/vista/imagenes/pilates.png</pixmap>
+=======
+       <pixmap>./src/vista/imagenes/pilates.png</pixmap>
+>>>>>>> Stashed changes
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1046,7 +1094,11 @@ Sala 1</string>
        <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
+<<<<<<< Updated upstream
        <pixmap>src/vista/imagenes/peso.png</pixmap>
+=======
+       <pixmap>./src/vista/imagenes/peso.png</pixmap>
+>>>>>>> Stashed changes
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1066,7 +1118,11 @@ Sala 1</string>
       <string/>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/reborde_ola.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1085,12 +1141,17 @@ Sala 1</string>
       <string/>
      </property>
      <property name="pixmap">
+<<<<<<< Updated upstream
       <pixmap>src/vista/imagenes/reborde_ola.png</pixmap>
+=======
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
+>>>>>>> Stashed changes
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
+<<<<<<< Updated upstream
     <widget class="QFrame" name="cardClase4_2">
      <property name="geometry">
       <rect>
@@ -1206,6 +1267,8 @@ Sala 3</string>
       </property>
      </widget>
     </widget>
+=======
+>>>>>>> Stashed changes
     <zorder>label_2</zorder>
     <zorder>label</zorder>
     <zorder>lblTituloClases</zorder>
@@ -1218,6 +1281,7 @@ Sala 3</string>
     <zorder>cardClase4</zorder>
     <zorder>cardFiltros</zorder>
     <zorder>cardProxima</zorder>
+<<<<<<< Updated upstream
     <zorder>cardClase4_2</zorder>
    </widget>
   </widget>
@@ -1225,3 +1289,12 @@ Sala 3</string>
  <resources/>
  <connections/>
 </ui>
+=======
+   </widget>
+  </widget>
+ </widget>
+ <resources></resources>
+ <connections/>
+</ui>
+
+>>>>>>> Stashed changes
