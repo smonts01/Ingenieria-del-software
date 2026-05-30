@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>StayFit - Mis reservas</string>
+   <string>StayFit - Clases</string>
   </property>
   <property name="styleSheet">
    <string notr="true">
@@ -21,16 +21,16 @@ QPushButton { font-family: &quot;Segoe UI&quot;; }
 QFrame#frameHeader { background-color: white; border-bottom: 1px solid #E5E7EB; }
 QFrame#frameMenu { background-color: white; border-right: 1px solid #E5E7EB; }
 QFrame#frameContenido { background-color: #F7F9FA; border: none; }
-QFrame#cardResumen, QFrame#cardConsejo, QFrame#cardSigue { background-color: white; border: 1px solid #E6E6E6; border-radius: 12px; }
+QFrame#cardFiltros, QFrame#cardHorario, QFrame#cardProxima, QFrame#cardInfo, QFrame#cardSigue { background-color: white; border: 1px solid #E6E6E6; border-radius: 12px; }
 QFrame[class=&quot;classCard&quot;] { background-color: white; border: 1px solid #E6E6E6; border-radius: 12px; }
-QFrame[class=&quot;badgeOk&quot;] { background-color: #DDF7F2; border-radius: 8px; border: none; }
-QFrame[class=&quot;infoBox&quot;] { background-color: #EEF6FB; border-radius: 8px; border: none; }
 QPushButton#btnClases { background-color: #18B7A5; color: white; border-radius: 8px; text-align: left; padding-left: 22px; font: bold 11pt &quot;Segoe UI&quot;; }
 QPushButton#btnInicio, QPushButton#btnInscripciones, QPushButton#btnPagos, QPushButton#btnEstadisticas, QPushButton#btnCalorias, QPushButton#btnPerfil, QPushButton#btnInformacion { background-color: transparent; color: #333333; border: none; text-align: left; padding-left: 22px; font: 11pt &quot;Segoe UI&quot;; }
 QPushButton#btnInicio:hover, QPushButton#btnInscripciones:hover, QPushButton#btnPagos:hover, QPushButton#btnEstadisticas:hover, QPushButton#btnCalorias:hover, QPushButton#btnPerfil:hover, QPushButton#btnInformacion:hover { background-color: #E6F7F5; border-radius: 8px; }
 QPushButton#btnCerrarSesion { background-color: white; color: #18B7A5; border: 1px solid #18B7A5; border-radius: 8px; font: bold 10pt &quot;Segoe UI&quot;; }
+QPushButton[class=&quot;btnReservar&quot;] { background-color: #18B7A5; color: white; border: none; border-radius: 8px; font: bold 9pt &quot;Segoe UI&quot;; }
 QPushButton[class=&quot;btnSecundario&quot;] { background-color: white; color: #18B7A5; border: 1px solid #18B7A5; border-radius: 8px; font: bold 9pt &quot;Segoe UI&quot;; }
-QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8px; padding-left: 10px; font: 9pt &quot;Segoe UI&quot;; color: #374151; }
+QLineEdit { background-color: white; border: 1px solid #D9DEE7; border-radius: 8px; padding-left: 12px; font: 9pt &quot;Segoe UI&quot;; color: #374151; }
+QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8px; padding-left: 10px; font: 9pt &quot;Segoe UI&quot;; color: #6B7280; }
    </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -91,28 +91,6 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string>Tu gimnasio, tu mejor versión</string>
      </property>
     </widget>
-    <widget class="QLabel" name="lblAvatarCliente">
-     <property name="geometry">
-      <rect>
-       <x>285</x>
-       <y>23</y>
-       <width>44</width>
-       <height>44</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color:#18B7A5; color:white; border-radius:22px;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QLabel" name="lblNombreCliente">
      <property name="geometry">
       <rect>
@@ -142,7 +120,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string notr="true">font:10pt &quot;Segoe UI&quot;; color:#6B7280;</string>
      </property>
      <property name="text">
-      <string>Cliente desde enero 2024</string>
+      <string>Cliente desde fecha</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnCerrarSesion">
@@ -156,6 +134,28 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
      </property>
      <property name="text">
       <string>Cerrar sesión</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblAvatarCliente">
+     <property name="geometry">
+      <rect>
+       <x>285</x>
+       <y>23</y>
+       <width>44</width>
+       <height>44</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #18B7A5; color: white; border-radius: 22px; font: 20pt &quot;Segoe UI Emoji&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -371,7 +371,708 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <height>610</height>
      </rect>
     </property>
-    <widget class="QLabel" name="fondoOla">
+    <widget class="QLabel" name="lblTituloClases">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>25</y>
+       <width>200</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string>
+     </property>
+     <property name="text">
+      <string>Clases</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblSubClases">
+     <property name="geometry">
+      <rect>
+       <x>32</x>
+       <y>60</y>
+       <width>470</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+     </property>
+     <property name="text">
+      <string>Descubre todas las clases disponibles y reserva tu plaza.</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblTabTodas">
+     <property name="geometry">
+      <rect>
+       <x>42</x>
+       <y>105</y>
+       <width>120</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#00A896; border-bottom:2px solid #00A896;</string>
+     </property>
+     <property name="text">
+      <string>Todas las clases</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblTabRes">
+     <property name="geometry">
+      <rect>
+       <x>185</x>
+       <y>105</y>
+       <width>100</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font:10pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+     </property>
+     <property name="text">
+      <string>Mis reservas</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="cardClase1">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>145</y>
+       <width>610</width>
+       <height>74</height>
+      </rect>
+     </property>
+     <property name="class" stdset="0">
+      <string>classCard</string>
+     </property>
+     <widget class="QLabel" name="icoClase1">
+      <property name="geometry">
+       <rect>
+        <x>18</x>
+        <y>18</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap>./src/vista/imagenes/peso.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClase1">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>12</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Body Pump</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblDesc1">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>35</y>
+        <width>165</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+      </property>
+      <property name="text">
+       <string>Entrenamiento con pesas
+al ritmo de la música.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblFecha1">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>15</y>
+        <width>130</width>
+        <height>46</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
+      </property>
+      <property name="text">
+       <string>26 may 2026
+18:00 - 19:00
+Sala 1</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblPlazas1">
+      <property name="geometry">
+       <rect>
+        <x>425</x>
+        <y>20</y>
+        <width>70</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 13pt &quot;Segoe UI&quot;; color:#00A896;</string>
+      </property>
+      <property name="text">
+       <string>8 / 15</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnReservar1">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>22</y>
+        <width>70</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reservar</string>
+      </property>
+      <property name="class" stdset="0">
+       <string>btnReservar</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="cardClase2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>230</y>
+       <width>610</width>
+       <height>74</height>
+      </rect>
+     </property>
+     <property name="class" stdset="0">
+      <string>classCard</string>
+     </property>
+     <widget class="QLabel" name="icoClase2">
+      <property name="geometry">
+       <rect>
+        <x>18</x>
+        <y>18</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#FF9F2E; border-radius:20px;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap>./src/vista/imagenes/yoga.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClase2">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>12</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Yoga</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblDesc2">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>35</y>
+        <width>165</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+      </property>
+      <property name="text">
+       <string>Mejora tu flexibilidad
+y reduce el estrés.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblFecha2">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>15</y>
+        <width>130</width>
+        <height>46</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
+      </property>
+      <property name="text">
+       <string>27 may 2026
+19:30 - 20:30
+Sala 2</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblPlazas2">
+      <property name="geometry">
+       <rect>
+        <x>425</x>
+        <y>20</y>
+        <width>70</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 13pt &quot;Segoe UI&quot;; color:#00A896;</string>
+      </property>
+      <property name="text">
+       <string>10 / 20</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnReservar2">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>22</y>
+        <width>70</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reservar</string>
+      </property>
+      <property name="class" stdset="0">
+       <string>btnReservar</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="cardClase3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>315</y>
+       <width>610</width>
+       <height>74</height>
+      </rect>
+     </property>
+     <property name="class" stdset="0">
+      <string>classCard</string>
+     </property>
+     <widget class="QLabel" name="icoClase3">
+      <property name="geometry">
+       <rect>
+        <x>18</x>
+        <y>18</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#8E6CFF; border-radius:20px;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap>./src/vista/imagenes/bicicleta.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClase3">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>12</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Spinning</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblDesc3">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>35</y>
+        <width>165</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+      </property>
+      <property name="text">
+       <string>Quema calorías con una
+sesión de alta intensidad.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblFecha3">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>15</y>
+        <width>130</width>
+        <height>46</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
+      </property>
+      <property name="text">
+       <string>28 may 2026
+17:00 - 18:00
+Sala 1</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblPlazas3">
+      <property name="geometry">
+       <rect>
+        <x>425</x>
+        <y>20</y>
+        <width>70</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 13pt &quot;Segoe UI&quot;; color:#00A896;</string>
+      </property>
+      <property name="text">
+       <string>5 / 15</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnReservar3">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>22</y>
+        <width>70</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reservar</string>
+      </property>
+      <property name="class" stdset="0">
+       <string>btnReservar</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="cardClase4">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>400</y>
+       <width>610</width>
+       <height>74</height>
+      </rect>
+     </property>
+     <property name="class" stdset="0">
+      <string>classCard</string>
+     </property>
+     <widget class="QLabel" name="icoClase4">
+      <property name="geometry">
+       <rect>
+        <x>18</x>
+        <y>18</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#2F80ED; border-radius:20px;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap>./src/vista/imagenes/pilates.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblClase4">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>12</y>
+        <width>150</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Pilates</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblDesc4">
+      <property name="geometry">
+       <rect>
+        <x>78</x>
+        <y>35</y>
+        <width>165</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+      </property>
+      <property name="text">
+       <string>Fortalece tu cuerpo y
+mejora tu postura.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblFecha4">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>15</y>
+        <width>130</width>
+        <height>46</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
+      </property>
+      <property name="text">
+       <string>30 may 2026
+10:00 - 11:00
+Sala 3</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblPlazas4">
+      <property name="geometry">
+       <rect>
+        <x>425</x>
+        <y>20</y>
+        <width>70</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 13pt &quot;Segoe UI&quot;; color:#00A896;</string>
+      </property>
+      <property name="text">
+       <string>9 / 15</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnReservar4">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>22</y>
+        <width>70</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reservar</string>
+      </property>
+      <property name="class" stdset="0">
+       <string>btnReservar</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="cardFiltros">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>30</y>
+       <width>285</width>
+       <height>190</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="lblFiltros">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>15</y>
+        <width>160</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 12pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Filtros</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblTipo">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>55</y>
+        <width>120</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Tipo de clase</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmbTipo">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>78</y>
+        <width>220</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Todas las categorías</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="lblHorario">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>118</y>
+        <width>120</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Horario</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmbHorario">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>220</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Todos los horarios</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLineEdit" name="txtBuscarClases">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>10</y>
+        <width>180</width>
+        <height>35</height>
+       </rect>
+      </property>
+      <property name="placeholderText">
+       <string>Buscar clases...</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="cardProxima">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>230</y>
+       <width>285</width>
+       <height>110</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="lblProxima">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>15</y>
+        <width>160</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Próxima clase</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblProxDatos">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>45</y>
+        <width>181</width>
+        <height>42</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#4B5563;</string>
+      </property>
+      <property name="text">
+       <string>Body Pump
+26 may 2026 · 18:00 - 19:00
+Sala 1</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="icoProxima">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>40</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap>./src/vista/imagenes/peso.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>-2</x>
+       <y>-5</y>
+       <width>990</width>
+       <height>620</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -390,611 +1091,18 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="lblTituloReservas">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>35</y>
-       <width>250</width>
-       <height>34</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-     </property>
-     <property name="text">
-      <string>Mis reservas</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblSubReservas">
-     <property name="geometry">
-      <rect>
-       <x>47</x>
-       <y>72</y>
-       <width>470</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:9pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-     </property>
-     <property name="text">
-      <string>Aquí tienes todas tus reservas pendientes.</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblTabTodas">
-     <property name="geometry">
-      <rect>
-       <x>58</x>
-       <y>112</y>
-       <width>120</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:10pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-     </property>
-     <property name="text">
-      <string>Todas las clases</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lblTabRes">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>112</y>
-       <width>110</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:bold 10pt &quot;Segoe UI&quot;; color:#00A896; border-bottom:2px solid #00A896;</string>
-     </property>
-     <property name="text">
-      <string>Mis reservas</string>
-     </property>
-    </widget>
-    <widget class="QFrame" name="cardReserva1">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>155</y>
-       <width>811</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="class" stdset="0">
-      <string>classCard</string>
-     </property>
-     <widget class="QLabel" name="icoReserva1">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>18</y>
-        <width>44</width>
-        <height>44</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#18B7A5; border-radius:22px;</string>
-      </property>
-      <property name="pixmap">
-       <pixmap>./src/vista/imagenes/peso.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaClase1">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>12</y>
-        <width>150</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Body Pump</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaDesc1">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>35</y>
-        <width>165</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Entrenamiento con pesas
-al ritmo de la música.</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaFecha1">
-      <property name="geometry">
-       <rect>
-        <x>340</x>
-        <y>10</y>
-        <width>135</width>
-        <height>58</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string> 26 may 2026
- 18:00 - 19:00
-  Sala 1</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="badgeReserva1">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>10</y>
-        <width>121</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="class" stdset="0">
-       <string>badgeOk</string>
-      </property>
-      <widget class="QLabel" name="lblBadge1">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>3</y>
-         <width>121</width>
-         <height>18</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:bold 8pt &quot;Segoe UI&quot;; color:#00A896;</string>
-       </property>
-       <property name="text">
-        <string>Reserva confirmada</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QLabel" name="lblPlazasReserva1">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>50</y>
-        <width>95</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 9pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Plazas: 8 / 15</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardReserva2">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>243</y>
-       <width>811</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="class" stdset="0">
-      <string>classCard</string>
-     </property>
-     <widget class="QLabel" name="icoReserva2">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>18</y>
-        <width>44</width>
-        <height>44</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#FF9F2E; border-radius:22px;</string>
-      </property>
-      <property name="pixmap">
-       <pixmap>./src/vista/imagenes/yoga.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaClase2">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>12</y>
-        <width>150</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Yoga</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaDesc2">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>35</y>
-        <width>165</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Mejora tu flexibilidad
-y reduce el estrés.</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaFecha2">
-      <property name="geometry">
-       <rect>
-        <x>340</x>
-        <y>10</y>
-        <width>135</width>
-        <height>58</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>  27 may 2026
-  19:30 - 20:30
-   Sala 2</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblPlazasReserva2">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>50</y>
-        <width>95</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 9pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Plazas: 10 / 20</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="badgeReserva1_2">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>10</y>
-        <width>121</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="class" stdset="0">
-       <string>badgeOk</string>
-      </property>
-      <widget class="QLabel" name="lblBadge1_2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>3</y>
-         <width>121</width>
-         <height>18</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:bold 8pt &quot;Segoe UI&quot;; color:#00A896;</string>
-       </property>
-       <property name="text">
-        <string>Reserva confirmada</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardReserva3">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>331</y>
-       <width>811</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="class" stdset="0">
-      <string>classCard</string>
-     </property>
-     <widget class="QLabel" name="icoReserva3">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>18</y>
-        <width>44</width>
-        <height>44</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#8E6CFF; border-radius:22px;</string>
-      </property>
-      <property name="pixmap">
-       <pixmap>./src/vista/imagenes/bicicleta.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaClase3">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>12</y>
-        <width>150</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Spinning</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaDesc3">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>35</y>
-        <width>165</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Quema calorías con una
-sesión de alta intensidad.</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaFecha3">
-      <property name="geometry">
-       <rect>
-        <x>340</x>
-        <y>10</y>
-        <width>135</width>
-        <height>58</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>  28 may 2026
- 17:00 - 18:00
-  Sala 1</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblPlazasReserva3">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>50</y>
-        <width>95</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 9pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Plazas: 5 / 15</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="badgeReserva1_3">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>10</y>
-        <width>121</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="class" stdset="0">
-       <string>badgeOk</string>
-      </property>
-      <widget class="QLabel" name="lblBadge1_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>3</y>
-         <width>121</width>
-         <height>18</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:bold 8pt &quot;Segoe UI&quot;; color:#00A896;</string>
-       </property>
-       <property name="text">
-        <string>Reserva confirmada</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="cardReserva4">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>419</y>
-       <width>811</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="class" stdset="0">
-      <string>classCard</string>
-     </property>
-     <widget class="QLabel" name="icoReserva4">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>18</y>
-        <width>44</width>
-        <height>44</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#2F80ED; border-radius:22px;</string>
-      </property>
-      <property name="pixmap">
-       <pixmap>./src/vista/imagenes/pilates.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaClase4">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>12</y>
-        <width>150</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 11pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Pilates</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaDesc4">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>35</y>
-        <width>165</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Fortalece tu cuerpo y
-mejora tu postura.</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblReservaFecha4">
-      <property name="geometry">
-       <rect>
-        <x>340</x>
-        <y>0</y>
-        <width>135</width>
-        <height>58</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string> 30 may 2026
- 10:00 - 11:00
-  Sala 3</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblPlazasReserva4">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>50</y>
-        <width>95</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 9pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>Plazas: 9 / 15</string>
-      </property>
-     </widget>
-     <widget class="QFrame" name="badgeReserva1_4">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>10</y>
-        <width>121</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <property name="class" stdset="0">
-       <string>badgeOk</string>
-      </property>
-      <widget class="QLabel" name="lblBadge1_4">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>3</y>
-         <width>121</width>
-         <height>18</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:bold 8pt &quot;Segoe UI&quot;; color:#00A896;</string>
-       </property>
-       <property name="text">
-        <string>Reserva confirmada</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
-    <widget class="QFrame" name="infoReservas">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>515</y>
-       <width>361</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="class" stdset="0">
-      <string>infoBox</string>
-     </property>
-     <widget class="QLabel" name="lblInfoReservas">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>6</y>
-        <width>361</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>ⓘ  Solo se muestran las reservas futuras que aún no has asistido.</string>
-      </property>
-     </widget>
-    </widget>
+    <zorder>label_2</zorder>
+    <zorder>label</zorder>
+    <zorder>lblTituloClases</zorder>
+    <zorder>lblSubClases</zorder>
+    <zorder>lblTabTodas</zorder>
+    <zorder>lblTabRes</zorder>
+    <zorder>cardClase1</zorder>
+    <zorder>cardClase2</zorder>
+    <zorder>cardClase3</zorder>
+    <zorder>cardClase4</zorder>
+    <zorder>cardFiltros</zorder>
+    <zorder>cardProxima</zorder>
    </widget>
   </widget>
  </widget>
