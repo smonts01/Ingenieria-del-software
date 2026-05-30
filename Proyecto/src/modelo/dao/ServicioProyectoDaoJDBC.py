@@ -1050,7 +1050,7 @@ class ServicioProyectoDaoJDBC:
         """
         return self.ejecutar(sql_insert, (id_cliente, id_clase, fecha, presente))
 
-     def recepcion_total_clientes(self):
+    def recepcion_total_clientes(self):
         datos = self.consultar("""
             SELECT COUNT(*)
             FROM clientes
