@@ -47,7 +47,18 @@ class ControladorAdministrador:
             v.btnActualizar.clicked.connect(self.cargar_datos)
         if hasattr(v, "btnNuevoTrabajador"):
             v.btnNuevoTrabajador.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_usuarios_nuevo_usuario.ui"))
-
+        if hasattr(v, "txtBuscarClientePendiente"):
+            v.txtBuscarClientePendiente.textChanged.connect(self.filtrar_pagos_pendientes)
+        if hasattr(v, "txtBuscarDNI"):
+            v.txtBuscarDNI.textChanged.connect(self.filtrar_pagos_pendientes)
+        if hasattr(v, "tableWidget") or hasattr(v, "tablaPagoAdmin"):
+            try:
+                datos = self.modelo.listar_pagos_pendientes_admin()
+                tabla = v.tablaPagoAdmin if hasattr(v, "tablaPagoAdmin") else v.tableWidget
+                self._rellenar_tabla_pagos_admin(tabla, datos)
+                self._actualizar_resumen_pagos_admin()
+            except Exception as e:
+                print(f"Error pagos admin: {e}")
         if hasattr(v, "btnRegistrarUsuario"):
             v.btnRegistrarUsuario.clicked.connect(self.registrar_usuario)
         
@@ -101,6 +112,12 @@ class ControladorAdministrador:
             v.btnModificarClase.clicked.connect(self.modificar_clase)
         if hasattr(v, "btnEliminarClase"):
             v.btnEliminarClase.clicked.connect(self.eliminar_clase)
+
+        if hasattr(v, "lblNumR1") and hasattr(v, "tablaRanking"):
+            try:
+                self.cargar_estadisticas_admin()
+            except Exception as e:
+                print(f"Error estadísticas admin: {e}")
 
     def cargar_datos(self):
         v = self.ventana
@@ -208,9 +225,6 @@ class ControladorAdministrador:
             except Exception as e:
                 print(f"Error tablaClases: {e}")
 
-        if hasattr(v, "tableWidget"):
-            try: self._rellenar(v.tableWidget, self.modelo.listar_pagos())
-            except: pass
 
         if hasattr(v, "tablaRanking"):
             try: self._rellenar(v.tablaRanking, self.modelo.ranking_clientes_activos())
@@ -772,3 +786,168 @@ class ControladorAdministrador:
         # Texto inferior de la tabla
         if hasattr(v, "lblMostrando"):
             v.lblMostrando.setText(f"Mostrando {total} clases")
+
+    def _rellenar_tabla_pagos_admin(self, tabla, datos):
+        cabeceras = ["Cliente", "DNI", "Tarifa", "Importe pendiente", "Fecha límite", "Estado"]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=False
+                )
+                tabla.setItem(fila, col, item)
+
+
+    def _actualizar_resumen_pagos_admin(self):
+        v = self.ventana
+
+        try:
+            ingresos_mes = float(self.modelo.ingresos_mes_actual())
+        except:
+            ingresos_mes = 0
+
+        try:
+            ingresos_anio = float(self.modelo.ingresos_anio_actual())
+        except:
+            ingresos_anio = 0
+
+        try:
+            clientes_pendientes = int(self.modelo.numero_clientes_pendientes_pago())
+        except:
+            clientes_pendientes = 0
+
+        try:
+            importe_pendiente = float(self.modelo.importe_pendiente_cobrar())
+        except:
+            importe_pendiente = 0
+
+        if hasattr(v, "label_4"):
+            v.label_4.setText(f"{ingresos_mes:.2f}€")
+
+        if hasattr(v, "label_8"):
+            v.label_8.setText(f"{ingresos_anio:.2f}€")
+
+        if hasattr(v, "label_13"):
+            v.label_13.setText(str(clientes_pendientes))
+
+        if hasattr(v, "label_5"):
+            v.label_5.setText(f"{importe_pendiente:.2f}€")
+
+
+    def filtrar_pagos_pendientes(self):
+            v = self.ventana
+
+            if hasattr(v, "txtBuscarDNI"):
+                texto = v.txtBuscarDNI.text().strip()
+            elif hasattr(v, "txtBuscarClientePendiente"):
+                texto = v.txtBuscarClientePendiente.text().strip()
+            else:
+                texto = ""
+
+            try:
+                if texto:
+                    datos = self.modelo.buscar_pago_pendiente_por_dni(texto)
+                else:
+                    datos = self.modelo.listar_pagos_pendientes_admin()
+
+                if hasattr(v, "tablaPagoAdmin"):
+                    tabla = v.tablaPagoAdmin
+                elif hasattr(v, "tableWidget"):
+                    tabla = v.tableWidget
+                else:
+                    return
+
+                self._rellenar_tabla_pagos_admin(tabla, datos)
+                self._actualizar_resumen_pagos_admin()
+
+            except Exception as e:
+                print(f"Error filtrar_pagos_pendientes: {e}")
+
+    def cargar_estadisticas_admin(self):
+        v = self.ventana
+
+        stats = self.modelo.estadisticas_admin()
+
+        if hasattr(v, "lblNumR1"):
+            v.lblNumR1.setText(str(stats["clientes_activos"]))
+
+        if hasattr(v, "lblNumR2"):
+            v.lblNumR2.setText(str(stats["reservas"]))
+
+        if hasattr(v, "lblNumR3"):
+            v.lblNumR3.setText(f'{stats["ocupacion"]}%')
+
+        if hasattr(v, "lblNumR4"):
+            v.lblNumR4.setText(str(stats["asistencias"]))
+
+        if hasattr(v, "lblNumClasesActivas"):
+            v.lblNumClasesActivas.setText(str(stats["clases_activas"]))
+
+        if hasattr(v, "lblNumEntrenadores"):
+            v.lblNumEntrenadores.setText(str(stats["entrenadores"]))
+
+        if hasattr(v, "lblNumSalas"):
+            v.lblNumSalas.setText(str(stats["salas"]))
+
+        if hasattr(v, "tablaRanking"):
+            datos_ranking = self.modelo.ranking_usuarios_activos_estadisticas()
+            self._rellenar_tabla_ranking_estadisticas(v.tablaRanking, datos_ranking)
+
+        datos_ocupacion = self.modelo.ocupacion_por_clase_estadisticas()
+        self._actualizar_ocupacion_por_clase(datos_ocupacion)
+
+
+    def _rellenar_tabla_ranking_estadisticas(self, tabla, datos):
+        cabeceras = ["#", "Cliente", "Asistencias", "Última clase", "Estado"]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            numero = fila + 1
+            nombre = registro[0]
+            asistencias = registro[1]
+            ultima_clase = registro[2]
+            estado = registro[3]
+
+            valores = [numero, nombre, asistencias, ultima_clase, estado]
+
+            for col, valor in enumerate(valores):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=False
+                )
+                tabla.setItem(fila, col, item)
+
+
+    def _actualizar_ocupacion_por_clase(self, datos):
+        v = self.ventana
+
+        for i in range(4):
+            label_nombre = f"lblOcc{i}"
+            barra_nombre = f"progOcc{i}"
+
+            if i < len(datos):
+                nombre_clase = str(datos[i][0])
+                porcentaje = int(datos[i][1]) if datos[i][1] is not None else 0
+            else:
+                nombre_clase = "-"
+                porcentaje = 0
+
+            if hasattr(v, label_nombre):
+                getattr(v, label_nombre).setText(nombre_clase)
+
+            if hasattr(v, barra_nombre):
+                barra = getattr(v, barra_nombre)
+                barra.setValue(porcentaje)
+                barra.setFormat(f"{porcentaje}%")

@@ -16,3 +16,14 @@ class Logica:
     def __getattr__(self, nombre):
         """Delegación controlada para mantener la API usada por los controladores."""
         return getattr(self._dao, nombre)
+
+    def estadisticas_admin(self):
+        return self.servicio.estadisticas_admin()
+
+
+    def ranking_usuarios_activos_estadisticas(self):
+        return self.servicio.ranking_usuarios_activos_estadisticas()
+
+
+    def ocupacion_por_clase_estadisticas(self):
+        return self.servicio.ocupacion_por_clase_estadisticas()

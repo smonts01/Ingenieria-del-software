@@ -745,3 +745,165 @@ class ServicioProyectoDaoJDBC:
             vo.direccion, vo.fecha_registro, vo.fecha_nacimiento,
         )
         return self._usuario_dao.update(vo_nuevo)
+
+    def ingresos_mes_actual(self):
+        datos = self.consultar("""
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE estado = 'abonado'
+            AND YEAR(fecha_pago) = YEAR(CURDATE())
+            AND MONTH(fecha_pago) = MONTH(CURDATE())
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def ingresos_anio_actual(self):
+        datos = self.consultar("""
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE estado = 'abonado'
+            AND YEAR(fecha_pago) = YEAR(CURDATE())
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def numero_clientes_pendientes_pago(self):
+        datos = self.consultar("""
+            SELECT COUNT(DISTINCT p.id_cliente)
+            FROM pago p
+            WHERE p.estado = 'pendiente'
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def importe_pendiente_cobrar(self):
+        datos = self.consultar("""
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE estado = 'pendiente'
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def listar_pagos_pendientes_admin(self):
+        return self.consultar("""
+            SELECT 
+                u.nombre,
+                u.dni,
+                t.nombre,
+                p.importe,
+                p.fecha_pago,
+                p.estado
+            FROM pago p
+            JOIN usuarios u ON p.id_cliente = u.id_usuario
+            JOIN tarifa t ON p.id_tarifa = t.id_tarifa
+            WHERE p.estado = 'pendiente'
+            ORDER BY p.fecha_pago DESC
+        """)
+
+
+    def buscar_pago_pendiente_por_dni(self, dni):
+        d = dni.lower().strip()
+
+        return self.consultar(f"""
+            SELECT 
+                u.nombre,
+                u.dni,
+                t.nombre,
+                p.importe,
+                p.fecha_pago,
+                p.estado
+            FROM pago p
+            JOIN usuarios u ON p.id_cliente = u.id_usuario
+            JOIN tarifa t ON p.id_tarifa = t.id_tarifa
+            WHERE p.estado = 'pendiente'
+            AND LOWER(u.dni) LIKE '%{d}%'
+            ORDER BY p.fecha_pago DESC
+        """)
+
+    def estadisticas_admin(self):
+        clientes_activos = self.consultar("""
+            SELECT COUNT(*)
+            FROM usuarios u
+            JOIN cliente c ON u.id_usuario = c.id_cliente
+        """)
+
+        reservas = self.consultar("""
+            SELECT COUNT(*)
+            FROM inscripcion
+            WHERE estado = 'inscrito'
+        """)
+
+        asistencias = self.consultar("""
+            SELECT COUNT(*)
+            FROM registro_acceso
+        """)
+
+        clases_activas = self.consultar("""
+            SELECT COUNT(*)
+            FROM clase
+        """)
+
+        entrenadores = self.consultar("""
+            SELECT COUNT(*)
+            FROM entrenador
+        """)
+
+        salas = self.consultar("""
+            SELECT COUNT(DISTINCT id_sala)
+            FROM clase
+        """)
+
+        ocupacion = self.consultar("""
+            SELECT COALESCE(ROUND(
+                (COUNT(i.id_inscripcion) / NULLIF(SUM(c.aforo_maximo), 0)) * 100
+            ), 0)
+            FROM clase c
+            LEFT JOIN inscripcion i 
+                ON c.id_clase = i.id_clase 
+            AND i.estado = 'inscrito'
+        """)
+
+        return {
+            "clientes_activos": clientes_activos[0][0] if clientes_activos else 0,
+            "reservas": reservas[0][0] if reservas else 0,
+            "asistencias": asistencias[0][0] if asistencias else 0,
+            "clases_activas": clases_activas[0][0] if clases_activas else 0,
+            "entrenadores": entrenadores[0][0] if entrenadores else 0,
+            "salas": salas[0][0] if salas else 0,
+            "ocupacion": ocupacion[0][0] if ocupacion else 0
+        }
+
+
+    def ranking_usuarios_activos_estadisticas(self):
+        return self.consultar("""
+            SELECT 
+                u.nombre,
+                COUNT(r.id_registro) AS asistencias,
+                COALESCE(MAX(c.nombre_actividad), '-') AS ultima_clase,
+                'Activo' AS estado
+            FROM usuarios u
+            JOIN cliente cli ON u.id_usuario = cli.id_cliente
+            LEFT JOIN registro_acceso r ON u.id_usuario = r.id_cliente
+            LEFT JOIN clase c ON r.id_clase = c.id_clase
+            GROUP BY u.id_usuario, u.nombre
+            ORDER BY asistencias DESC, u.nombre ASC
+            LIMIT 8
+        """)
+
+
+    def ocupacion_por_clase_estadisticas(self):
+        return self.consultar("""
+            SELECT 
+                c.nombre_actividad,
+                COALESCE(ROUND(
+                    (COUNT(i.id_inscripcion) / NULLIF(c.aforo_maximo, 0)) * 100
+                ), 0) AS ocupacion
+            FROM clase c
+            LEFT JOIN inscripcion i 
+                ON c.id_clase = i.id_clase 
+            AND i.estado = 'inscrito'
+            GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo
+            ORDER BY ocupacion DESC
+            LIMIT 4
+        """)

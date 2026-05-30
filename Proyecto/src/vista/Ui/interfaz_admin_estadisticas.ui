@@ -466,70 +466,6 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       <string>Consulta métricas de actividad, ocupación y rendimiento del gimnasio.</string>
      </property>
     </widget>
-    <widget class="QFrame" name="cardFiltros">
-     <property name="geometry">
-      <rect>
-       <x>680</x>
-       <y>25</y>
-       <width>265</width>
-       <height>72</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblPeriodo">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>12</y>
-        <width>100</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 9pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Periodo</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="cmbPeriodo">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>34</y>
-        <width>120</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>Este mes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Esta semana</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Este año</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QPushButton" name="btnActualizar">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>34</y>
-        <width>95</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Actualizar</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="cardResumen1">
      <property name="geometry">
       <rect>
@@ -569,22 +505,6 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       </property>
       <property name="text">
        <string>248</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSubR1">
-      <property name="geometry">
-       <rect>
-        <x>18</x>
-        <y>75</y>
-        <width>130</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>+12 este mes</string>
       </property>
      </widget>
     </widget>
@@ -823,22 +743,6 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
       </property>
       <property name="text">
        <string>Ranking de usuarios más activos</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblRankingInfo">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>15</y>
-        <width>280</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &amp;quot;Segoe UI&amp;quot;; color:#6B7280;</string>
-      </property>
-      <property name="text">
-       <string>Tabla completa con scroll vertical.</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="tablaRanking">
@@ -1674,7 +1578,6 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
     <zorder>fondoOla</zorder>
     <zorder>lblTitulo</zorder>
     <zorder>lblSubtitulo</zorder>
-    <zorder>cardFiltros</zorder>
     <zorder>cardResumen1</zorder>
     <zorder>cardResumen2</zorder>
     <zorder>cardResumen3</zorder>
