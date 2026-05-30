@@ -31,6 +31,8 @@ from src.modelo.VO.Registro_accesoVO import RegistroAccesoVO
 from src.modelo.VO.TarifaVO         import TarifaVO
 from src.modelo.VO.InformeVO        import InformeVO
 from src.modelo.conexion.Conexion   import Conexion
+from src.modelo.dao.MenorDaoJDBC import MenorDaoJDBC
+from src.modelo.VO.MenorVO import MenorVO
 
 
 class ServicioProyectoDaoJDBC:
@@ -45,6 +47,7 @@ class ServicioProyectoDaoJDBC:
         # DAOs — se instancian una sola vez y reutilizan la misma conexión
         self._usuario_dao     = UsuarioDaoJDBC()
         self._cliente_dao     = ClienteDaoJDBC()
+        self._menor_dao = MenorDaoJDBC()
         self._empleado_dao    = EmpleadoDaoJDBC()
         self._admin_dao       = AdministradorDaoJDBC()
         self._entrenador_dao  = EntrenadorDaoJDBC()
@@ -1126,8 +1129,6 @@ class ServicioProyectoDaoJDBC:
             VALUES (?, ?, ?, ?)
         """
         return self.ejecutar(sql_insert, (id_cliente, id_clase, fecha, presente))
-<<<<<<< Updated upstream
-=======
 
     
     #CONTABLE
@@ -1334,7 +1335,6 @@ class ServicioProyectoDaoJDBC:
         mensaje = f"Pago registrado correctamente para {nombre_cliente}.\nTarifa: {nombre_tarifa}\nImporte: {importe} €"
         return True, mensaje
 
->>>>>>> Stashed changes
 
     def recepcion_total_clientes(self):
         datos = self.consultar("""
@@ -1408,7 +1408,44 @@ class ServicioProyectoDaoJDBC:
             ORDER BY u.fecha_registro DESC
             LIMIT 8
         """)
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
+    def crear_cliente_desde_recepcion(
+        self,
+        dni,
+        nombre,
+        telefono,
+        email,
+        username,
+        password,
+        direccion,
+        fecha_nacimiento,
+        es_menor=False,
+        dni_tutor="",
+        nombre_tutor=""
+    ):
+        usuario_existente = self._usuario_dao.selectByUsername(username)
+        if usuario_existente is not None:
+            raise ValueError("Ya existe un usuario con ese nombre de usuario")
+
+        id_cliente = self.crear_usuario_completo(
+            dni=dni,
+            nombre=nombre,
+            telefono=telefono,
+            email=email,
+            username=username,
+            password=password,
+            id_rol=1,
+            direccion=direccion,
+            fecha_nacimiento=fecha_nacimiento,
+            id_admin_registra=None
+        )
+
+        if es_menor:
+            menor_vo = MenorVO(
+                id_cliente=id_cliente,
+                dni_tutor=dni_tutor,
+                nombre_tutor=nombre_tutor
+            )
+            self._menor_dao.insert(menor_vo)
+
+        return id_cliente

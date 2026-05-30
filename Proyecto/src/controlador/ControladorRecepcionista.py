@@ -45,16 +45,14 @@ class ControladorRecepcionista:
             v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_perfil.ui"))
 
         # Control de acceso
-        if hasattr(v, "btnInicio_2"):
-            v.btnInicio_2.clicked.connect(lambda: self.registrar_acceso("entrada"))
+        #if hasattr(v, "btnInicio_2"):
+            #v.btnInicio_2.clicked.connect(lambda: self.registrar_acceso("entrada"))
 
         if hasattr(v, "btnInicio_3"):
             v.btnInicio_3.clicked.connect(lambda: self.registrar_acceso("salida"))
 
-        # Registrar cliente
-        if hasattr(v, "btnRegistrar") or hasattr(v, "btnConfirmar"):
-            btn = getattr(v, "btnRegistrar", None) or getattr(v, "btnConfirmar", None)
-            btn.clicked.connect(self.registrar_cliente)
+        if hasattr(v, "btnInicio_20"):
+            v.btnInicio_2.clicked.connect(self.registrar_cliente)
 
         # Actualizar cliente
         if hasattr(v, "btnActualizar"):
@@ -104,44 +102,89 @@ class ControladorRecepcionista:
 
     def registrar_cliente(self):
         v = self.ventana
+
         try:
-            campos = {}
-            for nombre in ("lineEdit", "lineEdit_2", "lineEdit_3", "lineEdit_4",
-                           "lineEdit_5", "lineEdit_6", "lineEdit_7", "lineEdit_8"):
-                if hasattr(v, nombre):
-                    campos[nombre] = getattr(v, nombre).text().strip()
+            dni = v.DNI.text().strip() if hasattr(v, "DNI") else ""
+            nombre = v.NombreCompleto.text().strip() if hasattr(v, "NombreCompleto") else ""
+            telefono = v.Telefono.text().strip() if hasattr(v, "Telefono") else ""
+            direccion = v.Direccion.text().strip() if hasattr(v, "Direccion") else ""
+            email = v.Email.text().strip() if hasattr(v, "Email") else ""
+            fecha = v.Nacimiento.text().strip() if hasattr(v, "Nacimiento") else ""
 
-            # Try named fields first
-            dni      = getattr(v, "txtDni",      None)
-            nombre   = getattr(v, "txtNombre",    None)
-            telefono = getattr(v, "txtTelefono",  None)
-            email    = getattr(v, "txtEmail",     None)
-            direccion= getattr(v, "txtDireccion", None)
-            fecha    = getattr(v, "txtFecha",     None)
-            username = getattr(v, "txtUsuario",   None)
-            password = getattr(v, "txtPassword",  None)
+            username = v.Usuario.text().strip() if hasattr(v, "Usuario") else ""
+            password = v.Contrasea.text().strip() if hasattr(v, "Contrasea") else ""
+            confirmar = v.ConfirmarContrasea.text().strip() if hasattr(v, "ConfirmarContrasea") else ""
 
-            vals = [x.text().strip() if x else "" for x in
-                    [dni, nombre, telefono, email, direccion, fecha, username, password]]
+            es_adulto = v.ButtomAdulto.isChecked() if hasattr(v, "ButtomAdulto") else False
+            es_menor = v.ButtomMenor.isChecked() if hasattr(v, "ButtomMenor") else False
 
-            if not all(vals):
-                # fallback to lineEdits
-                vals_list = list(campos.values())
-                while len(vals_list) < 8:
-                    vals_list.append("")
-                vals = vals_list
+            dni_tutor = v.DNITutor.text().strip() if hasattr(v, "DNITutor") else ""
+            nombre_tutor = v.NombreTutor.text().strip() if hasattr(v, "NombreTutor") else ""
 
-            if not vals[0] or not vals[6] or not vals[7]:
-                MensajeView.warning(v, "Error", "DNI, usuario y contraseña son obligatorios")
+            if not all([dni, nombre, telefono, direccion, email, fecha, username, password, confirmar]):
+                MensajeView.warning(v, "Error", "Completa todos los datos obligatorios")
                 return
 
-            self.modelo.registrar_usuario(
-                vals[0], vals[1], vals[2], vals[3],
-                vals[6], vals[7], 1, vals[4], vals[5]
+            if password != confirmar:
+                MensajeView.warning(v, "Error", "Las contraseñas no coinciden")
+                return
+
+            if len(password) < 4:
+                MensajeView.warning(v, "Error", "La contraseña debe tener al menos 4 caracteres")
+                return
+
+            if not es_adulto and not es_menor:
+                MensajeView.warning(v, "Error", "Selecciona si el cliente es adulto o menor")
+                return
+
+            if es_menor and not all([dni_tutor, nombre_tutor]):
+                MensajeView.warning(v, "Error", "Para registrar un menor debes indicar DNI tutor y nombre tutor")
+                return
+
+            from datetime import datetime
+
+            try:
+                fecha_bd = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
+            except ValueError:
+                try:
+                    fecha_bd = datetime.strptime(fecha, "%Y-%m-%d").strftime("%Y-%m-%d")
+                except ValueError:
+                    MensajeView.warning(v, "Error", "Formato de fecha incorrecto. Usa DD/MM/YYYY")
+                    return
+
+            id_cliente = self.modelo.crear_cliente_desde_recepcion(
+                dni=dni,
+                nombre=nombre,
+                telefono=telefono,
+                email=email,
+                username=username,
+                password=password,
+                direccion=direccion,
+                fecha_nacimiento=fecha_bd,
+                es_menor=es_menor,
+                dni_tutor=dni_tutor,
+                nombre_tutor=nombre_tutor
             )
-            MensajeView.information(v, "Correcto", "Cliente registrado correctamente")
+
+            MensajeView.information(v, "Correcto", f"Cliente registrado correctamente con ID {id_cliente}")
+
+            for campo in [
+                "DNI", "NombreCompleto", "Telefono", "Direccion", "Email", "Nacimiento",
+                "Usuario", "Contrasea", "ConfirmarContrasea", "DNITutor", "NombreTutor"
+            ]:
+                if hasattr(v, campo):
+                    getattr(v, campo).clear()
+
+            if hasattr(v, "ButtomAdulto"):
+                v.ButtomAdulto.setChecked(False)
+
+            if hasattr(v, "ButtomMenor"):
+                v.ButtomMenor.setChecked(False)
+
+            self.cargar_datos()
+
         except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
+            MensajeView.warning(v, "Error", f"Error al registrar cliente: {str(e)}")
 
     def actualizar_cliente(self):
         v = self.ventana
