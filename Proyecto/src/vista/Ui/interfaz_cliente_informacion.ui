@@ -39,7 +39,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -54,7 +54,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -105,7 +105,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -167,7 +167,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -295,7 +295,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -314,7 +314,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>src/vista/imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -333,7 +333,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/grafico-de-barras.png</pixmap>
+      <pixmap>src/vista/imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -352,7 +352,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -371,7 +371,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -388,7 +388,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QLabel" name="fondoOla">
      <property name="geometry">
@@ -403,7 +403,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
+      <pixmap>src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -479,7 +479,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
+       <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -562,7 +562,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>./src/vista/imagenes/reloj.png</pixmap>
+       <pixmap>src/vista/imagenes/reloj.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -597,7 +597,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string notr="true">font:10pt &quot;Segoe UI&quot;; color:#4B5563;</string>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;color:#18B7A5; font-weight:700;&quot;&gt;Lunes a Viernes&lt;/span&gt;&lt;br/&gt;06:00 - 23:00&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color:#18B7A5; font-weight:700;&quot;&gt;Sábados&lt;/span&gt;&lt;br/&gt;08:00 - 20:00&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color:#18B7A5; font-weight:700;&quot;&gt;Domingos y festivos&lt;/span&gt;&lt;br/&gt;09:00 - 14:00&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;color:#18B7A5; font-weight:700;&quot;&gt;Lunes a Viernes&lt;/span&gt;&lt;br/&gt;06:00 - 23:00&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color:#18B7A5; font-weight:700;&quot;&gt;Sábados&lt;/span&gt;&lt;br/&gt;08:00 - 20:00&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color:#18B7A5; font-weight:700;&quot;</string>
       </property>
      </widget>
     </widget>
@@ -642,7 +642,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>./src/vista/imagenes/alfiler.png</pixmap>
+       <pixmap>src/vista/imagenes/alfiler.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -664,7 +664,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string>Ubicación</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblDireccion">
+     <widget class="QLabel" name="lblDireccionGimnasio">
       <property name="geometry">
        <rect>
         <x>85</x>
@@ -894,10 +894,10 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string>¿Tienes dudas o necesitas ayuda? Estamos aquí para ti.</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblEmail">
+     <widget class="QLabel" name="lblEmailGimnasio">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>80</x>
         <y>40</y>
         <width>150</width>
         <height>15</height>
@@ -910,10 +910,10 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
        <string>✉  info@stayfit.com</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblTelefono">
+     <widget class="QLabel" name="lblTelefonoGimnasio">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>340</x>
         <y>40</y>
         <width>120</width>
         <height>15</height>
@@ -924,22 +924,6 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       </property>
       <property name="text">
        <string>☎  600 123 456</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblWhatsapp">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>40</y>
-        <width>130</width>
-        <height>15</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#4B5563;</string>
-      </property>
-      <property name="text">
-       <string>☏  600 123 456</string>
       </property>
      </widget>
     </widget>
@@ -956,7 +940,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/reborde_ola.png</pixmap>
+      <pixmap>src/vista/imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -974,7 +958,6 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
    </widget>
   </widget>
  </widget>
- <resources></resources>
+ <resources/>
  <connections/>
 </ui>
-
