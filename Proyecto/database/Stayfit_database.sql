@@ -422,3 +422,4 @@ USE stayfit_database;
 SELECT * FROM usuarios ORDER BY id_usuario DESC LIMIT 3;
 SELECT * FROM clientes ORDER BY id_cliente DESC LIMIT 3;
 SELECT * FROM adulto ORDER BY id_cliente DESC LIMIT 3;
+SELECT * FROM inscripcion;

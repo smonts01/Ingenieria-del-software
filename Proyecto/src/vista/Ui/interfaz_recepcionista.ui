@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -174,7 +174,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/ola.png</pixmap>
+      <pixmap>../imagenes/ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -206,7 +206,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Inicio</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnClases">
+    <widget class="QPushButton" name="btnRegistroUsuario">
      <property name="geometry">
       <rect>
        <x>45</x>
@@ -219,7 +219,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Registrar usuario</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnInscripciones">
+    <widget class="QPushButton" name="btnControlAcceso">
      <property name="geometry">
       <rect>
        <x>45</x>
@@ -232,7 +232,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Control de acceso</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnPagos">
+    <widget class="QPushButton" name="btnClientes">
      <property name="geometry">
       <rect>
        <x>45</x>
@@ -382,13 +382,13 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnOcupacion">
+    <widget class="QPushButton" name="btnPerfil">
      <property name="geometry">
       <rect>
        <x>55</x>
@@ -497,7 +497,7 @@ QPushButton:checked {
        <string>Usuarios registrados</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblNumClases">
+     <widget class="QLabel" name="lblNumClientes">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -628,7 +628,7 @@ QPushButton:checked {
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="lblNumClases_2">
+     <widget class="QLabel" name="lblNumEntradas">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -661,103 +661,10 @@ QPushButton:checked {
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="card3">
-     <property name="geometry">
-      <rect>
-       <x>520</x>
-       <y>90</y>
-       <width>201</width>
-       <height>110</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="lblIconCal">
-      <property name="geometry">
-       <rect>
-        <x>11</x>
-        <y>25</y>
-        <width>50</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:#E8DEFF; border-radius:22px; font:17pt &quot;Segoe UI Emoji&quot;;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblTituloCal">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>20</y>
-        <width>111</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 8pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Nuevos usuarios hoy</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblNumClases_3">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>40</y>
-        <width>80</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font:bold 20pt &quot;Segoe UI&quot;; color:#1F2937;</string>
-      </property>
-      <property name="text">
-       <string>12</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblSubClases_3">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>70</y>
-        <width>90</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>clientes</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_13">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>../imagenes/registrar usuario.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
     <widget class="QFrame" name="card4">
      <property name="geometry">
       <rect>
-       <x>770</x>
+       <x>520</x>
        <y>90</y>
        <width>201</width>
        <height>110</height>
@@ -808,13 +715,13 @@ QPushButton:checked {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>./src/vista/imagenes/marca-de-verificacion.png</pixmap>
+       <pixmap>../imagenes/marca-de-verificacion.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="lblNumClases_4">
+     <widget class="QLabel" name="lblNumClasesHoy">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -872,7 +779,7 @@ QPushButton:checked {
        <string>Últimos accesos registrados</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="tablaProximasClases">
+     <widget class="QTableWidget" name="tablaUltimosRegistros">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -953,7 +860,7 @@ QPushButton:checked {
        <string>Clientes recientes</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="tablaProximasClases_2">
+     <widget class="QTableWidget" name="tablaClientesRecientes">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -1017,7 +924,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/ola.png</pixmap>
+      <pixmap>src/vista/imagenes/ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1138,21 +1045,39 @@ QPushButton:checked {
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="label_20">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>20</y>
+       <width>41</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../imagenes/ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
     <zorder>label_19</zorder>
     <zorder>lblBienvenida</zorder>
     <zorder>lblResumen</zorder>
     <zorder>card1</zorder>
     <zorder>card2</zorder>
-    <zorder>card3</zorder>
     <zorder>card4</zorder>
     <zorder>cardTabla</zorder>
     <zorder>cardPago</zorder>
     <zorder>label_16</zorder>
     <zorder>card1_2</zorder>
+    <zorder>label_20</zorder>
    </widget>
   </widget>
  </widget>
- <resources></resources>
+ <resources/>
  <connections/>
 </ui>
-

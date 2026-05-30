@@ -30,13 +30,13 @@ class ControladorRecepcionista:
             v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
         if hasattr(v, "btnInicio"):
             v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista.ui"))
-        if hasattr(v, "btnClases"):
+        if hasattr(v, "btnClientes"):
             v.btnClases.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_clientes.ui"))
-        if hasattr(v, "btnInscripciones"):
+        if hasattr(v, "btnRegistroUsuario"):
             v.btnInscripciones.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_registrar_usuario.ui"))
-        if hasattr(v, "btnPagos"):
+        if hasattr(v, "btnControlAcceso"):
             v.btnPagos.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_control_de_acceso.ui"))
-        if hasattr(v, "btnOcupacion"):
+        if hasattr(v, "btnPerfil"):
             v.btnOcupacion.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_perfil.ui"))
         if hasattr(v, "btnInicio_4"):
             v.btnInicio_4.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_registrar_usuario.ui"))
@@ -69,6 +69,12 @@ class ControladorRecepcionista:
             else:
                 datos = self.modelo.listar_clientes()
             self.rellenar_tabla(v.tableWidget, datos)
+        if hasattr(v, "lblNumClientes") and hasattr(v, "tablaUltimosRegistros"):
+            try:
+                self.cargar_inicio_recepcionista()
+                return
+            except Exception as e:
+                print(f"Error inicio recepcionista: {e}")
 
     def registrar_acceso(self, tipo):
         v = self.ventana
@@ -162,3 +168,62 @@ class ControladorRecepcionista:
     def cerrar_sesion(self):
         self.ventana.close()
         self.vista_login.show()
+
+    def cargar_inicio_recepcionista(self):
+        v = self.ventana
+
+        if hasattr(v, "lblNumClientes"):
+            v.lblNumClientes.setText(str(self.modelo.recepcion_total_clientes()))
+
+        if hasattr(v, "lblNumEntradas"):
+            v.lblNumEntradas.setText(str(self.modelo.recepcion_entradas_hoy()))
+
+        if hasattr(v, "lblNuevosUsuarios"):
+            v.lblNuevosUsuarios.setText(str(self.modelo.recepcion_nuevos_usuarios_hoy()))
+
+        if hasattr(v, "lblNumClasesHoy"):
+            v.lblNumClasesHoy.setText(str(self.modelo.recepcion_clases_hoy()))
+
+        if hasattr(v, "tablaUltimosRegistros"):
+            datos = self.modelo.recepcion_ultimos_registros_acceso()
+            self._rellenar_tabla_ultimos_registros(v.tablaUltimosRegistros, datos)
+
+        if hasattr(v, "tablaClientesRecientes"):
+            datos = self.modelo.recepcion_clientes_recientes()
+            self._rellenar_tabla_clientes_recientes(v.tablaClientesRecientes, datos)
+
+
+    def _rellenar_tabla_ultimos_registros(self, tabla, datos):
+        cabeceras = ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=False
+                )
+                tabla.setItem(fila, col, item)
+
+
+    def _rellenar_tabla_clientes_recientes(self, tabla, datos):
+        cabeceras = ["Cliente", "DNI", "Teléfono", "Fecha registro"]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=False
+                )
+                tabla.setItem(fila, col, item)

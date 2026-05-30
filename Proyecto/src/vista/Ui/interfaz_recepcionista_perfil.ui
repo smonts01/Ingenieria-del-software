@@ -482,7 +482,7 @@ border: None;</string>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
     </property>
-    <widget class="QPushButton" name="btnInicio">
+    <widget class="QPushButton" name="btnPerfil">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -501,7 +501,7 @@ border: None;</string>
       <string>Perfil</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnClases">
+    <widget class="QPushButton" name="btnInicio_2">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -514,7 +514,7 @@ border: None;</string>
       <string>Inicio</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnInscripciones">
+    <widget class="QPushButton" name="btnRegistroUsuario">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -527,7 +527,7 @@ border: None;</string>
       <string>Registrar usuario</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnPagos">
+    <widget class="QPushButton" name="btnClientes">
      <property name="geometry">
       <rect>
        <x>45</x>
@@ -677,13 +677,13 @@ border: None;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnOcupacion">
+    <widget class="QPushButton" name="btnControlAcceso">
      <property name="geometry">
       <rect>
        <x>60</x>
@@ -802,7 +802,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -866,7 +866,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/ola.png</pixmap>
+      <pixmap>src/vista/imagenes/ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -875,7 +875,6 @@ QPushButton:checked {
    </widget>
   </widget>
  </widget>
- <resources></resources>
+ <resources/>
  <connections/>
 </ui>
-
