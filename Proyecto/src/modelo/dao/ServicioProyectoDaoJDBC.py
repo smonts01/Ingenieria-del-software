@@ -58,7 +58,7 @@ class ServicioProyectoDaoJDBC:
         self._tarifa_dao      = TarifaDaoJDBC()
         self._informe_dao     = InformeDaoJDBC()
 
-    # ── Helpers internos ────────────────────────────────────────────────────
+    #  Helpers internos 
 
     def _cifrar(self, password: str) -> str:
         return hashlib.sha256(password.encode("utf-8")).hexdigest()
