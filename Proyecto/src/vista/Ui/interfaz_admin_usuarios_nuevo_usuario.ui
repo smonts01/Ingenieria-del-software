@@ -241,19 +241,6 @@ QRadioButton::indicator { width: 16px; height: 16px; }
       <string>Estadísticas</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnConfiguracion">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>305</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Configuración</string>
-     </property>
-    </widget>
     <widget class="QFrame" name="cardSigue">
      <property name="geometry">
       <rect>
@@ -393,22 +380,6 @@ QRadioButton::indicator { width: 16px; height: 16px; }
      </property>
      <property name="pixmap">
       <pixmap>../imagenes/grafico-de-barras.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="icoConfig">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>310</y>
-       <width>22</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="pixmap">
-      <pixmap>../imagenes/ajuste.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

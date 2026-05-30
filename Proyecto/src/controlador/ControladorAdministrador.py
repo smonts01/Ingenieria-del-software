@@ -113,12 +113,6 @@ class ControladorAdministrador:
         if hasattr(v, "btnEliminarClase"):
             v.btnEliminarClase.clicked.connect(self.eliminar_clase)
 
-        if hasattr(v, "lblNumR1") and hasattr(v, "tablaRanking"):
-            try:
-                self.cargar_estadisticas_admin()
-            except Exception as e:
-                print(f"Error estadísticas admin: {e}")
-
     def cargar_datos(self):
         v = self.ventana
 
@@ -139,6 +133,7 @@ class ControladorAdministrador:
                 try: getattr(v, lbl).setText(str(self.modelo.contar_inscripciones_clase(clase)))
                 except: getattr(v, lbl).setText("0")
 
+        
         if hasattr(v, "clientesbasico"):
             try: v.clientesbasico.setText(str(self.modelo.contar_clientes_tarifa("basico")))
             except: v.clientesbasico.setText("0")
@@ -216,7 +211,12 @@ class ControladorAdministrador:
             except Exception as e:
                 print(f"Error tablaClientes_2: {e}")
 
-
+        if hasattr(v, "lblNumR1") and hasattr(v, "tablaRanking"):
+            try:
+                self.cargar_estadisticas_admin()
+            except Exception as e:
+                print(f"Error estadísticas admin: {e}")
+                
         if hasattr(v, "tablaClases"):
             try:
                 datos = self.modelo.listar_clases()
