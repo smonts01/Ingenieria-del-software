@@ -324,19 +324,6 @@ class ServicioProyectoDaoJDBC:
                  v.hora_fin, v.aforo_maximo, v.nivel_intensidad, v.calorias_estimadas)
                 for v in vos]
 
-    def listar_inscripciones_resumen(self) -> list:
-        return self.consultar("""
-            SELECT 
-                u.nombre,
-                c.nombre_actividad,
-                i.fecha_inscripcion,
-                i.estado
-            FROM inscripcion i
-            JOIN usuarios u ON i.id_cliente = u.id_usuario
-            JOIN clase c ON i.id_clase = c.id_clase
-            WHERE i.estado = 'inscrito'
-            ORDER BY i.fecha_inscripcion DESC
-        """)
 
     def buscar_inscripciones(self, texto: str) -> list:
         t = texto.lower()
@@ -413,19 +400,6 @@ class ServicioProyectoDaoJDBC:
             ORDER BY nombre_actividad
         """)
 
-    def listar_inscripciones_resumen(self) -> list:
-        return self.consultar("""
-            SELECT 
-                u.nombre,
-                c.nombre_actividad,
-                i.fecha_inscripcion,
-                i.estado
-            FROM inscripcion i
-            JOIN usuarios u ON i.id_cliente = u.id_usuario
-            JOIN clase c ON i.id_clase = c.id_clase
-            WHERE i.estado = 'inscrito'
-            ORDER BY i.fecha_inscripcion DESC
-        """)
 
     def ocupacion_clases(self) -> list:
         return self.consultar("""
