@@ -101,6 +101,12 @@ class ControladorContable:
         if hasattr(v, "btnGenerarInforme"):
             v.btnGenerarInforme.clicked.connect(self.generar_informe)
 
+
+        if hasattr(v, "comboFiltroPagos"):
+            v.comboFiltroPagos.currentTextChanged.connect(
+                self.cargar_pagos_pendientes_filtrados
+            )
+
     def cargar_datos(self):
         v = self.ventana
 
@@ -161,28 +167,8 @@ class ControladorContable:
         # Esta pantalla se reconoce porque tiene txtBuscarClientePendiente
         # ============================================================
 
-        if hasattr(v, "txtBuscarClientePendiente"):
-
-            datos = self.modelo.pagos_pendientes()
-
-            # Tu tabla de esta pantalla solo tiene:
-            # ID Pago, Cliente, Tarifa, Importe, Fecha
-            datos_tabla = []
-            for fila in datos:
-                datos_tabla.append((
-                    fila[0],  # ID Pago
-                    fila[1],  # Cliente
-                    fila[2],  # Tarifa
-                    fila[3],  # Importe
-                    fila[4],  # Fecha
-                ))
-
-            if hasattr(v, "tableWidget") and not hasattr(v, "txtBuscarClientePendiente"):
-                self.rellenar_tabla(
-                    v.tableWidget,
-                    self.modelo.pagos_pendientes(),
-                    ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
-                )
+        if hasattr(v, "comboFiltroPagos"):
+            self.cargar_pagos_pendientes_filtrados()
 
             clientes_deuda = self.modelo.contable_clientes_con_deuda()
             importe_pendiente = self.modelo.contable_importe_pendiente()
@@ -199,8 +185,8 @@ class ControladorContable:
             if hasattr(v, "labelPagosVencidos"):
                 v.labelPagosVencidos.setText(str(vencidos))
 
-            if hasattr(v, "lblVencenSemana"):
-                v.lblVencenSemana.setText(str(vencen_semana))
+            if hasattr(v, "labelVencenSemana"):
+                v.labelVencenSemana.setText(str(vencen_semana))
 
             if hasattr(v, "label_Num_Pagos_Pend"):
                 v.label_Num_Pagos_Pend.setText(str(total_pendientes))
@@ -211,11 +197,69 @@ class ControladorContable:
             if hasattr(v, "label_ImporteTotal"):
                 v.label_ImporteTotal.setText(f"{float(importe_pendiente):.2f} €")
 
+
+        # ============================================================
+        # PANTALLA GESTIÓN ECONÓMICA
+        # ============================================================
+
+        if (
+            hasattr(v, "labelBasicoPrecio")
+            and hasattr(v, "labelBasicoDuracion")
+            and hasattr(v, "labelPremiumPrecio")
+            and hasattr(v, "labelPremiumDuracion")
+        ):
+            tarifas = self.modelo.contable_tarifas_economica()
+
+            for tarifa in tarifas:
+                nombre = str(tarifa[0]).lower()
+                precio = str(tarifa[1])
+                duracion = str(tarifa[2])
+
+                if nombre == "basico":
+                    v.labelBasicoPrecio.setText(precio)
+                    v.labelBasicoDuracion.setText(duracion)
+
+                elif nombre == "premium":
+                    v.labelPremiumPrecio.setText(precio)
+                    v.labelPremiumDuracion.setText(duracion)
+
+        
+        if hasattr(v, "tablaSalariosEconomica"):
+            datos = self.modelo.contable_salarios_personal()
+            self.rellenar_tabla(
+                v.tablaSalariosEconomica,
+                datos,
+                ["Empleado", "Rol", "Salario"]
+            )
+
+        if hasattr(v, "labelTarifasActivasEco"):
+            total_tarifas = self.modelo.num_tarifas_activas_contable()
+            v.labelTarifasActivasEco.setText(str(total_tarifas))
+
+        if hasattr(v, "labelNominasMesEco"):
+            nominas = self.modelo.contable_total_nominas()
+            v.labelNominasMesEco.setText(f"{float(nominas):.2f} €")
+
+        if hasattr(v, "labelPagosPendientesEco"):
+            pendiente = self.modelo.contable_importe_pendiente()
+            v.labelPagosPendientesEco.setText(f"{float(pendiente):.2f} €")
+
+        if (
+            hasattr(v, "labelIngresosEco")
+            and hasattr(v, "labelGastosEco")
+            and hasattr(v, "labelBalanceEco")
+        ):
+            ingresos, gastos, balance = self.modelo.contable_balance_economico()
+
+            v.labelIngresosEco.setText(f"{float(ingresos):.2f} €")
+            v.labelGastosEco.setText(f"{float(gastos):.2f} €")
+            v.labelBalanceEco.setText(f"{float(balance):.2f} €")
+
         # ============================================================
         # OTRAS PANTALLAS DEL CONTABLE
         # ============================================================
 
-        if hasattr(v, "tableWidget"):
+        if hasattr(v, "tableWidget") and not hasattr(v, "comboFiltroPagos"):
             self.rellenar_tabla(
                 v.tableWidget,
                 self.modelo.pagos_pendientes(),
@@ -249,6 +293,69 @@ class ControladorContable:
                 self.modelo.informe_salarios(),
                 ["Empleado", "Rol", "Salario"]
             )
+
+
+    #filtrar en tabla de clientes x clientes con pagos pendientes, pendiente vencido y todos
+    def cargar_pagos_pendientes_filtrados(self, *args):
+        v = self.ventana
+
+        if not hasattr(v, "tableWidget"):
+            return
+
+        if hasattr(v, "comboFiltroPagos"):
+            filtro = v.comboFiltroPagos.currentText().strip().lower()
+        else:
+            filtro = "todos"
+
+        datos = self.modelo.pagos_pendientes()
+        datos_filtrados = []
+
+        from datetime import date, datetime
+
+        for fila in datos:
+            id_pago = fila[0]
+            cliente = fila[1]
+            tarifa = fila[2]
+            importe = fila[3]
+            fecha_pago = fila[4]
+            cuota = fila[5] if len(fila) > 5 else ""
+
+            fecha_convertida = fecha_pago
+
+            if isinstance(fecha_pago, str):
+                try:
+                    fecha_convertida = datetime.strptime(fecha_pago[:10], "%Y-%m-%d").date()
+                except Exception:
+                    fecha_convertida = None
+            elif hasattr(fecha_pago, "date"):
+                fecha_convertida = fecha_pago.date()
+
+            es_vencido = False
+
+            if fecha_convertida is not None:
+                es_vencido = fecha_convertida < date.today()
+
+            if filtro == "vencido" and not es_vencido:
+                continue
+
+            if filtro == "pendiente" and es_vencido:
+                continue
+
+            datos_filtrados.append((
+                id_pago,
+                cliente,
+                tarifa,
+                importe,
+                fecha_pago,
+                cuota
+            ))
+
+        self.rellenar_tabla(
+            v.tableWidget,
+            datos_filtrados,
+            ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
+        )
+    
 
     def registrar_pago(self):
         v = self.ventana

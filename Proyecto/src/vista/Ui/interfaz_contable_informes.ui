@@ -567,6 +567,9 @@ QPushButton:checked {
       <font>
        <family>Segoe UI</family>
        <pointsize>11</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="mouseTracking">
@@ -694,7 +697,7 @@ QPushButton:checked {
        <string>Ingresos este mes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumAsistencias">
+     <widget class="QLabel" name="labelIngresosMesInf">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -787,7 +790,7 @@ QPushButton:checked {
        <string>Gastos del mes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblPorcentajeOcupacion">
+     <widget class="QLabel" name="labelGastosMesInf">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -864,7 +867,7 @@ QPushButton:checked {
        <string>Historial de informes</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="tableWidget_2">
+     <widget class="QTableWidget" name="tablaHistorialInformes">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -994,7 +997,7 @@ QPushButton:checked {
        <string>Informes generados</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumClases">
+     <widget class="QLabel" name="labelInformesGeneradosInf">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -1673,7 +1676,7 @@ QPushButton:checked {
        <string>Balance</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblPorcentajeOcupacion_2">
+     <widget class="QLabel" name="labelBalanceInf">
       <property name="geometry">
        <rect>
         <x>100</x>

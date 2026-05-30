@@ -554,7 +554,7 @@ QPushButton:checked {
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -567,6 +567,9 @@ QPushButton:checked {
       <font>
        <family>Segoe UI</family>
        <pointsize>11</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="mouseTracking">
@@ -694,7 +697,7 @@ QPushButton:checked {
        <string>Nóminas del mes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumAsistencias">
+     <widget class="QLabel" name="labelNominasMesEco">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -787,7 +790,7 @@ QPushButton:checked {
        <string>Pagos pendientes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblPorcentajeOcupacion">
+     <widget class="QLabel" name="labelPagosPendientesEco">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -922,7 +925,7 @@ QPushButton:checked {
        <string>Premium</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelHora_3">
+     <widget class="QLabel" name="labelBasicoPrecio">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -970,7 +973,7 @@ QPushButton:checked {
        <string>Duración</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelHora_5">
+     <widget class="QLabel" name="labelPremiumPrecio">
       <property name="geometry">
        <rect>
         <x>160</x>
@@ -986,7 +989,7 @@ QPushButton:checked {
        <string>35,00€</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelHora_6">
+     <widget class="QLabel" name="labelBasicoBuracion">
       <property name="geometry">
        <rect>
         <x>330</x>
@@ -1002,7 +1005,7 @@ QPushButton:checked {
        <string>Mensual</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelHora_7">
+     <widget class="QLabel" name="labelPremiumDuracion">
       <property name="geometry">
        <rect>
         <x>330</x>
@@ -1077,7 +1080,7 @@ QPushButton:checked {
        <string>Tarifas activas</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumClases">
+     <widget class="QLabel" name="labelTarifasActivasEco">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -1209,7 +1212,7 @@ QPushButton:checked {
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="tablaSalariosEconomica">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1627,7 +1630,7 @@ QPushButton:checked {
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="labelNumAsistencias_3">
+      <widget class="QLabel" name="labelIngresosEco">
        <property name="geometry">
         <rect>
          <x>110</x>
@@ -1659,7 +1662,7 @@ QPushButton:checked {
         <string>Gastos</string>
        </property>
       </widget>
-      <widget class="QLabel" name="labelNumAsistencias_4">
+      <widget class="QLabel" name="labelGastosEco">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -1752,7 +1755,7 @@ QPushButton:checked {
         <string>Balance</string>
        </property>
       </widget>
-      <widget class="QLabel" name="labelNumAsistencias_5">
+      <widget class="QLabel" name="labelBalanceEco">
        <property name="geometry">
         <rect>
          <x>580</x>

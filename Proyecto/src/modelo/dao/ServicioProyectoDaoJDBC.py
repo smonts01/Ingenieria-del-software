@@ -1126,8 +1126,6 @@ class ServicioProyectoDaoJDBC:
             VALUES (?, ?, ?, ?)
         """
         return self.ejecutar(sql_insert, (id_cliente, id_clase, fecha, presente))
-<<<<<<< Updated upstream
-=======
 
     
     #CONTABLE
@@ -1333,8 +1331,77 @@ class ServicioProyectoDaoJDBC:
 
         mensaje = f"Pago registrado correctamente para {nombre_cliente}.\nTarifa: {nombre_tarifa}\nImporte: {importe} €"
         return True, mensaje
+    
+    def contable_tarifas_economica(self):
+        """
+        Devuelve las tarifas activas para la pantalla Gestión económica.
+        Formato: Plan, Precio, Duración
+        """
+        sql = """
+            SELECT nombre,
+                   CONCAT(precio_mensual, ' €') AS precio,
+                   'Mensual' AS duracion
+            FROM tarifa
+            WHERE fecha_fin IS NULL OR fecha_fin >= CURRENT_DATE
+            ORDER BY precio_mensual ASC
+        """
+        return self.consultar(sql)
 
->>>>>>> Stashed changes
+    def contable_salarios_personal(self):
+        """
+        Devuelve los salarios del personal.
+        Formato: Empleado, Rol, Salario
+        """
+        sql = """
+            SELECT u.nombre,
+                   r.nombre_rol,
+                   CONCAT(e.salario, ' €') AS salario
+            FROM empleados e
+            INNER JOIN usuarios u ON e.id_empleado = u.id_usuario
+            INNER JOIN roles r ON u.id_rol = r.id_rol
+            ORDER BY r.nombre_rol, u.nombre
+        """
+        return self.consultar(sql)
+
+    def contable_total_nominas(self):
+        """
+        Suma todos los salarios del personal.
+        """
+        sql = """
+            SELECT COALESCE(SUM(salario), 0)
+            FROM empleados
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def contable_balance_economico(self):
+        """
+        Calcula ingresos, gastos y balance.
+        Ingresos: pagos abonados.
+        Gastos: salarios del personal.
+        """
+        ingresos = self.consultar("""
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE estado = 'abonado'
+        """)
+
+        gastos = self.consultar("""
+            SELECT COALESCE(SUM(salario), 0)
+            FROM empleados
+        """)
+
+        total_ingresos = ingresos[0][0] if ingresos else 0
+        total_gastos = gastos[0][0] if gastos else 0
+        balance = total_ingresos - total_gastos
+
+        return total_ingresos, total_gastos, balance
+
+
+
+    #-----------------------
+
+
 
     def recepcion_total_clientes(self):
         datos = self.consultar("""
@@ -1408,7 +1475,4 @@ class ServicioProyectoDaoJDBC:
             ORDER BY u.fecha_registro DESC
             LIMIT 8
         """)
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
