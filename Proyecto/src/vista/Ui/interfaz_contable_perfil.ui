@@ -778,7 +778,7 @@ QPushButton:checked {
         <string>Pagos registrados</string>
        </property>
       </widget>
-      <widget class="QLabel" name="labelNumPagosPend">
+      <widget class="QLabel" name="labelPerfilPagosRegistrados">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -870,7 +870,7 @@ border: None;</string>
         <string>Pendientes revisados</string>
        </property>
       </widget>
-      <widget class="QLabel" name="labelIngresosMes">
+      <widget class="QLabel" name="labelPerfilPendientesRevisados">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -946,7 +946,7 @@ border: None;</string>
         <string>Informes generados</string>
        </property>
       </widget>
-      <widget class="QLabel" name="labelNumTarifas">
+      <widget class="QLabel" name="labelPerfilInformesGenerados">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -1022,7 +1022,7 @@ border: None;</string>
         <string>Importe gestionado</string>
        </property>
       </widget>
-      <widget class="QLabel" name="lblInformesGen">
+      <widget class="QLabel" name="labelPerfilImporteGestionado">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -1149,7 +1149,7 @@ border: None;</string>
        <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_15">
+     <widget class="QLabel" name="labelPerfilRol">
       <property name="geometry">
        <rect>
         <x>270</x>
@@ -1171,7 +1171,7 @@ border: None;</string>
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:400;&quot;&gt;Contable&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_Nombre">
+     <widget class="QLabel" name="labelPerfilNombre">
       <property name="geometry">
        <rect>
         <x>270</x>
@@ -1193,7 +1193,7 @@ border: None;</string>
        <string>Nombre Apellidos</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_16">
+     <widget class="QLabel" name="labelPerfilEmail">
       <property name="geometry">
        <rect>
         <x>320</x>
@@ -1214,7 +1214,7 @@ border: None;</string>
        <string>correo.contable@stayfit.com</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_19">
+     <widget class="QLabel" name="labelPerfilTelefono">
       <property name="geometry">
        <rect>
         <x>320</x>
@@ -1235,7 +1235,7 @@ border: None;</string>
        <string>+34 600 123 456</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_20">
+     <widget class="QLabel" name="labelPerfilDireccion">
       <property name="geometry">
        <rect>
         <x>320</x>
@@ -1256,7 +1256,7 @@ border: None;</string>
        <string>Madrid, España</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_21">
+     <widget class="QLabel" name="labelPerfilFechaAlta">
       <property name="geometry">
        <rect>
         <x>320</x>

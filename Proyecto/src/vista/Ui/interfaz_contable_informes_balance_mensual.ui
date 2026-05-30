@@ -567,6 +567,9 @@ QPushButton:checked {
       <font>
        <family>Segoe UI</family>
        <pointsize>11</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="mouseTracking">
@@ -698,6 +701,16 @@ QPushButton:checked {
     border-radius: 12px;
 }</string>
      </property>
+     <widget class="QTableWidget" name="tablaInformeBalanceMensual">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>100</y>
+        <width>301</width>
+        <height>192</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QLabel" name="label_22">
      <property name="geometry">

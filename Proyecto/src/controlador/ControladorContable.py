@@ -64,26 +64,42 @@ class ControladorContable:
                 lambda: self.abrir_pantalla("interfaz_contable_info.ui")
             )
 
+        
         # Botones internos de la pantalla Informes
+        # Al pulsar una tarjeta, se guarda el informe y se abre su pantalla
+
+        if hasattr(v, "btnInformeGestionEconomica"):
+            v.btnInformeGestionEconomica.clicked.connect(
+                lambda: self.generar_y_abrir_informe(
+                    "Gestión económica",
+                    "interfaz_contable_informes_gestion_economica.ui"
+                )
+            )
+
         if hasattr(v, "btnInformePagos"):
             v.btnInformePagos.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_informes_de_pagos.ui")
+                lambda: self.generar_y_abrir_informe(
+                    "Informe de pagos",
+                    "interfaz_contable_informes_de_pagos.ui"
+                )
             )
 
         if hasattr(v, "btnInformePagosPendientes"):
             v.btnInformePagosPendientes.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_informes_pagos_pendientes.ui")
+                lambda: self.generar_y_abrir_informe(
+                    "Informe de pagos pendientes",
+                    "interfaz_contable_informes_pagos_pendientes.ui"
+                )
             )
 
         if hasattr(v, "btnInformeBalanceMensual"):
             v.btnInformeBalanceMensual.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_informes_balance_mensual.ui")
+                lambda: self.generar_y_abrir_informe(
+                    "Balance mensual",
+                    "interfaz_contable_informes_balance_mensual.ui"
+                )
             )
-
-        if hasattr(v, "btnInformeGestionEconomica"):
-            v.btnInformeGestionEconomica.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_informes_gestion_economica.ui")
-            )
+        
 
         # Botón real para registrar pago
         if hasattr(v, "btnConfirmarRegistrarPago"):
@@ -254,6 +270,139 @@ class ControladorContable:
             v.labelIngresosEco.setText(f"{float(ingresos):.2f} €")
             v.labelGastosEco.setText(f"{float(gastos):.2f} €")
             v.labelBalanceEco.setText(f"{float(balance):.2f} €")
+
+        # ============================================================
+        # PANTALLA INFORMES
+        # ============================================================
+
+        if hasattr(v, "labelInformesGeneradosInf"):
+            total_informes = self.modelo.num_informes_mes_contable()
+            v.labelInformesGeneradosInf.setText(str(total_informes))
+
+        if hasattr(v, "labelIngresosMesInf"):
+            ingresos = self.modelo.ingresos_mes_contable()
+            v.labelIngresosMesInf.setText(f"{float(ingresos):.2f} €")
+
+        if hasattr(v, "labelGastosMesInf"):
+            gastos = self.modelo.contable_gastos_mes()
+            v.labelGastosMesInf.setText(f"{float(gastos):.2f} €")
+
+        if hasattr(v, "labelBalanceInf"):
+            balance = self.modelo.contable_balance_mes()
+            v.labelBalanceInf.setText(f"{float(balance):.2f} €")
+
+        if hasattr(v, "tablaHistorialInformes"):
+            datos = self.modelo.historial_informes_contable()
+            self.rellenar_tabla(
+                v.tablaHistorialInformes,
+                datos,
+                ["ID", "Contable", "Tipo", "Fecha"]
+            )
+
+        # ============================================================
+        # INFORME GESTIÓN ECONÓMICA
+        # ============================================================
+
+        if hasattr(v, "tablaInformeGestionEconomica"):
+            datos = self.modelo.informe_gestion_economica_contable()
+            self.rellenar_tabla(
+                v.tablaInformeGestionEconomica,
+                datos,
+                ["Concepto", "Valor"]
+            )
+
+        # ============================================================
+        # INFORME DE PAGOS
+        # ============================================================
+
+        if hasattr(v, "tablaInformePagos"):
+            datos = self.modelo.informe_pagos_realizados()
+            self.rellenar_tabla(
+                v.tablaInformePagos,
+                datos,
+                ["Cliente", "Tarifa", "Importe", "Fecha", "Método"]
+            )
+
+        # ============================================================
+        # INFORME DE PAGOS PENDIENTES
+        # ============================================================
+
+        if hasattr(v, "tablaInformePagosPendientes"):
+            datos = self.modelo.pagos_pendientes()
+            self.rellenar_tabla(
+                v.tablaInformePagosPendientes,
+                datos,
+                ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
+            )
+
+        # ============================================================
+        # INFORME BALANCE MENSUAL
+        # ============================================================
+
+        if hasattr(v, "tablaInformeBalanceMensual"):
+            datos = self.modelo.informe_balance_mensual_contable()
+            self.rellenar_tabla(
+                v.tablaInformeBalanceMensual,
+                datos,
+                ["Año", "Mes", "Ingresos", "Gastos", "Balance"]
+            )
+
+        # ============================================================
+        # PANTALLA PERFIL CONTABLE
+        # ============================================================
+
+        if hasattr(v, "labelPerfilNombre"):
+            perfil = self.modelo.perfil_usuario(self.usuario["id_usuario"])
+
+            if perfil:
+                # perfil_usuario devuelve:
+                # 0 id_usuario
+                # 1 dni
+                # 2 nombre
+                # 3 telefono
+                # 4 email
+                # 5 username
+                # 6 rol
+                # 7 direccion
+                # 8 fecha_registro
+                # 9 fecha_nacimiento
+
+                v.labelPerfilNombre.setText(str(perfil[2]))
+                v.labelPerfilRol.setText(str(perfil[6]).capitalize())
+                v.labelPerfilEmail.setText(str(perfil[4]))
+                v.labelPerfilTelefono.setText(str(perfil[3]))
+                v.labelPerfilDireccion.setText(str(perfil[7]))
+
+                if perfil[8]:
+                    v.labelPerfilFechaAlta.setText(f"Miembro desde: {perfil[8]}")
+                else:
+                    v.labelPerfilFechaAlta.setText("Miembro desde: -")
+
+            pagos_registrados = self.modelo.contable_pagos_registrados(
+                self.usuario["id_usuario"]
+            )
+
+            pendientes_revisados = self.modelo.contable_pendientes_revisados()
+
+            informes_generados = self.modelo.contable_informes_generados_usuario(
+                self.usuario["id_usuario"]
+            )
+
+            importe_gestionado = self.modelo.contable_importe_gestionado(
+                self.usuario["id_usuario"]
+            )
+
+            if hasattr(v, "labelPerfilPagosRegistrados"):
+                v.labelPerfilPagosRegistrados.setText(str(pagos_registrados))
+
+            if hasattr(v, "labelPerfilPendientesRevisados"):
+                v.labelPerfilPendientesRevisados.setText(str(pendientes_revisados))
+
+            if hasattr(v, "labelPerfilInformesGenerados"):
+                v.labelPerfilInformesGenerados.setText(str(informes_generados))
+
+            if hasattr(v, "labelPerfilImporteGestionado"):
+                v.labelPerfilImporteGestionado.setText(f"{float(importe_gestionado):.2f} €")
 
         # ============================================================
         # OTRAS PANTALLAS DEL CONTABLE
@@ -463,6 +612,28 @@ class ControladorContable:
             MensajeView.warning(v, "Error", str(e))
 
 
+    def generar_y_abrir_informe(self, tipo_informe, archivo_ui):
+        """
+        Genera un informe en la base de datos y abre su pantalla correspondiente.
+        """
+
+        try:
+            self.modelo.generar_informe(
+                self.usuario["id_usuario"],
+                tipo_informe
+            )
+
+            self.abrir_pantalla(archivo_ui)
+
+        except Exception as e:
+            MensajeView.warning(
+                self.ventana,
+                "Error",
+                f"No se pudo generar el informe: {e}"
+            )
+
+
+
     def generar_informe(self):
         v = self.ventana
         try:
@@ -492,6 +663,10 @@ class ControladorContable:
             for col, valor in enumerate(registro):
                 texto = str(valor) if valor is not None else ""
                 tabla.setItem(fila, col, TablaView.crear_item(texto))
+
+        
+        tabla.resizeColumnsToContents()
+        tabla.resizeRowsToContents()
 
 
 

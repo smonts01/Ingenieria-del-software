@@ -871,9 +871,9 @@ QPushButton:checked {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>100</y>
+        <y>50</y>
         <width>331</width>
-        <height>151</height>
+        <height>191</height>
        </rect>
       </property>
       <row>
@@ -911,58 +911,6 @@ QPushButton:checked {
         <string>Fecha</string>
        </property>
       </column>
-     </widget>
-     <widget class="QFrame" name="card1_4">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>50</y>
-        <width>251</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#card1_4{
-    background-color: #FFFFFF;
-    border: 1px solid #DADDE2;
-    border-radius: 12px;
-}</string>
-      </property>
-      <widget class="QLineEdit" name="lineEdit_2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>191</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="placeholderText">
-        <string>Buscar informe...</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_16">
-       <property name="geometry">
-        <rect>
-         <x>220</x>
-         <y>10</y>
-         <width>21</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>../imagenes/lupa.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-      </widget>
      </widget>
     </widget>
     <widget class="QFrame" name="card2_2">

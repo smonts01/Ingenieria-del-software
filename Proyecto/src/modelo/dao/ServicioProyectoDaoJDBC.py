@@ -722,9 +722,15 @@ class ServicioProyectoDaoJDBC:
         return datos[0][0] if datos else 0
 
     def generar_informe(self, id_contable: int, tipo: str):
-        vo = InformeVO(None, id_contable, tipo, None)
-        return self._informe_dao.insert(vo)
-
+        """
+        Genera un informe guardándolo con fecha y hora actuales.
+        """
+        sql = """
+            INSERT INTO informe (id_contable, tipo_informe, fecha_generacion)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
+        """
+        return self.ejecutar(sql, (id_contable, tipo))
+    
     def listar_informes(self) -> list:
         vos = self._informe_dao.select()
         return [(v.id_informe, v.id_contable, v.tipo_informe, v.fecha_generacion)
@@ -1399,8 +1405,153 @@ class ServicioProyectoDaoJDBC:
         balance = total_ingresos - total_gastos
 
         return total_ingresos, total_gastos, balance
+    
+    def informe_balance_mensual_contable(self):
+        """
+        Devuelve el balance mensual.
+        Formato: Año, Mes, Ingresos, Gastos, Balance
+        """
+
+        sql = """
+            SELECT YEAR(fecha_pago) AS anio,
+                   MONTH(fecha_pago) AS mes,
+                   COALESCE(SUM(importe), 0) AS ingresos
+            FROM pago
+            WHERE estado = 'abonado'
+            GROUP BY YEAR(fecha_pago), MONTH(fecha_pago)
+            ORDER BY anio DESC, mes DESC
+        """
+
+        ingresos_mensuales = self.consultar(sql)
+
+        gastos = self.contable_total_nominas()
+
+        resultado = []
+
+        for fila in ingresos_mensuales:
+            anio = fila[0]
+            mes = fila[1]
+            ingresos = fila[2]
+            balance = ingresos - gastos
+
+            resultado.append((
+                anio,
+                mes,
+                f"{float(ingresos):.2f} €",
+                f"{float(gastos):.2f} €",
+                f"{float(balance):.2f} €"
+            ))
+
+        return resultado
+    
+    def informe_gestion_economica_contable(self):
+        """
+        Devuelve un resumen económico general para el informe de gestión económica.
+        Formato: Concepto, Valor
+        """
+
+        ingresos, gastos, balance = self.contable_balance_economico()
+        pendiente = self.contable_importe_pendiente()
+        tarifas_activas = self.num_tarifas_activas_contable()
+        nominas = self.contable_total_nominas()
+
+        return [
+            ("Ingresos abonados", f"{float(ingresos):.2f} €"),
+            ("Gastos / nóminas", f"{float(gastos):.2f} €"),
+            ("Balance", f"{float(balance):.2f} €"),
+            ("Pagos pendientes", f"{float(pendiente):.2f} €"),
+            ("Tarifas activas", str(tarifas_activas)),
+            ("Total nóminas", f"{float(nominas):.2f} €"),
+        ]
+
+    def contable_gastos_mes(self):
+        """
+        Calcula los gastos del mes.
+        De momento usamos la suma de salarios como gasto mensual.
+        """
+        sql = """
+            SELECT COALESCE(SUM(salario), 0)
+            FROM empleados
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def contable_balance_mes(self):
+        """
+        Calcula el balance del mes:
+        ingresos abonados del mes - gastos del mes.
+        """
+        ingresos = self.ingresos_mes_contable()
+        gastos = self.contable_gastos_mes()
+        return ingresos - gastos
+
+    def historial_informes_contable(self):
+        """
+        Devuelve el historial de informes generados.
+        """
+        sql = """
+            SELECT i.id_informe,
+                   u.nombre AS contable,
+                   i.tipo_informe,
+                   DATE(i.fecha_generacion) AS fecha
+            FROM informe i
+            INNER JOIN usuarios u ON i.id_contable = u.id_usuario
+            ORDER BY i.fecha_generacion DESC
+        """
+        return self.consultar(sql)
+    
+    def contable_pagos_registrados(self, id_contable):
+        """
+        Cuenta los pagos abonados registrados por este contable.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM pago
+            WHERE id_contable = ?
+              AND estado = 'abonado'
+        """
+        datos = self.consultar(sql, (id_contable,))
+        return datos[0][0] if datos else 0
 
 
+    def contable_pendientes_revisados(self):
+        """
+        Cuenta los pagos pendientes actuales.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM pago
+            WHERE estado = 'pendiente'
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+
+    def contable_informes_generados_usuario(self, id_contable):
+        """
+        Cuenta los informes generados por este contable.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM informe
+            WHERE id_contable = ?
+        """
+        datos = self.consultar(sql, (id_contable,))
+        return datos[0][0] if datos else 0
+
+
+    def contable_importe_gestionado(self, id_contable):
+        """
+        Suma el importe abonado gestionado por este contable.
+        """
+        sql = """
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE id_contable = ?
+              AND estado = 'abonado'
+        """
+        datos = self.consultar(sql, (id_contable,))
+        return datos[0][0] if datos else 0
 
     #-----------------------
 
@@ -1479,8 +1630,6 @@ class ServicioProyectoDaoJDBC:
             LIMIT 8
         """)
 
-<<<<<<< HEAD
-=======
     def crear_cliente_desde_recepcion(
         self,
         dni,
@@ -1521,4 +1670,5 @@ class ServicioProyectoDaoJDBC:
             self._menor_dao.insert(menor_vo)
 
         return id_cliente
->>>>>>> 1618dea145d9204b44398476ea9439cbc1450ea5
+    
+    
