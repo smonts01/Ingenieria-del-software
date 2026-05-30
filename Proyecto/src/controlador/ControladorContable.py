@@ -29,30 +29,29 @@ class ControladorContable:
         if hasattr(v, "btnCerrarSesion"):
             v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
 
-        # Menú lateral principal
         if hasattr(v, "btnInicio"):
             v.btnInicio.clicked.connect(
                 lambda: self.abrir_pantalla("interfaz_contable.ui")
             )
 
-        if hasattr(v, "btnInscritos"):
-            v.btnInscritos.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_gestion_economica.ui")
+        if hasattr(v, "btnRegistrarPago"):
+            v.btnRegistrarPago.clicked.connect(
+                lambda: self.abrir_pantalla("interfaz_contable_registrar_pago.ui")
             )
 
-        if hasattr(v, "btnOcupacion"):
-            v.btnOcupacion.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_informes.ui")
-            )
-
-        if hasattr(v, "btnRegistroAsistencia"):
-            v.btnRegistroAsistencia.clicked.connect(
+        if hasattr(v, "btnPagosPendientes"):
+            v.btnPagosPendientes.clicked.connect(
                 lambda: self.abrir_pantalla("interfaz_contable_pagos_pendientes.ui")
             )
 
-        if hasattr(v, "btnClases_2"):
-            v.btnClases_2.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_registrar_pago.ui")
+        if hasattr(v, "btnGestionEconomica"):
+            v.btnGestionEconomica.clicked.connect(
+                lambda: self.abrir_pantalla("interfaz_contable_gestion_economica.ui")
+            )
+
+        if hasattr(v, "btnInformes"):
+            v.btnInformes.clicked.connect(
+                lambda: self.abrir_pantalla("interfaz_contable_informes.ui")
             )
 
         if hasattr(v, "btnPerfil"):
@@ -66,35 +65,39 @@ class ControladorContable:
             )
 
         # Botones internos de la pantalla Informes
-        if hasattr(v, "btnOcupacion_2"):
-            v.btnOcupacion_2.clicked.connect(
+        if hasattr(v, "btnInformePagos"):
+            v.btnInformePagos.clicked.connect(
                 lambda: self.abrir_pantalla("interfaz_contable_informes_de_pagos.ui")
             )
 
-        if hasattr(v, "btnOcupacion_3"):
-            v.btnOcupacion_3.clicked.connect(
+        if hasattr(v, "btnInformePagosPendientes"):
+            v.btnInformePagosPendientes.clicked.connect(
                 lambda: self.abrir_pantalla("interfaz_contable_informes_pagos_pendientes.ui")
             )
 
-        if hasattr(v, "btnOcupacion_5"):
-            v.btnOcupacion_5.clicked.connect(
+        if hasattr(v, "btnInformeBalanceMensual"):
+            v.btnInformeBalanceMensual.clicked.connect(
                 lambda: self.abrir_pantalla("interfaz_contable_informes_balance_mensual.ui")
             )
 
-        if hasattr(v, "btnOcupacion_6"):
-            v.btnOcupacion_6.clicked.connect(
+        if hasattr(v, "btnInformeGestionEconomica"):
+            v.btnInformeGestionEconomica.clicked.connect(
                 lambda: self.abrir_pantalla("interfaz_contable_informes_gestion_economica.ui")
             )
 
-        # Botón correcto de registrar pago
+        # Botón real para registrar pago
+        if hasattr(v, "btnConfirmarRegistrarPago"):
+            v.btnConfirmarRegistrarPago.clicked.connect(self.registrar_pago)
+
+        # En tu interfaz actual el botón grande se llama btnInicio_2
         if hasattr(v, "btnInicio_2"):
             v.btnInicio_2.clicked.connect(self.registrar_pago)
 
-        # Marcar pago como abonado
+        # Botón para marcar pago pendiente como abonado
         if hasattr(v, "btnMarcarAbonado"):
             v.btnMarcarAbonado.clicked.connect(self.marcar_abonado)
 
-        # Generar informe
+        # Botón para generar informe
         if hasattr(v, "btnGenerarInforme"):
             v.btnGenerarInforme.clicked.connect(self.generar_informe)
 
@@ -136,6 +139,77 @@ class ControladorContable:
         if hasattr(v, "lblInformesGen"):
             total_informes = self.modelo.num_informes_mes_contable()
             v.lblInformesGen.setText(str(total_informes))
+
+        # ============================================================
+        # PANTALLA REGISTRAR PAGO
+        # ============================================================
+
+        if hasattr(v, "labelPagosPendientesRegistro"):
+            total_pendientes = self.modelo.num_pagos_pendientes_contable()
+            v.labelPagosPendientesRegistro.setText(str(total_pendientes))
+
+        if hasattr(v, "labelCobrosHoyRegistro"):
+            cobros_hoy = self.modelo.cobros_hoy_contable()
+            v.labelCobrosHoyRegistro.setText(str(cobros_hoy))
+
+        if hasattr(v, "labelInformesRegistro"):
+            total_informes = self.modelo.num_informes_mes_contable()
+            v.labelInformesRegistro.setText(str(total_informes))
+
+        # ============================================================
+        # PANTALLA PAGOS PENDIENTES
+        # Esta pantalla se reconoce porque tiene txtBuscarClientePendiente
+        # ============================================================
+
+        if hasattr(v, "txtBuscarClientePendiente"):
+
+            datos = self.modelo.pagos_pendientes()
+
+            # Tu tabla de esta pantalla solo tiene:
+            # ID Pago, Cliente, Tarifa, Importe, Fecha
+            datos_tabla = []
+            for fila in datos:
+                datos_tabla.append((
+                    fila[0],  # ID Pago
+                    fila[1],  # Cliente
+                    fila[2],  # Tarifa
+                    fila[3],  # Importe
+                    fila[4],  # Fecha
+                ))
+
+            if hasattr(v, "tableWidget") and not hasattr(v, "txtBuscarClientePendiente"):
+                self.rellenar_tabla(
+                    v.tableWidget,
+                    self.modelo.pagos_pendientes(),
+                    ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
+                )
+
+            clientes_deuda = self.modelo.contable_clientes_con_deuda()
+            importe_pendiente = self.modelo.contable_importe_pendiente()
+            vencidos = self.modelo.contable_pagos_vencidos()
+            vencen_semana = self.modelo.contable_pagos_vencen_semana()
+            total_pendientes = self.modelo.num_pagos_pendientes_contable()
+
+            if hasattr(v, "labelClientesDeuda"):
+                v.labelClientesDeuda.setText(str(clientes_deuda))
+
+            if hasattr(v, "labelImportePendiente"):
+                v.labelImportePendiente.setText(f"{float(importe_pendiente):.2f} €")
+
+            if hasattr(v, "labelPagosVencidos"):
+                v.labelPagosVencidos.setText(str(vencidos))
+
+            if hasattr(v, "lblVencenSemana"):
+                v.lblVencenSemana.setText(str(vencen_semana))
+
+            if hasattr(v, "label_Num_Pagos_Pend"):
+                v.label_Num_Pagos_Pend.setText(str(total_pendientes))
+
+            if hasattr(v, "label_Num_Vencidos"):
+                v.label_Num_Vencidos.setText(str(vencidos))
+
+            if hasattr(v, "label_ImporteTotal"):
+                v.label_ImporteTotal.setText(f"{float(importe_pendiente):.2f} €")
 
         # ============================================================
         # OTRAS PANTALLAS DEL CONTABLE
@@ -245,6 +319,8 @@ class ControladorContable:
                 if hasattr(v, "btnCalorias_2"):
                     v.btnCalorias_2.setText("Abonado")
 
+                self.cargar_datos()
+
             else:
                 MensajeView.warning(v, "Error", mensaje)
 
@@ -259,15 +335,26 @@ class ControladorContable:
                 if hasattr(v, tabla_name):
                     tabla = getattr(v, tabla_name)
                     fila = tabla.currentRow()
+
                     if fila >= 0 and tabla.item(fila, 0):
                         id_pago = int(tabla.item(fila, 0).text())
+
                         self.modelo.marcar_pago_abonado(id_pago)
-                        MensajeView.information(v, "Correcto", "Pago marcado como abonado")
+
+                        MensajeView.information(
+                            v,
+                            "Correcto",
+                            "Pago marcado como abonado"
+                        )
+
                         self.cargar_datos()
                         return
+
             MensajeView.warning(v, "Error", "Selecciona un pago primero")
+
         except Exception as e:
             MensajeView.warning(v, "Error", str(e))
+
 
     def generar_informe(self):
         v = self.ventana

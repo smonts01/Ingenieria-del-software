@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -216,7 +216,7 @@ QPushButton:checked {
       <string>Inicio</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnInscritos">
+    <widget class="QPushButton" name="btnGestionEconomica">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -258,7 +258,7 @@ QPushButton:checked {
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnOcupacion">
+    <widget class="QPushButton" name="btnInformes">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -428,7 +428,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -447,7 +447,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>src/vista/imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -466,7 +466,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>src/vista/imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -485,7 +485,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>./src/vista/imagenes/caja-registradora.png</pixmap>
+      <pixmap>src/vista/imagenes/caja-registradora.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -539,7 +539,7 @@ QPushButton:checked {
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnRegistroAsistencia">
+    <widget class="QPushButton" name="btnPagosPendientes">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -585,7 +585,7 @@ QPushButton:checked {
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnClases_2">
+    <widget class="QPushButton" name="btnRegistrarPago">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -725,7 +725,7 @@ QPushButton:checked {
        <string>Importe pendiente</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelIngresosMes">
+     <widget class="QLabel" name="labelImportePendiente">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -815,7 +815,7 @@ QPushButton:checked {
        <string>Vencidos</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumTarifas">
+     <widget class="QLabel" name="labelPagosVencidos">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -905,7 +905,7 @@ QPushButton:checked {
        <string>Vencen esta semana</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblInformesGen">
+     <widget class="QLabel" name="labelVencenSemana">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -992,7 +992,7 @@ QPushButton:checked {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>./src/vista/imagenes/cola.png</pixmap>
+       <pixmap>src/vista/imagenes/cola.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1036,7 +1036,7 @@ QTableWidget::item:selected {
 }</string>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
+       <enum>Qt::ScrollBarAlwaysOn</enum>
       </property>
       <property name="rowCount">
        <number>20</number>
@@ -1514,7 +1514,7 @@ QLineEdit:focus {
        <string>Clientes con deuda</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelNumPagosPend">
+     <widget class="QLabel" name="labelClientesDeuda">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -1638,7 +1638,6 @@ QLineEdit:focus {
    </widget>
   </widget>
  </widget>
- <resources></resources>
+ <resources/>
  <connections/>
 </ui>
-

@@ -564,7 +564,41 @@ class ServicioProyectoDaoJDBC:
         return self._pago_dao.insert(vo)
 
     def marcar_pago_abonado(self, id_pago: int):
-        return self._pago_dao.updateEstado(id_pago, "abonado")
+        """
+        Marca un pago pendiente como abonado y actualiza también el estado del cliente.
+        """
+
+        # Primero buscamos el cliente de ese pago
+        sql_buscar = """
+            SELECT id_cliente
+            FROM pago
+            WHERE id_pago = ?
+        """
+        datos = self.consultar(sql_buscar, (id_pago,))
+
+        if not datos:
+            raise ValueError("No existe ningún pago con ese ID.")
+
+        id_cliente = datos[0][0]
+
+        # Marcamos el pago como abonado
+        sql_pago = """
+            UPDATE pago
+            SET estado = 'abonado',
+                fecha_pago = CURRENT_TIMESTAMP
+            WHERE id_pago = ?
+        """
+        self.ejecutar(sql_pago, (id_pago,))
+
+        # Marcamos el cliente como abonado
+        sql_cliente = """
+            UPDATE clientes
+            SET estado_pagado = 'abonado'
+            WHERE id_cliente = ?
+        """
+        self.ejecutar(sql_cliente, (id_cliente,))
+
+        return True
 
     def listar_pagos(self) -> list:
         vos = self._pago_dao.select()
@@ -573,24 +607,67 @@ class ServicioProyectoDaoJDBC:
                 for v in vos]
 
     def pagos_pendientes(self) -> list:
-        # Busca en tabla pago primero
-        datos = self.consultar("""
-            SELECT p.id_pago, u.nombre, t.nombre, p.importe,
-                   p.fecha_pago, p.tipo_cuota
+        """
+        Devuelve solo pagos reales pendientes.
+        La primera columna SIEMPRE es id_pago, porque el controlador la usa
+        para marcar el pago como abonado.
+        """
+        sql = """
+            SELECT p.id_pago,
+                u.nombre AS cliente,
+                t.nombre AS tarifa,
+                CONCAT(p.importe, ' €') AS importe,
+                DATE(p.fecha_pago) AS fecha,
+                p.tipo_cuota
             FROM pago p
-            JOIN usuarios u ON p.id_cliente = u.id_usuario
-            JOIN tarifa t ON p.id_tarifa = t.id_tarifa
-            WHERE p.estado = 'pendiente' ORDER BY p.fecha_pago
-        """)
-        if datos:
-            return datos
-        # Fallback: clientes con estado_pagado pendiente
-        return self.consultar("""
-            SELECT c.id_cliente, u.nombre, 'Sin tarifa', 0,
-                   u.fecha_registro, 'mensual'
-            FROM clientes c JOIN usuarios u ON c.id_cliente = u.id_usuario
-            WHERE c.estado_pagado = 'pendiente'
-        """)
+            INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
+            INNER JOIN tarifa t ON p.id_tarifa = t.id_tarifa
+            WHERE p.estado = 'pendiente'
+            ORDER BY p.fecha_pago ASC
+        """
+        return self.consultar(sql)
+    
+    #-----------
+       
+
+    def contable_clientes_con_deuda(self):
+        sql = """
+            SELECT COUNT(DISTINCT id_cliente)
+            FROM pago
+            WHERE estado = 'pendiente'
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def contable_importe_pendiente(self):
+        sql = """
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE estado = 'pendiente'
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def contable_pagos_vencidos(self):
+        sql = """
+            SELECT COUNT(*)
+            FROM pago
+            WHERE estado = 'pendiente'
+              AND DATE(fecha_pago) < CURRENT_DATE
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def contable_pagos_vencen_semana(self):
+        sql = """
+            SELECT COUNT(*)
+            FROM pago
+            WHERE estado = 'pendiente'
+              AND DATE(fecha_pago) BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY)
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+    #----------
 
     def pagos_cliente(self, id_cliente: int) -> list:
         vos = self._pago_dao.selectByCliente(id_cliente)
@@ -1049,6 +1126,215 @@ class ServicioProyectoDaoJDBC:
             VALUES (?, ?, ?, ?)
         """
         return self.ejecutar(sql_insert, (id_cliente, id_clase, fecha, presente))
+<<<<<<< Updated upstream
+=======
+
+    
+    #CONTABLE
+
+    def cobros_hoy_contable(self):
+        """
+        Cuenta los pagos abonados registrados hoy.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM pago
+            WHERE estado = 'abonado'
+              AND DATE(fecha_pago) = CURRENT_DATE
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def ultimos_pagos_inicio_contable(self):
+        """
+        Devuelve los últimos pagos para la tabla de inicio del contable.
+        Formato:
+        Cliente, Tarifa, Importe, Fecha, Estado
+        """
+        sql = """
+            SELECT u.nombre AS cliente,
+                   t.nombre AS tarifa,
+                   CONCAT(p.importe, ' €') AS importe,
+                   DATE(p.fecha_pago) AS fecha,
+                   p.estado
+            FROM pago p
+            INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
+            INNER JOIN tarifa t ON p.id_tarifa = t.id_tarifa
+            ORDER BY p.fecha_pago DESC
+            LIMIT 10
+        """
+        return self.consultar(sql)
+
+    def pagos_pendientes_inicio_contable(self):
+        """
+        Devuelve los clientes con pagos pendientes para la tabla de inicio.
+        Formato:
+        Cliente, Importe pendiente, Fecha límite
+        """
+        sql = """
+            SELECT u.nombre AS cliente,
+                   CONCAT(p.importe, ' €') AS importe_pendiente,
+                   DATE(p.fecha_pago) AS fecha_limite
+            FROM pago p
+            INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
+            WHERE p.estado = 'pendiente'
+            ORDER BY p.fecha_pago ASC
+        """
+        return self.consultar(sql)
+
+    def num_pagos_pendientes_contable(self):
+        """
+        Cuenta los pagos pendientes registrados.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM pago
+            WHERE estado = 'pendiente'
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def ingresos_mes_contable(self):
+        """
+        Calcula los ingresos abonados del mes actual.
+        """
+        sql = """
+            SELECT COALESCE(SUM(importe), 0)
+            FROM pago
+            WHERE estado = 'abonado'
+              AND YEAR(fecha_pago) = YEAR(CURRENT_DATE)
+              AND MONTH(fecha_pago) = MONTH(CURRENT_DATE)
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def num_tarifas_activas_contable(self):
+        """
+        Cuenta las tarifas activas.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM tarifa
+            WHERE fecha_fin IS NULL OR fecha_fin >= CURRENT_DATE
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+
+    def num_informes_mes_contable(self):
+        """
+        Cuenta los informes generados durante el mes actual.
+        """
+        sql = """
+            SELECT COUNT(*)
+            FROM informe
+            WHERE YEAR(fecha_generacion) = YEAR(CURRENT_DATE)
+              AND MONTH(fecha_generacion) = MONTH(CURRENT_DATE)
+        """
+        datos = self.consultar(sql)
+        return datos[0][0] if datos else 0
+    
+
+
+    def buscar_cliente_tarifa_por_dni(self, dni):
+        """
+        Busca un cliente por DNI y devuelve su tarifa activa.
+        Formato:
+        id_cliente, nombre, dni, id_tarifa, nombre_tarifa, precio_mensual
+        """
+        sql = """
+            SELECT u.id_usuario,
+                   u.nombre,
+                   u.dni,
+                   t.id_tarifa,
+                   t.nombre,
+                   t.precio_mensual
+            FROM usuarios u
+            INNER JOIN clientes c ON u.id_usuario = c.id_cliente
+            INNER JOIN cliente_tarifa ct ON c.id_cliente = ct.id_cliente
+            INNER JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
+            WHERE u.dni = ?
+              AND ct.estado = 'activa'
+            LIMIT 1
+        """
+        datos = self.consultar(sql, (dni,))
+        return datos[0] if datos else None
+
+    def registrar_pago_contable(self, dni_cliente, id_contable, metodo_pago, fecha_pago):
+        """
+        Registra el pago de un cliente usando su DNI.
+        Si ya existe un pago pendiente, lo actualiza a abonado.
+        Si no existe pago pendiente, crea un pago nuevo.
+        """
+        cliente = self.buscar_cliente_tarifa_por_dni(dni_cliente)
+
+        if not cliente:
+            return False, "No se ha encontrado ningún cliente con ese DNI o no tiene tarifa activa."
+
+        id_cliente = cliente[0]
+        nombre_cliente = cliente[1]
+        id_tarifa = cliente[3]
+        nombre_tarifa = cliente[4]
+        importe = cliente[5]
+
+        # Comprobar si ya existe un pago abonado de ese cliente en el mismo mes
+        sql_ya_abonado = """
+            SELECT id_pago
+            FROM pago
+            WHERE id_cliente = ?
+              AND estado = 'abonado'
+              AND YEAR(fecha_pago) = YEAR(?)
+              AND MONTH(fecha_pago) = MONTH(?)
+            LIMIT 1
+        """
+        ya_abonado = self.consultar(sql_ya_abonado, (id_cliente, fecha_pago, fecha_pago))
+
+        if ya_abonado:
+            return False, f"El cliente {nombre_cliente} ya tiene un pago abonado en ese mes."
+
+        # Buscar si ya existe un pago pendiente de ese cliente
+        sql_pendiente = """
+            SELECT id_pago
+            FROM pago
+            WHERE id_cliente = ?
+              AND estado = 'pendiente'
+            ORDER BY fecha_pago DESC
+            LIMIT 1
+        """
+        pendiente = self.consultar(sql_pendiente, (id_cliente,))
+
+        if pendiente:
+            id_pago = pendiente[0][0]
+
+            sql_update = """
+                UPDATE pago
+                SET estado = 'abonado',
+                    metodo_pago = ?,
+                    fecha_pago = ?,
+                    id_contable = ?
+                WHERE id_pago = ?
+            """
+            self.ejecutar(sql_update, (metodo_pago, fecha_pago, id_contable, id_pago))
+
+        else:
+            sql_insert = """
+                INSERT INTO pago
+                (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+                VALUES (?, ?, ?, ?, ?, ?, 'abonado', 'mensual')
+            """
+            self.ejecutar(sql_insert, (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago))
+
+        # Actualizar estado del cliente
+        sql_cliente = """
+            UPDATE clientes
+            SET estado_pagado = 'abonado'
+            WHERE id_cliente = ?
+        """
+        self.ejecutar(sql_cliente, (id_cliente,))
+
+        mensaje = f"Pago registrado correctamente para {nombre_cliente}.\nTarifa: {nombre_tarifa}\nImporte: {importe} €"
+        return True, mensaje
+
+>>>>>>> Stashed changes
 
     def recepcion_total_clientes(self):
         datos = self.consultar("""
@@ -1122,3 +1408,7 @@ class ServicioProyectoDaoJDBC:
             ORDER BY u.fecha_registro DESC
             LIMIT 8
         """)
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
