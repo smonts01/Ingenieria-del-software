@@ -248,19 +248,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Estadísticas</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="btnConfiguracion">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>305</y>
-       <width>150</width>
-       <height>36</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Configuración</string>
-     </property>
-    </widget>
     <widget class="QFrame" name="cardPanel">
      <property name="geometry">
       <rect>
@@ -412,28 +399,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </property>
      <property name="pixmap">
       <pixmap>../imagenes/grafico-de-barras.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="icoConfig">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>310</y>
-       <width>23</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:15pt &quot;Segoe UI Emoji&quot;;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>../imagenes/ajuste.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

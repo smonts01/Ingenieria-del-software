@@ -18,12 +18,12 @@ class Logica:
         return getattr(self._dao, nombre)
 
     def estadisticas_admin(self):
-        return self.servicio.estadisticas_admin()
+        return self._dao.estadisticas_admin()
 
 
     def ranking_usuarios_activos_estadisticas(self):
-        return self.servicio.ranking_usuarios_activos_estadisticas()
+        return self._dao.ranking_usuarios_activos_estadisticas()
 
 
     def ocupacion_por_clase_estadisticas(self):
-        return self.servicio.ocupacion_por_clase_estadisticas()
+        return self._dao.ocupacion_por_clase_estadisticas()
