@@ -698,8 +698,8 @@ QPushButton:checked {
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>30</y>
-        <width>151</width>
+        <y>40</y>
+        <width>101</width>
         <height>20</height>
        </rect>
       </property>
@@ -904,22 +904,6 @@ QPushButton:checked {
       </property>
       <property name="text">
        <string>este mes</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_14">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>51</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image: url(./src/vista/imagenes/informe-de-negocio.png)</string>
-      </property>
-      <property name="text">
-       <string/>
       </property>
      </widget>
     </widget>

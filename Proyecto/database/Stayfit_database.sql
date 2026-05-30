@@ -430,6 +430,148 @@ INSERT INTO pago
 VALUES
 (12, @id_contable, 1, 30.00, 'efectivo', 'pendiente', 'mensual');
 
+
+-- ============================================================
+-- DATOS DE PRUEBA PARA CONTABLE
+-- 
+-- ============================================================
+
+SET @tarifa_basico := (
+    SELECT id_tarifa
+    FROM tarifa
+    WHERE LOWER(nombre) = 'basico'
+    LIMIT 1
+);
+
+SET @tarifa_premium := (
+    SELECT id_tarifa
+    FROM tarifa
+    WHERE LOWER(nombre) = 'premium'
+    LIMIT 1
+);
+
+-- ============================================================
+-- CLIENTES EXTRA
+-- ============================================================
+
+INSERT INTO usuarios
+(dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
+VALUES
+('44444444D', 'Raúl Sánchez', '600444444', 'raul@stayfit.com', 'raul', 'raul1', 1, 'Calle Norte 12', '1998-04-12'),
+('55555555E', 'Elena Martín', '600555555', 'elena@stayfit.com', 'elena', 'elena1', 1, 'Calle Sur 8', '2001-09-20'),
+('66666666F', 'Mario López', '600666666', 'mario@stayfit.com', 'mario', 'mario1', 1, 'Avenida Centro 5', '1995-12-03'),
+('77777777G', 'Paula Gómez', '600777777', 'paula@stayfit.com', 'paula', 'paula1', 1, 'Calle Luna 3', '1999-06-15'),
+('88888888H', 'Andrés Ruiz', '600888888', 'andres@stayfit.com', 'andres', 'andres1', 1, 'Calle Sol 18', '1992-02-28');
+
+-- Crear registros en clientes
+-- El trigger también los meterá automáticamente en adulto o menor
+INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas)
+SELECT id_usuario, 'abonado', 0
+FROM usuarios
+WHERE username IN ('raul', 'elena', 'mario', 'paula', 'andres');
+
+-- Relacionar clientes con tarifas
+INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado)
+SELECT id_usuario, @tarifa_premium, '2026-01-01', 'activa'
+FROM usuarios
+WHERE username IN ('raul', 'paula');
+
+INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado)
+SELECT id_usuario, @tarifa_basico, '2026-01-01', 'activa'
+FROM usuarios
+WHERE username IN ('elena', 'mario', 'andres');
+
+-- ============================================================
+-- PAGOS ABONADOS
+-- ============================================================
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_basico, 30.00, 'tarjeta', '2026-03-10 10:00:00', 'abonado', 'mensual'
+FROM usuarios
+WHERE username = 'elena';
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_premium, 45.00, 'bizum', '2026-03-15 11:30:00', 'abonado', 'mensual'
+FROM usuarios
+WHERE username = 'raul';
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_basico, 30.00, 'efectivo', '2026-04-05 09:45:00', 'abonado', 'mensual'
+FROM usuarios
+WHERE username = 'mario';
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_premium, 45.00, 'tarjeta', '2026-04-18 18:20:00', 'abonado', 'mensual'
+FROM usuarios
+WHERE username = 'paula';
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_basico, 30.00, 'transferencia', '2026-05-02 12:00:00', 'abonado', 'mensual'
+FROM usuarios
+WHERE username = 'andres';
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_premium, 45.00, 'tarjeta', '2026-05-12 17:00:00', 'abonado', 'mensual'
+FROM usuarios
+WHERE username = 'raul';
+
+-- ============================================================
+-- PAGOS PENDIENTES
+-- ============================================================
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_basico, 30.00, 'efectivo', '2026-05-30 00:00:00', 'pendiente', 'mensual'
+FROM usuarios
+WHERE username = 'mario';
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_premium, 45.00, 'tarjeta', '2026-06-05 00:00:00', 'pendiente', 'mensual'
+FROM usuarios
+WHERE username = 'paula';
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+SELECT id_usuario, @id_contable, @tarifa_basico, 30.00, 'bizum', '2026-06-10 00:00:00', 'pendiente', 'mensual'
+FROM usuarios
+WHERE username = 'andres';
+
+-- Actualizar estado de clientes
+UPDATE clientes
+SET estado_pagado = 'pendiente'
+WHERE id_cliente IN (
+    SELECT id_usuario
+    FROM usuarios
+    WHERE username IN ('mario', 'paula', 'andres', 'lucia')
+);
+
+UPDATE clientes
+SET estado_pagado = 'abonado'
+WHERE id_cliente IN (
+    SELECT id_usuario
+    FROM usuarios
+    WHERE username IN ('raul', 'elena', 'marta', 'pablo')
+);
+
+-- ============================================================
+-- INFORMES GENERADOS DE PRUEBA
+-- ============================================================
+
+INSERT INTO informe (id_contable, tipo_informe, fecha_generacion)
+VALUES
+(@id_contable, 'Gestión económica', '2026-05-20 10:00:00'),
+(@id_contable, 'Informe de pagos', '2026-05-21 11:00:00'),
+(@id_contable, 'Informe de pagos pendientes', '2026-05-22 12:00:00'),
+(@id_contable, 'Balance mensual', '2026-05-23 13:00:00');
+
+
 SHOW TABLES;
 SELECT * FROM usuarios;
 SELECT * FROM clase;

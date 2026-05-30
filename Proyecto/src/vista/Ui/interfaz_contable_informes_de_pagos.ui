@@ -567,6 +567,9 @@ QPushButton:checked {
       <font>
        <family>Segoe UI</family>
        <pointsize>11</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="mouseTracking">
@@ -698,6 +701,29 @@ QPushButton:checked {
     border-radius: 12px;
 }</string>
      </property>
+     <widget class="QTableWidget" name="tablaInformePagos">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>90</y>
+        <width>411</width>
+        <height>211</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnExportarPDF">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>340</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Exportar informe a PDF</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QLabel" name="label_20">
      <property name="geometry">
