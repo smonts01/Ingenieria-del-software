@@ -1,8 +1,6 @@
 import os
-from PyQt5.QtWidgets import QMessageBox
-
-from src.modelo.dao.ClienteDaoJDBC import ClienteDaoJDBC
-from src.vista.logica_cliente import VentanaCliente
+from datetime import date
+from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView
 
 
 class ControladorCliente:
@@ -95,7 +93,8 @@ class ControladorCliente:
             pass
         
         #Pantalla clases todas
-        
+        if hasattr(v, "lblProxDatos"):
+            pass
         
         #Pantralla clases reservas
         if hasattr(v, "lblReservaClase1"):
@@ -201,8 +200,14 @@ class ControladorCliente:
         
         
         #Pantalla informacion
-        
-        
+        if hasattr(v, "lblHorarioTexto"):
+            pass
+        if hasattr(v, "lblDireccionGimnasio"):
+            pass
+        if hasattr(v, "lblEmailGimnasio"):
+            pass
+        if hasattr(v, "lblTelefonoGimnasio"):
+            pass
         
         
         
