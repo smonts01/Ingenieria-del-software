@@ -41,8 +41,6 @@ class ControladorAdministrador:
             v.btnPagos.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_pagos.ui"))
         if hasattr(v, "btnEstadisticas"):
             v.btnEstadisticas.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_estadisticas.ui"))
-        if hasattr(v, "btnConfiguracion"):
-            v.btnConfiguracion.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_configuracion.ui"))
         if hasattr(v, "btnActualizar"):
             v.btnActualizar.clicked.connect(self.cargar_datos)
         if hasattr(v, "btnNuevoTrabajador"):
@@ -51,28 +49,14 @@ class ControladorAdministrador:
             v.txtBuscarClientePendiente.textChanged.connect(self.filtrar_pagos_pendientes)
         if hasattr(v, "txtBuscarDNI"):
             v.txtBuscarDNI.textChanged.connect(self.filtrar_pagos_pendientes)
-        if hasattr(v, "tableWidget") or hasattr(v, "tablaPagoAdmin"):
-            try:
-                datos = self.modelo.listar_pagos_pendientes_admin()
-                tabla = v.tablaPagoAdmin if hasattr(v, "tablaPagoAdmin") else v.tableWidget
-                self._rellenar_tabla_pagos_admin(tabla, datos)
-                self._actualizar_resumen_pagos_admin()
-            except Exception as e:
-                print(f"Error pagos admin: {e}")
-        if hasattr(v, "btnRegistrarUsuario"):
-            v.btnRegistrarUsuario.clicked.connect(self.registrar_usuario)
-        
         if hasattr(v, "cmbRolUsuario") and v.cmbRolUsuario.count() == 0:
             v.cmbRolUsuario.addItems(["Cliente", "Entrenador", "Recepcionista", "Administrador", "Contable"])
 
-        if hasattr(v, "txtBuscar"):
+        if hasattr(v, "txtBuscar") and hasattr(v, "tablaClases"):
             v.txtBuscar.textChanged.connect(self.filtrar_clases)
 
         if hasattr(v, "txtBuscarInscripciones"):
             v.txtBuscarInscripciones.textChanged.connect(self.filtrar_inscripciones)
-
-        if hasattr(v, "btnGuardarCambios"):
-            v.btnGuardarCambios.clicked.connect(self.guardar_cambios_clase)
 
         # Tabs clientes/trabajadores
         if hasattr(v, "lblTabClientes"):
@@ -100,18 +84,10 @@ class ControladorAdministrador:
             v.btnRegistrarUsuario.clicked.connect(self.registrar_usuario)
         if hasattr(v, "btnGuardarCambios") and hasattr(v, "tablaClases"):
             v.btnGuardarCambios.clicked.connect(self.guardar_cambios_clase)
-        if hasattr(v, "btnGuardarCambios") and hasattr(v, "tablaClientes_2"):
-            v.btnGuardarCambios.clicked.connect(self.modificar_usuario)
-        if hasattr(v, "btnEliminarUsuario"):
-            v.btnEliminarUsuario.clicked.connect(self.eliminar_usuario)
 
         # CRUD clases
         if hasattr(v, "btnNuevaClase") and hasattr(v, "tablaClases"):
             v.btnNuevaClase.clicked.connect(self.anadir_fila_clase)
-        if hasattr(v, "btnModificarClase"):
-            v.btnModificarClase.clicked.connect(self.modificar_clase)
-        if hasattr(v, "btnEliminarClase"):
-            v.btnEliminarClase.clicked.connect(self.eliminar_clase)
 
     def cargar_datos(self):
         v = self.ventana
@@ -162,6 +138,15 @@ class ControladorAdministrador:
         if hasattr(v, "graficoFake"):
             self._dibujar_grafico_ingresos(v.graficoFake)
 
+
+        if hasattr(v, "tablaPagoAdmin") or hasattr(v, "tableWidget"):
+            try:
+                datos = self.modelo.listar_pagos_pendientes_admin()
+                tabla = v.tablaPagoAdmin if hasattr(v, "tablaPagoAdmin") else v.tableWidget
+                self._rellenar_tabla_pagos_admin(tabla, datos)
+                self._actualizar_resumen_pagos_admin()
+            except Exception as e:
+                print(f"Error pagos admin: {e}")
 
         if hasattr(v, "lblNumTrabajadores"):
             try: v.lblNumTrabajadores.setText(str(self.modelo.contar_trabajadores()))
@@ -290,7 +275,6 @@ class ControladorAdministrador:
             label.setText(f"Error gráfico:\n{str(e)[:60]}")
 
 
-
     def _rellenar_tabla_editable(self, tabla, datos):
         headers = ["ID","DNI","Nombre","Teléfono","Email","Usuario","Rol","Dirección","Fecha Nac."]
         tabla.setColumnCount(len(headers))
@@ -352,7 +336,6 @@ class ControladorAdministrador:
             MensajeView.warning(v, "Error", str(e))
 
 
-
     def filtrar_clientes(self):
         v = self.ventana
         if not hasattr(v, "tablaClientes_2"):
@@ -365,18 +348,6 @@ class ControladorAdministrador:
                 v.lblMostrando_2.setText(f"Mostrando {len(datos)} clientes")
         except Exception as e:
             print(f"Error filtrar_clientes: {e}")
-
-    def filtrar_clientes_estado(self):
-        v = self.ventana
-        if not hasattr(v, "tablaClientes_2") or not hasattr(v, "cmbEstado_2"):
-            return
-        estado = v.cmbEstado_2.currentText()
-        try:
-            datos = self.modelo.listar_clientes_completo() if estado == "Todos" else self.modelo.buscar_clientes_estado(estado)
-            self._rellenar(v.tablaClientes_2, datos)
-        except Exception as e:
-            print(f"Error filtrar_clientes_estado: {e}")
-
 
 
     def registrar_usuario(self):
@@ -430,92 +401,9 @@ class ControladorAdministrador:
         except Exception as e:
             MensajeView.warning(v, "Error", f"Error al registrar: {str(e)}")
 
-    def modificar_usuario(self):
-        v = self.ventana
-        try:
-            tabla = getattr(v,"tablaClientes_2",None)
-            if not tabla or tabla.currentRow()<0:
-                MensajeView.warning(v,"Error","Selecciona un usuario primero")
-                return
-            id_usuario = int(tabla.item(tabla.currentRow(),0).text())
-            telefono = v.txtTelefono.text().strip() if hasattr(v,"txtTelefono") else ""
-            email    = v.txtEmail.text().strip()    if hasattr(v,"txtEmail")    else ""
-            direccion= v.txtDireccion.text().strip() if hasattr(v,"txtDireccion") else ""
-            self.modelo.modificar_usuario(id_usuario,telefono,email,direccion)
-            MensajeView.information(v,"Correcto","Usuario actualizado")
-            self.cargar_datos()
-        except Exception as e:
-            MensajeView.warning(v,"Error",str(e))
-
-    def eliminar_usuario(self):
-        v = self.ventana
-        try:
-            tabla = getattr(v,"tablaClientes_2",None)
-            if not tabla or tabla.currentRow()<0:
-                MensajeView.warning(v,"Error","Selecciona un usuario primero")
-                return
-            id_usuario = int(tabla.item(tabla.currentRow(),0).text())
-            if MensajeView.question(v,"Confirmar","¿Eliminar este usuario?",
-                                    MensajeView.SI|MensajeView.NO)==MensajeView.SI:
-                self.modelo.eliminar_usuario(id_usuario)
-                MensajeView.information(v,"Correcto","Usuario eliminado")
-                self.cargar_datos()
-        except Exception as e:
-            MensajeView.warning(v,"Error",str(e))
 
 
-    def registrar_clase(self):
-        v = self.ventana
-        try:
-            nombre   = v.txtNombreClase.text().strip() if hasattr(v,"txtNombreClase") else ""
-            dia      = v.txtDiaSemana.text().strip()   if hasattr(v,"txtDiaSemana")   else "lunes"
-            hora_ini = v.txtHoraInicio.text().strip()  if hasattr(v,"txtHoraInicio")  else "09:00"
-            hora_fin = v.txtHoraFin.text().strip()     if hasattr(v,"txtHoraFin")     else "10:00"
-            duracion = int(v.txtDuracion.text())       if hasattr(v,"txtDuracion")    else 60
-            aforo    = int(v.txtAforo.text())          if hasattr(v,"txtAforo")       else 20
-            calorias = int(v.txtCalorias.text())       if hasattr(v,"txtCalorias")    else 300
-            nivel    = v.cmbNivel.currentText()        if hasattr(v,"cmbNivel")       else "media"
-            if not nombre:
-                MensajeView.warning(v,"Error","Introduce el nombre de la clase")
-                return
-            self.modelo.registrar_clase(self.usuario["id_usuario"],1,nombre,
-                                        calorias,dia,hora_ini,hora_fin,duracion,aforo,nivel)
-            MensajeView.information(v,"Correcto","Clase registrada")
-            self.cargar_datos()
-        except Exception as e:
-            MensajeView.warning(v,"Error",str(e))
 
-    def modificar_clase(self):
-        v = self.ventana
-        try:
-            tabla = getattr(v,"tablaClases",None)
-            if not tabla or tabla.currentRow()<0:
-                MensajeView.warning(v,"Error","Selecciona una clase primero")
-                return
-            id_clase = int(tabla.item(tabla.currentRow(),0).text())
-            nombre = v.txtNombreClase.text().strip() if hasattr(v,"txtNombreClase") else tabla.item(tabla.currentRow(),1).text()
-            self.modelo.modificar_clase(id_clase,self.usuario["id_usuario"],1,
-                                        nombre,300,"lunes","09:00","10:00",60,20,"media")
-            MensajeView.information(v,"Correcto","Clase modificada")
-            self.cargar_datos()
-        except Exception as e:
-            MensajeView.warning(v,"Error",str(e))
-
-    def eliminar_clase(self):
-        v = self.ventana
-        try:
-            tabla = getattr(v,"tablaClases",None)
-            if not tabla or tabla.currentRow()<0:
-                MensajeView.warning(v,"Error","Selecciona una clase primero")
-                return
-            id_clase = int(tabla.item(tabla.currentRow(),0).text())
-            if MensajeView.question(v,"Confirmar","¿Eliminar esta clase?",
-                                    MensajeView.SI|MensajeView.NO)==MensajeView.SI:
-                self.modelo.eliminar_clase(id_clase)
-                MensajeView.information(v,"Correcto","Clase eliminada")
-                self.cargar_datos()
-        except Exception as e:
-            MensajeView.warning(v,"Error",str(e))
 
  
 
@@ -536,8 +424,6 @@ class ControladorAdministrador:
             for col, valor in enumerate(registro[:len(cabeceras)]):
                 TablaView.poner_item(tabla, fila, col, valor)
 
-    def rellenar_tabla(self, tabla, datos):
-        self._rellenar(tabla, datos)
 
     def cerrar_sesion(self):
         self.ventana.close()

@@ -11,11 +11,6 @@ Estructura por roles:
     VistaAdminUsuariosClientes
     VistaAdminUsuariosTrabajadores
     VistaAdminNuevoUsuario
-    VistaAdminInscripciones
-    VistaAdminPagos
-    VistaAdminEstadisticas
-    VistaAdminConfiguracion
-
   CLIENTE
     VistaClienteInicio
     VistaClienteClasesTodas
@@ -64,7 +59,6 @@ from .vista_admin_nuevo_usuario import VistaAdminNuevoUsuario
 from .vista_admin_inscripciones import VistaAdminInscripciones
 from .vista_admin_pagos import VistaAdminPagos
 from .vista_admin_estadisticas import VistaAdminEstadisticas
-from .vista_admin_configuracion import VistaAdminConfiguracion
 
 from .vista_cliente_inicio import VistaClienteInicio
 from .vista_cliente_clases_todas import VistaClienteClasesTodas
@@ -109,7 +103,6 @@ __all__ = [
     "VistaAdminInicio", "VistaAdminClases", "VistaAdminUsuariosClientes",
     "VistaAdminUsuariosTrabajadores", "VistaAdminNuevoUsuario",
     "VistaAdminInscripciones", "VistaAdminPagos", "VistaAdminEstadisticas",
-    "VistaAdminConfiguracion",
     # Cliente
     "VistaClienteInicio", "VistaClienteClasesTodas", "VistaClienteReservas",
     "VistaClienteEstadisticas", "VistaClientePerfil", "VistaClienteInformacion",
