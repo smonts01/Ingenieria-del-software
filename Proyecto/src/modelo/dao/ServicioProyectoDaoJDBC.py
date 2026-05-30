@@ -1049,6 +1049,7 @@ class ServicioProyectoDaoJDBC:
             VALUES (?, ?, ?, ?)
         """
         return self.ejecutar(sql_insert, (id_cliente, id_clase, fecha, presente))
+<<<<<<< HEAD
     
     #CONTABLE
 
@@ -1225,3 +1226,78 @@ class ServicioProyectoDaoJDBC:
 
         mensaje = f"Pago registrado correctamente para {nombre_cliente}.\nTarifa: {nombre_tarifa}\nImporte: {importe} €"
         return True, mensaje
+=======
+
+    def recepcion_total_clientes(self):
+        datos = self.consultar("""
+            SELECT COUNT(*)
+            FROM clientes
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def recepcion_entradas_hoy(self):
+        datos = self.consultar("""
+            SELECT COUNT(*)
+            FROM registro_acceso
+            WHERE tipo_acceso = 'entrada'
+            AND DATE(fecha_hora_registro) = CURDATE()
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def recepcion_nuevos_usuarios_hoy(self):
+        datos = self.consultar("""
+            SELECT COUNT(*)
+            FROM usuarios
+            WHERE DATE(fecha_registro) = CURDATE()
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def recepcion_clases_hoy(self):
+        datos = self.consultar("""
+            SELECT COUNT(*)
+            FROM clase
+            WHERE LOWER(dia_semana) = LOWER(
+                CASE DAYOFWEEK(CURDATE())
+                    WHEN 1 THEN 'domingo'
+                    WHEN 2 THEN 'lunes'
+                    WHEN 3 THEN 'martes'
+                    WHEN 4 THEN 'miércoles'
+                    WHEN 5 THEN 'jueves'
+                    WHEN 6 THEN 'viernes'
+                    WHEN 7 THEN 'sábado'
+                END
+            )
+        """)
+        return datos[0][0] if datos else 0
+
+
+    def recepcion_ultimos_registros_acceso(self):
+        return self.consultar("""
+            SELECT 
+                u.nombre,
+                u.dni,
+                r.tipo_acceso,
+                r.fecha_hora_registro
+            FROM registro_acceso r
+            JOIN usuarios u ON r.id_usuario = u.id_usuario
+            ORDER BY r.fecha_hora_registro DESC
+            LIMIT 8
+        """)
+
+
+    def recepcion_clientes_recientes(self):
+        return self.consultar("""
+            SELECT 
+                u.nombre,
+                u.dni,
+                u.telefono,
+                u.fecha_registro
+            FROM usuarios u
+            JOIN clientes c ON u.id_usuario = c.id_cliente
+            ORDER BY u.fecha_registro DESC
+            LIMIT 8
+        """)
+>>>>>>> 87d04154688b8dfa78ccf62294416ce7ab0e7e7a

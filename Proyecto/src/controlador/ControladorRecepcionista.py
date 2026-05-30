@@ -28,29 +28,34 @@ class ControladorRecepcionista:
 
         if hasattr(v, "btnCerrarSesion"):
             v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
+
         if hasattr(v, "btnInicio"):
             v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista.ui"))
-        if hasattr(v, "btnClases"):
-            v.btnClases.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_clientes.ui"))
-        if hasattr(v, "btnInscripciones"):
-            v.btnInscripciones.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_registrar_usuario.ui"))
-        if hasattr(v, "btnPagos"):
-            v.btnPagos.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_control_de_acceso.ui"))
-        if hasattr(v, "btnOcupacion"):
-            v.btnOcupacion.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_perfil.ui"))
-        if hasattr(v, "btnInicio_4"):
-            v.btnInicio_4.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_registrar_usuario.ui"))
-        if hasattr(v, "btnInicio_5"):
-            v.btnInicio_5.clicked.connect(self.cargar_datos)
+
+        if hasattr(v, "btnClientes"):
+            v.btnClientes.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_clientes.ui"))
+
+        if hasattr(v, "btnRegistroUsuario"):
+            v.btnRegistroUsuario.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_registrar_usuario.ui"))
+
+        if hasattr(v, "btnControlAcceso"):
+            v.btnControlAcceso.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_control_de_acceso.ui"))
+
+        if hasattr(v, "btnPerfil"):
+            v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_perfil.ui"))
+
         # Control de acceso
         if hasattr(v, "btnInicio_2"):
             v.btnInicio_2.clicked.connect(lambda: self.registrar_acceso("entrada"))
+
         if hasattr(v, "btnInicio_3"):
             v.btnInicio_3.clicked.connect(lambda: self.registrar_acceso("salida"))
+
         # Registrar cliente
         if hasattr(v, "btnRegistrar") or hasattr(v, "btnConfirmar"):
             btn = getattr(v, "btnRegistrar", None) or getattr(v, "btnConfirmar", None)
             btn.clicked.connect(self.registrar_cliente)
+
         # Actualizar cliente
         if hasattr(v, "btnActualizar"):
             v.btnActualizar.clicked.connect(self.actualizar_cliente)
@@ -58,16 +63,23 @@ class ControladorRecepcionista:
     def cargar_datos(self):
         v = self.ventana
 
-        if hasattr(v, "tablaProximasClases"):
-            self.rellenar_tabla(v.tablaProximasClases, self.modelo.listar_clases())
-        if hasattr(v, "tablaProximasClases_2"):
-            self.rellenar_tabla(v.tablaProximasClases_2, self.modelo.pagos_pendientes())
+        # Inicio recepcionista
+        if hasattr(v, "lblNumClientes") and hasattr(v, "tablaUltimosRegistros"):
+            try:
+                self.cargar_inicio_recepcionista()
+                return
+            except Exception as e:
+                print(f"Error inicio recepcionista: {e}")
+
+        # Otras pantallas
         if hasattr(v, "tableWidget"):
             titulo = v.windowTitle().lower() if v.windowTitle() else ""
+
             if "control" in titulo or "acceso" in titulo:
                 datos = self.modelo.listar_accesos()
             else:
                 datos = self.modelo.listar_clientes()
+
             self.rellenar_tabla(v.tableWidget, datos)
 
     def registrar_acceso(self, tipo):
@@ -162,3 +174,62 @@ class ControladorRecepcionista:
     def cerrar_sesion(self):
         self.ventana.close()
         self.vista_login.show()
+
+    def cargar_inicio_recepcionista(self):
+        v = self.ventana
+
+        if hasattr(v, "lblNumClientes"):
+            v.lblNumClientes.setText(str(self.modelo.recepcion_total_clientes()))
+
+        if hasattr(v, "lblNumEntradas"):
+            v.lblNumEntradas.setText(str(self.modelo.recepcion_entradas_hoy()))
+
+        if hasattr(v, "lblNuevosUsuarios"):
+            v.lblNuevosUsuarios.setText(str(self.modelo.recepcion_nuevos_usuarios_hoy()))
+
+        if hasattr(v, "lblNumClasesHoy"):
+            v.lblNumClasesHoy.setText(str(self.modelo.recepcion_clases_hoy()))
+
+        if hasattr(v, "tablaUltimosRegistros"):
+            datos = self.modelo.recepcion_ultimos_registros_acceso()
+            self._rellenar_tabla_ultimos_registros(v.tablaUltimosRegistros, datos)
+
+        if hasattr(v, "tablaClientesRecientes"):
+            datos = self.modelo.recepcion_clientes_recientes()
+            self._rellenar_tabla_clientes_recientes(v.tablaClientesRecientes, datos)
+
+
+    def _rellenar_tabla_ultimos_registros(self, tabla, datos):
+        cabeceras = ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=False
+                )
+                tabla.setItem(fila, col, item)
+
+
+    def _rellenar_tabla_clientes_recientes(self, tabla, datos):
+        cabeceras = ["Cliente", "DNI", "Teléfono", "Fecha registro"]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=False
+                )
+                tabla.setItem(fila, col, item)
