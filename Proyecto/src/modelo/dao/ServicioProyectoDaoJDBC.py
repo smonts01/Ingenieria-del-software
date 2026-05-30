@@ -238,7 +238,27 @@ class ServicioProyectoDaoJDBC:
         """)
 
     def perfil_usuario(self, id_usuario: int):
-        return self._usuario_dao.selectById(id_usuario)
+        """
+        Devuelve el perfil de usuario en formato tupla para que los controladores
+        puedan usar índices como perfil[2], perfil[3], etc.
+        """
+        sql = """
+            SELECT u.id_usuario,
+                   u.dni,
+                   u.nombre,
+                   u.telefono,
+                   u.email,
+                   u.username,
+                   r.nombre_rol,
+                   u.direccion,
+                   u.fecha_registro,
+                   u.fecha_nacimiento
+            FROM usuarios u
+            INNER JOIN roles r ON u.id_rol = r.id_rol
+            WHERE u.id_usuario = ?
+        """
+        datos = self.consultar(sql, (id_usuario,))
+        return datos[0] if datos else None
 
     def datos_inicio_cliente(self, id_cliente: int):
         """Delega en ClienteDaoJDBC.selectInicioCliente que devuelve ClienteInicioVO."""
@@ -433,11 +453,23 @@ class ServicioProyectoDaoJDBC:
         """)
 
     def clientes_inscritos_clase(self, id_clase: int) -> list:
-        return self.consultar(f"""
-            SELECT u.id_usuario, u.nombre, u.email, u.telefono
-            FROM inscripcion i JOIN usuarios u ON i.id_cliente = u.id_usuario
-            WHERE i.id_clase = {id_clase} AND i.estado = 'inscrito'
-        """)
+        """
+        Devuelve los clientes inscritos en una clase.
+        Formato esperado por ControladorEntrenador:
+        id_cliente, nombre, telefono, email
+        """
+        sql = """
+            SELECT u.id_usuario,
+                   u.nombre,
+                   u.telefono,
+                   u.email
+            FROM inscripcion i
+            INNER JOIN usuarios u ON i.id_cliente = u.id_usuario
+            WHERE i.id_clase = ?
+              AND i.estado = 'inscrito'
+            ORDER BY u.nombre
+        """
+        return self.consultar(sql, (id_clase,))
 
     def listar_inscripciones_resumen(self) -> list:
         return self.consultar("""
@@ -884,8 +916,141 @@ class ServicioProyectoDaoJDBC:
             ORDER BY ocupacion DESC
             LIMIT 4
         """)
+    
 
-    def recepcion_total_clientes(self):
+    def clases_entrenador_tabla(self, id_entrenador):
+        """
+        Devuelve las clases de un entrenador en formato preparado para tablas:
+        Clase, Sala, Horario, Día y Capacidad.
+        """
+        sql = """
+            SELECT c.nombre_actividad,
+                   s.nombre AS sala,
+                   CONCAT(c.hora_inicio, ' - ', c.hora_fin) AS horario,
+                   c.dia_semana,
+                   CONCAT(COUNT(i.id_inscripcion), '/', c.aforo_maximo) AS capacidad
+            FROM clase c
+            INNER JOIN sala s ON c.id_sala = s.id_sala
+            LEFT JOIN inscripcion i
+                ON c.id_clase = i.id_clase
+                AND i.estado = 'inscrito'
+            WHERE c.id_entrenador = ?
+            GROUP BY c.id_clase,
+                     c.nombre_actividad,
+                     s.nombre,
+                     c.hora_inicio,
+                     c.hora_fin,
+                     c.dia_semana,
+                     c.aforo_maximo
+            ORDER BY c.hora_inicio
+        """
+        return self.consultar(sql, (id_entrenador,))
+
+    def ocupacion_clases_entrenador(self, id_entrenador):
+        """
+        Devuelve la ocupación de las clases de un entrenador.
+        Formato:
+        id_clase, nombre_actividad, inscritos, aforo_maximo, ocupacion
+        """
+        sql = """
+            SELECT c.id_clase,
+                   c.nombre_actividad,
+                   COUNT(i.id_inscripcion) AS inscritos,
+                   c.aforo_maximo,
+                   CAST(COUNT(i.id_inscripcion) * 100.0 / c.aforo_maximo AS DECIMAL(5,2)) AS ocupacion
+            FROM clase c
+            LEFT JOIN inscripcion i
+                ON c.id_clase = i.id_clase
+                AND i.estado = 'inscrito'
+            WHERE c.id_entrenador = ?
+            GROUP BY c.id_clase,
+                     c.nombre_actividad,
+                     c.aforo_maximo
+            ORDER BY ocupacion DESC
+        """
+        return self.consultar(sql, (id_entrenador,))
+
+    def informacion_clase_con_sala(self, id_clase):
+        """
+        Devuelve la información completa de una clase junto con la sala.
+        Se usa en Clientes inscritos para actualizar la tarjeta superior.
+        """
+        sql = """
+            SELECT c.nombre_actividad,
+                   s.nombre,
+                   c.dia_semana,
+                   c.hora_inicio,
+                   c.hora_fin,
+                   c.aforo_maximo
+            FROM clase c
+            INNER JOIN sala s ON c.id_sala = s.id_sala
+            WHERE c.id_clase = ?
+        """
+        datos = self.consultar(sql, (id_clase,))
+        return datos[0] if datos else None
+
+    def buscar_clase(self, id_clase):
+        """
+        Busca una clase por ID.
+        Devuelve SELECT * para mantener los índices que usa ControladorEntrenador:
+        clase[3] = nombre_actividad
+        clase[5] = dia_semana
+        clase[6] = hora_inicio
+        clase[7] = hora_fin
+        """
+        sql = """
+            SELECT id_clase,
+                   id_entrenador,
+                   id_sala,
+                   nombre_actividad,
+                   calorias_estimadas,
+                   dia_semana,
+                   hora_inicio,
+                   hora_fin,
+                   duracion,
+                   aforo_maximo,
+                   nivel_intensidad
+            FROM clase
+            WHERE id_clase = ?
+        """
+        datos = self.consultar(sql, (id_clase,))
+        return datos[0] if datos else None
+
+    def asistencia_clase_fecha(self, id_clase, fecha):
+        """
+        Devuelve la asistencia registrada de una clase en una fecha concreta.
+        Sirve para que al volver a abrir la pantalla aparezca si/no y no Pendiente.
+        """
+        sql = """
+            SELECT id_cliente,
+                   presente
+            FROM asistencia
+            WHERE id_clase = ?
+              AND fecha = ?
+            ORDER BY id_asistencia
+        """
+        return self.consultar(sql, (id_clase, fecha))
+
+    def registrar_asistencia(self, id_cliente, id_clase, fecha, presente):
+        """
+        Registra o actualiza la asistencia de un cliente para una clase y fecha.
+        Primero borra la asistencia previa de ese día para evitar duplicados.
+        """
+        sql_delete = """
+            DELETE FROM asistencia
+            WHERE id_cliente = ?
+              AND id_clase = ?
+              AND fecha = ?
+        """
+        self.ejecutar(sql_delete, (id_cliente, id_clase, fecha))
+
+        sql_insert = """
+            INSERT INTO asistencia (id_cliente, id_clase, fecha, presente)
+            VALUES (?, ?, ?, ?)
+        """
+        return self.ejecutar(sql_insert, (id_cliente, id_clase, fecha, presente))
+
+     def recepcion_total_clientes(self):
         datos = self.consultar("""
             SELECT COUNT(*)
             FROM clientes
