@@ -711,6 +711,19 @@ QPushButton:checked {
        </rect>
       </property>
      </widget>
+     <widget class="QPushButton" name="btnExportarPDF">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>190</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Exportar informe a PDF</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QLabel" name="label_22">
      <property name="geometry">

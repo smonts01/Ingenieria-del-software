@@ -731,6 +731,19 @@ image: url(./src/vista/imagenes/tabla-de-ingresos.png);</string>
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="btnExportarPDF">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>320</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Exportar informe a PDF</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QLabel" name="label_13">
      <property name="geometry">

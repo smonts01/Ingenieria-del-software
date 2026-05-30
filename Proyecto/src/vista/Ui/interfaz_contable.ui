@@ -906,22 +906,6 @@ QPushButton:checked {
        <string>este mes</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_14">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>51</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">image: url(./src/vista/imagenes/informe-de-negocio.png)</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="cardTabla">
      <property name="geometry">

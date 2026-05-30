@@ -713,12 +713,15 @@ class ServicioProyectoDaoJDBC:
         """)
 
     def contar_clientes_tarifa(self, nombre_tarifa: str) -> int:
-        t = nombre_tarifa.lower()
-        datos = self.consultar(f"""
+        t = f"%{nombre_tarifa.lower()}%"
+        datos = self.consultar(
+            """
             SELECT COUNT(*) FROM cliente_tarifa ct
             JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
-            WHERE LOWER(t.nombre) LIKE '%{t}%' AND ct.estado = 'activa'
-        """)
+            WHERE LOWER(t.nombre) LIKE ? AND ct.estado = 'activa'
+            """,
+            (t,)
+        )
         return datos[0][0] if datos else 0
 
     def generar_informe(self, id_contable: int, tipo: str):
@@ -1407,15 +1410,10 @@ class ServicioProyectoDaoJDBC:
         return total_ingresos, total_gastos, balance
     
     def informe_balance_mensual_contable(self):
-        """
-        Devuelve el balance mensual.
-        Formato: Año, Mes, Ingresos, Gastos, Balance
-        """
-
         sql = """
             SELECT YEAR(fecha_pago) AS anio,
-                   MONTH(fecha_pago) AS mes,
-                   COALESCE(SUM(importe), 0) AS ingresos
+                MONTH(fecha_pago) AS mes,
+                COALESCE(SUM(importe), 0) AS ingresos
             FROM pago
             WHERE estado = 'abonado'
             GROUP BY YEAR(fecha_pago), MONTH(fecha_pago)
@@ -1424,7 +1422,10 @@ class ServicioProyectoDaoJDBC:
 
         ingresos_mensuales = self.consultar(sql)
 
-        gastos = self.contable_total_nominas()
+        # Gasto mensual estimado = suma total de salarios / 12
+        # Es una estimación razonable mientras no haya tabla de gastos por mes
+        total_nominas = self.contable_total_nominas()
+        gasto_mensual = total_nominas / 12 if total_nominas else 0
 
         resultado = []
 
@@ -1432,13 +1433,13 @@ class ServicioProyectoDaoJDBC:
             anio = fila[0]
             mes = fila[1]
             ingresos = fila[2]
-            balance = ingresos - gastos
+            balance = ingresos - gasto_mensual  # ahora el gasto es proporcional
 
             resultado.append((
                 anio,
                 mes,
                 f"{float(ingresos):.2f} €",
-                f"{float(gastos):.2f} €",
+                f"{float(gasto_mensual):.2f} €",
                 f"{float(balance):.2f} €"
             ))
 

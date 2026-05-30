@@ -123,6 +123,10 @@ class ControladorContable:
                 self.cargar_pagos_pendientes_filtrados
             )
 
+        
+        if hasattr(v, "btnExportarPDF"):
+            v.btnExportarPDF.clicked.connect(self.exportar_pdf)
+
     def cargar_datos(self):
         v = self.ventana
 
@@ -152,7 +156,7 @@ class ControladorContable:
 
         if hasattr(v, "labelIngresosMes"):
             ingresos = self.modelo.ingresos_mes_contable()
-            v.labelIngresosMes.setText(f"{float(ingresos):.2f} €")
+            v.labelIngresosMes.setText(f"{float(ingresos):.2f} \u20ac")
 
         if hasattr(v, "labelNumTarifas"):
             total_tarifas = self.modelo.num_tarifas_activas_contable()
@@ -612,25 +616,13 @@ class ControladorContable:
             MensajeView.warning(v, "Error", str(e))
 
 
+     
     def generar_y_abrir_informe(self, tipo_informe, archivo_ui):
-        """
-        Genera un informe en la base de datos y abre su pantalla correspondiente.
-        """
-
         try:
-            self.modelo.generar_informe(
-                self.usuario["id_usuario"],
-                tipo_informe
-            )
-
-            self.abrir_pantalla(archivo_ui)
-
+            self._tipo_informe_actual = tipo_informe  # guardamos el tipo para usarlo al exportar
+            self.abrir_pantalla(archivo_ui)            # solo abrimos la pantalla, sin guardar nada
         except Exception as e:
-            MensajeView.warning(
-                self.ventana,
-                "Error",
-                f"No se pudo generar el informe: {e}"
-            )
+            MensajeView.warning(self.ventana, "Error", f"No se pudo generar el informe: {e}")
 
 
 
@@ -667,6 +659,102 @@ class ControladorContable:
         
         tabla.resizeColumnsToContents()
         tabla.resizeRowsToContents()
+
+
+    #-----------------------------------
+    # EXPORTAMOS INFORMES A PDF
+    #-----------------------------------
+    def exportar_pdf(self):
+        from reportlab.lib.pagesizes import A4
+        from reportlab.lib import colors
+        from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+        from reportlab.lib.styles import getSampleStyleSheet
+        from datetime import datetime
+        import os
+
+        v = self.ventana
+
+        # Busca qué tabla tiene datos en la pantalla actual
+        tabla_widget = None
+        for nombre in ("tablaInformeGestionEconomica", "tablaInformePagos",
+                    "tablaInformePagosPendientes", "tablaInformeBalanceMensual"):
+            if hasattr(v, nombre):
+                tabla_widget = getattr(v, nombre)
+                break
+
+        if tabla_widget is None:
+            MensajeView.warning(v, "Error", "No hay tabla de informe en esta pantalla.")
+            return
+
+        # Extrae cabeceras y datos de la tabla Qt
+        cabeceras = []
+        for col in range(tabla_widget.columnCount()):
+            item = tabla_widget.horizontalHeaderItem(col)
+            cabeceras.append(item.text() if item else "")
+
+        filas = [cabeceras]
+        for fila in range(tabla_widget.rowCount()):
+            fila_datos = []
+            for col in range(tabla_widget.columnCount()):
+                item = tabla_widget.item(fila, col)
+                fila_datos.append(item.text() if item else "")
+            filas.append(fila_datos)
+
+        if len(filas) <= 1:
+            MensajeView.warning(v, "Sin datos", "El informe no tiene datos para exportar.")
+            return
+
+        # Nombre del archivo con fecha
+        tipo = getattr(self, "_tipo_informe_actual", "informe")
+        fecha_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+        nombre_archivo = f"{tipo.replace(' ', '_')}_{fecha_str}.pdf"
+        
+        import ctypes.wintypes
+        buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+        ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, buf)
+        ruta = os.path.join(buf.value, nombre_archivo)
+
+        # Genera el PDF
+        doc = SimpleDocTemplate(ruta, pagesize=A4)
+        estilos = getSampleStyleSheet()
+        elementos = []
+
+        elementos.append(Paragraph(f"StayFit — {tipo}", estilos["Title"]))
+        elementos.append(Paragraph(
+            f"Generado el {datetime.now().strftime('%d/%m/%Y a las %H:%M')}",
+            estilos["Normal"]
+        ))
+        elementos.append(Spacer(1, 20))
+
+        tabla_pdf = Table(filas, repeatRows=1)
+        tabla_pdf.setStyle(TableStyle([
+            ("BACKGROUND",  (0, 0), (-1, 0),  colors.HexColor("#1D9E75")),
+            ("TEXTCOLOR",   (0, 0), (-1, 0),  colors.white),
+            ("FONTNAME",    (0, 0), (-1, 0),  "Helvetica-Bold"),
+            ("FONTSIZE",    (0, 0), (-1, 0),  11),
+            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F1FFF8")]),
+            ("FONTSIZE",    (0, 1), (-1, -1), 9),
+            ("GRID",        (0, 0), (-1, -1), 0.5, colors.HexColor("#9FE1CB")),
+            ("ALIGN",       (0, 0), (-1, -1), "CENTER"),
+            ("VALIGN",      (0, 0), (-1, -1), "MIDDLE"),
+            ("TOPPADDING",  (0, 0), (-1, -1), 6),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ]))
+        elementos.append(tabla_pdf)
+
+        doc.build(elementos)
+
+        # Registra el informe en BD solo al exportar
+        try:
+            tipo_actual = getattr(self, "_tipo_informe_actual", "informe")
+            self.modelo.generar_informe(self.usuario["id_usuario"], tipo_actual)
+            self.cargar_datos()
+        except Exception:
+            pass
+
+        MensajeView.information(v, "PDF exportado", f"Guardado en:\n{ruta}")
+
+
 
 
 
