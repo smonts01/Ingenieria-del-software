@@ -304,6 +304,41 @@ class ServicioProyectoDaoJDBC:
                  v.hora_fin, v.aforo_maximo, v.nivel_intensidad, v.calorias_estimadas)
                 for v in vos]
 
+    def listar_inscripciones_resumen(self) -> list:
+        return self.consultar("""
+            SELECT 
+                u.nombre,
+                c.nombre_actividad,
+                i.fecha_inscripcion,
+                i.estado
+            FROM inscripcion i
+            JOIN usuarios u ON i.id_cliente = u.id_usuario
+            JOIN clase c ON i.id_clase = c.id_clase
+            WHERE i.estado = 'inscrito'
+            ORDER BY i.fecha_inscripcion DESC
+        """)
+
+    def buscar_inscripciones(self, texto: str) -> list:
+        t = texto.lower()
+
+        return self.consultar(f"""
+            SELECT 
+                u.nombre,
+                c.nombre_actividad,
+                i.fecha_inscripcion,
+                i.estado
+            FROM inscripcion i
+            JOIN usuarios u ON i.id_cliente = u.id_usuario
+            JOIN clase c ON i.id_clase = c.id_clase
+            WHERE i.estado = 'inscrito'
+            AND (
+                    LOWER(u.nombre) LIKE '%{t}%'
+                OR LOWER(c.nombre_actividad) LIKE '%{t}%'
+                OR LOWER(i.estado) LIKE '%{t}%'
+            )
+            ORDER BY i.fecha_inscripcion DESC
+        """)
+
     def clases_de_entrenador(self, id_entrenador: int) -> list:
         vos = self._clase_dao.selectByEntrenador(id_entrenador)
         return [(v.id_clase, v.nombre_actividad, v.dia_semana, v.hora_inicio,
@@ -356,6 +391,20 @@ class ServicioProyectoDaoJDBC:
                    hora_fin, aforo_maximo, nivel_intensidad, calorias_estimadas
             FROM clase WHERE LOWER(nombre_actividad) LIKE '%{t}%'
             ORDER BY nombre_actividad
+        """)
+
+    def listar_inscripciones_resumen(self) -> list:
+        return self.consultar("""
+            SELECT 
+                u.nombre,
+                c.nombre_actividad,
+                i.fecha_inscripcion,
+                i.estado
+            FROM inscripcion i
+            JOIN usuarios u ON i.id_cliente = u.id_usuario
+            JOIN clase c ON i.id_clase = c.id_clase
+            WHERE i.estado = 'inscrito'
+            ORDER BY i.fecha_inscripcion DESC
         """)
 
     def ocupacion_clases(self) -> list:

@@ -470,7 +470,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string>Gestiona las inscripciones de clientes a las clases del gimnasio.</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="txtBuscar">
+    <widget class="QLineEdit" name="txtBuscarInscripciones">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -482,46 +482,6 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      <property name="placeholderText">
       <string>Buscar inscripción...</string>
      </property>
-    </widget>
-    <widget class="QComboBox" name="cmbClase">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>90</y>
-       <width>170</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>Todas las clases</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Zumba</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Pilates</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Crossfit</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Yoga</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Spinning</string>
-      </property>
-     </item>
     </widget>
     <widget class="QFrame" name="cardTabla">
      <property name="geometry">
@@ -964,7 +924,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
 }</string>
        </property>
        <property name="text">
-        <string>Yoga</string>
+        <string>boomba</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_5">
@@ -1010,22 +970,23 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
         <string>inscripciones</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_17">
+      <widget class="QLabel" name="icoResumen_2">
        <property name="geometry">
         <rect>
-         <x>2</x>
-         <y>20</y>
+         <x>5</x>
+         <y>15</y>
          <width>51</width>
-         <height>31</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/estrella.png);
-background: transparent;
-border: None;</string>
+        <string notr="true">background-color:#D8F4F0; border-radius:24px;</string>
        </property>
-       <property name="text">
-        <string/>
+       <property name="pixmap">
+        <pixmap>../imagenes/estrella.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -1118,22 +1079,23 @@ border: None;</string>
         <string>de ocupación</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_20">
+      <widget class="QLabel" name="icoPagos_3">
        <property name="geometry">
         <rect>
-         <x>2</x>
+         <x>10</x>
          <y>20</y>
-         <width>51</width>
-         <height>31</height>
+         <width>41</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/usuarios.png);
-background: transparent;
-border: None;</string>
+        <string notr="true">background:transparent</string>
        </property>
-       <property name="text">
-        <string/>
+       <property name="pixmap">
+        <pixmap>../imagenes/usuarios.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -1248,22 +1210,26 @@ border: None;</string>
         <string>inscripciones</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_18">
+      <widget class="QLabel" name="icoPagos_2">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>20</y>
-         <width>51</width>
-         <height>31</height>
+         <width>41</width>
+         <height>41</height>
         </rect>
        </property>
-       <property name="styleSheet">
-        <string notr="true">image:url(:/newPrefix/decreciente.png);
-background: transparent;
-border: None;</string>
+       <property name="autoFillBackground">
+        <bool>false</bool>
        </property>
-       <property name="text">
-        <string/>
+       <property name="styleSheet">
+        <string notr="true">background:transparent</string>
+       </property>
+       <property name="pixmap">
+        <pixmap>../imagenes/decreciente.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -1272,8 +1238,7 @@ border: None;</string>
     <zorder>fondoOla</zorder>
     <zorder>lblTitulo</zorder>
     <zorder>lblSubtitulo</zorder>
-    <zorder>txtBuscar</zorder>
-    <zorder>cmbClase</zorder>
+    <zorder>txtBuscarInscripciones</zorder>
     <zorder>cardTabla</zorder>
     <zorder>cardResumen</zorder>
     <zorder>label_2</zorder>

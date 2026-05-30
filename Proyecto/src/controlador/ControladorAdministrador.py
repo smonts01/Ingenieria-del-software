@@ -56,6 +56,10 @@ class ControladorAdministrador:
 
         if hasattr(v, "txtBuscar"):
             v.txtBuscar.textChanged.connect(self.filtrar_clases)
+
+        if hasattr(v, "txtBuscarInscripciones"):
+            v.txtBuscarInscripciones.textChanged.connect(self.filtrar_inscripciones)
+
         if hasattr(v, "btnGuardarCambios"):
             v.btnGuardarCambios.clicked.connect(self.guardar_cambios_clase)
 
@@ -72,6 +76,7 @@ class ControladorAdministrador:
         # Pantalla trabajadores
         if hasattr(v, "txtBuscarTrabajador"):
             v.txtBuscarTrabajador.textChanged.connect(self.filtrar_trabajadores)
+
         if hasattr(v, "cmbRoles"):
             v.cmbRoles.currentIndexChanged.connect(self.filtrar_por_rol)
             if v.cmbRoles.count() == 0:
@@ -128,7 +133,8 @@ class ControladorAdministrador:
         if hasattr(v, "tablaInscripciones"):
             try:
                 datos = self.modelo.listar_inscripciones_resumen()
-                self._rellenar(v.tablaInscripciones, datos)
+                self._rellenar_tabla_inscripciones(v.tablaInscripciones, datos)
+                self._actualizar_resumen_inscripciones(datos)
             except Exception as e:
                 print(f"Error tablaInscripciones: {e}")
 
@@ -547,6 +553,26 @@ class ControladorAdministrador:
 
         except Exception as e:
             print(f"Error filtrar_clases: {e}")
+
+    def filtrar_inscripciones(self):
+        v = self.ventana
+
+        if not hasattr(v, "tablaInscripciones"):
+            return
+
+        texto = v.txtBuscarInscripciones.text().strip() if hasattr(v, "txtBuscarInscripciones") else ""
+
+        try:
+            if texto:
+                datos = self.modelo.buscar_inscripciones(texto)
+            else:
+                datos = self.modelo.listar_inscripciones_resumen()
+
+            self._rellenar_tabla_inscripciones(v.tablaInscripciones, datos)
+            self._actualizar_resumen_inscripciones(datos)
+
+        except Exception as e:
+            print(f"Error filtrar_inscripciones: {e}")
             
     def guardar_cambios_clase(self):
         v = self.ventana
@@ -667,16 +693,34 @@ class ControladorAdministrador:
                 item = TablaView.crear_item(str(valor) if valor is not None else "", editable=editable)
                 tabla.setItem(fila, col, item)
 
+    def _rellenar_tabla_inscripciones(self, tabla, datos):
+        cabeceras = ["Usuario", "Clase", "Fecha", "Estado"]
 
-    def _actualizar_resumen_clases(self, datos):
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=True
+                )
+                tabla.setItem(fila, col, item)
+
+
+    def _actualizar_resumen_inscripciones(self, datos):
         v = self.ventana
         total = len(datos)
 
-        if hasattr(v, "lblTotalClases"):
-            v.lblTotalClases.setText(str(total))
+        if hasattr(v, "lblTotalInscripciones"):
+            v.lblTotalInscripciones.setText(str(total))
 
         if hasattr(v, "lblMostrando"):
-            v.lblMostrando.setText(f"Mostrando {total} clases")
+            v.lblMostrando.setText(f"Mostrando {total} inscripciones")
 
 
     def anadir_fila_clase(self):
