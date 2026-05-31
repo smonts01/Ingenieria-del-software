@@ -45,14 +45,17 @@ class ControladorRecepcionista:
             v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_perfil.ui"))
 
         # Control de acceso
-        #if hasattr(v, "btnInicio_2"):
-            #v.btnInicio_2.clicked.connect(lambda: self.registrar_acceso("entrada"))
+        if hasattr(v, "txtDNIoID"):
+            v.txtDNIoID.textChanged.connect(self.buscar_cliente_control_acceso)
 
-        if hasattr(v, "btnInicio_3"):
-            v.btnInicio_3.clicked.connect(lambda: self.registrar_acceso("salida"))
+        if hasattr(v, "btnEntrada"):
+            v.btnEntrada.clicked.connect(lambda: self.registrar_acceso_control("entrada"))
+
+        if hasattr(v, "btnSalida"):
+            v.btnSalida.clicked.connect(lambda: self.registrar_acceso_control("salida"))
 
         if hasattr(v, "btnInicio_20"):
-            v.btnInicio_2.clicked.connect(self.registrar_cliente)
+            v.btnInicio_20.clicked.connect(self.registrar_cliente)
 
         # Actualizar cliente
         if hasattr(v, "btnActualizar"):
@@ -68,6 +71,17 @@ class ControladorRecepcionista:
                 return
             except Exception as e:
                 print(f"Error inicio recepcionista: {e}")
+
+
+        # Pantalla control de acceso
+        if hasattr(v, "txtDNIoID") and hasattr(v, "tableAccesos"):
+            try:
+                self.limpiar_cliente_control_acceso()
+                datos = self.modelo.listar_ultimos_accesos_control()
+                self._rellenar_tabla_accesos_control(v.tableAccesos, datos)
+                return
+            except Exception as e:
+                print(f"Error control acceso recepcionista: {e}")
 
         # Otras pantallas
         if hasattr(v, "tableWidget"):
@@ -262,6 +276,126 @@ class ControladorRecepcionista:
 
     def _rellenar_tabla_clientes_recientes(self, tabla, datos):
         cabeceras = ["Cliente", "DNI", "Teléfono", "Fecha registro"]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=False
+                )
+                tabla.setItem(fila, col, item)
+
+
+    def limpiar_cliente_control_acceso(self):
+        v = self.ventana
+
+        if hasattr(v, "lblNombre"):
+            v.lblNombre.setText("Cliente no seleccionado")
+
+        if hasattr(v, "lblDNI"):
+            v.lblDNI.setText("DNI: -")
+
+        if hasattr(v, "lblID"):
+            v.lblID.setText("ID: -")
+
+        if hasattr(v, "lblEstado"):
+            v.lblEstado.setText("Estado pago: -")
+
+        self.cliente_control_actual = None
+
+
+    def buscar_cliente_control_acceso(self):
+        v = self.ventana
+
+        if not hasattr(v, "txtDNIoID"):
+            return
+
+        texto = v.txtDNIoID.text().strip()
+
+        if not texto:
+            self.limpiar_cliente_control_acceso()
+            return
+
+        try:
+            cliente = self.modelo.buscar_cliente_acceso_por_dni_o_id(texto)
+
+            if not cliente:
+                self.cliente_control_actual = None
+
+                if hasattr(v, "lblNombre"):
+                    v.lblNombre.setText("Cliente no encontrado")
+                if hasattr(v, "lblDNI"):
+                    v.lblDNI.setText("DNI: -")
+                if hasattr(v, "lblID"):
+                    v.lblID.setText("ID: -")
+                if hasattr(v, "lblEstado"):
+                    v.lblEstado.setText("")
+
+                return
+
+            id_usuario = cliente[0]
+            dni = cliente[1]
+            nombre = cliente[2]
+            estado_pago = cliente[3]
+
+            self.cliente_control_actual = {
+                "id_usuario": id_usuario,
+                "dni": dni,
+                "nombre": nombre,
+                "estado_pago": estado_pago
+            }
+
+            if hasattr(v, "lblNombre"):
+                v.lblNombre.setText(str(nombre))
+
+            if hasattr(v, "lblDNI"):
+                v.lblDNI.setText(f"DNI: {dni}")
+
+            if hasattr(v, "lblID"):
+                v.lblID.setText(f"ID: {id_usuario}")
+
+            if hasattr(v, "lblEstado"):
+                v.lblEstado.setText(str(estado_pago))
+
+        except Exception as e:
+            print(f"Error buscar cliente control acceso: {e}")
+
+
+    def registrar_acceso_control(self, tipo_acceso):
+        v = self.ventana
+
+        if not hasattr(self, "cliente_control_actual") or not self.cliente_control_actual:
+            MensajeView.warning(v, "Error", "Primero busca un cliente por DNI o ID")
+            return
+
+        try:
+            id_usuario = self.cliente_control_actual["id_usuario"]
+
+            self.modelo.registrar_acceso_cliente_control(id_usuario, tipo_acceso)
+
+            MensajeView.information(
+                v,
+                "Correcto",
+                f"{'Entrada' if tipo_acceso == 'entrada' else 'Salida'} registrada correctamente"
+            )
+
+            datos = self.modelo.listar_ultimos_accesos_control()
+
+            if hasattr(v, "tableAccesos"):
+                self._rellenar_tabla_accesos_control(v.tableAccesos, datos)
+
+        except Exception as e:
+            MensajeView.warning(v, "Error", str(e))
+
+
+    def _rellenar_tabla_accesos_control(self, tabla, datos):
+        cabeceras = ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"]
 
         TablaView.configurar_columnas(tabla, cabeceras)
         tabla.setColumnCount(len(cabeceras))
