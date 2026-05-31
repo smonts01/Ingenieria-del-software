@@ -41,7 +41,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -172,7 +172,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -393,7 +393,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblBienvenida">
      <property name="geometry">
