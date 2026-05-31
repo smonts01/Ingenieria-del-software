@@ -61,6 +61,23 @@ class ControladorRecepcionista:
         if hasattr(v, "btnActualizar"):
             v.btnActualizar.clicked.connect(self.actualizar_cliente)
 
+    # Pantalla clientes recepcionista
+        if hasattr(v, "lblBuscarDNI"):
+            v.lblBuscarDNI.textChanged.connect(self.filtrar_clientes_recepcionista)
+
+        if hasattr(v, "comboBox_adultomenor"):
+            if v.comboBox_adultomenor.count() == 0:
+                v.comboBox_adultomenor.addItems(["Todos", "Adulto", "Menor"])
+            v.comboBox_adultomenor.currentIndexChanged.connect(self.filtrar_clientes_recepcionista)
+
+        if hasattr(v, "comboBox_plan"):
+            if v.comboBox_plan.count() == 0:
+                v.comboBox_plan.addItems(["Todos", "Basico", "Premium"])
+            v.comboBox_plan.currentIndexChanged.connect(self.filtrar_clientes_recepcionista)
+
+        if hasattr(v, "btnCambios"):
+            v.btnCambios.clicked.connect(self.guardar_cambios_clientes_recepcionista)
+
     def cargar_datos(self):
         v = self.ventana
 
@@ -82,7 +99,13 @@ class ControladorRecepcionista:
                 return
             except Exception as e:
                 print(f"Error control acceso recepcionista: {e}")
-
+        if hasattr (v, "lblTotalClientes") and hasattr (v, "TablaClientes"):
+            try:
+                self.cargar_clientes_recepcionista()
+                return
+            except Exception as e:
+                print(f"Error clientes recepcionista: {e}")
+                
         # Otras pantallas
         if hasattr(v, "tableWidget"):
             titulo = v.windowTitle().lower() if v.windowTitle() else ""
