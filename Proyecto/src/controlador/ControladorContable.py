@@ -65,8 +65,6 @@ class ControladorContable:
             )
 
         
-        # Botones internos de la pantalla Informes
-        # Al pulsar una tarjeta, se guarda el informe y se abre su pantalla
 
         if hasattr(v, "btnInformeGestionEconomica"):
             v.btnInformeGestionEconomica.clicked.connect(
@@ -101,19 +99,18 @@ class ControladorContable:
             )
         
 
-        # Botón real para registrar pago
         if hasattr(v, "btnConfirmarRegistrarPago"):
             v.btnConfirmarRegistrarPago.clicked.connect(self.registrar_pago)
 
-        # En tu interfaz actual el botón grande se llama btnInicio_2
+        
         if hasattr(v, "btnInicio_2"):
             v.btnInicio_2.clicked.connect(self.registrar_pago)
 
-        # Botón para marcar pago pendiente como abonado
+       
         if hasattr(v, "btnMarcarAbonado"):
             v.btnMarcarAbonado.clicked.connect(self.marcar_abonado)
 
-        # Botón para generar informe
+        
         if hasattr(v, "btnGenerarInforme"):
             v.btnGenerarInforme.clicked.connect(self.generar_informe)
 
@@ -127,11 +124,16 @@ class ControladorContable:
         if hasattr(v, "btnExportarPDF"):
             v.btnExportarPDF.clicked.connect(self.exportar_pdf)
 
+        # Buscar por el DNI
+        if hasattr(v, "lineEdit") and hasattr(v, "lblNombreCliente_8"):
+            v.lineEdit.returnPressed.connect(self.buscar_cliente_registrar_pago)
+
+
     def cargar_datos(self):
         v = self.ventana
 
         # ============================================================
-        # INICIO CONTABLE
+        # INICIO 
         # ============================================================
 
         if hasattr(v, "tablaUltimosPagos"):
@@ -182,9 +184,11 @@ class ControladorContable:
             total_informes = self.modelo.num_informes_mes_contable()
             v.labelInformesRegistro.setText(str(total_informes))
 
+
+
         # ============================================================
         # PANTALLA PAGOS PENDIENTES
-        # Esta pantalla se reconoce porque tiene txtBuscarClientePendiente
+        # 
         # ============================================================
 
         if hasattr(v, "comboFiltroPagos"):
@@ -359,17 +363,6 @@ class ControladorContable:
             perfil = self.modelo.perfil_usuario(self.usuario["id_usuario"])
 
             if perfil:
-                # perfil_usuario devuelve:
-                # 0 id_usuario
-                # 1 dni
-                # 2 nombre
-                # 3 telefono
-                # 4 email
-                # 5 username
-                # 6 rol
-                # 7 direccion
-                # 8 fecha_registro
-                # 9 fecha_nacimiento
 
                 v.labelPerfilNombre.setText(str(perfil[2]))
                 v.labelPerfilRol.setText(str(perfil[6]).capitalize())
@@ -409,7 +402,7 @@ class ControladorContable:
                 v.labelPerfilImporteGestionado.setText(f"{float(importe_gestionado):.2f} €")
 
         # ============================================================
-        # OTRAS PANTALLAS DEL CONTABLE
+        # El resto de pantallas
         # ============================================================
 
         if hasattr(v, "tableWidget") and not hasattr(v, "comboFiltroPagos"):
@@ -508,7 +501,38 @@ class ControladorContable:
             datos_filtrados,
             ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
         )
+
+    def buscar_cliente_registrar_pago(self):
+        v = self.ventana
+        dni = v.lineEdit.text().strip().upper()
+
+        if not dni:
+            return
+
     
+        cliente = self.modelo.buscar_cliente_tarifa_por_dni(dni)
+
+        if cliente:
+            id_cliente = str(cliente[0])
+            nombre     = str(cliente[1])
+            dni_real   = str(cliente[2])
+
+            v.lblNombreCliente_8.setText(nombre)
+            v.lblNombreCliente_9.setText(f"DNI: {dni_real}")
+            v.lblNombreCliente_10.setText(f"ID:{id_cliente}")
+
+            # Compruebo si tiene pago pendiente
+            pago = self.modelo.buscar_pago_pendiente_por_dni(dni)
+            if pago:
+                v.btnCalorias_2.setText("Pendiente")
+            else:
+                v.btnCalorias_2.setText("Al corriente")
+        else:
+            v.lblNombreCliente_8.setText("Cliente no encontrado")
+            v.lblNombreCliente_9.setText("DNI: -")
+            v.lblNombreCliente_10.setText("ID: -")
+            v.btnCalorias_2.setText("Sin datos")
+        
 
     def registrar_pago(self):
         v = self.ventana
@@ -558,7 +582,7 @@ class ControladorContable:
                 from datetime import datetime
                 fecha_pago = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             else:
-                # Escribe la fecha como: 2026-05-30
+                
                 fecha_pago = fecha_texto + " 00:00:00"
 
             correcto, mensaje = self.modelo.registrar_pago_contable(
@@ -619,8 +643,8 @@ class ControladorContable:
      
     def generar_y_abrir_informe(self, tipo_informe, archivo_ui):
         try:
-            self._tipo_informe_actual = tipo_informe  # guardamos el tipo para usarlo al exportar
-            self.abrir_pantalla(archivo_ui)            # solo abrimos la pantalla, sin guardar nada
+            self._tipo_informe_actual = tipo_informe  
+            self.abrir_pantalla(archivo_ui)            
         except Exception as e:
             MensajeView.warning(self.ventana, "Error", f"No se pudo generar el informe: {e}")
 
@@ -661,9 +685,7 @@ class ControladorContable:
         tabla.resizeRowsToContents()
 
 
-    #-----------------------------------
-    # EXPORTAMOS INFORMES A PDF
-    #-----------------------------------
+    
     def exportar_pdf(self):
         from reportlab.lib.pagesizes import A4
         from reportlab.lib import colors
@@ -744,7 +766,7 @@ class ControladorContable:
 
         doc.build(elementos)
 
-        # Registra el informe en BD solo al exportar
+       
         try:
             tipo_actual = getattr(self, "_tipo_informe_actual", "informe")
             self.modelo.generar_informe(self.usuario["id_usuario"], tipo_actual)

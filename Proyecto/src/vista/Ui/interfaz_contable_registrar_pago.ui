@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -182,6 +182,26 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <width>141</width>
        <height>36</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #FFFFFF;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+}
+
+QPushButton:checked {
+    background-color: #DDF7F3;
+    color: #333333;
+    font-weight: bold;
+}</string>
      </property>
      <property name="text">
       <string>Registrar pago</string>
@@ -399,7 +419,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -418,7 +438,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -437,7 +457,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>../imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -456,7 +476,7 @@ QPushButton:checked {
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/caja-registradora.png</pixmap>
+      <pixmap>../imagenes/caja-registradora.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -596,7 +616,9 @@ QPushButton:checked {
     background-color: #DDF7F3;
     color: #333333;
     font-weight: bold;
-}</string>
+}
+
+</string>
      </property>
      <property name="text">
       <string>Inicio</string>
@@ -880,7 +902,7 @@ QPushButton:checked {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/usuario.png</pixmap>
+       <pixmap>../imagenes/usuario.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -986,7 +1008,7 @@ QPushButton:checked {
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>src/vista/imagenes/usuario.png</pixmap>
+        <pixmap>../imagenes/usuario.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -1614,7 +1636,7 @@ QPushButton:checked {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/boton-de-verificacion.png</pixmap>
+       <pixmap>../imagenes/boton-de-verificacion.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
