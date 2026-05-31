@@ -1672,4 +1672,76 @@ class ServicioProyectoDaoJDBC:
 
         return id_cliente
     
-    
+        
+
+    def buscar_cliente_acceso_por_dni_o_id(self, texto):
+        texto = str(texto).strip()
+
+        if texto.isdigit():
+            sql = """
+                SELECT u.id_usuario,
+                    u.dni,
+                    u.nombre,
+                    c.estado_pagado
+                FROM usuarios u
+                INNER JOIN clientes c ON u.id_usuario = c.id_cliente
+                WHERE u.id_usuario = ?
+                LIMIT 1
+            """
+            datos = self.consultar(sql, (int(texto),))
+        else:
+            sql = """
+                SELECT u.id_usuario,
+                    u.dni,
+                    u.nombre,
+                    c.estado_pagado
+                FROM usuarios u
+                INNER JOIN clientes c ON u.id_usuario = c.id_cliente
+                WHERE LOWER(u.dni) = LOWER(?)
+                LIMIT 1
+            """
+            datos = self.consultar(sql, (texto,))
+
+        return datos[0] if datos else None
+
+
+    def ultimo_acceso_cliente(self, id_usuario):
+        sql = """
+            SELECT tipo_acceso
+            FROM registro_acceso
+            WHERE id_usuario = ?
+            ORDER BY fecha_hora_registro DESC
+            LIMIT 1
+        """
+        datos = self.consultar(sql, (id_usuario,))
+        return datos[0][0] if datos else None
+
+
+    def registrar_acceso_cliente_control(self, id_usuario, tipo_acceso):
+        tipo_acceso = tipo_acceso.lower().strip()
+
+        if tipo_acceso not in ("entrada", "salida"):
+            raise ValueError("Tipo de acceso no válido")
+
+        ultimo = self.ultimo_acceso_cliente(id_usuario)
+
+        if tipo_acceso == "salida" and ultimo != "entrada":
+            raise ValueError("No se puede registrar una salida sin una entrada previa")
+
+        if tipo_acceso == "entrada" and ultimo == "entrada":
+            raise ValueError("Este cliente ya tiene una entrada registrada sin salida")
+
+        return self.registrar_acceso(id_usuario, tipo_acceso)
+
+
+    def listar_ultimos_accesos_control(self):
+        return self.consultar("""
+            SELECT u.nombre,
+                u.dni,
+                r.tipo_acceso,
+                r.fecha_hora_registro
+            FROM registro_acceso r
+            INNER JOIN usuarios u ON r.id_usuario = u.id_usuario
+            ORDER BY r.fecha_hora_registro DESC
+            LIMIT 20
+        """)
