@@ -89,6 +89,13 @@ class ControladorRecepcionista:
             except Exception as e:
                 print(f"Error inicio recepcionista: {e}")
 
+        # Pantalla perfil recepcionista
+        if hasattr(v, "label_Nombre") and hasattr(v, "label_7"):
+            try:
+                self.cargar_perfil_recepcionista()
+                return
+            except Exception as e:
+                print(f"Error perfil recepcionista: {e}")
 
         # Pantalla control de acceso
         if hasattr(v, "txtDNIoID") and hasattr(v, "tableAccesos"):
@@ -99,7 +106,7 @@ class ControladorRecepcionista:
                 return
             except Exception as e:
                 print(f"Error control acceso recepcionista: {e}")
-        if hasattr (v, "lblTotalClientes") and hasattr (v, "TablaClientes"):
+        if hasattr (v, "lblTotalClientes") and hasattr (v, "tablaClientes"):
             try:
                 self.cargar_clientes_recepcionista()
                 return
@@ -433,3 +440,159 @@ class ControladorRecepcionista:
                     editable=False
                 )
                 tabla.setItem(fila, col, item)
+
+    def cargar_clientes_recepcionista(self):
+        v = self.ventana
+
+        if hasattr(v, "lblTotalClientes"):
+            v.lblTotalClientes.setText(str(self.modelo.recepcion_total_clientes_lista()))
+
+        if hasattr(v, "lblNuevosMes"):
+            v.lblNuevosMes.setText(str(self.modelo.recepcion_nuevos_clientes_mes()))
+
+        self.filtrar_clientes_recepcionista()
+
+
+    def filtrar_clientes_recepcionista(self):
+        v = self.ventana
+
+        if not hasattr(v, "tablaClientes"):
+            return
+
+        dni = v.lblBuscarDNI.text().strip() if hasattr(v, "lblBuscarDNI") else ""
+        tipo = v.comboBox_adultomenor.currentText().strip() if hasattr(v, "comboBox_adultomenor") else "Todos"
+        plan = v.comboBox_plan.currentText().strip() if hasattr(v, "comboBox_plan") else "Todos"
+
+        try:
+            datos = self.modelo.recepcion_listar_clientes_filtrados(dni, tipo, plan)
+            self._rellenar_tabla_clientes_recepcionista(v.tablaClientes, datos)
+
+            if hasattr(v, "lblTotalClientes"):
+                v.lblTotalClientes.setText(str(self.modelo.recepcion_total_clientes_lista()))
+
+            if hasattr(v, "lblNuevosMes"):
+                v.lblNuevosMes.setText(str(self.modelo.recepcion_nuevos_clientes_mes()))
+
+        except Exception as e:
+            print(f"Error filtrar_clientes_recepcionista: {e}")
+
+
+    def _rellenar_tabla_clientes_recepcionista(self, tabla, datos):
+        cabeceras = [
+            "ID",
+            "DNI",
+            "Nombre",
+            "Teléfono",
+            "Email",
+            "Dirección",
+            "Nacimiento",
+            "Estado pago",
+            "Tipo",
+            "Plan"
+        ]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                editable = col not in (0, 8, 9)
+
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=editable
+                )
+
+                tabla.setItem(fila, col, item)
+
+
+    def guardar_cambios_clientes_recepcionista(self):
+        v = self.ventana
+
+        if not hasattr(v, "tablaClientes"):
+            return
+
+        tabla = v.tablaClientes
+
+        try:
+            for fila in range(tabla.rowCount()):
+                id_item = tabla.item(fila, 0)
+
+                if not id_item or not id_item.text().strip():
+                    continue
+
+                id_cliente = int(id_item.text().strip())
+
+                dni = tabla.item(fila, 1).text().strip() if tabla.item(fila, 1) else ""
+                nombre = tabla.item(fila, 2).text().strip() if tabla.item(fila, 2) else ""
+                telefono = tabla.item(fila, 3).text().strip() if tabla.item(fila, 3) else ""
+                email = tabla.item(fila, 4).text().strip() if tabla.item(fila, 4) else ""
+                direccion = tabla.item(fila, 5).text().strip() if tabla.item(fila, 5) else ""
+                nacimiento = tabla.item(fila, 6).text().strip() if tabla.item(fila, 6) else ""
+                estado_pago = tabla.item(fila, 7).text().strip() if tabla.item(fila, 7) else "pendiente"
+
+                if not dni or not nombre:
+                    MensajeView.warning(v, "Error", f"La fila {fila + 1} debe tener DNI y nombre")
+                    return
+
+                if estado_pago.lower() not in ("abonado", "pendiente"):
+                    MensajeView.warning(
+                        v,
+                        "Error",
+                        f"El estado de pago de la fila {fila + 1} debe ser abonado o pendiente"
+                    )
+                    return
+
+                self.modelo.recepcion_guardar_cambios_cliente(
+                    id_cliente,
+                    dni,
+                    nombre,
+                    telefono,
+                    email,
+                    direccion,
+                    nacimiento,
+                    estado_pago.lower()
+                )
+
+            MensajeView.information(v, "Correcto", "Cambios de clientes guardados correctamente")
+            self.filtrar_clientes_recepcionista()
+
+        except Exception as e:
+            MensajeView.warning(v, "Error", f"Error al guardar cambios: {str(e)}")
+
+    def cargar_perfil_recepcionista(self):
+        v = self.ventana
+
+        id_usuario = self.usuario["id_usuario"]
+        perfil = self.modelo.perfil_usuario(id_usuario)
+
+        if perfil is None:
+            return
+
+        # perfil:
+        # 0 id_usuario
+        # 1 dni
+        # 2 nombre
+        # 3 telefono
+        # 4 email
+        # 5 username
+        # 6 rol
+        # 7 direccion
+        # 8 fecha_registro
+        # 9 fecha_nacimiento
+
+        if hasattr(v, "label_Nombre"):
+            v.label_Nombre.setText(str(perfil[2]))
+
+        if hasattr(v, "label_7"):
+            v.label_7.setText(str(perfil[4]))
+
+        if hasattr(v, "label_9"):
+            v.label_9.setText(str(perfil[1]))
+
+        if hasattr(v, "label_16"):
+            v.label_16.setText(str(perfil[7]))

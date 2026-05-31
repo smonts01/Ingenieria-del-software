@@ -39,7 +39,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -167,7 +167,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -388,7 +388,7 @@ QLabel#lblCheck1, QLabel#lblCheck2, QLabel#lblCheck3, QLabel#lblCheck4, QLabel#l
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="fondoOla">
      <property name="geometry">

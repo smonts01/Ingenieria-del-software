@@ -42,7 +42,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -164,7 +164,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -370,7 +370,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblTituloEstadisticas">
      <property name="geometry">

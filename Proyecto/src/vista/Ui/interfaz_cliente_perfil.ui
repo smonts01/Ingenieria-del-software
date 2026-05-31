@@ -42,7 +42,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -170,7 +170,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -376,7 +376,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::Shape::NoFrame</enum>
+     <enum>QFrame::NoFrame</enum>
     </property>
     <widget class="QLabel" name="labelFondoOla">
      <property name="geometry">
@@ -799,7 +799,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
      </widget>
      <widget class="QFrame" name="barraProgresoValor">
@@ -812,7 +812,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
      </widget>
      <widget class="QLabel" name="lblPorcentaje">

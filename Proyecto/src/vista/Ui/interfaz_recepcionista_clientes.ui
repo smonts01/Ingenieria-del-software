@@ -251,6 +251,9 @@ QPushButton:checked {
       <font>
        <family>Segoe UI</family>
        <pointsize>11</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
@@ -822,7 +825,7 @@ QPushButton:checked {
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/informacion.png</pixmap>
+       <pixmap>../imagenes/informacion.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
