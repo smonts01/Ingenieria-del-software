@@ -1,8 +1,14 @@
 import os
+from datetime import datetime
 from src.vista.componentes import CargadorVista, MensajeView, TablaView
 
 
 class ControladorRecepcionista:
+    """Controlador de las pantallas del perfil recepcionista.
+
+    Responsabilidad MVC: gestiona eventos de la vista y delega la lógica de
+    negocio en self.modelo (capa Logica). No accede a DAO ni ejecuta SQL.
+    """
 
     def __init__(self, modelo, usuario, ruta_ui, vista_login):
         self.modelo = modelo
@@ -10,6 +16,7 @@ class ControladorRecepcionista:
         self.ruta_ui = ruta_ui
         self.vista_login = vista_login
         self.ventana = None
+        self.cliente_control_actual = None
 
     def abrir(self):
         self.abrir_pantalla("interfaz_recepcionista.ui")
@@ -19,6 +26,7 @@ class ControladorRecepcionista:
             self.ventana.close()
         ruta = os.path.join(self.ruta_ui, archivo)
         self.ventana = CargadorVista.cargar(ruta)
+        self.marcar_boton_activo(archivo)
         self.conectar_botones()
         self.cargar_datos()
         self.ventana.show()
@@ -29,226 +37,316 @@ class ControladorRecepcionista:
         if hasattr(v, "btnCerrarSesion"):
             v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
 
-        if hasattr(v, "btnInicio"):
-            v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista.ui"))
+        self._conectar_navegacion(v)
 
-        if hasattr(v, "btnClientes"):
-            v.btnClientes.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_clientes.ui"))
-
-        if hasattr(v, "btnRegistroUsuario"):
-            v.btnRegistroUsuario.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_registrar_usuario.ui"))
-
-        if hasattr(v, "btnControlAcceso"):
-            v.btnControlAcceso.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_control_de_acceso.ui"))
-
-        if hasattr(v, "btnPerfil"):
-            v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_perfil.ui"))
+        # Registrar usuario / cliente
+        boton_registrar = self._buscar_widget("btnInicio_20", "btnInicio_2", "btnRegistrar", "btnConfirmar")
+        if boton_registrar and (self._buscar_widget("DNI", "lineEdit") is not None):
+            boton_registrar.clicked.connect(self.registrar_cliente)
 
         # Control de acceso
-        if hasattr(v, "txtDNIoID"):
-            v.txtDNIoID.textChanged.connect(self.buscar_cliente_control_acceso)
+        buscador_acceso = self._buscar_widget("txtDNIoID", "lineEdit")
+        if buscador_acceso and self._buscar_tabla_accesos() is not None:
+            buscador_acceso.textChanged.connect(self.buscar_cliente_control_acceso)
 
-        if hasattr(v, "btnEntrada"):
-            v.btnEntrada.clicked.connect(lambda: self.registrar_acceso_control("entrada"))
+        boton_entrada = self._buscar_widget("btnEntrada", "btnInicio_3")
+        if boton_entrada and self._buscar_tabla_accesos() is not None:
+            boton_entrada.clicked.connect(lambda: self.registrar_acceso_control("entrada"))
 
-        if hasattr(v, "btnSalida"):
-            v.btnSalida.clicked.connect(lambda: self.registrar_acceso_control("salida"))
+        boton_salida = self._buscar_widget("btnSalida", "btnInicio_4")
+        if boton_salida and self._buscar_tabla_accesos() is not None:
+            boton_salida.clicked.connect(lambda: self.registrar_acceso_control("salida"))
 
-        if hasattr(v, "btnInicio_20"):
-            v.btnInicio_20.clicked.connect(self.registrar_cliente)
+        # Clientes recepcionista
+        buscador_clientes = self._buscar_widget("lblBuscarDNI", "lineEdit")
+        if buscador_clientes and self._buscar_tabla_clientes() is not None:
+            buscador_clientes.textChanged.connect(self.filtrar_clientes_recepcionista)
 
-        # Actualizar cliente
+        combo_tipo = self._buscar_widget("comboBox_adultomenor", "comboBox_2")
+        if combo_tipo and self._buscar_tabla_clientes() is not None:
+            if combo_tipo.count() == 0:
+                combo_tipo.addItems(["Todos", "Adulto", "Menor"])
+            combo_tipo.currentIndexChanged.connect(self.filtrar_clientes_recepcionista)
+
+        combo_plan = self._buscar_widget("comboBox_plan", "comboBox_3")
+        if combo_plan and self._buscar_tabla_clientes() is not None:
+            if combo_plan.count() == 0:
+                combo_plan.addItems(["Todos", "Basico", "Premium"])
+            combo_plan.currentIndexChanged.connect(self.filtrar_clientes_recepcionista)
+
+        boton_cambios = self._buscar_widget("btnCambios", "btnInicio_5")
+        if boton_cambios and self._buscar_tabla_clientes() is not None:
+            boton_cambios.clicked.connect(self.guardar_cambios_clientes_recepcionista)
+
         if hasattr(v, "btnActualizar"):
             v.btnActualizar.clicked.connect(self.actualizar_cliente)
 
-    # Pantalla clientes recepcionista
-        if hasattr(v, "lblBuscarDNI"):
-            v.lblBuscarDNI.textChanged.connect(self.filtrar_clientes_recepcionista)
+    def _conectar_navegacion(self, v):
+        conexiones = {
+            "btnInicio": "interfaz_recepcionista.ui",
+            "btnInicio_2": "interfaz_recepcionista.ui",
+            "btnInicio_3": "interfaz_recepcionista.ui",
+            "btnInicio_5": "interfaz_recepcionista.ui",
+            "btnRegistroUsuario": "interfaz_recepcionista_registrar_usuario.ui",
+            "btnControlAcceso": "interfaz_recepcionista_control_de_acceso.ui",
+            "btnClientes": "interfaz_recepcionista_clientes.ui",
+            "btnPerfil": "interfaz_recepcionista_perfil.ui",
+        }
+        # Solo conectamos los botones de menú. Los botones btnInicio_2/3/5 también
+        # existen como acciones en algunas pantallas, por eso comprobamos contexto.
+        if hasattr(v, "btnInicio"):
+            v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista.ui"))
+        if hasattr(v, "btnRegistroUsuario"):
+            v.btnRegistroUsuario.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_registrar_usuario.ui"))
+        if hasattr(v, "btnControlAcceso"):
+            v.btnControlAcceso.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_control_de_acceso.ui"))
+        if hasattr(v, "btnClientes"):
+            v.btnClientes.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_clientes.ui"))
+        if hasattr(v, "btnPerfil"):
+            v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista_perfil.ui"))
 
-        if hasattr(v, "comboBox_adultomenor"):
-            if v.comboBox_adultomenor.count() == 0:
-                v.comboBox_adultomenor.addItems(["Todos", "Adulto", "Menor"])
-            v.comboBox_adultomenor.currentIndexChanged.connect(self.filtrar_clientes_recepcionista)
+        # Menú en UI antiguas donde el botón de inicio no se llama btnInicio
+        if hasattr(v, "btnInicio_2") and self._buscar_tabla_clientes() is not None:
+            v.btnInicio_2.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista.ui"))
+        if hasattr(v, "btnInicio_3") and self._buscar_widget("lineEdit_7") is not None:
+            v.btnInicio_3.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista.ui"))
+        if hasattr(v, "btnInicio_5") and self._buscar_tabla_accesos() is not None:
+            v.btnInicio_5.clicked.connect(lambda: self.abrir_pantalla("interfaz_recepcionista.ui"))
 
-        if hasattr(v, "comboBox_plan"):
-            if v.comboBox_plan.count() == 0:
-                v.comboBox_plan.addItems(["Todos", "Basico", "Premium"])
-            v.comboBox_plan.currentIndexChanged.connect(self.filtrar_clientes_recepcionista)
-
-        if hasattr(v, "btnCambios"):
-            v.btnCambios.clicked.connect(self.guardar_cambios_clientes_recepcionista)
+    def marcar_boton_activo(self, archivo):
+        v = self.ventana
+        mapa = {
+            "interfaz_recepcionista.ui": "btnInicio",
+            "interfaz_recepcionista_registrar_usuario.ui": "btnRegistroUsuario",
+            "interfaz_recepcionista_control_de_acceso.ui": "btnControlAcceso",
+            "interfaz_recepcionista_clientes.ui": "btnClientes",
+            "interfaz_recepcionista_perfil.ui": "btnPerfil",
+        }
+        for nombre in ["btnInicio", "btnRegistroUsuario", "btnControlAcceso", "btnClientes", "btnPerfil"]:
+            if hasattr(v, nombre):
+                btn = getattr(v, nombre)
+                btn.setCheckable(True)
+                btn.setChecked(nombre == mapa.get(archivo))
 
     def cargar_datos(self):
         v = self.ventana
 
-        # Inicio recepcionista
         if hasattr(v, "lblNumClientes") and hasattr(v, "tablaUltimosRegistros"):
-            try:
-                self.cargar_inicio_recepcionista()
-                return
-            except Exception as e:
-                print(f"Error inicio recepcionista: {e}")
+            self.cargar_inicio_recepcionista()
+            return
 
-        # Pantalla perfil recepcionista
+        if self._buscar_tabla_accesos() is not None and self._buscar_widget("txtDNIoID", "lineEdit") is not None:
+            self.limpiar_cliente_control_acceso()
+            datos = self.modelo.listar_ultimos_accesos_control()
+            self._rellenar_tabla_accesos_control(self._buscar_tabla_accesos(), datos)
+            return
+
+        if self._buscar_tabla_clientes() is not None and self._buscar_widget("comboBox_adultomenor", "comboBox_2") is not None:
+            self.cargar_clientes_recepcionista()
+            return
+
         if hasattr(v, "label_Nombre") and hasattr(v, "label_7"):
-            try:
-                self.cargar_perfil_recepcionista()
-                return
-            except Exception as e:
-                print(f"Error perfil recepcionista: {e}")
+            self.cargar_perfil_recepcionista()
+            return
 
-        # Pantalla control de acceso
-        if hasattr(v, "txtDNIoID") and hasattr(v, "tableAccesos"):
-            try:
-                self.limpiar_cliente_control_acceso()
-                datos = self.modelo.listar_ultimos_accesos_control()
-                self._rellenar_tabla_accesos_control(v.tableAccesos, datos)
-                return
-            except Exception as e:
-                print(f"Error control acceso recepcionista: {e}")
-        if hasattr (v, "lblTotalClientes") and hasattr (v, "tablaClientes"):
-            try:
-                self.cargar_clientes_recepcionista()
-                return
-            except Exception as e:
-                print(f"Error clientes recepcionista: {e}")
-                
-        # Otras pantallas
         if hasattr(v, "tableWidget"):
-            titulo = v.windowTitle().lower() if v.windowTitle() else ""
+            self.rellenar_tabla(v.tableWidget, self.modelo.listar_clientes())
 
-            if "control" in titulo or "acceso" in titulo:
-                datos = self.modelo.listar_accesos()
-            else:
-                datos = self.modelo.listar_clientes()
+    # ── Helpers para compatibilidad con nombres antiguos/nuevos de .ui ─────
+    def _buscar_widget(self, *nombres):
+        for nombre in nombres:
+            if hasattr(self.ventana, nombre):
+                return getattr(self.ventana, nombre)
+        return None
 
-            self.rellenar_tabla(v.tableWidget, datos)
+    def _texto(self, *nombres):
+        w = self._buscar_widget(*nombres)
+        return w.text().strip() if w is not None else ""
 
-    def registrar_acceso(self, tipo):
+    def _buscar_tabla_clientes(self):
+        return self._buscar_widget("tablaClientes", "tableWidget")
+
+    def _buscar_tabla_accesos(self):
+        return self._buscar_widget("tableAccesos", "tableWidget")
+
+    # ── Inicio recepcionista ───────────────────────────────────────────────
+    def cargar_inicio_recepcionista(self):
         v = self.ventana
-        try:
-            campo = None
-            for nombre in ("lineEdit", "txtId", "txtUsuario"):
-                if hasattr(v, nombre):
-                    campo = getattr(v, nombre)
-                    break
-            if not campo or not campo.text().strip():
-                MensajeView.warning(v, "Error", "Introduce el ID del usuario")
-                return
-            id_usuario = int(campo.text().strip())
-            self.modelo.registrar_acceso(id_usuario, tipo)
-            MensajeView.information(v, "Correcto", f"{'Entrada' if tipo == 'entrada' else 'Salida'} registrada")
-            self.cargar_datos()
-        except ValueError:
-            MensajeView.warning(v, "Error", "El ID debe ser un número")
-        except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
+        if hasattr(v, "lblNumClientes"):
+            v.lblNumClientes.setText(str(self.modelo.recepcion_total_clientes()))
+        if hasattr(v, "lblNumEntradas"):
+            v.lblNumEntradas.setText(str(self.modelo.recepcion_entradas_hoy()))
+        if hasattr(v, "lblNuevosUsuarios"):
+            v.lblNuevosUsuarios.setText(str(self.modelo.recepcion_nuevos_usuarios_hoy()))
+        if hasattr(v, "lblNumClasesHoy"):
+            v.lblNumClasesHoy.setText(str(self.modelo.recepcion_clases_hoy()))
+        if hasattr(v, "tablaUltimosRegistros"):
+            self._rellenar_tabla_ultimos_registros(v.tablaUltimosRegistros, self.modelo.recepcion_ultimos_registros_acceso())
+        if hasattr(v, "tablaClientesRecientes"):
+            self._rellenar_tabla_clientes_recientes(v.tablaClientesRecientes, self.modelo.recepcion_clientes_recientes())
 
+    # ── Alta cliente ──────────────────────────────────────────────────────
     def registrar_cliente(self):
         v = self.ventana
-
         try:
-            dni = v.DNI.text().strip() if hasattr(v, "DNI") else ""
-            nombre = v.NombreCompleto.text().strip() if hasattr(v, "NombreCompleto") else ""
-            telefono = v.Telefono.text().strip() if hasattr(v, "Telefono") else ""
-            direccion = v.Direccion.text().strip() if hasattr(v, "Direccion") else ""
-            email = v.Email.text().strip() if hasattr(v, "Email") else ""
-            fecha = v.Nacimiento.text().strip() if hasattr(v, "Nacimiento") else ""
+            dni = self._texto("DNI", "txtDni", "lineEdit")
+            nombre = self._texto("NombreCompleto", "txtNombre", "lineEdit_5")
+            telefono = self._texto("Telefono", "txtTelefono", "lineEdit_2")
+            direccion = self._texto("Direccion", "txtDireccion", "lineEdit_3")
+            email = self._texto("Email", "txtEmail", "lineEdit_6")
+            fecha = self._texto("Nacimiento", "txtFecha", "lineEdit_4")
+            username = self._texto("Usuario", "txtUsuario", "lineEdit_7")
+            password = self._texto("Contrasea", "txtPassword", "lineEdit_8")
+            confirmar = self._texto("ConfirmarContrasea", "lineEdit_9")
+            dni_tutor = self._texto("DNITutor", "lineEdit_13")
+            nombre_tutor = self._texto("NombreTutor", "lineEdit_15")
 
-            username = v.Usuario.text().strip() if hasattr(v, "Usuario") else ""
-            password = v.Contrasea.text().strip() if hasattr(v, "Contrasea") else ""
-            confirmar = v.ConfirmarContrasea.text().strip() if hasattr(v, "ConfirmarContrasea") else ""
-
-            es_adulto = v.ButtomAdulto.isChecked() if hasattr(v, "ButtomAdulto") else False
-            es_menor = v.ButtomMenor.isChecked() if hasattr(v, "ButtomMenor") else False
-
-            dni_tutor = v.DNITutor.text().strip() if hasattr(v, "DNITutor") else ""
-            nombre_tutor = v.NombreTutor.text().strip() if hasattr(v, "NombreTutor") else ""
+            adulto = self._buscar_widget("ButtomAdulto", "radioButton")
+            menor = self._buscar_widget("ButtomMenor", "radioButton_2")
+            es_menor = menor.isChecked() if menor else False
+            es_adulto = adulto.isChecked() if adulto else False
 
             if not all([dni, nombre, telefono, direccion, email, fecha, username, password, confirmar]):
                 MensajeView.warning(v, "Error", "Completa todos los datos obligatorios")
                 return
-
             if password != confirmar:
                 MensajeView.warning(v, "Error", "Las contraseñas no coinciden")
                 return
-
-            if len(password) < 4:
-                MensajeView.warning(v, "Error", "La contraseña debe tener al menos 4 caracteres")
-                return
-
             if not es_adulto and not es_menor:
                 MensajeView.warning(v, "Error", "Selecciona si el cliente es adulto o menor")
                 return
 
-            if es_menor and not all([dni_tutor, nombre_tutor]):
-                MensajeView.warning(v, "Error", "Para registrar un menor debes indicar DNI tutor y nombre tutor")
-                return
-
-            from datetime import datetime
-
             try:
                 fecha_bd = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
             except ValueError:
-                try:
-                    fecha_bd = datetime.strptime(fecha, "%Y-%m-%d").strftime("%Y-%m-%d")
-                except ValueError:
-                    MensajeView.warning(v, "Error", "Formato de fecha incorrecto. Usa DD/MM/YYYY")
-                    return
+                fecha_bd = datetime.strptime(fecha, "%Y-%m-%d").strftime("%Y-%m-%d")
 
             id_cliente = self.modelo.crear_cliente_desde_recepcion(
-                dni=dni,
-                nombre=nombre,
-                telefono=telefono,
-                email=email,
-                username=username,
-                password=password,
-                direccion=direccion,
-                fecha_nacimiento=fecha_bd,
-                es_menor=es_menor,
-                dni_tutor=dni_tutor,
-                nombre_tutor=nombre_tutor
+                dni, nombre, telefono, email, username, password, direccion,
+                fecha_bd, es_menor, dni_tutor, nombre_tutor
             )
-
             MensajeView.information(v, "Correcto", f"Cliente registrado correctamente con ID {id_cliente}")
-
-            for campo in [
-                "DNI", "NombreCompleto", "Telefono", "Direccion", "Email", "Nacimiento",
-                "Usuario", "Contrasea", "ConfirmarContrasea", "DNITutor", "NombreTutor"
-            ]:
-                if hasattr(v, campo):
-                    getattr(v, campo).clear()
-
-            if hasattr(v, "ButtomAdulto"):
-                v.ButtomAdulto.setChecked(False)
-
-            if hasattr(v, "ButtomMenor"):
-                v.ButtomMenor.setChecked(False)
-
-            self.cargar_datos()
-
+            for nombre_widget in ["DNI", "NombreCompleto", "Telefono", "Direccion", "Email", "Nacimiento",
+                                  "Usuario", "Contrasea", "ConfirmarContrasea", "DNITutor", "NombreTutor",
+                                  "lineEdit", "lineEdit_2", "lineEdit_3", "lineEdit_4", "lineEdit_5",
+                                  "lineEdit_6", "lineEdit_7", "lineEdit_8", "lineEdit_9", "lineEdit_13", "lineEdit_15"]:
+                w = self._buscar_widget(nombre_widget)
+                if w: w.clear()
         except Exception as e:
             MensajeView.warning(v, "Error", f"Error al registrar cliente: {str(e)}")
 
-    def actualizar_cliente(self):
+    # ── Control de acceso ─────────────────────────────────────────────────
+    def limpiar_cliente_control_acceso(self):
+        self.cliente_control_actual = None
+        self._set_label(("lblNombre", "lblNombreCliente_8"), "Cliente no seleccionado")
+        self._set_label(("lblDNI", "lblNombreCliente_9"), "DNI: -")
+        self._set_label(("lblID", "lblNombreCliente_10"), "ID: -")
+        self._set_label(("lblEstado", "btnCalorias_2"), "-")
+
+    def buscar_cliente_control_acceso(self):
+        texto = self._texto("txtDNIoID", "lineEdit")
+        if not texto:
+            self.limpiar_cliente_control_acceso()
+            return
+        cliente = self.modelo.buscar_cliente_acceso_por_dni_o_id(texto)
+        if not cliente:
+            self.cliente_control_actual = None
+            self._set_label(("lblNombre", "lblNombreCliente_8"), "Cliente no encontrado")
+            self._set_label(("lblDNI", "lblNombreCliente_9"), "DNI: -")
+            self._set_label(("lblID", "lblNombreCliente_10"), "ID: -")
+            self._set_label(("lblEstado", "btnCalorias_2"), "-")
+            return
+
+        id_usuario, dni, nombre, estado_pago = cliente
+        self.cliente_control_actual = {"id_usuario": id_usuario, "dni": dni, "nombre": nombre, "estado_pago": estado_pago}
+        self._set_label(("lblNombre", "lblNombreCliente_8"), str(nombre))
+        self._set_label(("lblDNI", "lblNombreCliente_9"), f"DNI: {dni}")
+        self._set_label(("lblID", "lblNombreCliente_10"), f"ID: {id_usuario}")
+        self._set_label(("lblEstado", "btnCalorias_2"), str(estado_pago))
+
+    def registrar_acceso_control(self, tipo_acceso):
         v = self.ventana
+        if not self.cliente_control_actual:
+            MensajeView.warning(v, "Error", "Primero busca un cliente por DNI o ID")
+            return
         try:
-            tabla = v.tableWidget if hasattr(v, "tableWidget") else None
-            if not tabla:
-                return
-            fila = tabla.currentRow()
-            if fila < 0:
-                MensajeView.warning(v, "Error", "Selecciona un cliente")
-                return
-            id_cliente = int(tabla.item(fila, 0).text())
-            telefono = v.txtTelefono.text().strip() if hasattr(v, "txtTelefono") else ""
-            email    = v.txtEmail.text().strip()    if hasattr(v, "txtEmail")    else ""
-            direccion= v.txtDireccion.text().strip() if hasattr(v, "txtDireccion") else ""
-            self.modelo.modificar_usuario(id_cliente, telefono, email, direccion)
-            MensajeView.information(v, "Correcto", "Cliente actualizado")
-            self.cargar_datos()
+            self.modelo.registrar_acceso_cliente_control(self.cliente_control_actual["id_usuario"], tipo_acceso)
+            MensajeView.information(v, "Correcto", f"{tipo_acceso.capitalize()} registrada correctamente")
+            tabla = self._buscar_tabla_accesos()
+            if tabla:
+                self._rellenar_tabla_accesos_control(tabla, self.modelo.listar_ultimos_accesos_control())
         except Exception as e:
             MensajeView.warning(v, "Error", str(e))
+
+    # ── Clientes recepcionista ────────────────────────────────────────────
+    def cargar_clientes_recepcionista(self):
+        self._set_label(("lblTotalClientes", "lblNombreCliente_14", "lblNombreCliente_24"), str(self.modelo.recepcion_total_clientes_lista()))
+        self._set_label(("lblNuevosMes", "lblNombreCliente_22"), str(self.modelo.recepcion_nuevos_clientes_mes()))
+        self.filtrar_clientes_recepcionista()
+
+    def filtrar_clientes_recepcionista(self):
+        tabla = self._buscar_tabla_clientes()
+        if tabla is None:
+            return
+        dni = self._texto("lblBuscarDNI", "lineEdit")
+        combo_tipo = self._buscar_widget("comboBox_adultomenor", "comboBox_2")
+        combo_plan = self._buscar_widget("comboBox_plan", "comboBox_3")
+        tipo = combo_tipo.currentText().strip() if combo_tipo else "Todos"
+        plan = combo_plan.currentText().strip() if combo_plan else "Todos"
+        datos = self.modelo.recepcion_listar_clientes_filtrados(dni, tipo, plan)
+        self._rellenar_tabla_clientes_recepcionista(tabla, datos)
+
+    def guardar_cambios_clientes_recepcionista(self):
+        v = self.ventana
+        tabla = self._buscar_tabla_clientes()
+        if tabla is None:
+            return
+        try:
+            for fila in range(tabla.rowCount()):
+                id_item = tabla.item(fila, 0)
+                if not id_item or not id_item.text().strip():
+                    continue
+                id_cliente = int(id_item.text().strip())
+                valores = []
+                for col in range(1, 8):
+                    item = tabla.item(fila, col)
+                    valores.append(item.text().strip() if item else "")
+                dni, nombre, telefono, email, direccion, nacimiento, estado_pago = valores
+                self.modelo.recepcion_guardar_cambios_cliente(
+                    id_cliente, dni, nombre, telefono, email, direccion, nacimiento, estado_pago
+                )
+            MensajeView.information(v, "Correcto", "Cambios de clientes guardados correctamente")
+            self.filtrar_clientes_recepcionista()
+        except Exception as e:
+            MensajeView.warning(v, "Error", f"Error al guardar cambios: {str(e)}")
+
+    # ── Perfil recepcionista ──────────────────────────────────────────────
+    def cargar_perfil_recepcionista(self):
+        perfil = self.modelo.perfil_usuario(self.usuario["id_usuario"])
+        if not perfil:
+            return
+        self._set_label(("label_Nombre",), str(perfil[2]))
+        self._set_label(("label_7",), str(perfil[4]))
+        self._set_label(("label_9",), str(perfil[1]))
+        self._set_label(("label_16",), str(perfil[7]))
+
+    # ── Funciones antiguas mantenidas para compatibilidad ────────────────
+    def registrar_acceso(self, tipo):
+        return self.registrar_acceso_control(tipo)
+
+    def actualizar_cliente(self):
+        self.guardar_cambios_clientes_recepcionista()
+
+    def cerrar_sesion(self):
+        self.ventana.close()
+        self.vista_login.show()
+
+    # ── Relleno de tablas / labels ───────────────────────────────────────
+    def _set_label(self, nombres, texto):
+        for nombre in nombres:
+            if hasattr(self.ventana, nombre):
+                getattr(self.ventana, nombre).setText(texto)
+                return
 
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))
@@ -258,341 +356,34 @@ class ControladorRecepcionista:
             for col, valor in enumerate(registro):
                 tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else ""))
 
-    def cerrar_sesion(self):
-        self.ventana.close()
-        self.vista_login.show()
-
-    def cargar_inicio_recepcionista(self):
-        v = self.ventana
-
-        if hasattr(v, "lblNumClientes"):
-            v.lblNumClientes.setText(str(self.modelo.recepcion_total_clientes()))
-
-        if hasattr(v, "lblNumEntradas"):
-            v.lblNumEntradas.setText(str(self.modelo.recepcion_entradas_hoy()))
-
-        if hasattr(v, "lblNuevosUsuarios"):
-            v.lblNuevosUsuarios.setText(str(self.modelo.recepcion_nuevos_usuarios_hoy()))
-
-        if hasattr(v, "lblNumClasesHoy"):
-            v.lblNumClasesHoy.setText(str(self.modelo.recepcion_clases_hoy()))
-
-        if hasattr(v, "tablaUltimosRegistros"):
-            datos = self.modelo.recepcion_ultimos_registros_acceso()
-            self._rellenar_tabla_ultimos_registros(v.tablaUltimosRegistros, datos)
-
-        if hasattr(v, "tablaClientesRecientes"):
-            datos = self.modelo.recepcion_clientes_recientes()
-            self._rellenar_tabla_clientes_recientes(v.tablaClientesRecientes, datos)
-
-
     def _rellenar_tabla_ultimos_registros(self, tabla, datos):
-        cabeceras = ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=False
-                )
-                tabla.setItem(fila, col, item)
-
+        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"], datos, editable=False)
 
     def _rellenar_tabla_clientes_recientes(self, tabla, datos):
-        cabeceras = ["Cliente", "DNI", "Teléfono", "Fecha registro"]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=False
-                )
-                tabla.setItem(fila, col, item)
-
-
-    def limpiar_cliente_control_acceso(self):
-        v = self.ventana
-
-        if hasattr(v, "lblNombre"):
-            v.lblNombre.setText("Cliente no seleccionado")
-
-        if hasattr(v, "lblDNI"):
-            v.lblDNI.setText("DNI: -")
-
-        if hasattr(v, "lblID"):
-            v.lblID.setText("ID: -")
-
-        if hasattr(v, "lblEstado"):
-            v.lblEstado.setText("Estado pago: -")
-
-        self.cliente_control_actual = None
-
-
-    def buscar_cliente_control_acceso(self):
-        v = self.ventana
-
-        if not hasattr(v, "txtDNIoID"):
-            return
-
-        texto = v.txtDNIoID.text().strip()
-
-        if not texto:
-            self.limpiar_cliente_control_acceso()
-            return
-
-        try:
-            cliente = self.modelo.buscar_cliente_acceso_por_dni_o_id(texto)
-
-            if not cliente:
-                self.cliente_control_actual = None
-
-                if hasattr(v, "lblNombre"):
-                    v.lblNombre.setText("Cliente no encontrado")
-                if hasattr(v, "lblDNI"):
-                    v.lblDNI.setText("DNI: -")
-                if hasattr(v, "lblID"):
-                    v.lblID.setText("ID: -")
-                if hasattr(v, "lblEstado"):
-                    v.lblEstado.setText("")
-
-                return
-
-            id_usuario = cliente[0]
-            dni = cliente[1]
-            nombre = cliente[2]
-            estado_pago = cliente[3]
-
-            self.cliente_control_actual = {
-                "id_usuario": id_usuario,
-                "dni": dni,
-                "nombre": nombre,
-                "estado_pago": estado_pago
-            }
-
-            if hasattr(v, "lblNombre"):
-                v.lblNombre.setText(str(nombre))
-
-            if hasattr(v, "lblDNI"):
-                v.lblDNI.setText(f"DNI: {dni}")
-
-            if hasattr(v, "lblID"):
-                v.lblID.setText(f"ID: {id_usuario}")
-
-            if hasattr(v, "lblEstado"):
-                v.lblEstado.setText(str(estado_pago))
-
-        except Exception as e:
-            print(f"Error buscar cliente control acceso: {e}")
-
-
-    def registrar_acceso_control(self, tipo_acceso):
-        v = self.ventana
-
-        if not hasattr(self, "cliente_control_actual") or not self.cliente_control_actual:
-            MensajeView.warning(v, "Error", "Primero busca un cliente por DNI o ID")
-            return
-
-        try:
-            id_usuario = self.cliente_control_actual["id_usuario"]
-
-            self.modelo.registrar_acceso_cliente_control(id_usuario, tipo_acceso)
-
-            MensajeView.information(
-                v,
-                "Correcto",
-                f"{'Entrada' if tipo_acceso == 'entrada' else 'Salida'} registrada correctamente"
-            )
-
-            datos = self.modelo.listar_ultimos_accesos_control()
-
-            if hasattr(v, "tableAccesos"):
-                self._rellenar_tabla_accesos_control(v.tableAccesos, datos)
-
-        except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
-
+        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Teléfono", "Fecha registro"], datos, editable=False)
 
     def _rellenar_tabla_accesos_control(self, tabla, datos):
-        cabeceras = ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=False
-                )
-                tabla.setItem(fila, col, item)
-
-    def cargar_clientes_recepcionista(self):
-        v = self.ventana
-
-        if hasattr(v, "lblTotalClientes"):
-            v.lblTotalClientes.setText(str(self.modelo.recepcion_total_clientes_lista()))
-
-        if hasattr(v, "lblNuevosMes"):
-            v.lblNuevosMes.setText(str(self.modelo.recepcion_nuevos_clientes_mes()))
-
-        self.filtrar_clientes_recepcionista()
-
-
-    def filtrar_clientes_recepcionista(self):
-        v = self.ventana
-
-        if not hasattr(v, "tablaClientes"):
-            return
-
-        dni = v.lblBuscarDNI.text().strip() if hasattr(v, "lblBuscarDNI") else ""
-        tipo = v.comboBox_adultomenor.currentText().strip() if hasattr(v, "comboBox_adultomenor") else "Todos"
-        plan = v.comboBox_plan.currentText().strip() if hasattr(v, "comboBox_plan") else "Todos"
-
-        try:
-            datos = self.modelo.recepcion_listar_clientes_filtrados(dni, tipo, plan)
-            self._rellenar_tabla_clientes_recepcionista(v.tablaClientes, datos)
-
-            if hasattr(v, "lblTotalClientes"):
-                v.lblTotalClientes.setText(str(self.modelo.recepcion_total_clientes_lista()))
-
-            if hasattr(v, "lblNuevosMes"):
-                v.lblNuevosMes.setText(str(self.modelo.recepcion_nuevos_clientes_mes()))
-
-        except Exception as e:
-            print(f"Error filtrar_clientes_recepcionista: {e}")
-
+        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"], datos, editable=False)
 
     def _rellenar_tabla_clientes_recepcionista(self, tabla, datos):
-        cabeceras = [
-            "ID",
-            "DNI",
-            "Nombre",
-            "Teléfono",
-            "Email",
-            "Dirección",
-            "Nacimiento",
-            "Estado pago",
-            "Tipo",
-            "Plan"
-        ]
-
+        cabeceras = ["ID", "DNI", "Nombre", "Teléfono", "Email", "Dirección", "Nacimiento", "Estado pago", "Tipo", "Plan"]
         TablaView.configurar_columnas(tabla, cabeceras)
         tabla.setColumnCount(len(cabeceras))
         tabla.setHorizontalHeaderLabels(cabeceras)
         tabla.setRowCount(len(datos))
         tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
         tabla.setSelectionBehavior(tabla.SelectRows)
-
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro[:len(cabeceras)]):
-                editable = col not in (0, 8, 9)
-
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=editable
-                )
-
+                item = TablaView.crear_item(str(valor) if valor is not None else "", editable=(col not in (0, 8, 9)))
                 tabla.setItem(fila, col, item)
 
-
-    def guardar_cambios_clientes_recepcionista(self):
-        v = self.ventana
-
-        if not hasattr(v, "tablaClientes"):
-            return
-
-        tabla = v.tablaClientes
-
-        try:
-            for fila in range(tabla.rowCount()):
-                id_item = tabla.item(fila, 0)
-
-                if not id_item or not id_item.text().strip():
-                    continue
-
-                id_cliente = int(id_item.text().strip())
-
-                dni = tabla.item(fila, 1).text().strip() if tabla.item(fila, 1) else ""
-                nombre = tabla.item(fila, 2).text().strip() if tabla.item(fila, 2) else ""
-                telefono = tabla.item(fila, 3).text().strip() if tabla.item(fila, 3) else ""
-                email = tabla.item(fila, 4).text().strip() if tabla.item(fila, 4) else ""
-                direccion = tabla.item(fila, 5).text().strip() if tabla.item(fila, 5) else ""
-                nacimiento = tabla.item(fila, 6).text().strip() if tabla.item(fila, 6) else ""
-                estado_pago = tabla.item(fila, 7).text().strip() if tabla.item(fila, 7) else "pendiente"
-
-                if not dni or not nombre:
-                    MensajeView.warning(v, "Error", f"La fila {fila + 1} debe tener DNI y nombre")
-                    return
-
-                if estado_pago.lower() not in ("abonado", "pendiente"):
-                    MensajeView.warning(
-                        v,
-                        "Error",
-                        f"El estado de pago de la fila {fila + 1} debe ser abonado o pendiente"
-                    )
-                    return
-
-                self.modelo.recepcion_guardar_cambios_cliente(
-                    id_cliente,
-                    dni,
-                    nombre,
-                    telefono,
-                    email,
-                    direccion,
-                    nacimiento,
-                    estado_pago.lower()
-                )
-
-            MensajeView.information(v, "Correcto", "Cambios de clientes guardados correctamente")
-            self.filtrar_clientes_recepcionista()
-
-        except Exception as e:
-            MensajeView.warning(v, "Error", f"Error al guardar cambios: {str(e)}")
-
-    def cargar_perfil_recepcionista(self):
-        v = self.ventana
-
-        id_usuario = self.usuario["id_usuario"]
-        perfil = self.modelo.perfil_usuario(id_usuario)
-
-        if perfil is None:
-            return
-
-        # perfil:
-        # 0 id_usuario
-        # 1 dni
-        # 2 nombre
-        # 3 telefono
-        # 4 email
-        # 5 username
-        # 6 rol
-        # 7 direccion
-        # 8 fecha_registro
-        # 9 fecha_nacimiento
-
-        if hasattr(v, "label_Nombre"):
-            v.label_Nombre.setText(str(perfil[2]))
-
-        if hasattr(v, "label_7"):
-            v.label_7.setText(str(perfil[4]))
-
-        if hasattr(v, "label_9"):
-            v.label_9.setText(str(perfil[1]))
-
-        if hasattr(v, "label_16"):
-            v.label_16.setText(str(perfil[7]))
+    def _rellenar_tabla_generica(self, tabla, cabeceras, datos, editable=False):
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setSelectionBehavior(tabla.SelectRows)
+        for fila, registro in enumerate(datos):
+            for col, valor in enumerate(registro[:len(cabeceras)]):
+                tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else "", editable=editable))

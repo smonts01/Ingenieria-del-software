@@ -1,7 +1,7 @@
 class ClienteInicioVO:
     """
     Value Object que agrupa toda la información necesaria para inicializar
-    la interfaz unificada del cliente (interfaz_cliente_unificada.ui).
+    las pantallas del cliente.
 
     Cubre los siguientes bloques de la interfaz:
         - Header:           nombre, fecha de registro

@@ -1,8 +1,17 @@
 import os
-from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView
+from src.vista.componentes import CargadorVista, MensajeView, TablaView
 
 
 class ControladorCliente:
+    """
+    Controlador del perfil Cliente.
+
+    Responsabilidad MVC:
+    - Carga vistas .ui y conecta botones.
+    - Lee/escribe widgets de la interfaz.
+    - Llama siempre a la capa Logica mediante self.modelo.
+    - No accede directamente a DAO ni ejecuta SQL.
+    """
 
     def __init__(self, modelo, usuario, ruta_ui, vista_login):
         self.modelo = modelo
@@ -10,43 +19,54 @@ class ControladorCliente:
         self.ruta_ui = ruta_ui
         self.vista_login = vista_login
         self.ventana = None
+        self._vo = None
 
-    #Abrir interfaz inicio
     def abrir(self):
         self.abrir_pantalla("interfaz_cliente_inicio.ui")
 
     def abrir_pantalla(self, archivo):
         if self.ventana:
             self.ventana.close()
+
         ruta = os.path.join(self.ruta_ui, archivo)
         self.ventana = CargadorVista.cargar(ruta)
+        self._cargar_vo_cliente()
         self.conectar_botones()
         self.cargar_datos()
         self.ventana.show()
 
-    #Conexion de los botones
+    def _cargar_vo_cliente(self):
+        id_cliente = self.usuario["id_usuario"]
+        self._vo = self.modelo.datos_inicio_cliente(id_cliente)
+
     def conectar_botones(self):
         v = self.ventana
 
-        # Menu lateral
         if hasattr(v, "btnCerrarSesion"):
             v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
-        if hasattr(v, "btnInicio"):
-            v.btnInicio.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_cliente_inicio.ui"))
-        if hasattr(v, "btnClases"):
-            v.btnClases.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_cliente_clases_todas.ui"))
-        if hasattr(v, "btnEstadisticas"):
-            v.btnEstadisticas.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_cliente_estadisticas.ui"))
-        if hasattr(v, "btnPerfil"):
-            v.btnPerfil.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_cliente_perfil.ui"))
-        if hasattr(v, "btnInformacion"):
-            v.btnInformacion.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_cliente_informacion.ui"))
 
+        if hasattr(v, "btnInicio"):
+            v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_inicio.ui"))
+
+        if hasattr(v, "btnClases"):
+            v.btnClases.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_clases_todas.ui"))
+
+        if hasattr(v, "btnEstadisticas"):
+            v.btnEstadisticas.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_estadisticas.ui"))
+
+        if hasattr(v, "btnPerfil"):
+            v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_perfil.ui"))
+
+        if hasattr(v, "btnInformacion"):
+            v.btnInformacion.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_informacion.ui"))
+
+<<<<<<< HEAD
+        # Pantalla de clases: botones de reserva
+        for i in range(1, 6):
+            boton = getattr(v, f"btnReservar{i}", None)
+            if boton:
+                boton.clicked.connect(lambda checked=False, n=i: self.reservar_clase_card(n))
+=======
         # Pantalla clases todas
         if hasattr(v, "lblTabRes"):
             v.lblTabRes.mousePressEvent = lambda e: self.abrir_pantalla(
@@ -93,156 +113,107 @@ class ControladorCliente:
             domingo = lunes + timedelta(days=6)
             rango = f"{lunes.day} - {domingo.day} {domingo.strftime('%B %Y').lower()}"
             v.btnPeriodo.setText(rango)
+<<<<<<< Updated upstream
+=======
+>>>>>>> 0c43ad4920bb63af20dda4b52f67c6fbe5e436a4
+>>>>>>> Stashed changes
 
-        # Pantalla clases reservas
-        if hasattr(v, "lblTabTodas"):
-            v.lblTabTodas.mousePressEvent = lambda e: self.abrir_pantalla(
-                "interfaz_cliente_clases_todas.ui")
+        # Pantalla perfil: guardar cambios
+        if hasattr(v, "btnGuardarCambios"):
+            v.btnGuardarCambios.clicked.connect(self.guardar_perfil)
 
-    # Cargar datos
     def cargar_datos(self):
-        v = self.ventana
-        uid = self.usuario["id_usuario"]
-        
-        try:
-            datos = self.modelo.datos_inicio_cliente(uid)
-        except Exception as e:
-            print(f"Error datos_inicio_cliente: {e}")
-            datos = None
+        if self._vo is None:
+            MensajeView.warning(self.ventana, "Error", "No se pudieron cargar los datos del cliente")
+            return
 
-        # Cabecera común
-        nombre = datos.nombre if datos else self.usuario.get("nombre", "")
-        fecha_registro = datos.fecha_registro if datos else "-"
+        self._rellenar_cabecera()
+
+        v = self.ventana
+        if hasattr(v, "lblBienvenida"):
+            self._cargar_inicio()
+        elif hasattr(v, "lblTituloClases"):
+            self._cargar_clases_todas()
+        elif hasattr(v, "lblTituloReservas"):
+            self._cargar_reservas()
+        elif hasattr(v, "lblTituloEstadisticas"):
+            self._cargar_estadisticas()
+        elif hasattr(v, "lblTituloPerfil"):
+            self._cargar_perfil()
+
+    def _rellenar_cabecera(self):
+        v = self.ventana
+        vo = self._vo
 
         if hasattr(v, "lblNombreCliente"):
-            v.lblNombreCliente.setText(nombre)
+            v.lblNombreCliente.setText(str(vo.nombre))
+
         if hasattr(v, "lblFechaAltaCliente"):
-            v.lblFechaAltaCliente.setText(str(fecha_registro))
+            v.lblFechaAltaCliente.setText(f"Cliente desde {vo.fecha_registro}")
+
+    def _cargar_inicio(self):
+        v = self.ventana
+        vo = self._vo
+
         if hasattr(v, "lblBienvenida"):
-            v.lblBienvenida.setText(f"¡Hola, {nombre}!")
-
-        # PANTALLA INICIO
+            v.lblBienvenida.setText(f"Bienvenida, {vo.nombre}")
         if hasattr(v, "lblNumClases"):
-            try:
-                v.lblNumClases.setText(
-                    str(datos.clases_semana) if datos else "0")
-            except:
-                v.lblNumClases.setText("0")
-
-        if hasattr(v, "lblAsistencias"):
-            try:
-                v.lblAsistencias.setText(
-                    str(datos.asistencias_mes) if datos else "0")
-            except:
-                v.lblAsistencias.setText("0")
-
-        if hasattr(v, "lblCaloriasSemana"):
-            try:
-                v.lblCaloriasSemana.setText(
-                    str(datos.calorias_semana) if datos else "0")
-            except:
-                v.lblCaloriasSemana.setText("0")
-
-        # Tarjeta de pago
-        if hasattr(v, "lblCantidadPago"):
-            try:
-                v.lblCantidadPago.setText(
-                    f"{float(datos.precio_tarifa):.2f}€" if datos else "0.00€")
-            except:
-                v.lblCantidadPago.setText("0.00€")
-
-        if hasattr(v, "lblCuota"):
-            try:
-                v.lblCuota.setText(datos.nombre_tarifa if datos else "-")
-            except:
-                v.lblCuota.setText("-")
-
+            v.lblNumClases.setText(str(vo.clases_semana))
         if hasattr(v, "lblEstadoPago"):
-            try:
-                v.lblEstadoPago.setText(
-                    datos.ultimo_pago_estado if datos else "-")
-            except:
-                v.lblEstadoPago.setText("-")
-
-        if hasattr(v, "lblPendientePago"):
-            try:
-                pendiente = (datos.ultimo_pago_estado == "pendiente") if datos else False
-                v.lblPendientePago.setVisible(pendiente)
-            except:
-                v.lblPendientePago.setVisible(False)
-
+            v.lblEstadoPago.setText(str(vo.estado_pagado).capitalize())
+        if hasattr(v, "lblCaloriasSemana"):
+            v.lblCaloriasSemana.setText(f"{vo.calorias_semana} kcal")
+        if hasattr(v, "lblAsistencias"):
+            v.lblAsistencias.setText(vo.get_asistencias_str())
+        if hasattr(v, "lblCuota"):
+            v.lblCuota.setText(str(vo.nombre_tarifa))
+        if hasattr(v, "lblCantidadPago"):
+            v.lblCantidadPago.setText(vo.get_precio_str())
         if hasattr(v, "lblMesPago"):
-            try:
-                v.lblMesPago.setText(datos.ultimo_pago_fecha if datos else "-")
-            except:
-                v.lblMesPago.setText("-")
-
-        # Tabla próximas clases
+            v.lblMesPago.setText(str(vo.ultimo_pago_fecha))
+        if hasattr(v, "lblPendientePago"):
+            v.lblPendientePago.setText(str(vo.ultimo_pago_estado).capitalize())
         if hasattr(v, "tablaProximasClases"):
-            try:
-                filas = []
-                if datos and datos.proximas_clases:
-                    for c in datos.proximas_clases:
-                        filas.append([
-                            c.get("nombre_actividad", ""),
-                            c.get("fecha", ""),
-                            c.get("hora_inicio", ""),
-                            c.get("nombre_sala", ""),
-                        ])
-                cabeceras = ["Clase", "Día", "Hora", "Sala"]
-                self._rellenar_con_cabeceras(v.tablaProximasClases, filas, cabeceras)
-            except Exception as e:
-                print(f"Error tablaProximasClases: {e}")
+            self._rellenar_tabla_proximas(v.tablaProximasClases, vo.proximas_clases)
 
-        # PANTALLA CLASES TODAS 
-        self._cargar_cards_clases()
+    def _cargar_clases_todas(self):
+        # Las cards de clases vienen diseñadas en el .ui.
+        # El controlador solo mantiene el nombre del cliente en cabecera y conecta reservas.
+        pass
 
-        # PANTALLA RESERVAS
-        self._cargar_cards_reservas()
+    def _cargar_reservas(self):
+        # Pantalla visual de reservas. Los datos dinámicos principales se cargan en Inicio.
+        pass
 
-        # PANTALLA ESTADÍSTICAS
+    def _cargar_estadisticas(self):
+        v = self.ventana
+        vo = self._vo
+
         if hasattr(v, "lblNumEntrenos"):
-            try:
-                v.lblNumEntrenos.setText(
-                    str(datos.entrenos_semana) if datos else "0")
-            except:
-                v.lblNumEntrenos.setText("0")
-
-        if hasattr(v, "lblNumEntrenos_2"):
-            try:
-                v.lblNumEntrenos_2.setText(
-                    str(datos.asistencias_mes) if datos else "0")
-            except:
-                v.lblNumEntrenos_2.setText("0")
-
+            v.lblNumEntrenos.setText(str(vo.entrenos_semana))
+        if hasattr(v, "lblSubEntrenos"):
+            v.lblSubEntrenos.setText(vo.get_delta_entrenos_str())
         if hasattr(v, "lblNumTiempo"):
-            try:
-                v.lblNumTiempo.setText(
-                    f"{datos.tiempo_semana_min} min" if datos else "0 min")
-            except:
-                v.lblNumTiempo.setText("0 min")
-
+            v.lblNumTiempo.setText(vo.get_tiempo_semana_str())
+        if hasattr(v, "lblSubTiempo"):
+            v.lblSubTiempo.setText(vo.get_delta_tiempo_str())
         if hasattr(v, "lblNumCalorias"):
-            try:
-                v.lblNumCalorias.setText(
-                    str(datos.calorias_semana) if datos else "0")
-            except:
-                v.lblNumCalorias.setText("0")
+            v.lblNumCalorias.setText(f"{vo.calorias_semana} kcal")
+        if hasattr(v, "btnMini"):
+            v.btnMini.setText(f"Total semanal: {vo.calorias_semana} kcal")
+        if hasattr(v, "lblNumRacha"):
+            v.lblNumRacha.setText(str(vo.racha_dias))
+        if hasattr(v, "lblTextoRacha"):
+            v.lblTextoRacha.setText(f"Llevas {vo.racha_dias} días consecutivos entrenando.")
 
-        if hasattr(v, "lblNumObjetivo"):
-            try:
-                v.lblNumObjetivo.setText(
-                    str(datos.racha_dias) if datos else "0")
-            except:
-                v.lblNumObjetivo.setText("0")
+        self._rellenar_leyendas_distribucion(vo.distribucion_tipos)
 
-        if hasattr(v, "lblTotalCalorias"):
-            try:
-                v.lblTotalCalorias.setText(
-                    str(datos.calorias_acumuladas) if datos else "0")
-            except:
-                v.lblTotalCalorias.setText("0")
+    def _cargar_perfil(self):
+        v = self.ventana
+        vo = self._vo
 
+<<<<<<< HEAD
+=======
         # Racha
         if hasattr(v, "lblSigueRacha"):
             try:
@@ -275,36 +246,27 @@ class ControladorCliente:
                 barra.setGeometry(barra.x(), nueva_y, barra.width(), altura)
                 
         # PANTALLA PERFIL 
+>>>>>>> 0c43ad4920bb63af20dda4b52f67c6fbe5e436a4
         if hasattr(v, "lblNombrePerfil"):
-            v.lblNombrePerfil.setText(nombre)
-
+            v.lblNombrePerfil.setText(str(vo.nombre))
         if hasattr(v, "lblEmailPerfil"):
-            try:
-                v.lblEmailPerfil.setText(datos.email if datos else "")
-            except:
-                v.lblEmailPerfil.setText("")
-
-        # Barra de progreso de objetivo
-        if hasattr(v, "lblPorcentaje"):
-            try:
-                pct = datos.asistencias_mes if datos else 0
-                OBJETIVO = 20
-                pct_real = min(int(int(pct) * 100 / OBJETIVO), 100)
-                v.lblPorcentaje.setText(f"{pct_real}%")
-                if hasattr(v, "barraProgresoFondo") and hasattr(v, "barraProgresoValor"):
-                    ancho_total = v.barraProgresoFondo.width() or 200
-                    v.barraProgresoValor.setFixedWidth(
-                        int(ancho_total * pct_real / 100))
-            except:
-                v.lblPorcentaje.setText("0%")
-
+            v.lblEmailPerfil.setText(str(vo.email))
+        if hasattr(v, "txtNombre"):
+            v.txtNombre.setText(str(vo.nombre))
+        if hasattr(v, "txtTelefono"):
+            v.txtTelefono.setText(str(vo.telefono))
+        if hasattr(v, "txtEmail"):
+            v.txtEmail.setText(str(vo.email))
+        if hasattr(v, "txtFecha"):
+            v.txtFecha.setText(str(vo.fecha_nacimiento))
+        if hasattr(v, "txtDireccion"):
+            v.txtDireccion.setText(str(vo.direccion))
         if hasattr(v, "lblAsistenciasValor"):
-            try:
-                v.lblAsistenciasValor.setText(
-                    str(datos.asistencias_mes) if datos else "0")
-            except:
-                v.lblAsistenciasValor.setText("0")
+            v.lblAsistenciasValor.setText(f"{vo.asistencias_mes} / {vo.inscripciones_mes} clases")
 
+<<<<<<< HEAD
+    def reservar_clase_card(self, numero_card):
+=======
         if hasattr(v, "lblObjetivoSemanal"):
             try:
                 v.lblObjetivoSemanal.setText(
@@ -373,10 +335,29 @@ class ControladorCliente:
     }
 
     def _cargar_cards_clases(self):
+<<<<<<< Updated upstream
+=======
+>>>>>>> 0c43ad4920bb63af20dda4b52f67c6fbe5e436a4
+>>>>>>> Stashed changes
         v = self.ventana
-        if not hasattr(v, "lblClase1"):
+        label = getattr(v, f"lblClase{numero_card}", None)
+        if label is None:
+            MensajeView.warning(v, "Error", "No se ha encontrado la clase seleccionada")
             return
+<<<<<<< Updated upstream
+=======
+
+        nombre_clase = label.text().strip()
+        if not nombre_clase:
+            MensajeView.warning(v, "Error", "No se ha seleccionado ninguna clase")
+            return
+>>>>>>> Stashed changes
         try:
+<<<<<<< HEAD
+            self.modelo.inscribirse_clase_por_nombre(self.usuario["id_usuario"], nombre_clase)
+            MensajeView.information(v, "Reserva confirmada", f"Te has inscrito en {nombre_clase}.")
+            self._cargar_vo_cliente()
+=======
             clases = self.modelo.listar_clases()
         except Exception as e:
             print(f"Error _cargar_cards_clases: {e}")
@@ -526,17 +507,23 @@ class ControladorCliente:
             self.modelo.inscribirse_clase(self.usuario["id_usuario"], id_clase)
             MensajeView.information(
                 v, "Reserva confirmada", f"Te has inscrito en {nombre}.")
+>>>>>>> 0c43ad4920bb63af20dda4b52f67c6fbe5e436a4
             self.cargar_datos()
-
         except Exception as e:
             MensajeView.warning(v, "Error al reservar", str(e))
 
-    #Filtrar clases
-    def filtrar_clases(self):
+    def guardar_perfil(self):
         v = self.ventana
-        if not hasattr(v, "lblClase1"):
+
+        telefono = v.txtTelefono.text().strip() if hasattr(v, "txtTelefono") else ""
+        email = v.txtEmail.text().strip() if hasattr(v, "txtEmail") else ""
+        direccion = v.txtDireccion.text().strip() if hasattr(v, "txtDireccion") else ""
+
+        if not email:
+            MensajeView.warning(v, "Error", "El email no puede estar vacío")
             return
 
+<<<<<<< Updated upstream
         texto   = v.txtBuscarClases.text().strip() if hasattr(v, "txtBuscarClases") else ""
         tipo    = v.cmbTipo.currentText()           if hasattr(v, "cmbTipo")         else "Todos"
         horario = v.cmbHorario.currentText()        if hasattr(v, "cmbHorario")      else "Todos"
@@ -544,6 +531,27 @@ class ControladorCliente:
         # [0]=id_clase [1]=nombre_actividad [2]=dia_semana [3]=hora_inicio
         # [4]=hora_fin [5]=aforo_maximo [6]=nivel_intensidad [7]=calorias_estimadas
         try:
+=======
+<<<<<<< HEAD
+        try:
+            self.modelo.modificar_usuario(self.usuario["id_usuario"], telefono, email, direccion)
+            MensajeView.information(v, "Perfil actualizado", "Los cambios se han guardado correctamente")
+            self._cargar_vo_cliente()
+            self.cargar_datos()
+        except Exception as e:
+            MensajeView.warning(v, "Error al guardar", str(e))
+
+    def _rellenar_tabla_proximas(self, tabla, datos):
+        cabeceras = ["Clase", "Fecha", "Hora", "Sala"]
+=======
+        texto   = v.txtBuscarClases.text().strip() if hasattr(v, "txtBuscarClases") else ""
+        tipo    = v.cmbTipo.currentText()           if hasattr(v, "cmbTipo")         else "Todos"
+        horario = v.cmbHorario.currentText()        if hasattr(v, "cmbHorario")      else "Todos"
+
+        # [0]=id_clase [1]=nombre_actividad [2]=dia_semana [3]=hora_inicio
+        # [4]=hora_fin [5]=aforo_maximo [6]=nivel_intensidad [7]=calorias_estimadas
+        try:
+>>>>>>> Stashed changes
             clases = self.modelo.buscar_clases(texto) if texto else self.modelo.listar_clases()
         except:
             clases = []
@@ -587,13 +595,42 @@ class ControladorCliente:
 
     # Extra
     def _rellenar_con_cabeceras(self, tabla, datos, cabeceras):
+>>>>>>> 0c43ad4920bb63af20dda4b52f67c6fbe5e436a4
         TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
         tabla.setRowCount(len(datos))
-        for fila_idx, fila in enumerate(datos):
-            for col_idx, valor in enumerate(fila[:len(cabeceras)]):
-                TablaView.poner_item(tabla, fila_idx, col_idx, valor)
 
-    #Cerrar sesion
+        for fila, registro in enumerate(datos):
+            valores = [
+                registro.get("nombre_actividad", ""),
+                registro.get("fecha", ""),
+                registro.get("hora_inicio", ""),
+                registro.get("nombre_sala", ""),
+            ]
+            for col, valor in enumerate(valores):
+                tabla.setItem(fila, col, TablaView.crear_item(str(valor), editable=False))
+
+    def _rellenar_leyendas_distribucion(self, distribucion):
+        v = self.ventana
+        labels = [
+            getattr(v, "lblLeyenda1", None),
+            getattr(v, "lblLeyenda2", None),
+            getattr(v, "lblLeyenda3", None),
+            getattr(v, "lblLeyenda4", None),
+        ]
+        items = list(distribucion.items()) if isinstance(distribucion, dict) else []
+
+        for i, label in enumerate(labels):
+            if label is None:
+                continue
+            if i < len(items):
+                tipo, porcentaje = items[i]
+                label.setText(f"● {tipo} {porcentaje}%")
+            else:
+                label.setText("")
+
     def cerrar_sesion(self):
-        self.ventana.close()
+        if self.ventana:
+            self.ventana.close()
         self.vista_login.show()

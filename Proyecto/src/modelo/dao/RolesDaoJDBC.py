@@ -86,3 +86,8 @@ class RolesDaoJDBC(Conexion):
             cursor.close()
             self.closeConnection()
         return rows
+
+    def nombre_rol_por_id(self, id_rol):
+        rol = self.selectById(id_rol)
+        return rol.nombre_rol if rol else None
+

@@ -1,6 +1,5 @@
 <RCC>
   <qresource prefix="newPrefix">
-    <file>tabla-de-ingresos.png</file>
     <file>informacion.png</file>
     <file>estrella_pop.png</file>
     <file>decreciente.png</file>
