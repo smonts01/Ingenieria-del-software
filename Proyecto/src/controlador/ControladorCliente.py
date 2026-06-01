@@ -59,18 +59,40 @@ class ControladorCliente:
         if hasattr(v, "btnReservar5"):
             v.btnReservar5.clicked.connect(lambda: self.reservar_clase(5))
         if hasattr(v, "txtBuscarClases"):
-            v.txtBuscarClases.textChanged.connect(self.filtrar_clases)
-        if hasattr(v, "cmbTipo") and v.cmbTipo.count() == 0:
-            v.cmbTipo.addItems(
-                ["Todos", "Yoga", "Pilates", "Spinning", "Zumba", "Crossfit"])
+            v.txtBuscarClases.textChanged.connect(self.filtrar_clases) 
+               
         if hasattr(v, "cmbTipo"):
-            v.cmbTipo.currentIndexChanged.connect(self.filtrar_clases)
-        if hasattr(v, "cmbHorario") and v.cmbHorario.count() == 0:
-            v.cmbHorario.addItems(
-                ["Todos", "09:00-10:00", "10:00-11:00",
-                 "11:00-12:00", "17:00-18:00", "18:00-19:00"])
+            v.cmbTipo.blockSignals(True)
+            v.cmbTipo.clear()
+            try:
+                clases = self.modelo.listar_clases()
+                nombres = sorted(set(str(c[1]).strip() for c in clases if c[1]))
+            except:
+                nombres = []
+            v.cmbTipo.addItems(["Todas las categorías"] + nombres)
+            v.cmbTipo.blockSignals(False)
+            v.cmbTipo.currentIndexChanged.connect(self.filtrar_clases)            
         if hasattr(v, "cmbHorario"):
-            v.cmbHorario.currentIndexChanged.connect(self.filtrar_clases)
+                v.cmbHorario.blockSignals(True)
+                v.cmbHorario.clear()
+                try:
+                    clases = self.modelo.listar_clases()
+                    horarios = sorted(set(
+                        f"{str(c[3])[:5]} - {str(c[4])[:5]}"
+                        for c in clases if c[3] and c[4]
+                    ))
+                except:
+                    horarios = []
+                v.cmbHorario.addItems(["Todos los horarios"] + horarios)
+                v.cmbHorario.blockSignals(False)
+                v.cmbHorario.currentIndexChanged.connect(self.filtrar_clases)
+        if hasattr(v, "btnPeriodo"):
+            from datetime import date, timedelta
+            hoy = date.today()
+            lunes = hoy - timedelta(days=hoy.weekday())
+            domingo = lunes + timedelta(days=6)
+            rango = f"{lunes.day} - {domingo.day} {domingo.strftime('%B %Y').lower()}"
+            v.btnPeriodo.setText(rango)
 
         # Pantalla clases reservas
         if hasattr(v, "lblTabTodas"):
@@ -231,26 +253,27 @@ class ControladorCliente:
                 
         # Daigrama de barras 
         barras = ["barLun", "barMar", "barMie", "barJue", "barVie", "barSab"]
-        if any(hasattr(v, b) for b in barras):
-            MAX_HEIGHT = 120
-            
-            try:
-                dist = datos.distribucion_tipos if datos else {}
-                valores = list(dist.values())[:6]
-                while len(valores) < 6:
-                    valores.append(0)
-            except:
-                valores = [0] * 6
+        BASE_Y  = 172   # y de la línea base del gráfico en el .ui
+        MAX_H   = 120   # altura máxima en píxeles (equivale al 100%)
 
-            for nombre_barra, pct in zip(barras, valores):
-                barra = getattr(v, nombre_barra, None)
-                if barra:
-                    try:
-                        barra.setFixedHeight(
-                            max(4, int(int(pct) * MAX_HEIGHT / 100)))
-                    except:
-                        barra.setFixedHeight(4)
+        try:
+            dist = datos.distribucion_tipos if datos else {}
+            valores = list(dist.values())[:6]
+            while len(valores) < 6:
+                valores.append(0)
+        except:
+            valores = [0] * 6
 
+        for nombre_barra, pct in zip(barras, valores):
+            barra = getattr(v, nombre_barra, None)
+            if barra:
+                try:
+                    altura = max(4, int(int(pct) * MAX_H / 100)) if pct else 4
+                except:
+                    altura = 4
+                nueva_y = BASE_Y - altura          # ancla desde abajo
+                barra.setGeometry(barra.x(), nueva_y, barra.width(), altura)
+                
         # PANTALLA PERFIL 
         if hasattr(v, "lblNombrePerfil"):
             v.lblNombrePerfil.setText(nombre)
@@ -311,7 +334,7 @@ class ControladorCliente:
 
         # PANTALLA INFORMACIÓN
         INFO_GIMNASIO = {
-            "horario":    "Lun-Vie: 07:00 - 22:00  |  Sáb: 09:00 - 14:00",
+            "horario":    "Lun-Vie: 07:00 - 22:00\nSáb: 09:00 - 14:00",
             "direccion":  "Calle Principal 1, Ciudad",
             "email":      "info@stayfit.com",
             "telefono":   "+34 600 000 000",
@@ -350,46 +373,57 @@ class ControladorCliente:
     }
 
     def _cargar_cards_clases(self):
-        """Rellena las 5 cards de clases disponibles."""
         v = self.ventana
         if not hasattr(v, "lblClase1"):
             return
-
         try:
             clases = self.modelo.listar_clases()
         except Exception as e:
             print(f"Error _cargar_cards_clases: {e}")
             clases = []
 
-        for idx, (lbl_nombre, lbl_desc, lbl_fecha, lbl_plazas, btn) in \
-                self._SLOTS_CLASES.items():
+        # [0]=id_clase [1]=nombre_actividad [2]=dia_semana [3]=hora_inicio
+        # [4]=hora_fin [5]=aforo_maximo [6]=nivel_intensidad [7]=calorias_estimadas
+        for idx, (lbl_nombre, lbl_desc, lbl_fecha, lbl_plazas, btn) in self._SLOTS_CLASES.items():
             clase = clases[idx - 1] if idx - 1 < len(clases) else None
 
             if hasattr(v, lbl_nombre):
-                getattr(v, lbl_nombre).setText(
-                    str(clase[1]) if clase else "-")          
+                getattr(v, lbl_nombre).setText(str(clase[1]) if clase else "-")
 
             if hasattr(v, lbl_desc):
-                nivel = str(clase[6]).capitalize() if clase else "-" 
+                nivel = str(clase[6]).capitalize() if clase else "-"
                 getattr(v, lbl_desc).setText(f"Nivel: {nivel}")
 
             if hasattr(v, lbl_fecha):
                 if clase:
-                    dia = str(clase[2]).capitalize()           
-                    hora = str(clase[3])[:5]                 
+                    dia  = str(clase[2]).capitalize()
+                    hora = f"{str(clase[3])[:5]} - {str(clase[4])[:5]}"   # inicio - fin
                     getattr(v, lbl_fecha).setText(f"{dia}  {hora}")
                 else:
                     getattr(v, lbl_fecha).setText("-")
 
             if hasattr(v, lbl_plazas):
-                getattr(v, lbl_plazas).setText(
-                    str(clase[5]) if clase else "-")          
+                if clase:
+                    try:
+                        inscritos = self.modelo.contar_inscripciones_clase(clase[1])
+                    except:
+                        inscritos = 0
+                    getattr(v, lbl_plazas).setText(f"{inscritos}/{clase[5]}")
+                else:
+                    getattr(v, lbl_plazas).setText("-")
 
             if hasattr(v, btn):
                 getattr(v, btn).setEnabled(clase is not None)
 
+        # Próxima clase: la primera de la lista ordenada por día
         if hasattr(v, "lblProxDatos"):
-            v.lblProxDatos.setText(f"{len(clases)} clase(s) disponibles")
+            if clases:
+                proxima = clases[0]
+                hora = f"{str(proxima[3])[:5]} - {str(proxima[4])[:5]}"
+                v.lblProxDatos.setText(
+                    f"{proxima[1]}\n{str(proxima[2]).capitalize()}  {hora}")
+            else:
+                v.lblProxDatos.setText("Sin clases disponibles")
 
     # Clases ya reservadas
     _SLOTS_RESERVAS = {
@@ -438,12 +472,19 @@ class ControladorCliente:
                 nivel = str(reserva[5]).capitalize()              
                 getattr(v, lbl_desc).setText(f"Nivel: {nivel}")
             if hasattr(v, lbl_fecha):
-                dia = str(reserva[2]).capitalize()                
-                hora = str(reserva[3])[:5]                        
+                dia  = str(reserva[2]).capitalize()
+                hora = f"{str(reserva[3])[:5]} - {str(reserva[4])[:5]}"
                 getattr(v, lbl_fecha).setText(f"{dia}  {hora}")
             if hasattr(v, lbl_plazas):
-                hora_fin = str(reserva[4])[:5]                    
-                getattr(v, lbl_plazas).setText(f"Fin: {hora_fin}")
+                try:
+                    id_clase = reserva[0]
+                    # Buscar el aforo de la clase
+                    todas = self.modelo.listar_clases()
+                    aforo = next((c[5] for c in todas if c[0] == id_clase), "?")
+                    inscritos = self.modelo.contar_inscripciones_clase(reserva[1])
+                    getattr(v, lbl_plazas).setText(f"{inscritos}/{aforo}")
+                except:
+                    getattr(v, lbl_plazas).setText("-")
             if hasattr(v, lbl_badge):
                 getattr(v, lbl_badge).setText("Confirmada")
 
@@ -468,7 +509,7 @@ class ControladorCliente:
             id_clase = None
             for c in clases:
                 if str(c[1]).lower() == nombre.lower(): 
-                    id_clase = c[0]                     
+                    id_clase = c[1]                     
                     break
 
             if id_clase is None:
@@ -496,29 +537,25 @@ class ControladorCliente:
         if not hasattr(v, "lblClase1"):
             return
 
-        texto  = v.txtBuscarClases.text().strip() if hasattr(v, "txtBuscarClases") else ""
-        tipo   = v.cmbTipo.currentText()           if hasattr(v, "cmbTipo")         else "Todos"
-        horario = v.cmbHorario.currentText()       if hasattr(v, "cmbHorario")      else "Todos"
+        texto   = v.txtBuscarClases.text().strip() if hasattr(v, "txtBuscarClases") else ""
+        tipo    = v.cmbTipo.currentText()           if hasattr(v, "cmbTipo")         else "Todos"
+        horario = v.cmbHorario.currentText()        if hasattr(v, "cmbHorario")      else "Todos"
 
+        # [0]=id_clase [1]=nombre_actividad [2]=dia_semana [3]=hora_inicio
+        # [4]=hora_fin [5]=aforo_maximo [6]=nivel_intensidad [7]=calorias_estimadas
         try:
-            if texto:
-                clases = self.modelo.buscar_clases(texto)
-            else:
-                clases = self.modelo.listar_clases()
+            clases = self.modelo.buscar_clases(texto) if texto else self.modelo.listar_clases()
         except:
             clases = []
 
-        if tipo and tipo != "Todos":
-            clases = [c for c in clases
-                      if tipo.lower() in str(c[1]).lower()]
+        if tipo and tipo not in ("Todos", "Todas las categorías"):
+            clases = [c for c in clases if tipo.lower() in str(c[1]).lower()]
 
-        if horario and horario != "Todos":
+        if horario and horario not in ("Todos", "Todos los horarios"):
             hora_ini = horario.split("-")[0].strip()
-            clases = [c for c in clases
-                      if str(c[3]).startswith(hora_ini)]
+            clases = [c for c in clases if str(c[3]).startswith(hora_ini)]
 
-        for idx, (lbl_nombre, lbl_desc, lbl_fecha, lbl_plazas, btn) \
-                in self._SLOTS_CLASES.items():
+        for idx, (lbl_nombre, lbl_desc, lbl_fecha, lbl_plazas, btn) in self._SLOTS_CLASES.items():
             clase = clases[idx - 1] if idx - 1 < len(clases) else None
 
             if hasattr(v, lbl_nombre):
@@ -528,12 +565,20 @@ class ControladorCliente:
                 getattr(v, lbl_desc).setText(f"Nivel: {nivel}")
             if hasattr(v, lbl_fecha):
                 if clase:
+                    hora = f"{str(clase[3])[:5]} - {str(clase[4])[:5]}"
                     getattr(v, lbl_fecha).setText(
-                        f"{str(clase[2]).capitalize()}  {str(clase[3])[:5]}")
+                        f"{str(clase[2]).capitalize()}  {hora}")
                 else:
                     getattr(v, lbl_fecha).setText("-")
             if hasattr(v, lbl_plazas):
-                getattr(v, lbl_plazas).setText(str(clase[5]) if clase else "-")
+                if clase:
+                    try:
+                        inscritos = self.modelo.contar_inscripciones_clase(clase[1])
+                    except:
+                        inscritos = 0
+                    getattr(v, lbl_plazas).setText(f"{inscritos}/{clase[5]}")
+                else:
+                    getattr(v, lbl_plazas).setText("-")
             if hasattr(v, btn):
                 getattr(v, btn).setEnabled(clase is not None)
 
