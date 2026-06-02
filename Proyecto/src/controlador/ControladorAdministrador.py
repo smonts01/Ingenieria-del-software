@@ -128,12 +128,15 @@ class ControladorAdministrador:
 
         if hasattr(v, "tablaClientesPagosPendientes"):
             try:
-                datos = self.modelo.pagos_pendientes()
-                cabeceras = ["ID pago", "Cliente", "Tarifa", "Importe", "Fecha", "Tipo cuota"]
-                self._rellenar_con_cabeceras(v.tablaClientesPagosPendientes, datos, cabeceras)
-                print(f"Pagos pendientes: {len(datos)} filas")
+                datos = self.modelo.clientes_pendientes_admin()
+                cabeceras = ["ID cliente", "Nombre", "Tarifa", "Estado pago"]
+                self._rellenar_con_cabeceras(
+                    v.tablaClientesPagosPendientes,
+                    datos,
+                    cabeceras
+                )
             except Exception as e:
-                print(f"Error pagos pendientes: {e}")
+                print(f"Error clientes pendientes administrador: {e}")
 
         if hasattr(v, "graficoFake"):
             self._dibujar_grafico_ingresos(v.graficoFake)

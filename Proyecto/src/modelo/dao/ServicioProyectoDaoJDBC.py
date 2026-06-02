@@ -366,3 +366,6 @@ class ServicioProyectoDaoJDBC:
     def estadisticas_admin(self): return self._estadisticas_consultas_dao.estadisticas_admin()
     def ranking_usuarios_activos_estadisticas(self): return self._estadisticas_consultas_dao.ranking_usuarios_activos_estadisticas()
     def ocupacion_por_clase_estadisticas(self): return self._estadisticas_consultas_dao.ocupacion_por_clase_estadisticas()
+
+    def clientes_pendientes_admin(self):
+        return self._pago_consultas_dao.clientes_pendientes_admin()

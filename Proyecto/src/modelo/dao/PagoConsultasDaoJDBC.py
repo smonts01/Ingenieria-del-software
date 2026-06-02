@@ -97,20 +97,25 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
             WHERE estado = 'pendiente'
         """)
         return datos[0][0] if datos else 0
-
-    def listar_pagos_pendientes_admin(self):
+        
+    def clientes_pendientes_admin(self):
         return self.consultar("""
-            SELECT u.nombre,
-                   u.dni,
-                   t.nombre,
-                   p.importe,
-                   p.fecha_pago,
-                   p.estado
-            FROM pago p
-            JOIN usuarios u ON p.id_cliente = u.id_usuario
-            JOIN tarifa t ON p.id_tarifa = t.id_tarifa
-            WHERE p.estado = 'pendiente'
-            ORDER BY p.fecha_pago DESC
+            SELECT 
+                u.id_usuario,
+                u.nombre,
+                COALESCE(t.nombre, 'Sin tarifa') AS tarifa,
+                c.estado_pagado
+            FROM clientes c
+            INNER JOIN usuarios u 
+                ON c.id_cliente = u.id_usuario
+            LEFT JOIN cliente_tarifa ct 
+                ON c.id_cliente = ct.id_cliente
+            AND ct.estado = 'activa'
+            LEFT JOIN tarifa t 
+                ON ct.id_tarifa = t.id_tarifa
+            WHERE c.estado_pagado = 'pendiente'
+            ORDER BY u.nombre
+            LIMIT 10
         """)
 
     def buscar_pago_pendiente_por_dni(self, dni):
@@ -153,6 +158,7 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
             ORDER BY p.fecha_pago DESC
             LIMIT 10
         """)
+
 
     def pagos_pendientes_inicio_contable(self):
         return self.consultar("""
