@@ -318,7 +318,12 @@ class LogicaUsuarios:
         }
 
         for trabajador in trabajadores:
-            rol = str(trabajador[6]).lower().strip() if len(trabajador) > 6 else ""
+            rol = ""
+
+            if hasattr(trabajador, "nombre_rol"):
+                rol = str(trabajador.nombre_rol).lower().strip()
+            elif hasattr(trabajador, "rol"):
+                rol = str(trabajador.rol).lower().strip()
 
             if "entrenador" in rol:
                 resumen["entrenadores"] += 1

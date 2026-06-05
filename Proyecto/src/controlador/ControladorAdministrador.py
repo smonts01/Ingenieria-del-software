@@ -180,7 +180,7 @@ class ControladorAdministrador:
         if hasattr(v, "tablaTrabajadores_2"):
             try:
                 datos = self.modelo.listar_trabajadores_completo()
-                self._rellenar_tabla_editable(v.tablaTrabajadores_2, datos)
+                self._rellenar_tabla_trabajadores_admin(v.tablaTrabajadores_2, datos)
 
                 # Actualiza el texto de abajo
                 if hasattr(v, "lblMostrando_2"):
@@ -199,7 +199,7 @@ class ControladorAdministrador:
         if hasattr(v, "tablaClientes_2"):
             try:
                 datos = self.modelo.listar_clientes_completo()
-                self._rellenar(v.tablaClientes_2, datos)
+                self._rellenar_tabla_clientes_admin(v.tablaClientes_2, datos)
                 if hasattr(v, "lblMostrando_2"):
                     v.lblMostrando_2.setText(f"Mostrando {len(datos)} clientes")
             except Exception as e:
@@ -307,7 +307,7 @@ class ControladorAdministrador:
         texto = v.txtBuscarTrabajador.text().strip() if hasattr(v, "txtBuscarTrabajador") else ""
         try:
             datos = self.modelo.buscar_trabajadores(texto) if texto else self.modelo.listar_trabajadores_completo()
-            self._rellenar_tabla_editable(v.tablaTrabajadores_2, datos)
+            self._rellenar_tabla_trabajadores_admin(v.tablaTrabajadores_2, datos)
             if hasattr(v, "lblMostrando_2"):
                 v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
         except Exception as e:
@@ -320,7 +320,7 @@ class ControladorAdministrador:
         rol = v.cmbRoles.currentText()
         try:
             datos = self.modelo.listar_trabajadores_completo() if rol == "Todos" else self.modelo.buscar_trabajadores_rol(rol)
-            self._rellenar_tabla_editable(v.tablaTrabajadores_2, datos)
+            self._rellenar_tabla_trabajadores_admin(v.tablaTrabajadores_2, datos)
             if hasattr(v, "lblMostrando_2"):
                 v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
         except Exception as e:
@@ -349,14 +349,19 @@ class ControladorAdministrador:
 
     def filtrar_clientes(self):
         v = self.ventana
+
         if not hasattr(v, "tablaClientes_2"):
             return
+
         texto = v.txtBuscarCliente.text().strip() if hasattr(v, "txtBuscarCliente") else ""
+
         try:
             datos = self.modelo.buscar_clientes(texto) if texto else self.modelo.listar_clientes_completo()
-            self._rellenar(v.tablaClientes_2, datos)
+            self._rellenar_tabla_clientes_admin(v.tablaClientes_2, datos)
+
             if hasattr(v, "lblMostrando_2"):
                 v.lblMostrando_2.setText(f"Mostrando {len(datos)} clientes")
+
         except Exception as e:
             print(f"Error filtrar_clientes: {e}")
 
@@ -415,8 +420,46 @@ class ControladorAdministrador:
 
 
 
+    def _rellenar_tabla_clientes_admin(self, tabla, datos):
+        cabeceras = [
+            "ID",
+            "DNI",
+            "Nombre",
+            "Teléfono",
+            "Email",
+            "Usuario",
+            "Estado pago",
+            "Dirección",
+            "Fecha nacimiento"
+        ]
 
- 
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, cliente in enumerate(datos):
+            valores = [
+                cliente.id_usuario,
+                cliente.dni,
+                cliente.nombre,
+                cliente.telefono,
+                cliente.email,
+                cliente.username,
+                cliente.estado_pagado,
+                cliente.direccion,
+                cliente.fecha_nacimiento
+            ]
+
+            for col, valor in enumerate(valores):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=True
+                )
+                tabla.setItem(fila, col, item)
+
 
     def _rellenar(self, tabla, datos):
         tabla.setRowCount(len(datos))
@@ -435,6 +478,52 @@ class ControladorAdministrador:
             for col, valor in enumerate(registro[:len(cabeceras)]):
                 TablaView.poner_item(tabla, fila, col, valor)
 
+    def _rellenar_tabla_trabajadores_admin(self, tabla, datos):
+        cabeceras = [
+            "ID",
+            "DNI",
+            "Nombre",
+            "Teléfono",
+            "Email",
+            "Usuario",
+            "Rol",
+            "Dirección",
+            "Fecha nacimiento"
+        ]
+
+        TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
+        tabla.setSelectionBehavior(tabla.SelectRows)
+
+        for fila, trabajador in enumerate(datos):
+            valores = [
+                trabajador.id_usuario,
+                trabajador.dni,
+                trabajador.nombre,
+                trabajador.telefono,
+                trabajador.email,
+                trabajador.username,
+                trabajador.nombre_rol,
+                trabajador.direccion,
+                trabajador.fecha_nacimiento
+            ]
+
+            for col, valor in enumerate(valores):
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=True
+                )
+
+                if col in (0, 6):
+                    item = TablaView.crear_item(
+                        str(valor) if valor is not None else "",
+                        editable=False
+                    )
+
+                tabla.setItem(fila, col, item)
 
     def cerrar_sesion(self):
         self.ventana.close()
@@ -571,14 +660,35 @@ class ControladorAdministrador:
         cabeceras = ["ID", "Nombre", "Día", "Hora inicio", "Hora fin", "Aforo", "Nivel"]
 
         TablaView.configurar_columnas(tabla, cabeceras)
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
         tabla.setRowCount(len(datos))
         tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
         tabla.setSelectionBehavior(tabla.SelectRows)
 
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
+        for fila, clase in enumerate(datos):
+
+            if hasattr(clase, "id_clase"):
+                valores = [
+                    clase.id_clase,
+                    clase.nombre_actividad,
+                    clase.dia_semana,
+                    clase.hora_inicio,
+                    clase.hora_fin,
+                    clase.aforo_maximo,
+                    clase.nivel_intensidad
+                ]
+            else:
+                valores = list(clase)[:len(cabeceras)]
+
+            for col, valor in enumerate(valores):
                 editable = col != 0
-                item = TablaView.crear_item(str(valor) if valor is not None else "", editable=editable)
+
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=editable
+                )
+
                 tabla.setItem(fila, col, item)
 
     def _rellenar_tabla_inscripciones(self, tabla, datos):

@@ -11,6 +11,24 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         WHERE id_pago = ?
     """
 
+    SQL_LISTAR_PAGOS_PENDIENTES_ADMIN = """
+        SELECT 
+            p.id_pago,
+            u.dni,
+            u.nombre,
+            t.nombre,
+            p.importe,
+            p.fecha_pago,
+            p.estado
+        FROM pago p
+        INNER JOIN usuarios u 
+            ON p.id_cliente = u.id_usuario
+        LEFT JOIN tarifa t 
+            ON p.id_tarifa = t.id_tarifa
+        WHERE p.estado = 'pendiente'
+        ORDER BY p.fecha_pago DESC
+    """
+
     SQL_MARCAR_CLIENTE_ABONADO = "UPDATE clientes SET estado_pagado = 'abonado' WHERE id_cliente = ?"
 
     SQL_PAGOS_PENDIENTES = """
@@ -61,15 +79,24 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     SQL_IMPORTE_PENDIENTE = "SELECT COALESCE(SUM(importe), 0) FROM pago WHERE estado = 'pendiente'"
 
     SQL_CLIENTES_PENDIENTES_ADMIN = """
-        SELECT u.id_usuario, u.nombre,
-               COALESCE(t.nombre, 'Sin tarifa') AS tarifa, c.estado_pagado
+        SELECT 
+            u.nombre AS cliente,
+            u.dni AS dni,
+            COALESCE(t.nombre, 'Sin tarifa') AS tarifa,
+            COALESCE(t.precio_mensual, 0) AS importe_pendiente,
+            COALESCE(DATE_ADD(ct.fecha_contratacion, INTERVAL 30 DAY), CURDATE()) AS fecha_limite
         FROM clientes c
-        INNER JOIN usuarios u ON c.id_cliente = u.id_usuario
-        LEFT JOIN cliente_tarifa ct ON c.id_cliente = ct.id_cliente AND ct.estado = 'activa'
-        LEFT JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
-        WHERE c.estado_pagado = 'pendiente'
-        ORDER BY u.nombre LIMIT 10
+        INNER JOIN usuarios u 
+            ON c.id_cliente = u.id_usuario
+        LEFT JOIN cliente_tarifa ct 
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        LEFT JOIN tarifa t 
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        ORDER BY u.nombre
     """
+
 
     SQL_BUSCAR_PAGO_PENDIENTE_DNI = """
         SELECT u.nombre, u.dni, t.nombre, p.importe, p.fecha_pago, p.estado
@@ -173,6 +200,9 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     SQL_IMPORTE_GESTIONADO = """
         SELECT COALESCE(SUM(importe), 0) FROM pago WHERE id_contable = ? AND estado = 'abonado'
     """
+
+    def listar_pagos_pendientes_admin(self):
+        return self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
 
     def marcar_pago_abonado(self, id_pago: int):
         datos = self.consultar(self.SQL_SELECT_CLIENTE_POR_PAGO, (id_pago,))
