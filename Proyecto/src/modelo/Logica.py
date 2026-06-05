@@ -425,3 +425,6 @@ class Logica:
     def estadisticas_admin(self): return self._estadisticas.estadisticas_admin()
     def ranking_usuarios_activos_estadisticas(self): return self._estadisticas.ranking_usuarios_activos_estadisticas()
     def ocupacion_por_clase_estadisticas(self): return self._estadisticas.ocupacion_por_clase_estadisticas()
+
+    def clientes_pendientes_admin(self):
+        return self._servicio.clientes_pendientes_admin()

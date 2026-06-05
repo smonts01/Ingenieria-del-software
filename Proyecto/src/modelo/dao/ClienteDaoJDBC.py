@@ -1,9 +1,9 @@
-from src.modelo.conexion.Conexion import Conexion
+from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 from src.modelo.VO.ClientesVO import ClientesVO
 from src.modelo.VO.ClienteInicioVO import ClienteInicioVO
 
 
-class ClienteDaoJDBC(Conexion):
+class ClienteDaoJDBC(DaoJDBCBase):
 
     SQL_SELECT = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes"
     SQL_SELECT_BY_ID = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes WHERE id_cliente = ?"
@@ -13,9 +13,6 @@ class ClienteDaoJDBC(Conexion):
     SQL_UPDATE_CALORIAS = "UPDATE clientes SET calorias_acumuladas=? WHERE id_cliente=?"
     SQL_DELETE = "DELETE FROM clientes WHERE id_cliente = ?"
 
-    # Consultas para ClienteInicioVO
-
-    # Datos del usuario y del cliente en una sola consulta
     _SQL_INICIO_BASE = """
         SELECT
             u.id_usuario,
@@ -32,7 +29,6 @@ class ClienteDaoJDBC(Conexion):
         WHERE c.id_cliente = ?
     """
 
-    # Tarifa activa del cliente
     _SQL_TARIFA_ACTIVA = """
         SELECT t.nombre, t.precio_mensual
         FROM cliente_tarifa ct
@@ -43,7 +39,6 @@ class ClienteDaoJDBC(Conexion):
         LIMIT 1
     """
 
-    # Último pago registrado
     _SQL_ULTIMO_PAGO = """
         SELECT
             p.importe,
@@ -55,7 +50,6 @@ class ClienteDaoJDBC(Conexion):
         LIMIT 1
     """
 
-    # Asistencias con presente='si' en la semana en curso
     _SQL_CLASES_SEMANA = """
         SELECT COUNT(*) AS clases_semana
         FROM asistencia a
@@ -64,8 +58,6 @@ class ClienteDaoJDBC(Conexion):
           AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1)
     """
 
-    # Calorías quemadas en la semana en curso (suma de calorias_estimadas de
-    # las clases asistidas)
     _SQL_CALORIAS_SEMANA = """
         SELECT COALESCE(SUM(cl.calorias_estimadas), 0) AS calorias_semana
         FROM asistencia a
@@ -75,7 +67,6 @@ class ClienteDaoJDBC(Conexion):
           AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1)
     """
 
-    # Asistencias e inscripciones del mes actual
     _SQL_ASISTENCIAS_MES = """
         SELECT
             (
@@ -96,8 +87,6 @@ class ClienteDaoJDBC(Conexion):
             ) AS inscripciones_mes
     """
 
-    # Próximas clases inscritas (fecha >= hoy, ordenadas por día de semana
-    # + hora; se traen las 20 primeras para llenar la tabla de la UI)
     _SQL_PROXIMAS_CLASES = """
         SELECT
             cl.nombre_actividad,
@@ -117,7 +106,6 @@ class ClienteDaoJDBC(Conexion):
         LIMIT 20
     """
 
-    # Estadísticas semana en curso
     _SQL_STATS_SEMANA_ACTUAL = """
         SELECT
             COUNT(*)                              AS entrenos,
@@ -129,7 +117,6 @@ class ClienteDaoJDBC(Conexion):
           AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1)
     """
 
-    # Estadísticas semana anterior (para calcular deltas)
     _SQL_STATS_SEMANA_ANTERIOR = """
         SELECT
             COUNT(*)                              AS entrenos,
@@ -141,9 +128,6 @@ class ClienteDaoJDBC(Conexion):
           AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1) - 1
     """
 
-    # Racha: días consecutivos con al menos una asistencia hasta hoy.
-    # Se calculan todas las fechas de asistencia del cliente y se evalúa
-    # cuántos días seguidos hay hacia atrás desde hoy.
     _SQL_FECHAS_ASISTENCIA = """
         SELECT DISTINCT fecha
         FROM asistencia
@@ -152,9 +136,6 @@ class ClienteDaoJDBC(Conexion):
         ORDER BY fecha DESC
     """
 
-    # Distribución por tipo de clase (especialidad del entrenador como proxy
-    # del tipo de actividad). Se agrupan por nombre_actividad y se calcula
-    # el porcentaje sobre el total de asistencias del cliente.
     _SQL_DISTRIBUCION = """
         SELECT
             cl.nombre_actividad AS tipo,
@@ -167,7 +148,7 @@ class ClienteDaoJDBC(Conexion):
         ORDER BY total DESC
     """
 
-    # Métodos originales
+
 
     def _rowToVO(self, row) -> ClientesVO:
         id_cliente, estado_pagado, calorias_acumuladas = row
@@ -281,26 +262,7 @@ class ClienteDaoJDBC(Conexion):
     #  Nuevo método 
 
     def selectInicioCliente(self, id_cliente: int) -> ClienteInicioVO | None:
-        """
-        Recopila de la base de datos toda la información necesaria para
-        inicializar la interfaz unificada del cliente y la devuelve
-        encapsulada en un ClienteInicioVO.
 
-        Realiza 11 consultas independientes agrupadas lógicamente:
-            1. Datos base (usuario + cliente)
-            2. Tarifa activa
-            3. Último pago
-            4. Clases asistidas esta semana
-            5. Calorías quemadas esta semana
-            6. Asistencias / inscripciones del mes
-            7. Próximas clases inscritas (tabla Inicio)
-            8. Estadísticas semana actual
-            9. Estadísticas semana anterior (para deltas)
-           10. Fechas de asistencia para calcular racha
-           11. Distribución por tipo de actividad
-
-        Retorna None si el cliente no existe.
-        """
         cursor = self.getCursor()
         try:
             # 1. Datos base 

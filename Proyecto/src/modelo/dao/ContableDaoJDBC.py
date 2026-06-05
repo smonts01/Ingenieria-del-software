@@ -1,8 +1,8 @@
-from src.modelo.conexion.Conexion import Conexion
+from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 from src.modelo.VO.ContableVO import ContableVO
 
 
-class ContableDaoJDBC(Conexion):
+class ContableDaoJDBC(DaoJDBCBase):
 
     SQL_SELECT = "SELECT id_contable, titulacion, id_administrador_registra FROM contable"
     SQL_SELECT_BY_ID = "SELECT id_contable, titulacion, id_administrador_registra FROM contable WHERE id_contable = ?"
