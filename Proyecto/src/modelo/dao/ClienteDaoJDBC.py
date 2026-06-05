@@ -168,7 +168,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             print("Error al seleccionar clientes:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return clientes
 
     def selectById(self, id_cliente: int) -> ClientesVO:
@@ -184,7 +184,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             print("Error al seleccionar cliente por ID:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return cliente
 
     def insert(self, vo: ClientesVO) -> int:
@@ -200,7 +200,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             print("Error al insertar cliente:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows
 
     def update(self, vo: ClientesVO) -> int:
@@ -216,7 +216,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             print("Error al actualizar cliente:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows
 
     def updateEstadoPagado(self, id_cliente: int, estado_pagado: str) -> int:
@@ -230,7 +230,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             print("Error al actualizar estado de pago:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows
 
     def updateCalorias(self, id_cliente: int, calorias_acumuladas: int) -> int:
@@ -244,7 +244,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             print("Error al actualizar calorías:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows
 
     def delete(self, id_cliente: int) -> int:
@@ -258,7 +258,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             print("Error al eliminar cliente:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows
 
     #  Nuevo método 
@@ -371,7 +371,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             return None
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
     #  Helpers privados 
 
