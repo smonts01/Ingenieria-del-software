@@ -542,42 +542,24 @@ class ControladorAdministrador:
             MensajeView.warning(v, "Error", str(e))
 
     def _actualizar_resumen_trabajadores(self, trabajadores):
-        total = len(trabajadores)
-
-        entrenadores = 0
-        recepcion = 0
-        contables = 0
-        administradores = 0
-
-        for trabajador in trabajadores:
-            rol = str(trabajador[6]).lower().strip() if len(trabajador) > 6 else ""
-
-            if "entrenador" in rol:
-                entrenadores += 1
-            elif "recepcionista" in rol or "recepción" in rol or "recepcion" in rol:
-                recepcion += 1
-            elif "contable" in rol:
-                contables += 1
-            elif "administrador" in rol or "admin" in rol:
-                administradores += 1
-
+        resumen = self.modelo.resumen_trabajadores_por_rol(trabajadores)
         v = self.ventana
 
         if hasattr(v, "lblNumTrabajadores"):
-            v.lblNumTrabajadores.setText(str(total))
+            v.lblNumTrabajadores.setText(str(resumen["total"]))
 
         if hasattr(v, "Entrenadores"):
-            v.Entrenadores.setText(str(entrenadores))
+            v.Entrenadores.setText(str(resumen["entrenadores"]))
 
         if hasattr(v, "Recepcionista"):
-            v.Recepcionista.setText(str(recepcion))
+            v.Recepcionista.setText(str(resumen["recepcionistas"]))
 
         if hasattr(v, "Contables"):
-            v.Contables.setText(str(contables))
+            v.Contables.setText(str(resumen["contables"]))
 
         if hasattr(v, "Administradores"):
-            v.Administradores.setText(str(administradores))
-
+            v.Administradores.setText(str(resumen["administradores"]))
+            
 
     def _rellenar_tabla_clases(self, tabla, datos):
         cabeceras = ["ID", "Nombre", "Día", "Hora inicio", "Hora fin", "Aforo", "Nivel"]

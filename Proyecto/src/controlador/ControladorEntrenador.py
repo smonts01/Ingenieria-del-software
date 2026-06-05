@@ -78,32 +78,20 @@ class ControladorEntrenador:
                 if hasattr(v, "labelHora"):
                     v.labelHora.setText(f"{hora_inicio} - {hora_fin}")
 
+        
         if hasattr(v, "labelNumAsistencias"):
-            clases = self.modelo.clases_de_entrenador(id_u)
-            total_pendientes = 0
-
-            for clase in clases:
-                inscritos = self.modelo.clientes_inscritos_clase(clase[0])
-                total_pendientes += len(inscritos)
-
+            total_pendientes = self.modelo.total_inscritos_clases_entrenador(id_u)
             v.labelNumAsistencias.setText(str(total_pendientes))
 
         if hasattr(v, "lblPorcentajeOcupacion"):
-            ocupaciones = self.modelo.ocupacion_clases_entrenador(id_u)
-
-            if ocupaciones:
-                suma = 0
-
-                for ocupacion in ocupaciones:
-                    suma += float(ocupacion[4])
-
-                media = round(suma / len(ocupaciones), 2)
-                v.lblPorcentajeOcupacion.setText(f"{media}%")
+            media = self.modelo.ocupacion_media_entrenador(id_u)
+            v.lblPorcentajeOcupacion.setText(f"{media}%")
 
 
 
         if hasattr(v, "tablaMisClases"):
             self.rellenar_tabla(v.tablaMisClases, self.modelo.clases_entrenador_tabla(id_u))
+        
         if hasattr(v, "tablaOcupacionClases"):
             datos_ocupacion = self.modelo.ocupacion_clases_entrenador(id_u)
 
@@ -117,27 +105,16 @@ class ControladorEntrenador:
                 for col, valor in enumerate(dato):
                     tabla.setItem(fila, col, TablaView.crear_item(str(valor)))
 
-            if datos_ocupacion:
-                total_ocupacion = 0
-                clases_llenas = 0
-                clase_mas_llena = datos_ocupacion[0]
+            resumen = self.modelo.resumen_ocupacion_entrenador(id_u)
 
-                for dato in datos_ocupacion:
-                    inscritos = int(dato[2])
-                    aforo = int(dato[3])
-                    ocupacion = float(dato[4])
+            clase_mas_llena = resumen["clase_mas_llena"]
 
-                    total_ocupacion += ocupacion
-
-                    if inscritos >= aforo:
-                        clases_llenas += 1
-
-                ocupacion_media = round(total_ocupacion / len(datos_ocupacion), 2)
-
+            if clase_mas_llena:
+                ocupacion_media = resumen["ocupacion_media"]
                 nombre_clase_mas_llena = clase_mas_llena[1]
                 inscritos_mas_llena = clase_mas_llena[2]
                 aforo_mas_llena = clase_mas_llena[3]
-                plazas_libres = int(aforo_mas_llena) - int(inscritos_mas_llena)
+                plazas_libres = resumen["plazas_libres_mas_llena"]
 
                 if hasattr(v, "label_Porcentaje_Ocupacion"):
                     v.label_Porcentaje_Ocupacion.setText(f"{ocupacion_media}%")
@@ -466,12 +443,14 @@ class ControladorEntrenador:
                     id_cliente = int(item_cliente.text().split(" - ")[0])
                     estado = item_estado.text().strip().lower()
 
-                    if estado in ["si", "sí", "asistio", "asistió"]:
-                        self.modelo.registrar_asistencia(id_cliente, id_clase, fecha, "si")
+                    estado_normalizado = self.modelo._clases.normalizar_estado_asistencia(estado)
+
+                    if estado_normalizado == "si":
+                        self.modelo.registrar_asistencia_normalizada(id_cliente, id_clase, fecha, estado)
                         presentes += 1
 
-                    elif estado in ["no", "ausencia", "ausente"]:
-                        self.modelo.registrar_asistencia(id_cliente, id_clase, fecha, "no")
+                    elif estado_normalizado == "no":
+                        self.modelo.registrar_asistencia_normalizada(id_cliente, id_clase, fecha, estado)
                         ausencias += 1
 
                     else:

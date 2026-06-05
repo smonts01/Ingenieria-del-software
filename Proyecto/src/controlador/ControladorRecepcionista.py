@@ -206,20 +206,26 @@ class ControladorRecepcionista:
             es_menor = menor.isChecked() if menor else False
             es_adulto = adulto.isChecked() if adulto else False
 
-            if not all([dni, nombre, telefono, direccion, email, fecha, username, password, confirmar]):
-                MensajeView.warning(v, "Error", "Completa todos los datos obligatorios")
-                return
-            if password != confirmar:
-                MensajeView.warning(v, "Error", "Las contraseñas no coinciden")
-                return
-            if not es_adulto and not es_menor:
-                MensajeView.warning(v, "Error", "Selecciona si el cliente es adulto o menor")
-                return
-
             try:
-                fecha_bd = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
-            except ValueError:
-                fecha_bd = datetime.strptime(fecha, "%Y-%m-%d").strftime("%Y-%m-%d")
+                self.modelo.validar_datos_registro_cliente(
+                    dni,
+                    nombre,
+                    telefono,
+                    direccion,
+                    email,
+                    fecha,
+                    username,
+                    password,
+                    confirmar,
+                    es_adulto,
+                    es_menor
+                )
+
+                fecha_bd = self.modelo.convertir_fecha_a_bd(fecha)
+
+            except ValueError as e:
+                MensajeView.warning(v, "Error", str(e))
+                return
 
             id_cliente = self.modelo.crear_cliente_desde_recepcion(
                 dni, nombre, telefono, email, username, password, direccion,

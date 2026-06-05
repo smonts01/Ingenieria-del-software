@@ -473,20 +473,7 @@ class ControladorContable:
             fecha_pago = fila[4]
             cuota = fila[5] if len(fila) > 5 else ""
 
-            fecha_convertida = fecha_pago
-
-            if isinstance(fecha_pago, str):
-                try:
-                    fecha_convertida = datetime.strptime(fecha_pago[:10], "%Y-%m-%d").date()
-                except Exception:
-                    fecha_convertida = None
-            elif hasattr(fecha_pago, "date"):
-                fecha_convertida = fecha_pago.date()
-
-            es_vencido = False
-
-            if fecha_convertida is not None:
-                es_vencido = fecha_convertida < date.today()
+            es_vencido = self.modelo.es_pago_vencido(fecha_pago)
 
             if filtro == "vencido" and not es_vencido:
                 continue
@@ -562,23 +549,13 @@ class ControladorContable:
             else:
                 metodo_pago = "efectivo"
 
-            # La base de datos solo acepta: efectivo, tarjeta, transferencia, bizum
-            if metodo_pago == "tarjeta":
-                metodo_pago = "tarjeta"
-            elif metodo_pago == "efectivo":
-                metodo_pago = "efectivo"
-            elif metodo_pago == "transferencia":
-                metodo_pago = "transferencia"
-            elif metodo_pago == "bizum":
-                metodo_pago = "bizum"
-            else:
-                MensajeView.warning(
-                    v,
-                    "Error",
-                    "Método de pago no válido. Selecciona tarjeta, efectivo, transferencia o bizum."
-                )
+            try:
+                metodo_pago = self.modelo.normalizar_metodo_pago(metodo_pago)
+            except ValueError as e:
+                MensajeView.warning(v, "Error", str(e))
                 return
-
+            
+            
             # lineEdit_2 es la fecha del pago
             if hasattr(v, "lineEdit_2"):
                 fecha_texto = v.lineEdit_2.text().strip()

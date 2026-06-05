@@ -305,3 +305,28 @@ class LogicaUsuarios:
             return self.registrar_contable(id_usuario, "ADE", id_admin)
 
         raise ValueError("Rol no reconocido")
+    
+
+
+    def resumen_trabajadores_por_rol(self, trabajadores):
+        resumen = {
+            "total": len(trabajadores),
+            "entrenadores": 0,
+            "recepcionistas": 0,
+            "contables": 0,
+            "administradores": 0
+        }
+
+        for trabajador in trabajadores:
+            rol = str(trabajador[6]).lower().strip() if len(trabajador) > 6 else ""
+
+            if "entrenador" in rol:
+                resumen["entrenadores"] += 1
+            elif "recepcionista" in rol or "recepción" in rol or "recepcion" in rol:
+                resumen["recepcionistas"] += 1
+            elif "contable" in rol:
+                resumen["contables"] += 1
+            elif "administrador" in rol or "admin" in rol:
+                resumen["administradores"] += 1
+
+        return resumen

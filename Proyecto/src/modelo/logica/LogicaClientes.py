@@ -249,3 +249,24 @@ class LogicaClientes:
         id_clase = clases[0][0]
 
         return self.inscribirse_clase(id_cliente, id_clase)
+    
+
+    def validar_datos_registro_cliente(self, dni, nombre, telefono, direccion,
+                                       email, fecha, username, password,
+                                       confirmar_password, es_adulto, es_menor):
+        if not all([dni, nombre, telefono, direccion, email, fecha, username, password, confirmar_password]):
+            raise ValueError("Completa todos los datos obligatorios")
+
+        if password != confirmar_password:
+            raise ValueError("Las contraseñas no coinciden")
+
+        if not es_adulto and not es_menor:
+            raise ValueError("Selecciona si el cliente es adulto o menor")
+
+        return True
+
+    def convertir_fecha_a_bd(self, fecha):
+        try:
+            return datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
+        except ValueError:
+            return datetime.strptime(fecha, "%Y-%m-%d").strftime("%Y-%m-%d")

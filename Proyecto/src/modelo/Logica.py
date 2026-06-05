@@ -56,6 +56,9 @@ class Logica:
 
     def crear_relacion_usuario_por_rol(self, *args, **kwargs):
         return self._usuarios.crear_relacion_usuario_por_rol(*args, **kwargs)
+    
+    def resumen_trabajadores_por_rol(self, trabajadores):
+        return self._usuarios.resumen_trabajadores_por_rol(trabajadores)
 
     # ── Trabajadores ────────────────────────────────────────────────────
     def contar_trabajadores(self):
@@ -133,6 +136,8 @@ class Logica:
 
     def recepcion_guardar_cambios_cliente(self, *args, **kwargs):
         return self._clientes.recepcion_guardar_cambios_cliente(*args, **kwargs)
+    
+    
 
     # ── Recepción ───────────────────────────────────────────────────────
     def recepcion_entradas_hoy(self):
@@ -164,6 +169,12 @@ class Logica:
 
     def ultimo_acceso_cliente(self, id_usuario):
         return self._recepcion.ultimo_acceso_cliente(id_usuario)
+    
+    def validar_datos_registro_cliente(self, *args, **kwargs):
+        return self._clientes.validar_datos_registro_cliente(*args, **kwargs)
+
+    def convertir_fecha_a_bd(self, fecha):
+        return self._clientes.convertir_fecha_a_bd(fecha)
 
     # ── Clases / inscripciones / asistencia ─────────────────────────────
     def contar_clases(self):
@@ -258,6 +269,24 @@ class Logica:
 
     def clases_inscritas_cliente(self, id_cliente):
         return self._clientes.clases_inscritas_cliente(id_cliente)
+    
+    
+    def total_inscritos_clases_entrenador(self, id_entrenador):
+        return self._clases.total_inscritos_clases_entrenador(id_entrenador)
+
+    def ocupacion_media_entrenador(self, id_entrenador):
+        return self._clases.ocupacion_media_entrenador(id_entrenador)
+
+    def resumen_ocupacion_entrenador(self, id_entrenador):
+        return self._clases.resumen_ocupacion_entrenador(id_entrenador)
+
+    def registrar_asistencia_normalizada(self, id_cliente, id_clase, fecha, estado):
+        return self._clases.registrar_asistencia_normalizada(
+            id_cliente,
+            id_clase,
+            fecha,
+            estado
+        )
 
     # ── Pagos / contabilidad ────────────────────────────────────────────
     def registrar_pago(self, *args, **kwargs):
@@ -322,6 +351,12 @@ class Logica:
 
     def informe_salarios(self):
         return self._pagos.informe_salarios()
+    
+    def es_pago_vencido(self, fecha_pago):
+        return self._pagos.es_pago_vencido(fecha_pago)
+
+    def normalizar_metodo_pago(self, metodo_pago):
+        return self._pagos.normalizar_metodo_pago(metodo_pago)
 
     # ── Contable ────────────────────────────────────────────────────────
     def cobros_hoy_contable(self):

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 
 from src.modelo.VO.PagoVO import PagoVO
 
@@ -310,3 +310,42 @@ class LogicaPagos:
             raise ValueError("Debe indicarse el contable")
 
         return self._pago_consultas_dao.contable_importe_gestionado(id_contable)
+    
+
+    def es_pago_vencido(self, fecha_pago):
+        """
+        Regla de negocio:
+        Un pago está vencido si su fecha es anterior a la fecha actual.
+        """
+        fecha_convertida = fecha_pago
+
+        if isinstance(fecha_pago, str):
+            try:
+                fecha_convertida = datetime.strptime(fecha_pago[:10], "%Y-%m-%d").date()
+            except Exception:
+                return False
+
+        elif hasattr(fecha_pago, "date"):
+            fecha_convertida = fecha_pago.date()
+
+        if fecha_convertida is None:
+            return False
+
+        return fecha_convertida < date.today()
+
+    
+    def normalizar_metodo_pago(self, metodo_pago):
+        """
+        Regla de negocio:
+        Solo se aceptan los métodos de pago válidos de la aplicación.
+        """
+        metodo = str(metodo_pago).strip().lower()
+
+        metodos_validos = ["tarjeta", "efectivo", "transferencia", "bizum"]
+
+        if metodo not in metodos_validos:
+            raise ValueError(
+                "Método de pago no válido. Selecciona tarjeta, efectivo, transferencia o bizum."
+            )
+
+        return metodo

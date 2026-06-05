@@ -263,3 +263,92 @@ class LogicaClases:
 
     def ranking_clientes_activos(self):
         return self._asistencia_consultas_dao.ranking_clientes_activos()
+    
+    
+    
+    def total_inscritos_clases_entrenador(self, id_entrenador):
+        clases = self.clases_de_entrenador(id_entrenador)
+        total = 0
+
+        for clase in clases:
+            inscritos = self.clientes_inscritos_clase(clase[0])
+            total += len(inscritos)
+
+        return total
+
+    def ocupacion_media_entrenador(self, id_entrenador):
+        ocupaciones = self.ocupacion_clases_entrenador(id_entrenador)
+
+        if not ocupaciones:
+            return 0
+
+        suma = 0
+
+        for ocupacion in ocupaciones:
+            suma += float(ocupacion[4])
+
+        return round(suma / len(ocupaciones), 2)
+
+    def resumen_ocupacion_entrenador(self, id_entrenador):
+        datos_ocupacion = self.ocupacion_clases_entrenador(id_entrenador)
+
+        if not datos_ocupacion:
+            return {
+                "total_clases": 0,
+                "ocupacion_media": 0,
+                "clases_llenas": 0,
+                "clase_mas_llena": None,
+                "plazas_libres_mas_llena": 0
+            }
+
+        total_ocupacion = 0
+        clases_llenas = 0
+        clase_mas_llena = datos_ocupacion[0]
+
+        for dato in datos_ocupacion:
+            inscritos = int(dato[2])
+            aforo = int(dato[3])
+            ocupacion = float(dato[4])
+
+            total_ocupacion += ocupacion
+
+            if inscritos >= aforo:
+                clases_llenas += 1
+
+            if ocupacion > float(clase_mas_llena[4]):
+                clase_mas_llena = dato
+
+        ocupacion_media = round(total_ocupacion / len(datos_ocupacion), 2)
+        plazas_libres = int(clase_mas_llena[3]) - int(clase_mas_llena[2])
+
+        return {
+            "total_clases": len(datos_ocupacion),
+            "ocupacion_media": ocupacion_media,
+            "clases_llenas": clases_llenas,
+            "clase_mas_llena": clase_mas_llena,
+            "plazas_libres_mas_llena": plazas_libres
+        }
+
+    def normalizar_estado_asistencia(self, estado):
+        estado = str(estado).strip().lower()
+
+        if estado in ["si", "sí", "asistio", "asistió", "presente"]:
+            return "si"
+
+        if estado in ["no", "ausencia", "ausente"]:
+            return "no"
+
+        return "pendiente"
+
+    def registrar_asistencia_normalizada(self, id_cliente, id_clase, fecha, estado):
+        estado_normalizado = self.normalizar_estado_asistencia(estado)
+
+        if estado_normalizado == "pendiente":
+            return None
+
+        return self.registrar_asistencia(
+            id_cliente,
+            id_clase,
+            fecha,
+            estado_normalizado
+        )
