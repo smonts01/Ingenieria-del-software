@@ -58,25 +58,22 @@ class ControladorEntrenador:
         if hasattr(v, "tablaProximasClasesEntrenador"):
             self.rellenar_tabla(v.tablaProximasClasesEntrenador, self.modelo.clases_entrenador_tabla(id_u))
 
-        if hasattr(v, "labelNumClases"):
-            clases = self.modelo.clases_de_entrenador(id_u)
-            v.labelNumClases.setText(str(len(clases)))
-
+        
+        
         if hasattr(v, "labelClase") or hasattr(v, "labelHora"):
-            clases = self.modelo.clases_de_entrenador(id_u)
+            clases_tabla = self.modelo.clases_entrenador_tabla(id_u)
 
-            if clases:
-                primera_clase = clases[0]
+            if clases_tabla:
+                primera_clase = clases_tabla[0]
 
-                nombre = primera_clase[1]
-                hora_inicio = primera_clase[3]
-                hora_fin = primera_clase[4]
+                nombre = primera_clase[0]
+                horario = primera_clase[2]
 
                 if hasattr(v, "labelClase"):
                     v.labelClase.setText(str(nombre))
 
                 if hasattr(v, "labelHora"):
-                    v.labelHora.setText(f"{hora_inicio} - {hora_fin}")
+                    v.labelHora.setText(str(horario))
 
         
         if hasattr(v, "labelNumAsistencias"):
@@ -107,6 +104,10 @@ class ControladorEntrenador:
 
             resumen = self.modelo.resumen_ocupacion_entrenador(id_u)
 
+            if hasattr(v, "label_Num_Clases"):
+                v.label_Num_Clases.setText(str(resumen["clases_llenas"]))
+
+
             clase_mas_llena = resumen["clase_mas_llena"]
 
             if clase_mas_llena:
@@ -128,8 +129,6 @@ class ControladorEntrenador:
                 if hasattr(v, "label_plazasLibres"):
                     v.label_plazasLibres.setText(str(plazas_libres))
 
-                if hasattr(v, "label_Num_Clases"):
-                    v.label_Num_Clases.setText(str(clases_llenas))
 
                 if hasattr(v, "label_Porcentaje_Ocupacion_2"):
                     v.label_Porcentaje_Ocupacion_2.setText(f"{ocupacion_media}%")
@@ -359,22 +358,19 @@ class ControladorEntrenador:
         if hasattr(v, "label_numAus"):
             v.label_numAus.setText("0")
 
-        clase = self.modelo.buscar_clase(id_clase)
+        clase = self.modelo.datos_clase_asistencia(id_clase)
 
         if clase:
-            nombre = clase[3]
-            dia = clase[5]
-            hora_inicio = clase[6]
-            hora_fin = clase[7]
-
             if hasattr(v, "label_nombreclase"):
-                v.label_nombreclase.setText(str(nombre))
+                v.label_nombreclase.setText(str(clase["nombre"]))
 
             if hasattr(v, "label_fecha"):
-                v.label_fecha.setText(str(dia))
+                v.label_fecha.setText(str(clase["dia"]))
 
             if hasattr(v, "lblHorarioClase"):
-                v.lblHorarioClase.setText(f"{hora_inicio} - {hora_fin}")
+                v.lblHorarioClase.setText(
+                    f"{clase['hora_inicio']} - {clase['hora_fin']}"
+                )
 
     def actualizar_resumen_asistencia(self):
         v = self.ventana
@@ -477,13 +473,22 @@ class ControladorEntrenador:
         except Exception as e:
             MensajeView.warning(v, "Error", str(e))
 
+
+    
+
     def rellenar_tabla(self, tabla, datos):
         tabla.setRowCount(len(datos))
+
         if datos:
             tabla.setColumnCount(len(datos[0]))
+
         for fila, registro in enumerate(datos):
             for col, valor in enumerate(registro):
-                tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else ""))
+                tabla.setItem(
+                    fila,
+                    col,
+                    TablaView.crear_item(str(valor) if valor is not None else "")
+                )
 
     def cerrar_sesion(self):
         self.ventana.close()

@@ -290,6 +290,9 @@ class Logica:
     
     def normalizar_estado_asistencia(self, estado):
         return self._clases.normalizar_estado_asistencia(estado)
+    
+    def datos_clase_asistencia(self, id_clase):
+        return self._clases.datos_clase_asistencia(id_clase)
 
     # ── Pagos / contabilidad ────────────────────────────────────────────
     def registrar_pago(self, *args, **kwargs):
