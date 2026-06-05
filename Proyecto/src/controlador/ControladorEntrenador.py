@@ -443,7 +443,7 @@ class ControladorEntrenador:
                     id_cliente = int(item_cliente.text().split(" - ")[0])
                     estado = item_estado.text().strip().lower()
 
-                    estado_normalizado = self.modelo._clases.normalizar_estado_asistencia(estado)
+                    estado_normalizado = self.modelo.normalizar_estado_asistencia(estado)
 
                     if estado_normalizado == "si":
                         self.modelo.registrar_asistencia_normalizada(id_cliente, id_clase, fecha, estado)
