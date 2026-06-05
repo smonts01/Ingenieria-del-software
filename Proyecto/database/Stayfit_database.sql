@@ -428,6 +428,47 @@ VALUES
 (10, 13, 1, 30.00, 'bizum', '2026-04-08 10:10:00', 'abonado', 'mensual'),
 (11, 13, 2, 45.00, 'transferencia', '2026-04-19 13:40:00', 'abonado', 'mensual');
 
+
+
+-- Cliente pendiente 1
+INSERT INTO usuarios
+(dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
+VALUES
+('44444444D', 'Ana Torres', '600444444', 'ana@stayfit.com', 'ana', 'ana1', 1, 'Calle Cuatro', '1999-04-12');
+
+SET @id_ana = LAST_INSERT_ID();
+
+INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas)
+VALUES (@id_ana, 'pendiente', 0);
+
+INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado)
+VALUES (@id_ana, 1, '2026-05-01', 'activa');
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+VALUES
+(@id_ana, 13, 1, 30.00, 'tarjeta', '2026-06-06 10:00:00', 'pendiente', 'mensual');
+
+
+-- Cliente pendiente 2
+INSERT INTO usuarios
+(dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
+VALUES
+('55555555E', 'Diego Martín', '600555555', 'diego@stayfit.com', 'diego', 'diego1', 1, 'Calle Cinco', '1997-09-25');
+
+SET @id_diego = LAST_INSERT_ID();
+
+INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas)
+VALUES (@id_diego, 'pendiente', 0);
+
+INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado)
+VALUES (@id_diego, 2, '2026-05-01', 'activa');
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+VALUES
+(@id_diego, 13, 2, 45.00, 'efectivo', '2026-05-20 11:30:00', 'pendiente', 'mensual');
+
 SHOW TABLES;
 SELECT * FROM usuarios;
 SELECT * FROM clase;

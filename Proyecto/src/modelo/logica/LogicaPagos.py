@@ -127,6 +127,9 @@ class LogicaPagos:
             raise ValueError("Debe introducirse el DNI")
 
         return self._pago_consultas_dao.buscar_pago_pendiente_por_dni(dni)
+    
+    def primer_pago_pendiente(self):
+        return self._pago_consultas_dao.primer_pago_pendiente()
 
     # ── INFORMES ECONÓMICOS ────────────────────────────────────────
 

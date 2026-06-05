@@ -79,14 +79,9 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     """
 
     SQL_IMPORTE_PENDIENTE = """
-        SELECT COALESCE(SUM(t.precio_mensual), 0)
-        FROM clientes c
-        LEFT JOIN cliente_tarifa ct
-            ON c.id_cliente = ct.id_cliente
-        AND ct.estado = 'activa'
-        LEFT JOIN tarifa t
-            ON ct.id_tarifa = t.id_tarifa
-        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        SELECT COALESCE(SUM(importe), 0)
+        FROM pago
+        WHERE estado = 'pendiente'
     """
 
     SQL_CLIENTES_PENDIENTES_ADMIN = """
@@ -174,8 +169,31 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     SQL_PAGOS_VENCEN_SEMANA = """
         SELECT COUNT(*) FROM pago
         WHERE estado = 'pendiente'
-          AND DATE(fecha_pago) BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY)
+        AND DATE(fecha_pago) >= CURRENT_DATE
+        AND DATE(fecha_pago) <= DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY)
     """
+
+    SQL_BUSCAR_PAGO_PENDIENTE_DNI = """
+            SELECT 
+                p.id_pago,
+                u.id_usuario,
+                u.nombre,
+                u.dni,
+                t.id_tarifa,
+                t.nombre,
+                p.importe,
+                p.fecha_pago,
+                p.estado
+            FROM pago p
+            INNER JOIN usuarios u 
+                ON p.id_cliente = u.id_usuario
+            INNER JOIN tarifa t 
+                ON p.id_tarifa = t.id_tarifa
+            WHERE p.estado = 'pendiente'
+            AND UPPER(u.dni) = UPPER(?)
+            ORDER BY p.fecha_pago DESC
+            LIMIT 1
+        """
 
     SQL_BUSCAR_CLIENTE_TARIFA_DNI = """
         SELECT u.id_usuario, u.nombre, u.dni,
@@ -222,7 +240,32 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     SQL_IMPORTE_GESTIONADO = """
         SELECT COALESCE(SUM(importe), 0) FROM pago WHERE id_contable = ? AND estado = 'abonado'
     """
+    SQL_PRIMER_PAGO_PENDIENTE = """
+        SELECT 
+            p.id_pago,
+            u.id_usuario,
+            u.nombre,
+            u.dni,
+            t.id_tarifa,
+            t.nombre,
+            p.importe,
+            p.fecha_pago,
+            p.estado
+        FROM pago p
+        INNER JOIN usuarios u 
+            ON p.id_cliente = u.id_usuario
+        INNER JOIN tarifa t 
+            ON p.id_tarifa = t.id_tarifa
+        WHERE p.estado = 'pendiente'
+        ORDER BY p.fecha_pago DESC
+        LIMIT 1
+    """
 
+
+    def primer_pago_pendiente(self):
+        datos = self.consultar(self.SQL_PRIMER_PAGO_PENDIENTE)
+        return datos[0] if datos else None
+    
     def listar_pagos_pendientes_admin(self):
         return self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
 
@@ -269,8 +312,9 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return self.consultar(self.SQL_CLIENTES_PENDIENTES_ADMIN)
 
     def buscar_pago_pendiente_por_dni(self, dni):
-        d = f"%{dni.lower().strip()}%"
-        return self.consultar(self.SQL_BUSCAR_PAGO_PENDIENTE_DNI, (d,))
+        d = dni.strip().upper()
+        datos = self.consultar(self.SQL_BUSCAR_PAGO_PENDIENTE_DNI, (d,))
+        return datos[0] if datos else None
 
     def cobros_hoy_contable(self):
         datos = self.consultar(self.SQL_COBROS_HOY)

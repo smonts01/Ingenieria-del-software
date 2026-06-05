@@ -190,6 +190,28 @@ class ControladorContable:
             total_informes = self.modelo.num_informes_mes_contable()
             v.labelInformesRegistro.setText(str(total_informes))
 
+        if hasattr(v, "lblNombreCliente_8"):
+            pago = self.modelo.primer_pago_pendiente()
+
+            if pago:
+                self.mostrar_pago_pendiente(pago)
+            else:
+                v.lblNombreCliente_8.setText("Sin pagos pendientes")
+                v.lblNombreCliente_9.setText("DNI: -")
+                v.lblNombreCliente_10.setText("ID: -")
+
+                if hasattr(v, "btnCalorias_2"):
+                    v.btnCalorias_2.setText("Sin datos")
+
+                if hasattr(v, "lblSubAs_3"):
+                    v.lblSubAs_3.setText("-")
+
+                if hasattr(v, "lblSubAs_4"):
+                    v.lblSubAs_4.setText("-")
+
+                if hasattr(v, "lblSubAs_5"):
+                    v.lblSubAs_5.setText("0.00€")
+
 
 
         # ============================================================
@@ -228,13 +250,15 @@ class ControladorContable:
                 v.label_ImporteTotal.setText(f"{float(importe_pendiente):.2f} €")
 
 
+
+
         # ============================================================
         # PANTALLA GESTIÓN ECONÓMICA
         # ============================================================
 
         if (
             hasattr(v, "labelBasicoPrecio")
-            and hasattr(v, "labelBasicoDuracion")
+            and hasattr(v, "labelBasicoBuracion")
             and hasattr(v, "labelPremiumPrecio")
             and hasattr(v, "labelPremiumDuracion")
         ):
@@ -247,7 +271,7 @@ class ControladorContable:
 
                 if nombre == "basico":
                     v.labelBasicoPrecio.setText(precio)
-                    v.labelBasicoDuracion.setText(duracion)
+                    v.labelBasicoBuracion.setText(duracion)
 
                 elif nombre == "premium":
                     v.labelPremiumPrecio.setText(precio)
@@ -495,6 +519,39 @@ class ControladorContable:
             ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
         )
 
+
+    def mostrar_pago_pendiente(self, pago):
+        v = self.ventana
+
+        id_pago = pago[0]
+        id_cliente = pago[1]
+        nombre = pago[2]
+        dni_real = pago[3]
+        id_tarifa = pago[4]
+        tarifa = pago[5]
+        importe = pago[6]
+        fecha_pago = pago[7]
+        estado = pago[8]
+
+        self.id_pago_seleccionado = id_pago
+        self.id_cliente_seleccionado = id_cliente
+
+        v.lblNombreCliente_8.setText(str(nombre))
+        v.lblNombreCliente_9.setText(f"DNI: {dni_real}")
+        v.lblNombreCliente_10.setText(f"ID:{id_cliente}")
+
+        if hasattr(v, "btnCalorias_2"):
+            v.btnCalorias_2.setText(str(estado).capitalize())
+
+        if hasattr(v, "lblSubAs_3"):
+            v.lblSubAs_3.setText(str(tarifa))
+
+        if hasattr(v, "lblSubAs_5"):
+            v.lblSubAs_5.setText(f"{float(importe):.2f}€")
+
+        if hasattr(v, "lblSubAs_4"):
+            v.lblSubAs_4.setText(str(fecha_pago))
+
     def buscar_cliente_registrar_pago(self):
         v = self.ventana
         dni = v.lineEdit.text().strip().upper()
@@ -502,30 +559,55 @@ class ControladorContable:
         if not dni:
             return
 
-    
-        cliente = self.modelo.buscar_cliente_tarifa_por_dni(dni)
+        pago = self.modelo.buscar_pago_pendiente_por_dni(dni)
 
-        if cliente:
-            id_cliente = str(cliente[0])
-            nombre     = str(cliente[1])
-            dni_real   = str(cliente[2])
+        if pago:
+            id_pago = pago[0]
+            id_cliente = pago[1]
+            nombre = pago[2]
+            dni_real = pago[3]
+            id_tarifa = pago[4]
+            tarifa = pago[5]
+            importe = pago[6]
+            fecha_pago = pago[7]
+            estado = pago[8]
 
-            v.lblNombreCliente_8.setText(nombre)
+            self.id_pago_seleccionado = id_pago
+            self.id_cliente_seleccionado = id_cliente
+
+            v.lblNombreCliente_8.setText(str(nombre))
             v.lblNombreCliente_9.setText(f"DNI: {dni_real}")
             v.lblNombreCliente_10.setText(f"ID:{id_cliente}")
 
-            # Compruebo si tiene pago pendiente
-            pago = self.modelo.buscar_pago_pendiente_por_dni(dni)
-            if pago:
-                v.btnCalorias_2.setText("Pendiente")
-            else:
-                v.btnCalorias_2.setText("Al corriente")
+            if hasattr(v, "btnCalorias_2"):
+                v.btnCalorias_2.setText(str(estado).capitalize())
+
+            if hasattr(v, "lblSubAs_3"):
+                v.lblSubAs_3.setText(str(tarifa))
+
+            if hasattr(v, "lblSubAs_5"):
+                v.lblSubAs_5.setText(f"{float(importe):.2f}€")
+
+            if hasattr(v, "lblSubAs_4"):
+                v.lblSubAs_4.setText(str(fecha_pago))
+
         else:
-            v.lblNombreCliente_8.setText("Cliente no encontrado")
-            v.lblNombreCliente_9.setText("DNI: -")
+            v.lblNombreCliente_8.setText("Sin pago pendiente")
+            v.lblNombreCliente_9.setText(f"DNI: {dni}")
             v.lblNombreCliente_10.setText("ID: -")
-            v.btnCalorias_2.setText("Sin datos")
-        
+
+            if hasattr(v, "btnCalorias_2"):
+                v.btnCalorias_2.setText("Al corriente")
+
+            if hasattr(v, "lblSubAs_3"):
+                v.lblSubAs_3.setText("-")
+
+            if hasattr(v, "lblSubAs_5"):
+                v.lblSubAs_5.setText("0.00€")
+
+            if hasattr(v, "lblSubAs_4"):
+                v.lblSubAs_4.setText("-")
+            
 
     def registrar_pago(self):
         v = self.ventana

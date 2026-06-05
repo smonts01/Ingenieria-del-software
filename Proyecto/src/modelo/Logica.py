@@ -300,6 +300,9 @@ class Logica:
         return self._clases.datos_clase_asistencia(id_clase)
 
     # ── Pagos / contabilidad ────────────────────────────────────────────
+    def primer_pago_pendiente(self):
+        return self._pagos.primer_pago_pendiente()
+    
     def registrar_pago(self, *args, **kwargs):
         return self._pagos.registrar_pago(*args, **kwargs)
 
