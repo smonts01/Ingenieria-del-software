@@ -1,6 +1,13 @@
 import os
 from src.vista.componentes import CargadorVista, MensajeView, TablaView
-
+from datetime import date, datetime
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from datetime import datetime
+import os
+import ctypes.wintypes
 
 class ControladorContable:
 
@@ -456,7 +463,7 @@ class ControladorContable:
         datos = self.modelo.pagos_pendientes()
         datos_filtrados = []
 
-        from datetime import date, datetime
+        
 
         for fila in datos:
             id_pago = fila[0]
@@ -579,7 +586,7 @@ class ControladorContable:
                 fecha_texto = ""
 
             if fecha_texto == "":
-                from datetime import datetime
+                
                 fecha_pago = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             else:
                 
@@ -687,12 +694,7 @@ class ControladorContable:
 
     
     def exportar_pdf(self):
-        from reportlab.lib.pagesizes import A4
-        from reportlab.lib import colors
-        from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-        from reportlab.lib.styles import getSampleStyleSheet
-        from datetime import datetime
-        import os
+
 
         v = self.ventana
 
@@ -731,7 +733,7 @@ class ControladorContable:
         fecha_str = datetime.now().strftime("%Y%m%d_%H%M%S")
         nombre_archivo = f"{tipo.replace(' ', '_')}_{fecha_str}.pdf"
         
-        import ctypes.wintypes
+
         buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
         ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, buf)
         ruta = os.path.join(buf.value, nombre_archivo)
