@@ -15,6 +15,7 @@ from src.modelo.dao.AdultoDaoJDBC import AdultoDaoJDBC
 from src.modelo.dao.InscripcionDaoJDBC import InscripcionDaoJDBC
 from src.modelo.dao.InscripcionConsultasDaoJDBC import InscripcionConsultasDaoJDBC
 from src.modelo.dao.ClaseConsultasDaoJDBC import ClaseConsultasDaoJDBC
+from src.modelo.dao.ClienteTarifaDaoJDBC import ClienteTarifaDaoJDBC
 
 
 class LogicaClientes:
@@ -29,6 +30,7 @@ class LogicaClientes:
         self._inscripcion_dao = InscripcionDaoJDBC()
         self._inscripcion_consultas_dao = InscripcionConsultasDaoJDBC()
         self._clase_consultas_dao = ClaseConsultasDaoJDBC()
+        self._cliente_tarifa_dao = ClienteTarifaDaoJDBC()
 
     def _cifrar(self, password: str) -> str:
         return hashlib.sha256(password.encode("utf-8")).hexdigest()
@@ -118,7 +120,7 @@ class LogicaClientes:
 
     def crear_cliente_desde_recepcion(self, dni, nombre, telefono, email, username,
                                       password, direccion, fecha_nacimiento,
-                                      es_menor=False, dni_tutor="", nombre_tutor=""):
+                                      es_menor=False, dni_tutor="", nombre_tutor="",plan="Basico"):
         obligatorios = [
             dni,
             nombre,
@@ -186,7 +188,24 @@ class LogicaClientes:
             except Exception:
                 pass
 
+        self._asignar_tarifa_cliente(id_cliente, plan)
         return id_cliente
+
+    def _obtener_id_tarifa_por_plan(self, plan):
+        plan = str(plan).strip().lower()
+
+        if plan in ("premium", "plan premium"):
+            return 2
+
+        return 1
+
+    def _asignar_tarifa_cliente(self, id_cliente, plan):
+        id_tarifa = self._obtener_id_tarifa_por_plan(plan)
+
+        return self._cliente_tarifa_dao.asignar_tarifa_activa(
+            id_cliente,
+            id_tarifa
+        )
 
     # ── INSCRIPCIONES DEL CLIENTE ───────────────────────────────────
 
@@ -252,8 +271,9 @@ class LogicaClientes:
     
 
     def validar_datos_registro_cliente(self, dni, nombre, telefono, direccion,
-                                       email, fecha, username, password,
-                                       confirmar_password, es_adulto, es_menor):
+                                    email, fecha, username, password,
+                                    confirmar_password, es_adulto, es_menor,
+                                    plan="Basico"):
         if not all([dni, nombre, telefono, direccion, email, fecha, username, password, confirmar_password]):
             raise ValueError("Completa todos los datos obligatorios")
 
@@ -262,6 +282,9 @@ class LogicaClientes:
 
         if not es_adulto and not es_menor:
             raise ValueError("Selecciona si el cliente es adulto o menor")
+
+        if str(plan).strip().lower() not in ("basico", "básico", "premium"):
+            raise ValueError("Selecciona un plan válido")
 
         return True
 

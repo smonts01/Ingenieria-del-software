@@ -205,6 +205,7 @@ class ControladorRecepcionista:
             menor = self._buscar_widget("ButtomMenor", "radioButton_2")
             es_menor = menor.isChecked() if menor else False
             es_adulto = adulto.isChecked() if adulto else False
+            plan = v.PlanComboBox.currentText().strip() if hasattr(v, "PlanComboBox") else "Basico"
 
             try:
                 self.modelo.validar_datos_registro_cliente(
@@ -218,7 +219,8 @@ class ControladorRecepcionista:
                     password,
                     confirmar,
                     es_adulto,
-                    es_menor
+                    es_menor,
+                    plan
                 )
 
                 fecha_bd = self.modelo.convertir_fecha_a_bd(fecha)
@@ -363,13 +365,13 @@ class ControladorRecepcionista:
                 tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else ""))
 
     def _rellenar_tabla_ultimos_registros(self, tabla, datos):
-        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"], datos, editable=False)
+        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"], datos, editable=True)
 
     def _rellenar_tabla_clientes_recientes(self, tabla, datos):
-        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Teléfono", "Fecha registro"], datos, editable=False)
+        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Teléfono", "Fecha registro"], datos, editable=True)
 
     def _rellenar_tabla_accesos_control(self, tabla, datos):
-        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"], datos, editable=False)
+        self._rellenar_tabla_generica(tabla, ["Cliente", "DNI", "Tipo acceso", "Fecha y hora"], datos, editable=True)
 
     def _rellenar_tabla_clientes_recepcionista(self, tabla, datos):
         cabeceras = ["ID", "DNI", "Nombre", "Teléfono", "Email", "Dirección", "Nacimiento", "Estado pago", "Tipo", "Plan"]
@@ -384,12 +386,47 @@ class ControladorRecepcionista:
                 item = TablaView.crear_item(str(valor) if valor is not None else "", editable=(col not in (0, 8, 9)))
                 tabla.setItem(fila, col, item)
 
-    def _rellenar_tabla_generica(self, tabla, cabeceras, datos, editable=False):
+    def _rellenar_tabla_generica(self, tabla, cabeceras, datos, editable=True):
         TablaView.configurar_columnas(tabla, cabeceras)
         tabla.setColumnCount(len(cabeceras))
         tabla.setHorizontalHeaderLabels(cabeceras)
         tabla.setRowCount(len(datos))
         tabla.setSelectionBehavior(tabla.SelectRows)
+
         for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
-                tabla.setItem(fila, col, TablaView.crear_item(str(valor) if valor is not None else "", editable=editable))
+            if isinstance(registro, (list, tuple)):
+                valores = list(registro)[:len(cabeceras)]
+            else:
+                valores = self._valores_desde_vo(registro, cabeceras)
+
+            for col, valor in enumerate(valores):
+                editable_celda = editable and col != 0
+
+                item = TablaView.crear_item(
+                    str(valor) if valor is not None else "",
+                    editable=editable_celda
+                )
+
+                tabla.setItem(fila, col, item)
+
+    def _valores_desde_vo(self, registro, cabeceras):
+        if hasattr(registro, "nombre_cliente"):
+            return [
+                registro.nombre_cliente,
+                registro.dni,
+                registro.tipo_acceso,
+                registro.fecha_hora
+            ][:len(cabeceras)]
+
+        if hasattr(registro, "id_registro"):
+            return [
+                registro.id_registro,
+                registro.id_usuario,
+                registro.tipo_acceso,
+                registro.fecha_hora
+            ][:len(cabeceras)]
+
+        return [
+            getattr(registro, attr, "")
+            for attr in vars(registro).keys()
+        ][:len(cabeceras)]
