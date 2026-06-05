@@ -3,13 +3,13 @@ from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 
 class UsuarioConsultasDaoJDBC(DaoJDBCBase):
 
-    SQL_PERFIL = ("SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email, u.username, r.nombre_rol, u.direccion, u.fecha_registro, u.fecha_nacimiento"
-                "FROM usuarios u"
-                "INNER JOIN roles r ON u.id_rol = r.id_rol"
+    SQL_PERFIL = ("SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email, u.username, r.nombre_rol, u.direccion, u.fecha_registro, u.fecha_nacimiento "
+                "FROM usuarios u "
+                "INNER JOIN roles r ON u.id_rol = r.id_rol "
                 "WHERE u.id_usuario = ?")
 
-    SQL_RECEPCION = ("SELECT COUNT(*)"
-                    "FROM usuarios"
+    SQL_RECEPCION = ("SELECT COUNT(*) "
+                    "FROM usuarios "
                     "WHERE DATE(fecha_registro) = CURDATE()")
 
     def perfil_usuario(self, id_usuario: int):
