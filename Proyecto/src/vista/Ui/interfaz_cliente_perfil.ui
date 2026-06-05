@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>700</height>
+    <width>1202</width>
+    <height>690</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +45,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -57,7 +60,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -108,7 +111,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -170,7 +173,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -295,7 +298,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -311,7 +314,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>../imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -327,7 +330,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/grafico-de-barras.png</pixmap>
+      <pixmap>../imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -343,7 +346,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -359,7 +362,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>../imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -376,7 +379,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QLabel" name="labelFondoOla">
      <property name="geometry">
@@ -496,7 +499,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        <x>360</x>
        <y>100</y>
        <width>360</width>
-       <height>477</height>
+       <height>281</height>
       </rect>
      </property>
      <widget class="QLabel" name="lblInfoPersonal">
@@ -579,7 +582,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        <string>Fecha nacimiento</string>
       </property>
      </widget>
-     <widget class="QLabel" name="l5">
+     <widget class="QLabel" name="l6">
       <property name="geometry">
        <rect>
         <x>25</x>
@@ -592,55 +595,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>Género</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="l6">
-      <property name="geometry">
-       <rect>
-        <x>25</x>
-        <y>275</y>
-        <width>110</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
        <string>Dirección</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="l7">
-      <property name="geometry">
-       <rect>
-        <x>25</x>
-        <y>317</y>
-        <width>110</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Peso (kg)</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="l8">
-      <property name="geometry">
-       <rect>
-        <x>25</x>
-        <y>359</y>
-        <width>110</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
-      </property>
-      <property name="text">
-       <string>Altura (cm)</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblNombreCompleto">
@@ -682,19 +637,6 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        <string>cliente@email.com</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lblGenero">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>233</y>
-        <width>161</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Masculino</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="lblFechaNacimiento">
       <property name="geometry">
        <rect>
@@ -712,39 +654,13 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <property name="geometry">
        <rect>
         <x>170</x>
-        <y>275</y>
+        <y>233</y>
         <width>181</width>
         <height>16</height>
        </rect>
       </property>
       <property name="text">
        <string>Calle Falsa 123, Madrid</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblPeso">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>317</y>
-        <width>161</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>72</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="lblAltura">
-      <property name="geometry">
-       <rect>
-        <x>170</x>
-        <y>359</y>
-        <width>161</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>175</string>
       </property>
      </widget>
     </widget>
@@ -799,7 +715,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
      </widget>
      <widget class="QFrame" name="barraProgresoValor">
@@ -812,7 +728,7 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
+       <enum>QFrame::Shape::NoFrame</enum>
       </property>
      </widget>
      <widget class="QLabel" name="lblPorcentaje">
@@ -883,6 +799,25 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>991</width>
+       <height>611</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../imagenes/recursos.qrc">:/newPrefix/reborde_ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
     <zorder>label</zorder>
     <zorder>labelFondoOla</zorder>
     <zorder>lblTituloPerfil</zorder>
@@ -890,9 +825,12 @@ QFrame#barraProgresoValor { background-color:#18B7A5; border-radius:4px; border:
     <zorder>cardPerfil</zorder>
     <zorder>cardInfoPersonal</zorder>
     <zorder>cardObjetivos</zorder>
+    <zorder>label_2</zorder>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../imagenes/recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>

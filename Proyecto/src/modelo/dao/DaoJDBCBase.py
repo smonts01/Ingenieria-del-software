@@ -29,3 +29,6 @@ class DaoJDBCBase:
             return cursor.rowcount
         finally:
             cursor.close()
+    
+    def closeConnection(self):
+        self._conexion.closeConnection()
