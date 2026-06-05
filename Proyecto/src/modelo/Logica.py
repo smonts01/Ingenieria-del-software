@@ -316,6 +316,9 @@ class Logica:
     def buscar_pago_pendiente_por_dni(self, dni):
         return self._pagos.buscar_pago_pendiente_por_dni(dni)
 
+    def buscar_cliente_pendiente_por_dni_admin(self, dni):
+        return self._pagos.buscar_cliente_pendiente_por_dni_admin(dni)
+
     def ingresos_mes_actual(self):
         return self._pagos.ingresos_mes_actual()
 

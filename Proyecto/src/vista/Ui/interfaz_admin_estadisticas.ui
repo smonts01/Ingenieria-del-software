@@ -472,6 +472,22 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
        <string>248</string>
       </property>
      </widget>
+     <widget class="QLabel" name="lblSubR2_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>130</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font:8pt &quot;Segoe UI&quot;; color:#6B7280;</string>
+      </property>
+      <property name="text">
+       <string>clientes</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="cardResumen2">
      <property name="geometry">
@@ -646,7 +662,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:bold 11pt &amp;quot;Segoe UI&amp;quot;;</string>
+       <string notr="true">color: #009688;
+font-size: 14px;
+font-weight: bold;</string>
       </property>
       <property name="text">
        <string>Ranking de usuarios más activos</string>
@@ -1088,10 +1106,12 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:8pt &amp;quot;Segoe UI&amp;quot;; color:#6B7280;</string>
+       <string notr="true">color: #009688;
+font-size: 14px;
+font-weight: bold;</string>
       </property>
       <property name="text">
-       <string>Doble clic para editar. Usa la barra lateral para subir y bajar.</string>
+       <string>Usa la barra lateral para subir y bajar.</string>
       </property>
      </widget>
     </widget>
@@ -1114,7 +1134,9 @@ QProgressBar::chunk { background-color: #18B7A5; border-radius: 6px; }
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font:bold 11pt &amp;quot;Segoe UI&amp;quot;;</string>
+       <string notr="true">color: #009688;
+font-size: 14px;
+font-weight: bold;</string>
       </property>
       <property name="text">
        <string>Ocupación por clase</string>

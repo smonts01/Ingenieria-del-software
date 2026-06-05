@@ -73,10 +73,21 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     """
 
     SQL_NUM_CLIENTES_PENDIENTES = """
-        SELECT COUNT(DISTINCT p.id_cliente) FROM pago p WHERE p.estado = 'pendiente'
+        SELECT COUNT(*)
+        FROM clientes c
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
     """
 
-    SQL_IMPORTE_PENDIENTE = "SELECT COALESCE(SUM(importe), 0) FROM pago WHERE estado = 'pendiente'"
+    SQL_IMPORTE_PENDIENTE = """
+        SELECT COALESCE(SUM(t.precio_mensual), 0)
+        FROM clientes c
+        LEFT JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+        AND ct.estado = 'activa'
+        LEFT JOIN tarifa t
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+    """
 
     SQL_CLIENTES_PENDIENTES_ADMIN = """
         SELECT 
@@ -98,13 +109,24 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     """
 
 
-    SQL_BUSCAR_PAGO_PENDIENTE_DNI = """
-        SELECT u.nombre, u.dni, t.nombre, p.importe, p.fecha_pago, p.estado
-        FROM pago p
-        JOIN usuarios u ON p.id_cliente = u.id_usuario
-        JOIN tarifa t ON p.id_tarifa = t.id_tarifa
-        WHERE p.estado = 'pendiente' AND LOWER(u.dni) LIKE ?
-        ORDER BY p.fecha_pago DESC
+    SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN = """
+        SELECT 
+            u.nombre AS cliente,
+            u.dni AS dni,
+            COALESCE(t.nombre, 'Sin tarifa') AS tarifa,
+            COALESCE(t.precio_mensual, 0) AS importe_pendiente,
+            COALESCE(DATE_ADD(ct.fecha_contratacion, INTERVAL 30 DAY), CURDATE()) AS fecha_limite
+        FROM clientes c
+        INNER JOIN usuarios u 
+            ON c.id_cliente = u.id_usuario
+        LEFT JOIN cliente_tarifa ct 
+            ON c.id_cliente = ct.id_cliente
+        AND ct.estado = 'activa'
+        LEFT JOIN tarifa t 
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        AND LOWER(u.dni) LIKE ?
+        ORDER BY u.nombre
     """
 
     SQL_COBROS_HOY = """
@@ -337,3 +359,7 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     def contable_importe_gestionado(self, id_contable):
         datos = self.consultar(self.SQL_IMPORTE_GESTIONADO, (id_contable,))
         return datos[0][0] if datos else 0
+
+    def buscar_cliente_pendiente_por_dni_admin(self, dni):
+        d = f"%{dni.lower().strip()}%"
+        return self.consultar(self.SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN, (d,))

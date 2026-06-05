@@ -150,7 +150,7 @@ class ControladorAdministrador:
 
         if hasattr(v, "tablaPagoAdmin") or hasattr(v, "tableWidget"):
             try:
-                datos = self.modelo.listar_pagos_pendientes_admin()
+                datos = self.modelo.clientes_pendientes_admin()
                 tabla = v.tablaPagoAdmin if hasattr(v, "tablaPagoAdmin") else v.tableWidget
                 self._rellenar_tabla_pagos_admin(tabla, datos)
                 self._actualizar_resumen_pagos_admin()
@@ -779,7 +779,7 @@ class ControladorAdministrador:
             v.lblMostrando.setText(f"Mostrando {total} clases")
 
     def _rellenar_tabla_pagos_admin(self, tabla, datos):
-        cabeceras = ["Cliente", "DNI", "Tarifa", "Importe pendiente", "Fecha límite", "Estado"]
+        cabeceras = ["Cliente", "DNI", "Tarifa", "Importe pendiente", "Fecha límite"]
 
         TablaView.configurar_columnas(tabla, cabeceras)
         tabla.setColumnCount(len(cabeceras))
@@ -844,9 +844,9 @@ class ControladorAdministrador:
 
             try:
                 if texto:
-                    datos = self.modelo.buscar_pago_pendiente_por_dni(texto)
+                    datos = self.modelo.buscar_cliente_pendiente_por_dni_admin(texto)
                 else:
-                    datos = self.modelo.listar_pagos_pendientes_admin()
+                    datos = self.modelo.clientes_pendientes_admin()
 
                 if hasattr(v, "tablaPagoAdmin"):
                     tabla = v.tablaPagoAdmin

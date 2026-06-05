@@ -72,6 +72,9 @@ class LogicaPagos:
 
         return self._pago_consultas_dao.marcar_pago_abonado(id_pago)
 
+    def buscar_cliente_pendiente_por_dni_admin(self, dni):
+        return self._pago_consultas_dao.buscar_cliente_pendiente_por_dni_admin(dni)
+
     def listar_pagos(self):
         pagos = self._pago_dao.select()
 
