@@ -1,5 +1,6 @@
 import os
 from src.vista.componentes import CargadorVista, MensajeView, TablaView
+from datetime import date, timedelta
 
 
 class ControladorCliente:
@@ -65,6 +66,46 @@ class ControladorCliente:
             boton = getattr(v, f"btnReservar{i}", None)
             if boton:
                 boton.clicked.connect(lambda checked=False, n=i: self.reservar_clase_card(n))
+        
+                # Buscador de clases
+        if hasattr(v, "txtBuscarClases"):
+            v.txtBuscarClases.textChanged.connect(self.filtrar_clases)
+
+        # Combo de tipo/categoría
+        if hasattr(v, "cmbTipo"):
+            v.cmbTipo.blockSignals(True)
+            v.cmbTipo.clear()
+            try:
+                clases = self.modelo.listar_clases()
+                nombres = sorted(set(str(c[1]).strip() for c in clases if c[1]))
+            except Exception:
+                nombres = []
+            v.cmbTipo.addItems(["Todas las categorías"] + nombres)
+            v.cmbTipo.blockSignals(False)
+            v.cmbTipo.currentIndexChanged.connect(self.filtrar_clases)
+
+        # Combo de horario
+        if hasattr(v, "cmbHorario"):
+            v.cmbHorario.blockSignals(True)
+            v.cmbHorario.clear()
+            try:
+                clases = self.modelo.listar_clases()
+                horarios = sorted(set(
+                    f"{str(c[3])[:5]} - {str(c[4])[:5]}"
+                    for c in clases if c[3] and c[4]
+                ))
+            except Exception:
+                horarios = []
+            v.cmbHorario.addItems(["Todos los horarios"] + horarios)
+            v.cmbHorario.blockSignals(False)
+            v.cmbHorario.currentIndexChanged.connect(self.filtrar_clases)
+        
+        if hasattr(v, "btnPeriodo"):
+            hoy = date.today()
+            lunes = hoy - timedelta(days=hoy.weekday())
+            domingo = lunes + timedelta(days=6)
+            rango = f"{lunes.day} - {domingo.day} {domingo.strftime('%B %Y').lower()}"
+            v.btnPeriodo.setText(rango)
 
         # Pantalla perfil: guardar cambios
         if hasattr(v, "btnGuardarCambios"):
