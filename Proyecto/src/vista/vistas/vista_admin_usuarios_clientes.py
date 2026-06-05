@@ -4,6 +4,7 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMessageBox
 
 
 class VistaAdminUsuariosClientes(QMainWindow):
@@ -68,11 +69,11 @@ class VistaAdminUsuariosClientes(QMainWindow):
 
     # --- Feedback ---
     def mostrar_error(self, mensaje: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.critical(self, "Error", mensaje)
 
     def mostrar_mensaje(self, titulo: str, mensaje: str):
-        from PyQt5.QtWidgets import QMessageBox
+     
         QMessageBox.information(self, titulo, mensaje)
 
     # --- Señales ---

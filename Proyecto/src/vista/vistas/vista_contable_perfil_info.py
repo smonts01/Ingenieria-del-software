@@ -6,6 +6,7 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow, QLineEdit
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMessageBox
 
 
 def _conectar_menu_contable(vista, ctrl):
@@ -50,11 +51,11 @@ class VistaContablePerfil(QMainWindow):
         self.frameAvisoPerfil_2.setVisible(visible)
 
     def mostrar_error(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.critical(self, "Error", msg)
 
     def mostrar_exito(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.information(self, "Guardado", msg)
 
     def conectar_senales(self, ctrl):

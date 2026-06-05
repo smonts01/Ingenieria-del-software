@@ -4,6 +4,7 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QLabel
 
 
 class VistaEntrenadorOcupacion(QMainWindow):
@@ -36,7 +37,7 @@ class VistaEntrenadorOcupacion(QMainWindow):
         """Actualiza uno de los indicadores de ocupación media (idx 1-3)."""
         frame = getattr(self, f"frameOcupacionMedia{'' if idx == 1 else f'_{idx}'}", None)
         if frame:
-            from PyQt5.QtWidgets import QLabel
+            
             lbl = frame.findChild(QLabel)
             if lbl:
                 lbl.setText(valor)

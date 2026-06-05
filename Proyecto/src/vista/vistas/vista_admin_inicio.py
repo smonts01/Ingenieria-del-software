@@ -4,6 +4,8 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidget
 
 
 class VistaAdminInicio(QMainWindow):
@@ -41,11 +43,10 @@ class VistaAdminInicio(QMainWindow):
         :param datos: Lista de filas, cada fila es una lista de strings.
         :param cabeceras: Nombres de columnas.
         """
-        from PyQt5.QtWidgets import QTableWidgetItem
         tabla = self.cardTabla.findChild(type(self.cardTabla), "tableWidget") \
             if hasattr(self, "tableWidget") else None
         # Búsqueda genérica del QTableWidget dentro del card
-        from PyQt5.QtWidgets import QTableWidget
+        
         tabla = self.findChild(QTableWidget)
         if tabla is None:
             return

@@ -4,6 +4,7 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMessageBox
 
 
 class VistaClienteReservas(QMainWindow):
@@ -59,15 +60,15 @@ class VistaClienteReservas(QMainWindow):
 
     # --- Feedback ---
     def mostrar_mensaje(self, titulo: str, mensaje: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.information(self, titulo, mensaje)
 
     def mostrar_error(self, mensaje: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.critical(self, "Error", mensaje)
 
     def confirmar_cancelacion(self, nombre_clase: str) -> bool:
-        from PyQt5.QtWidgets import QMessageBox
+      
         resp = QMessageBox.question(
             self, "Cancelar reserva",
             f"¿Seguro que quieres cancelar la reserva de '{nombre_clase}'?"

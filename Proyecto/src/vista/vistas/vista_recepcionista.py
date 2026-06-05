@@ -9,6 +9,8 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem, QLineEdit
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QMessageBox
 
 
 def _conectar_menu_recepcionista(vista, ctrl):
@@ -86,14 +88,14 @@ class VistaRecepcionistaClientes(QMainWindow):
     # --- Cards de clientes (hasta 11 visibles en el diseño) ---
     def set_cliente_card(self, nombre_widget: str, texto: str):
         """Actualiza el texto de un QLabel de card por su objectName."""
-        from PyQt5.QtWidgets import QLabel
+        
         lbl = self.findChild(QLabel, nombre_widget)
         if lbl:
             lbl.setText(texto)
 
     # --- Feedback ---
     def mostrar_error(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.critical(self, "Error", msg)
 
     def conectar_senales(self, ctrl):
@@ -130,7 +132,7 @@ class VistaRecepcionistaControlAcceso(QMainWindow):
             lbl_nombre.setText(nombre)
 
     def set_num_accesos_hoy(self, valor: str):
-        from PyQt5.QtWidgets import QLabel
+
         lbl = self.findChild(QLabel, "lblNumAccesosHoy")
         if lbl:
             lbl.setText(valor)
@@ -145,11 +147,11 @@ class VistaRecepcionistaControlAcceso(QMainWindow):
 
     # --- Feedback ---
     def mostrar_mensaje(self, titulo: str, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.information(self, titulo, msg)
 
     def mostrar_error(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.critical(self, "Error", msg)
 
 
@@ -175,11 +177,11 @@ class VistaRecepcionistaRegistrarUsuario(QMainWindow):
             w.clear()
 
     def mostrar_error(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.critical(self, "Error de validación", msg)
 
     def mostrar_exito(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.information(self, "Usuario registrado", msg)
 
     def conectar_senales(self, ctrl):
@@ -217,11 +219,11 @@ class VistaRecepcionistaPerfil(QMainWindow):
         self.frameAvisoPerfil.setVisible(visible)
 
     def mostrar_error(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.critical(self, "Error", msg)
 
     def mostrar_exito(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.information(self, "Guardado", msg)
 
     def conectar_senales(self, ctrl):

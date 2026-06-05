@@ -4,6 +4,8 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QLineEdit
+from PyQt5.QtWidgets import QMessageBox
 
 
 class VistaAdminNuevoUsuario(QMainWindow):
@@ -32,14 +34,14 @@ class VistaAdminNuevoUsuario(QMainWindow):
             widget = self.findChild(type(self.cmbRolUsuario), nombre_widget) \
                 if hasattr(self, nombre_widget) else None
             # Búsqueda genérica por nombre
-            from PyQt5.QtWidgets import QLineEdit
+            
             w = self.findChild(QLineEdit, nombre_widget)
             if w:
                 campos[nombre_widget.replace("txt", "").lower()] = w.text().strip()
         return campos
 
     def get_datos_acceso(self) -> dict:
-        from PyQt5.QtWidgets import QLineEdit
+        
         password_w = self.findChild(QLineEdit, "txtPassword")
         confirmar_w = self.findChild(QLineEdit, "txtConfirmar")
         return {
@@ -52,15 +54,15 @@ class VistaAdminNuevoUsuario(QMainWindow):
 
     # --- Feedback ---
     def mostrar_error(self, mensaje: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.critical(self, "Error de validación", mensaje)
 
     def mostrar_exito(self, mensaje: str):
-        from PyQt5.QtWidgets import QMessageBox
+       
         QMessageBox.information(self, "Usuario creado", mensaje)
 
     def limpiar_formulario(self):
-        from PyQt5.QtWidgets import QLineEdit
+      
         for widget in self.findChildren(QLineEdit):
             widget.clear()
         self.cmbRolUsuario.setCurrentIndex(0)

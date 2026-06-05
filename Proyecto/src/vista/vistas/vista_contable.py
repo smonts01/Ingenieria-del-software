@@ -8,6 +8,8 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QLineEdit, QComboBox, QDateEdit
 
 
 # ---------------------------------------------------------------------------
@@ -149,11 +151,11 @@ class VistaContablePagosPendientes(QMainWindow):
         return item.text() if item else None
 
     def mostrar_error(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.critical(self, "Error", msg)
 
     def mostrar_mensaje(self, titulo: str, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.information(self, titulo, msg)
 
     def conectar_senales(self, ctrl):
@@ -182,7 +184,7 @@ class VistaContableRegistrarPago(QMainWindow):
 
     def get_datos_pago(self) -> dict:
         """Recoge todos los campos del formulario de pago."""
-        from PyQt5.QtWidgets import QLineEdit, QComboBox, QDateEdit
+        
         datos = {}
         for w in self.findChildren(QLineEdit):
             datos[w.objectName()] = w.text().strip()
@@ -194,15 +196,15 @@ class VistaContableRegistrarPago(QMainWindow):
 
     # --- Feedback ---
     def mostrar_error(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.critical(self, "Error", msg)
 
     def mostrar_exito(self, msg: str):
-        from PyQt5.QtWidgets import QMessageBox
+
         QMessageBox.information(self, "Pago registrado", msg)
 
     def limpiar_formulario(self):
-        from PyQt5.QtWidgets import QLineEdit
+
         for w in self.findChildren(QLineEdit):
             w.clear()
 

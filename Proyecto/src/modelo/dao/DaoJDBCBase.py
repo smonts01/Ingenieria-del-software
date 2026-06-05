@@ -4,8 +4,7 @@ from src.modelo.conexion.Conexion import Conexion
 class DaoJDBCBase:
     """Base común para DAOs de consultas complejas.
 
-    Centraliza las operaciones SQL auxiliares para que ServicioProyectoDaoJDBC
-    no ejecute consultas directamente.
+        Centraliza las operaciones SQL auxiliares para los DAO del proyecto.
     """
 
     def __init__(self):

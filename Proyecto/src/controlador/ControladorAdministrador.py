@@ -1,6 +1,9 @@
 import os
 from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView
-
+import matplotlib.pyplot as plt
+import io
+import matplotlib
+from datetime import datetime
 
 class ControladorAdministrador:
 
@@ -234,10 +237,9 @@ class ControladorAdministrador:
 
     def _dibujar_grafico_ingresos(self, label):
         try:
-            import matplotlib
+            
             matplotlib.use("Agg")
-            import matplotlib.pyplot as plt
-            import io
+            
 
             datos = self.modelo.ingresos_por_mes()
             if not datos:
@@ -378,7 +380,7 @@ class ControladorAdministrador:
                 return
 
         
-            from datetime import datetime
+            
             try:
                 fecha = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
             except ValueError:

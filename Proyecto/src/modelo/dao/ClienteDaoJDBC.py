@@ -1,6 +1,7 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 from src.modelo.VO.ClientesVO import ClientesVO
 from src.modelo.VO.ClienteInicioVO import ClienteInicioVO
+from datetime import date, timedelta
 
 
 class ClienteDaoJDBC(DaoJDBCBase):
@@ -380,7 +381,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
         antiguo (sin duplicados), calcula cuántos días consecutivos hay
         hacia atrás desde hoy.
         """
-        from datetime import date, timedelta
+        
 
         if not fechas:
             return 0

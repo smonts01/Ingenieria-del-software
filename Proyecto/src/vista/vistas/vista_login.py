@@ -4,6 +4,7 @@ Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
+from PyQt5.QtWidgets import QMessageBox
 
 
 class VistaLogin(QDialog):
@@ -36,7 +37,7 @@ class VistaLogin(QDialog):
 
     # --- Métodos de feedback al usuario ---
     def mostrar_error(self, mensaje: str):
-        from PyQt5.QtWidgets import QMessageBox
+        
         QMessageBox.critical(self, "Error de acceso", mensaje)
 
     def limpiar_campos(self):
