@@ -1096,24 +1096,6 @@ font-weight: bold;</string>
        </property>
       </item>
      </widget>
-     <widget class="QLabel" name="lblRankingPie">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>318</y>
-        <width>420</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: #009688;
-font-size: 14px;
-font-weight: bold;</string>
-      </property>
-      <property name="text">
-       <string>Usa la barra lateral para subir y bajar.</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="cardOcupacion">
      <property name="geometry">
