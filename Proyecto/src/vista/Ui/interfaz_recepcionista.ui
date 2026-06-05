@@ -202,8 +202,37 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <height>36</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: left;
+    color: #111827;
+    font-weight: normal;
+}
+
+QPushButton:hover {
+    background-color: #E8F8F5;
+    color: #111827;
+    font-weight: normal;
+}
+
+QPushButton:checked {
+    background-color: #18B7A5;
+    color: #FFFFFF;
+    font-weight: bold;
+}</string>
+     </property>
      <property name="text">
       <string>Inicio</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="btnRegistroUsuario">

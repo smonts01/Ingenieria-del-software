@@ -2,7 +2,7 @@ from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 from src.modelo.VO.ClientesVO import ClientesVO
 from src.modelo.VO.ClienteInicioVO import ClienteInicioVO
 from datetime import date, timedelta
-
+from src.modelo.conexion.Conexion import Conexion
 
 class ClienteDaoJDBC(DaoJDBCBase):
 
@@ -149,7 +149,8 @@ class ClienteDaoJDBC(DaoJDBCBase):
         ORDER BY total DESC
     """
 
-
+    def __init__(self):
+        self._conexion = Conexion()
 
     def _rowToVO(self, row) -> ClientesVO:
         id_cliente, estado_pagado, calorias_acumuladas = row
@@ -157,7 +158,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def select(self) -> list[ClientesVO]:
         """Recupera todos los clientes."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         clientes = []
         try:
             cursor.execute(self.SQL_SELECT)
@@ -172,7 +173,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def selectById(self, id_cliente: int) -> ClientesVO:
         """Recupera un cliente por su ID."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         cliente = None
         try:
             cursor.execute(self.SQL_SELECT_BY_ID, (id_cliente,))
@@ -188,7 +189,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def insert(self, vo: ClientesVO) -> int:
         """Inserta un nuevo cliente. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_INSERT, (
@@ -204,7 +205,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def update(self, vo: ClientesVO) -> int:
         """Actualiza un cliente existente. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_UPDATE, (
@@ -220,7 +221,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def updateEstadoPagado(self, id_cliente: int, estado_pagado: str) -> int:
         """Actualiza únicamente el estado de pago de un cliente. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_UPDATE_ESTADO, (estado_pagado, id_cliente))
@@ -234,7 +235,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def updateCalorias(self, id_cliente: int, calorias_acumuladas: int) -> int:
         """Actualiza únicamente las calorías acumuladas de un cliente. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_UPDATE_CALORIAS, (calorias_acumuladas, id_cliente))
@@ -248,7 +249,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def delete(self, id_cliente: int) -> int:
         """Elimina un cliente por su ID. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_DELETE, (id_cliente,))
@@ -264,7 +265,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     def selectInicioCliente(self, id_cliente: int) -> ClienteInicioVO | None:
 
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         try:
             # 1. Datos base 
             cursor.execute(self._SQL_INICIO_BASE, (id_cliente,))
