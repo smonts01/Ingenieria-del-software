@@ -163,11 +163,42 @@ class LogicaClases:
     def ocupacion_clases(self):
         return self._clase_consultas_dao.ocupacion_clases()
 
+    
     def clases_entrenador_tabla(self, id_entrenador):
-        return self._clase_consultas_dao.clases_entrenador_tabla(id_entrenador)
+        """
+        Datos preparados para tablas del entrenador.
+        El DAO devuelve ClaseEntrenadorVO y aquí lo convertimos a tuplas.
+        """
+        clases = self._clase_consultas_dao.clases_entrenador_tabla(id_entrenador)
+
+        return [
+            (
+                clase.nombre_actividad,
+                clase.sala,
+                clase.horario,
+                clase.dia_semana,
+                clase.capacidad
+            )
+            for clase in clases
+        ]
 
     def ocupacion_clases_entrenador(self, id_entrenador):
-        return self._clase_consultas_dao.ocupacion_clases_entrenador(id_entrenador)
+        """
+        Datos preparados para la tabla de ocupación del entrenador.
+        El DAO devuelve OcupacionClaseVO y aquí lo convertimos a tuplas.
+        """
+        ocupaciones = self._clase_consultas_dao.ocupacion_clases_entrenador(id_entrenador)
+
+        return [
+            (
+                ocupacion.id_clase,
+                ocupacion.nombre_actividad,
+                ocupacion.inscritos,
+                ocupacion.aforo_maximo,
+                ocupacion.porcentaje
+            )
+            for ocupacion in ocupaciones
+        ]
 
     def informacion_clase_con_sala(self, id_clase):
         return self._clase_consultas_dao.informacion_clase_con_sala(id_clase)
@@ -285,7 +316,7 @@ class LogicaClases:
         suma = 0
 
         for ocupacion in ocupaciones:
-            suma += float(ocupacion[4])
+            suma += float(ocupacion[4] or 0)
 
         return round(suma / len(ocupaciones), 2)
 
@@ -306,20 +337,20 @@ class LogicaClases:
         clase_mas_llena = datos_ocupacion[0]
 
         for dato in datos_ocupacion:
-            inscritos = int(dato[2])
-            aforo = int(dato[3])
-            ocupacion = float(dato[4])
+            inscritos = int(dato[2] or 0)
+            aforo = int(dato[3] or 0)
+            ocupacion = float(dato[4] or 0)
 
             total_ocupacion += ocupacion
 
-            if inscritos >= aforo:
+            if aforo > 0 and inscritos >= aforo:
                 clases_llenas += 1
 
-            if ocupacion > float(clase_mas_llena[4]):
+            if ocupacion > float(clase_mas_llena[4] or 0):
                 clase_mas_llena = dato
 
         ocupacion_media = round(total_ocupacion / len(datos_ocupacion), 2)
-        plazas_libres = int(clase_mas_llena[3]) - int(clase_mas_llena[2])
+        plazas_libres = int(clase_mas_llena[3] or 0) - int(clase_mas_llena[2] or 0)
 
         return {
             "total_clases": len(datos_ocupacion),
@@ -352,3 +383,30 @@ class LogicaClases:
             fecha,
             estado_normalizado
         )
+    
+    def datos_clase_asistencia(self, id_clase):
+        """
+        Devuelve los datos básicos de una clase preparados para la pantalla
+        de asistencia del entrenador.
+        """
+        clase = self.buscar_clase(id_clase)
+
+        if not clase:
+            return None
+
+        # Si buscar_clase devuelve ClaseVO
+        if hasattr(clase, "nombre_actividad"):
+            return {
+                "nombre": clase.nombre_actividad,
+                "dia": clase.dia_semana,
+                "hora_inicio": clase.hora_inicio,
+                "hora_fin": clase.hora_fin
+            }
+
+        # Si buscar_clase devuelve tupla/lista
+        return {
+            "nombre": clase[3],
+            "dia": clase[5],
+            "hora_inicio": clase[6],
+            "hora_fin": clase[7]
+        }

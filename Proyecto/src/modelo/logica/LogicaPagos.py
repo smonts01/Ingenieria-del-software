@@ -94,7 +94,12 @@ class LogicaPagos:
         ]
 
     def pagos_pendientes(self):
-        return self._pago_consultas_dao.pagos_pendientes()
+        pagos = self._pago_consultas_dao.pagos_pendientes()
+
+        return [
+            self._pago_pendiente_a_tupla(pago)
+            for pago in pagos
+        ]
 
     def pagos_cliente(self, id_cliente):
         if not id_cliente:
@@ -273,16 +278,34 @@ class LogicaPagos:
         return self._empleado_consultas_dao.contable_salarios_personal()
 
     def contable_total_nominas(self):
-        return self._empleado_consultas_dao.contable_total_nominas()
-
+        return self._pago_consultas_dao.contable_total_nominas()
+    
     def contable_balance_economico(self):
         return self._pago_consultas_dao.contable_balance_economico()
 
     def informe_balance_mensual_contable(self):
-        return self._informe_consultas_dao.informe_balance_mensual_contable()
+        gasto_mensual = self.contable_total_nominas()
+
+        return self._informe_consultas_dao.informe_balance_mensual_contable(
+            gasto_mensual
+        )
 
     def informe_gestion_economica_contable(self):
-        return self._informe_consultas_dao.informe_gestion_economica_contable()
+        ingresos = self.ingresos_mes_contable()
+        gastos = self.contable_gastos_mes()
+        balance = self.contable_balance_mes()
+        pendiente = self.contable_importe_pendiente()
+        tarifas_activas = self.num_tarifas_activas_contable()
+        nominas = self.contable_total_nominas()
+
+        return self._informe_consultas_dao.informe_gestion_economica_contable(
+            ingresos,
+            gastos,
+            balance,
+            pendiente,
+            tarifas_activas,
+            nominas
+        )
 
     def contable_gastos_mes(self):
         return self._pago_consultas_dao.contable_gastos_mes()
@@ -352,3 +375,38 @@ class LogicaPagos:
             )
 
         return metodo
+    
+
+    def _valor(self, objeto, atributos, indice, defecto=None):
+        """
+        Lee un dato tanto si viene como VO como si viene como tupla/lista.
+        """
+        if not isinstance(atributos, (list, tuple)):
+            atributos = [atributos]
+
+        for atributo in atributos:
+            if hasattr(objeto, atributo):
+                return getattr(objeto, atributo)
+
+        try:
+            return objeto[indice]
+        except Exception:
+            return defecto
+
+    def _pago_pendiente_a_tupla(self, pago):
+        """
+        Convierte PagoPendienteVO o tupla en:
+        ID Pago, Cliente, Tarifa, Importe, Fecha, Cuota
+        """
+
+        if isinstance(pago, (tuple, list)):
+            return tuple(pago)
+
+        return (
+            pago.id_pago,
+            pago.nombre_cliente,
+            pago.nombre_tarifa,
+            pago.importe,
+            pago.fecha,
+            pago.tipo_cuota
+        )
