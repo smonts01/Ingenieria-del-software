@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>700</height>
+    <height>690</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,7 +41,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblLogoIcono">
      <property name="geometry">
@@ -59,7 +59,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -110,7 +110,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -172,7 +172,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QPushButton" name="btnInicio">
      <property name="geometry">
@@ -300,7 +300,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -319,7 +319,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/grafico-de-barras.png</pixmap>
+      <pixmap>../imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -338,7 +338,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -357,7 +357,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>../imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -376,7 +376,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>../imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -393,7 +393,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
+     <enum>QFrame::Shape::NoFrame</enum>
     </property>
     <widget class="QLabel" name="lblBienvenida">
      <property name="geometry">
@@ -516,7 +516,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/calendario.png</pixmap>
+       <pixmap>../imagenes/calendario.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -609,7 +609,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/pagos.png</pixmap>
+       <pixmap>../imagenes/pagos.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -702,7 +702,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/fuego.png</pixmap>
+       <pixmap>../imagenes/fuego.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -795,7 +795,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/marca-de-verificacion.png</pixmap>
+       <pixmap>../imagenes/marca-de-verificacion.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1072,7 +1072,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/reborde_ola.png</pixmap>
+      <pixmap>../imagenes/reborde_ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -1092,6 +1092,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../imagenes/recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>

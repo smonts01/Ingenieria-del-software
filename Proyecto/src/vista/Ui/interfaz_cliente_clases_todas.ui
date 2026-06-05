@@ -56,7 +56,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/logo_stayfit.png</pixmap>
+      <pixmap>../imagenes/logo_stayfit.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -152,7 +152,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -291,7 +291,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/casa_inicio.png</pixmap>
+      <pixmap>../imagenes/casa_inicio.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -307,7 +307,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/calendario.png</pixmap>
+      <pixmap>../imagenes/calendario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -323,7 +323,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/grafico-de-barras.png</pixmap>
+      <pixmap>../imagenes/grafico-de-barras.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -339,7 +339,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/usuario.png</pixmap>
+      <pixmap>../imagenes/usuario.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -355,7 +355,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
       </rect>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/informacion.png</pixmap>
+      <pixmap>../imagenes/informacion.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -460,7 +460,7 @@ QComboBox { background-color: white; border: 1px solid #D9DEE7; border-radius: 8
        <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/peso.png</pixmap>
+       <pixmap>../imagenes/peso.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -575,7 +575,7 @@ Sala 1</string>
        <string notr="true">background-color:#FF9F2E; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/yoga.png</pixmap>
+       <pixmap>../imagenes/yoga.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -690,7 +690,7 @@ Sala 2</string>
        <string notr="true">background-color:#8E6CFF; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/bicicleta.png</pixmap>
+       <pixmap>../imagenes/bicicleta.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -805,7 +805,7 @@ Sala 1</string>
        <string notr="true">background-color:#2F80ED; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/pilates.png</pixmap>
+       <pixmap>../imagenes/pilates.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1046,7 +1046,7 @@ Sala 1</string>
        <string notr="true">background-color:#18B7A5; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/peso.png</pixmap>
+       <pixmap>../imagenes/peso.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1116,7 +1116,7 @@ Sala 1</string>
        <string notr="true">background-color:#2F80ED; border-radius:20px;</string>
       </property>
       <property name="pixmap">
-       <pixmap>src/vista/imagenes/pilates.png</pixmap>
+       <pixmap>../imagenes/pilates.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1222,6 +1222,8 @@ Sala 3</string>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../imagenes/recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>
