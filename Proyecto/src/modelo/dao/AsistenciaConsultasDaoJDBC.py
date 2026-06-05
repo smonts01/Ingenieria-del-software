@@ -1,11 +1,13 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.EstadisticaAsistenciaVO import EstadisticaAsistenciaVO
+from src.modelo.VO.RankingClienteVO import RankingClienteVO
 
 
 class AsistenciaConsultasDaoJDBC(DaoJDBCBase):
 
     SQL_CALCULAR_CALORIAS_CLIENTE = ("SELECT COALESCE(SUM(c.calorias_estimadas), 0) "
-                                    "FROM asistencia a JOIN clase c ON a.id_clase = c.id_clase "
-                                    "WHERE a.id_cliente = ? AND a.presente = 'si'")
+                                     "FROM asistencia a JOIN clase c ON a.id_clase = c.id_clase "
+                                     "WHERE a.id_cliente = ? AND a.presente = 'si'")
 
     SQL_ESTADISTICAS_CLIENTE = ("SELECT c.nombre_actividad, COUNT(*) as asistencias, SUM(c.calorias_estimadas) as calorias "
                                 "FROM asistencia a JOIN clase c ON a.id_clase = c.id_clase "
@@ -25,15 +27,16 @@ class AsistenciaConsultasDaoJDBC(DaoJDBCBase):
                             "ORDER BY a.fecha DESC, u.nombre")
 
     SQL_ASISTENCIA_CLASE_FECHA = ("SELECT id_cliente, presente "
-                                "FROM asistencia "
-                                "WHERE id_clase = ? "
-                                    "AND fecha = ? "
-                                "ORDER BY id_asistencia")
+                                  "FROM asistencia "
+                                  "WHERE id_clase = ? "
+                                  "AND fecha = ? "
+                                  "ORDER BY id_asistencia")
 
     SQL_REGISTRAR_ASISTENCIA = ("DELETE FROM asistencia "
                                 "WHERE id_cliente = ? "
-                                    "AND id_clase = ? "
-                                    "AND fecha = ?")
+                                "AND id_clase = ? "
+                                "AND fecha = ?")
+
     SQL_EJECUTAR = ("INSERT INTO asistencia (id_cliente, id_clase, fecha, presente) "
                     "VALUES (?, ?, ?, ?)")
 
@@ -42,10 +45,12 @@ class AsistenciaConsultasDaoJDBC(DaoJDBCBase):
         return int(datos[0][0]) if datos else 0
 
     def estadisticas_cliente(self, id_cliente: int):
-        return self.consultar(self.SQL_ESTADISTICAS_CLIENTE, (id_cliente,))
+        filas = self.consultar(self.SQL_ESTADISTICAS_CLIENTE, (id_cliente,))
+        return [EstadisticaAsistenciaVO(f[0], f[1], f[2]) for f in filas]
 
     def ranking_clientes_activos(self):
-        return self.consultar(self.SQL_RANKING_CLIENTES_ACTIVOS)
+        filas = self.consultar(self.SQL_RANKING_CLIENTES_ACTIVOS)
+        return [RankingClienteVO(f[0], f[1]) for f in filas]
 
     def consultar_asistencia_clase(self, id_clase: int):
         return self.consultar(self.SQL_ASISTENCIA_CLASE, (id_clase,))
