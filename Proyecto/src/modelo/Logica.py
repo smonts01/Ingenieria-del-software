@@ -7,18 +7,16 @@ from src.modelo.logica.LogicaEstadisticas import LogicaEstadisticas
 from src.modelo.logica.LogicaUsuarios import LogicaUsuarios
 
 
-
 class Logica:
     """
     Capa de lógica de negocio de la aplicación.
 
-    Los controladores llaman a esta clase. Esta clase valida reglas de negocio
-    y coordina los módulos de lógica específicos. Ningún controlador debe
-    acceder directamente a DAO ni ejecutar SQL.
+    Los controladores llaman a esta clase. Esta clase coordina los módulos
+    de lógica específicos. Ningún controlador debe acceder directamente
+    a DAO ni ejecutar SQL.
     """
 
     def __init__(self):
-
         self._auth = LogicaAutenticacion()
         self._usuarios = LogicaUsuarios()
         self._clientes = LogicaClientes()
@@ -26,15 +24,12 @@ class Logica:
         self._pagos = LogicaPagos()
         self._clases = LogicaClases()
         self._estadisticas = LogicaEstadisticas()
-        
 
-    # ── Autenticación ─ 
+    # ── Autenticación ───────────────────────────────────────────────────
     def iniciar_sesion(self, username, password):
         return self._auth.iniciar_sesion(username, password)
-    
 
-
-    # ── Usuarios / perfiles ───────────────────────────────────────────────
+    # ── Usuarios / perfiles ─────────────────────────────────────────────
     def registrar_usuario(self, *args, **kwargs):
         return self._usuarios.registrar_usuario(*args, **kwargs)
 
@@ -46,9 +41,60 @@ class Logica:
 
     def perfil_usuario(self, *args, **kwargs):
         return self._usuarios.perfil_usuario(*args, **kwargs)
-    
 
-    # ── Clientes ─────────────────────────────────────────────────────────
+    def eliminar_usuario(self, *args, **kwargs):
+        return self._usuarios.eliminar_usuario(*args, **kwargs)
+
+    def buscar_usuario(self, *args, **kwargs):
+        return self._usuarios.buscar_usuario(*args, **kwargs)
+
+    def listar_usuarios(self, *args, **kwargs):
+        return self._usuarios.listar_usuarios(*args, **kwargs)
+
+    def cambiar_password(self, *args, **kwargs):
+        return self._usuarios.cambiar_password(*args, **kwargs)
+
+    def crear_relacion_usuario_por_rol(self, *args, **kwargs):
+        return self._usuarios.crear_relacion_usuario_por_rol(*args, **kwargs)
+
+    # ── Trabajadores ────────────────────────────────────────────────────
+    def contar_trabajadores(self):
+        return self._usuarios.contar_trabajadores()
+
+    def contar_por_rol(self, rol):
+        return self._usuarios.contar_por_rol(rol)
+
+    def listar_trabajadores_completo(self):
+        return self._usuarios.listar_trabajadores_completo()
+
+    def buscar_trabajadores(self, texto):
+        return self._usuarios.buscar_trabajadores(texto)
+
+    def buscar_trabajadores_rol(self, rol):
+        return self._usuarios.buscar_trabajadores_rol(rol)
+
+    def guardar_cambios_trabajador(self, *args, **kwargs):
+        return self._usuarios.guardar_cambios_trabajador(*args, **kwargs)
+
+    def registrar_empleado(self, *args, **kwargs):
+        return self._usuarios.registrar_empleado(*args, **kwargs)
+
+    def registrar_entrenador(self, *args, **kwargs):
+        return self._usuarios.registrar_entrenador(*args, **kwargs)
+
+    def registrar_recepcionista(self, *args, **kwargs):
+        return self._usuarios.registrar_recepcionista(*args, **kwargs)
+
+    def registrar_contable(self, *args, **kwargs):
+        return self._usuarios.registrar_contable(*args, **kwargs)
+
+    def registrar_administrador(self, *args, **kwargs):
+        return self._usuarios.registrar_administrador(*args, **kwargs)
+
+    def listar_empleados(self, *args, **kwargs):
+        return self._usuarios.listar_empleados(*args, **kwargs)
+
+    # ── Clientes ────────────────────────────────────────────────────────
     def contar_usuarios(self):
         return self._clientes.contar_usuarios()
 
@@ -87,9 +133,8 @@ class Logica:
 
     def recepcion_guardar_cambios_cliente(self, *args, **kwargs):
         return self._clientes.recepcion_guardar_cambios_cliente(*args, **kwargs)
-    
 
-    # ── Recepción ────────────────────────────────────────────────────────
+    # ── Recepción ───────────────────────────────────────────────────────
     def recepcion_entradas_hoy(self):
         return self._recepcion.recepcion_entradas_hoy()
 
@@ -120,28 +165,7 @@ class Logica:
     def ultimo_acceso_cliente(self, id_usuario):
         return self._recepcion.ultimo_acceso_cliente(id_usuario)
 
-    # ── Trabajadores ─────────────────────────────────────────────────────
-    def contar_trabajadores(self):
-        return self._usuarios.contar_trabajadores()
-
-    def contar_por_rol(self, rol):
-        return self._usuarios.contar_por_rol(rol)
-
-    def listar_trabajadores_completo(self):
-        return self._usuarios.listar_trabajadores_completo()
-
-    def buscar_trabajadores(self, texto):
-        return self._usuarios.buscar_trabajadores(texto)
-
-    def buscar_trabajadores_rol(self, rol):
-        return self._usuarios.buscar_trabajadores_rol(rol)
-
-    def guardar_cambios_trabajador(self, *args, **kwargs):
-        return self._usuarios.guardar_cambios_trabajador(*args, **kwargs)
-    
-
-        
-    # ── Clases / inscripciones / asistencia ──────────────────────────────
+    # ── Clases / inscripciones / asistencia ─────────────────────────────
     def contar_clases(self):
         return self._clases.contar_clases()
 
@@ -234,8 +258,8 @@ class Logica:
 
     def clases_inscritas_cliente(self, id_cliente):
         return self._clientes.clases_inscritas_cliente(id_cliente)
-    
-    # ── Pagos / contabilidad ─────────────────────────────────────────────
+
+    # ── Pagos / contabilidad ────────────────────────────────────────────
     def registrar_pago(self, *args, **kwargs):
         return self._pagos.registrar_pago(*args, **kwargs)
 
@@ -253,13 +277,12 @@ class Logica:
 
     def listar_pagos_pendientes_admin(self):
         return self._pagos.listar_pagos_pendientes_admin()
-    
+
     def clientes_pendientes_admin(self):
         return self._pagos.clientes_pendientes_admin()
 
     def buscar_pago_pendiente_por_dni(self, dni):
         return self._pagos.buscar_pago_pendiente_por_dni(dni)
-    
 
     def ingresos_mes_actual(self):
         return self._pagos.ingresos_mes_actual()
@@ -300,43 +323,7 @@ class Logica:
     def informe_salarios(self):
         return self._pagos.informe_salarios()
 
-
-    # ── Usuarios / trabajadores restantes ───────────────────────────────
-    def eliminar_usuario(self, *args, **kwargs):
-        return self._usuarios.eliminar_usuario(*args, **kwargs)
-
-    def buscar_usuario(self, *args, **kwargs):
-        return self._usuarios.buscar_usuario(*args, **kwargs)
-
-    def listar_usuarios(self, *args, **kwargs):
-        return self._usuarios.listar_usuarios(*args, **kwargs)
-
-    def cambiar_password(self, *args, **kwargs):
-        return self._usuarios.cambiar_password(*args, **kwargs)
-
-    def registrar_empleado(self, *args, **kwargs):
-        return self._usuarios.registrar_empleado(*args, **kwargs)
-
-    def registrar_entrenador(self, *args, **kwargs):
-        return self._usuarios.registrar_entrenador(*args, **kwargs)
-
-    def registrar_recepcionista(self, *args, **kwargs):
-        return self._usuarios.registrar_recepcionista(*args, **kwargs)
-
-    def registrar_contable(self, *args, **kwargs):
-        return self._usuarios.registrar_contable(*args, **kwargs)
-
-    def registrar_administrador(self, *args, **kwargs):
-        return self._usuarios.registrar_administrador(*args, **kwargs)
-
-    def listar_empleados(self, *args, **kwargs):
-        return self._usuarios.listar_empleados(*args, **kwargs)
-
-    def crear_relacion_usuario_por_rol(self, *args, **kwargs):
-        return self._usuarios.crear_relacion_usuario_por_rol(*args, **kwargs)
-    
-
-    # ── Contable ─────────────────────────────────────────────────────────
+    # ── Contable ────────────────────────────────────────────────────────
     def cobros_hoy_contable(self):
         return self._pagos.cobros_hoy_contable()
 
@@ -419,12 +406,13 @@ class Logica:
 
     def contable_importe_gestionado(self, id_contable):
         return self._pagos.contable_importe_gestionado(id_contable)
-    
 
-    # ── Estadísticas ──────────────────────────────────────────────────────
-    def estadisticas_admin(self): return self._estadisticas.estadisticas_admin()
-    def ranking_usuarios_activos_estadisticas(self): return self._estadisticas.ranking_usuarios_activos_estadisticas()
-    def ocupacion_por_clase_estadisticas(self): return self._estadisticas.ocupacion_por_clase_estadisticas()
+    # ── Estadísticas ────────────────────────────────────────────────────
+    def estadisticas_admin(self):
+        return self._estadisticas.estadisticas_admin()
 
-    def clientes_pendientes_admin(self):
-        return self._servicio.clientes_pendientes_admin()
+    def ranking_usuarios_activos_estadisticas(self):
+        return self._estadisticas.ranking_usuarios_activos_estadisticas()
+
+    def ocupacion_por_clase_estadisticas(self):
+        return self._estadisticas.ocupacion_por_clase_estadisticas()
