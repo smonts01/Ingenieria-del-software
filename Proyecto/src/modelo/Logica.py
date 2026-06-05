@@ -177,6 +177,11 @@ class Logica:
         return self._clientes.convertir_fecha_a_bd(fecha)
 
     # ── Clases / inscripciones / asistencia ─────────────────────────────
+
+    def clases_hoy_entrenador(self, id_entrenador):
+        return self._clases.clases_hoy_entrenador(id_entrenador)
+    
+    
     def contar_clases(self):
         return self._clases.contar_clases()
 

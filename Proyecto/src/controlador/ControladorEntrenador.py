@@ -56,24 +56,36 @@ class ControladorEntrenador:
         id_u = self.usuario["id_usuario"]
 
         if hasattr(v, "tablaProximasClasesEntrenador"):
-            self.rellenar_tabla(v.tablaProximasClasesEntrenador, self.modelo.clases_entrenador_tabla(id_u))
+            datos_clases = self.modelo.clases_entrenador_tabla(id_u)
+            self.rellenar_tabla(v.tablaProximasClasesEntrenador, datos_clases)
+            v.tablaProximasClasesEntrenador.verticalHeader().setVisible(False)
 
+
+        if hasattr(v, "labelNumClases"):
+            total_hoy = self.modelo.clases_hoy_entrenador(id_u)
+            v.labelNumClases.setText(str(total_hoy))
+                
         
-        
-        if hasattr(v, "labelClase") or hasattr(v, "labelHora"):
+        if hasattr(v, "labelClase") or hasattr(v, "labelHora") or hasattr(v, "labelSala"):
             clases_tabla = self.modelo.clases_entrenador_tabla(id_u)
 
             if clases_tabla:
                 primera_clase = clases_tabla[0]
 
                 nombre = primera_clase[0]
+                sala = primera_clase[1]
                 horario = primera_clase[2]
+
+                hora_inicio = str(horario).split(" - ")[0]
 
                 if hasattr(v, "labelClase"):
                     v.labelClase.setText(str(nombre))
 
                 if hasattr(v, "labelHora"):
-                    v.labelHora.setText(str(horario))
+                    v.labelHora.setText(str(hora_inicio))
+
+                if hasattr(v, "labelSala"):
+                    v.labelSala.setText(str(sala))
 
         
         if hasattr(v, "labelNumAsistencias"):
@@ -87,7 +99,36 @@ class ControladorEntrenador:
 
 
         if hasattr(v, "tablaMisClases"):
-            self.rellenar_tabla(v.tablaMisClases, self.modelo.clases_entrenador_tabla(id_u))
+            datos_clases = self.modelo.clases_entrenador_tabla(id_u)
+
+            self.rellenar_tabla(v.tablaMisClases, datos_clases)
+            v.tablaMisClases.verticalHeader().setVisible(False)
+
+            if hasattr(v, "labelTotalClasesAsignadas"):
+                v.labelTotalClasesAsignadas.setText(str(len(datos_clases)))
+
+            if hasattr(v, "labelClasesHoy"):
+                total_hoy = self.modelo.clases_hoy_entrenador(id_u)
+                v.labelClasesHoy.setText(str(total_hoy))
+
+            if hasattr(v, "lblPorcentajeOcupacionClase"):
+                media = self.modelo.ocupacion_media_entrenador(id_u)
+                v.lblPorcentajeOcupacionClase.setText(f"{float(media):.1f}%")
+
+            if datos_clases:
+                primera_clase = datos_clases[0]
+
+                nombre = primera_clase[0]
+                horario = primera_clase[2]
+                dia = primera_clase[3]
+
+                hora_inicio = str(horario).split(" - ")[0]
+
+                if hasattr(v, "labelProximaClase"):
+                    v.labelProximaClase.setText(str(nombre))
+
+                if hasattr(v, "lblHoraProxClase"):
+                    v.lblHoraProxClase.setText(f"{dia} {hora_inicio}")
         
         if hasattr(v, "tablaOcupacionClases"):
             datos_ocupacion = self.modelo.ocupacion_clases_entrenador(id_u)
@@ -349,14 +390,29 @@ class ControladorEntrenador:
         if hasattr(v, "label_numInscritos"):
             v.label_numInscritos.setText(str(len(datos)))
 
+        presentes = 0
+        ausentes = 0
+        pendientes = 0
+
+        for cliente in datos:
+            id_cliente = cliente[0]
+            estado = mapa_asistencia.get(id_cliente, "pendiente")
+
+            if estado == "si":
+                presentes += 1
+            elif estado == "no":
+                ausentes += 1
+            else:
+                pendientes += 1
+
         if hasattr(v, "label_numAsist"):
-            v.label_numAsist.setText("0")
+            v.label_numAsist.setText(str(presentes))
 
         if hasattr(v, "label_numPend"):
-            v.label_numPend.setText(str(len(datos)))
+            v.label_numPend.setText(str(pendientes))
 
         if hasattr(v, "label_numAus"):
-            v.label_numAus.setText("0")
+            v.label_numAus.setText(str(ausentes))
 
         clase = self.modelo.datos_clase_asistencia(id_clase)
 
@@ -371,6 +427,14 @@ class ControladorEntrenador:
                 v.lblHorarioClase.setText(
                     f"{clase['hora_inicio']} - {clase['hora_fin']}"
                 )
+
+        info_sala = self.modelo.informacion_clase_con_sala(id_clase)
+
+        if info_sala:
+            sala = info_sala[1]
+
+            if hasattr(v, "lblSalaClase"):
+                v.lblSalaClase.setText(str(sala))
 
     def actualizar_resumen_asistencia(self):
         v = self.ventana

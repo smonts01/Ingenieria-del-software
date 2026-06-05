@@ -17,15 +17,20 @@ class ClaseConsultasDaoJDBC(DaoJDBCBase):
                            "GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo "
                            "ORDER BY pct DESC")
 
-    SQL_CLASES_ENTRENADOR_TABLA = ("SELECT c.nombre_actividad, s.nombre AS sala, CONCAT(c.hora_inicio, ' - ', c.hora_fin) AS horario, c.dia_semana, CONCAT(COUNT(i.id_inscripcion), '/', c.aforo_maximo) AS capacidad "
-                                   "FROM clase c "
-                                   "INNER JOIN sala s ON c.id_sala = s.id_sala "
-                                   "LEFT JOIN inscripcion i "
-                                   "ON c.id_clase = i.id_clase "
-                                   "AND i.estado = 'inscrito' "
-                                   "WHERE c.id_entrenador = ? "
-                                   "GROUP BY c.id_clase, c.nombre_actividad, s.nombre, c.hora_inicio, c.hora_fin, c.dia_semana, c.aforo_maximo "
-                                   "ORDER BY c.hora_inicio")
+    SQL_CLASES_ENTRENADOR_TABLA = ("SELECT c.nombre_actividad, "
+                                    "s.nombre AS sala, "
+                                    "CONCAT(TIME_FORMAT(c.hora_inicio, '%H:%i'), ' - ', TIME_FORMAT(c.hora_fin, '%H:%i')) AS horario, "
+                                    "c.dia_semana, "
+                                    "CONCAT(COUNT(i.id_inscripcion), '/', c.aforo_maximo) AS capacidad "
+                                    "FROM clase c "
+                                    "INNER JOIN sala s ON c.id_sala = s.id_sala "
+                                    "LEFT JOIN inscripcion i "
+                                    "ON c.id_clase = i.id_clase "
+                                    "AND i.estado = 'inscrito' "
+                                    "WHERE c.id_entrenador = ? "
+                                    "GROUP BY c.id_clase, c.nombre_actividad, s.nombre, c.hora_inicio, c.hora_fin, c.dia_semana, c.aforo_maximo "
+                                    "ORDER BY FIELD(c.dia_semana, 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'), c.hora_inicio")
+
 
     SQL_OCUPACION = ("SELECT c.id_clase, c.nombre_actividad, COUNT(i.id_inscripcion) AS inscritos, c.aforo_maximo, CAST(COUNT(i.id_inscripcion) * 100.0 / c.aforo_maximo AS DECIMAL(5,2)) AS ocupacion "
                      "FROM clase c "
@@ -58,7 +63,27 @@ class ClaseConsultasDaoJDBC(DaoJDBCBase):
                                 "WHEN 7 THEN 'sábado' "
                                 "END "
                                 ")")
+    
+    SQL_CLASES_HOY_ENTRENADOR = ("SELECT COUNT(*) "
+                                "FROM clase "
+                                "WHERE id_entrenador = ? "
+                                "AND LOWER(dia_semana) = LOWER( "
+                                "CASE DAYOFWEEK(CURDATE()) "
+                                "WHEN 1 THEN 'domingo' "
+                                "WHEN 2 THEN 'lunes' "
+                                "WHEN 3 THEN 'martes' "
+                                "WHEN 4 THEN 'miercoles' "
+                                "WHEN 5 THEN 'jueves' "
+                                "WHEN 6 THEN 'viernes' "
+                                "WHEN 7 THEN 'sabado' "
+                                "END)")
 
+
+    def clases_hoy_entrenador(self, id_entrenador):
+        datos = self.consultar(self.SQL_CLASES_HOY_ENTRENADOR, (id_entrenador,))
+        return datos[0][0] if datos else 0
+    
+    
     def buscar_clases(self, texto: str):
         t = f"%{texto.lower().strip()}%"
         filas = self.consultar(self.SQL_BUSCAR_CLASES, (t,))
