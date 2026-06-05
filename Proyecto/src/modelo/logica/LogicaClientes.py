@@ -38,8 +38,8 @@ class LogicaClientes:
     def contar_usuarios(self):
         return len(self._cliente_dao.select())
 
-    def listar_clientes(self):
-        clientes = self._cliente_dao.select()
+    def contar_usuarios(self):
+        return self._cliente_consultas_dao.recepcion_total_clientes()
 
         return [
             (

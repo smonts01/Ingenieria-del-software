@@ -359,8 +359,8 @@ INSERT INTO entrenador (id_entrenador, especialidad, id_administrador_registra) 
 (2, 'Fitness y clases dirigidas', 1);
 
 INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES
-(10, 'abonado', 0),
-(11, 'abonado', 0),
+(10, 'pendiente', 0),
+(11, 'pendiente', 0),
 (12, 'pendiente', 0);
 
 INSERT INTO sala (id_sala, nombre, aforo_maximo, tipo_zona) VALUES
@@ -407,9 +407,26 @@ VALUES ('72260110K', 'Sonia Recepcionista', '600555099', 'recepcionista@stayfit.
 INSERT INTO empleados (id_empleado, salario) VALUES (LAST_INSERT_ID(), 2500.00);
 INSERT INTO contable (id_contable, titulacion, id_administrador_registra) VALUES (LAST_INSERT_ID(), 'ADE', 1);
 
--- Ahora insertar el pago pendiente de Lucía
-INSERT INTO pago (id_cliente, id_contable, id_tarifa, importe, metodo_pago, estado, tipo_cuota)
-SELECT 12, id_contable, 1, 30.00, 'efectivo', 'pendiente', 'mensual' FROM contable LIMIT 1;
+DELETE FROM contable
+WHERE id_contable = 14;
+
+INSERT INTO empleados (id_empleado, salario)
+VALUES (13, 1200.00);
+INSERT INTO contable (id_contable, titulacion, id_administrador_registra)
+VALUES (13, 'ADE', 1);
+
+
+INSERT INTO pago
+(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+VALUES
+(10, 13, 1, 30.00, 'tarjeta', '2026-01-15 10:00:00', 'abonado', 'mensual'),
+(11, 13, 2, 45.00, 'efectivo', '2026-01-20 11:30:00', 'abonado', 'mensual'),
+(12, 13, 1, 30.00, 'bizum', '2026-02-10 09:45:00', 'abonado', 'mensual'),
+(10, 13, 1, 30.00, 'transferencia', '2026-02-18 12:15:00', 'abonado', 'mensual'),
+(11, 13, 2, 45.00, 'tarjeta', '2026-03-05 16:20:00', 'abonado', 'mensual'),
+(12, 13, 1, 30.00, 'efectivo', '2026-03-22 17:00:00', 'abonado', 'mensual'),
+(10, 13, 1, 30.00, 'bizum', '2026-04-08 10:10:00', 'abonado', 'mensual'),
+(11, 13, 2, 45.00, 'transferencia', '2026-04-19 13:40:00', 'abonado', 'mensual');
 
 SHOW TABLES;
 SELECT * FROM usuarios;
@@ -423,3 +440,6 @@ SELECT * FROM usuarios ORDER BY id_usuario DESC LIMIT 3;
 SELECT * FROM clientes ORDER BY id_cliente DESC LIMIT 3;
 SELECT * FROM adulto ORDER BY id_cliente DESC LIMIT 3;
 SELECT * FROM inscripcion;
+SELECT * FROM pago;
+DESCRIBE pago;
+SELECT * FROM contable;

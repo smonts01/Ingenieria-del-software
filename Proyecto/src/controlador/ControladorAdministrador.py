@@ -96,8 +96,11 @@ class ControladorAdministrador:
         v = self.ventana
 
         if hasattr(v, "lblUsuariosNum"):
-            try: v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
-            except: v.lblUsuariosNum.setText("0")
+            try:
+                v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
+            except Exception as e:
+                print(f"Error contando clientes en inicio admin: {e}")
+                v.lblUsuariosNum.setText("0")
 
         self._actualizar_resumen_clases()
 
@@ -218,7 +221,10 @@ class ControladorAdministrador:
 
         if hasattr(v, "tablaInscripciones") and hasattr(v, "lblTotal"):
             try:
-                self._rellenar(v.tablaInscripciones, self.modelo.listar_inscripciones_resumen())
+                self._rellenar_tabla_inscripciones(
+                    v.tablaInscripciones,
+                    self.modelo.listar_inscripciones_resumen()
+                )
                 stats = self.modelo.estadisticas_inscripciones()
                 v.lblTotal.setText(str(stats["total"]))
                 if hasattr(v, "label_4"):
@@ -586,7 +592,14 @@ class ControladorAdministrador:
         tabla.setSelectionBehavior(tabla.SelectRows)
 
         for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
+            valores = [
+                registro.nombre_cliente,
+                registro.nombre_actividad,
+                registro.fecha_inscripcion,
+                registro.estado
+            ]
+
+            for col, valor in enumerate(valores):
                 item = TablaView.crear_item(
                     str(valor) if valor is not None else "",
                     editable=True
