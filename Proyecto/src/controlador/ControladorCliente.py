@@ -147,9 +147,14 @@ class ControladorCliente:
         if hasattr(v, "lblBienvenida"):
             v.lblBienvenida.setText(f"Bienvenida, {vo.nombre}")
         if hasattr(v, "lblNumClases"):
-            v.lblNumClases.setText(str(vo.clases_semana))
+            v.lblNumClases.setText(str(len(vo.proximas_clases)))
         if hasattr(v, "lblEstadoPago"):
             v.lblEstadoPago.setText(str(vo.estado_pagado).capitalize())
+        if hasattr(v, "lblSubPago"):
+            if str(vo.estado_pagado).lower() == "abonado":
+                v.lblSubPago.setText("Sin pagos pendientes")
+            else:
+                v.lblSubPago.setText("Tienes pagos pendientes")
         if hasattr(v, "lblCaloriasSemana"):
             v.lblCaloriasSemana.setText(f"{vo.calorias_semana} kcal")
         if hasattr(v, "lblAsistencias"):
@@ -292,6 +297,35 @@ class ControladorCliente:
                 label.setText(f"● {tipo} {porcentaje}%")
             else:
                 label.setText("")
+
+    def filtrar_clases(self):
+        v = self.ventana
+
+        if not hasattr(v, "txtBuscarClases"):
+            return
+
+        texto = v.txtBuscarClases.text().strip().lower()
+
+        # Cambia este nombre si tu tabla se llama de otra forma
+        if hasattr(v, "tablaClases"):
+            tabla = v.tablaClases
+        elif hasattr(v, "tablaTodasClases"):
+            tabla = v.tablaTodasClases
+        elif hasattr(v, "tablaClasesTodas"):
+            tabla = v.tablaClasesTodas
+        else:
+            return
+
+        for fila in range(tabla.rowCount()):
+            coincide = False
+
+            for col in range(tabla.columnCount()):
+                item = tabla.item(fila, col)
+                if item and texto in item.text().lower():
+                    coincide = True
+                    break
+
+            tabla.setRowHidden(fila, not coincide)
 
     def cerrar_sesion(self):
         if self.ventana:
