@@ -36,6 +36,28 @@ class LogicaClientes:
         return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
     # ── CLIENTES ─────────────────────────────────────────────────────
+    def calorias_semana_por_dia(self, id_cliente):
+        return self._cliente_dao.calorias_semana_por_dia(id_cliente)
+
+    def clases_asistidas_cliente(self, id_cliente):
+        return self._cliente_dao.clases_asistidas_cliente(id_cliente)
+    
+    def calcular_objetivo_semanal(self, calorias_semana):
+        objetivo_kcal = 1000
+
+        calorias = int(calorias_semana or 0)
+
+        porcentaje = int((calorias / objetivo_kcal) * 100)
+
+        if porcentaje > 100:
+            porcentaje = 100
+
+        return {
+            "objetivo_kcal": objetivo_kcal,
+            "porcentaje": porcentaje,
+            "texto_porcentaje": f"{porcentaje}%",
+            "texto_objetivo": f"Objetivo : {objetivo_kcal} kcal"
+        }
 
     def contar_usuarios(self):
         return len(self._cliente_dao.select())
@@ -222,6 +244,12 @@ class LogicaClientes:
             if inscripcion.id_clase == id_clase and inscripcion.estado == "inscrito":
                 raise ValueError("Ya estás inscrito en esta clase")
 
+            if inscripcion.id_clase == id_clase and inscripcion.estado == "cancelado":
+                return self._inscripcion_dao.updateEstado(
+                    inscripcion.id_inscripcion,
+                    "inscrito"
+                )
+
         inscripcion_vo = InscripcionVO(
             None,
             id_cliente,
@@ -231,6 +259,7 @@ class LogicaClientes:
         )
 
         return self._inscripcion_dao.insert(inscripcion_vo)
+    
 
     def desapuntarse_clase(self, id_cliente, id_clase):
         if not id_cliente:
@@ -265,10 +294,23 @@ class LogicaClientes:
         if not clases:
             raise ValueError("No se encontró ninguna clase con ese nombre")
 
-        id_clase = clases[0][0]
+        id_clase = clases[0].id_clase
 
         return self.inscribirse_clase(id_cliente, id_clase)
     
+    def desapuntarse_clase_por_nombre(self, id_cliente, nombre_actividad):
+        if not nombre_actividad:
+            raise ValueError("No se ha seleccionado ninguna clase")
+
+        clases = self._clase_consultas_dao.buscar_clases(nombre_actividad)
+
+        if not clases:
+            raise ValueError("No se encontró ninguna clase con ese nombre")
+
+        id_clase = clases[0].id_clase
+
+        return self.desapuntarse_clase(id_cliente, id_clase)
+        
 
     def validar_datos_registro_cliente(self, dni, nombre, telefono, direccion,
                                     email, fecha, username, password,
