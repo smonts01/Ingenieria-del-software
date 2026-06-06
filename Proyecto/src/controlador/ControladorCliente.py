@@ -147,9 +147,14 @@ class ControladorCliente:
         if hasattr(v, "lblBienvenida"):
             v.lblBienvenida.setText(f"Bienvenida, {vo.nombre}")
         if hasattr(v, "lblNumClases"):
-            v.lblNumClases.setText(str(vo.clases_semana))
+            v.lblNumClases.setText(str(len(vo.proximas_clases)))
         if hasattr(v, "lblEstadoPago"):
             v.lblEstadoPago.setText(str(vo.estado_pagado).capitalize())
+        if hasattr(v, "lblSubPago"):
+            if str(vo.estado_pagado).lower() == "abonado":
+                v.lblSubPago.setText("Sin pagos pendientes")
+            else:
+                v.lblSubPago.setText("Tienes pagos pendientes")
         if hasattr(v, "lblCaloriasSemana"):
             v.lblCaloriasSemana.setText(f"{vo.calorias_semana} kcal")
         if hasattr(v, "lblAsistencias"):
