@@ -1,7 +1,7 @@
 import jaydebeapi
 
 class Conexion:
-    def __init__(self, host='localhost', database='stayfit_database', user='root', password='1234'):
+    def __init__(self, host='localhost', database='stayfit_database', user='root', password='250706'):
         self._host = host
         self._database = database
         self._user = user
@@ -18,7 +18,6 @@ class Conexion:
                 [self._user, self._password],
                 jar_file
             )
-            # AÑADE ESTA LÍNEA:
             self.conexion.jconn.setAutoCommit(True)
             return self.conexion
         except Exception as e:
