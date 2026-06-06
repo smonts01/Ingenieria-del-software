@@ -44,7 +44,7 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
             ON c.id_cliente = u.id_usuario
         LEFT JOIN cliente_tarifa ct
             ON c.id_cliente = ct.id_cliente
-           AND ct.estado = 'activa'
+        AND ct.estado = 'activa'
         LEFT JOIN tarifa t 
             ON ct.id_tarifa = t.id_tarifa
         WHERE LOWER(c.estado_pagado) = 'pendiente'
