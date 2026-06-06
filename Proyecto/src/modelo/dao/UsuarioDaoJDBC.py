@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.UsuarioVO import UsuarioVO
 
 
-class UsuarioDaoJDBC(Conexion):
+class UsuarioDaoJDBC:
 
     SQL_SELECT = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios"
     SQL_SELECT_BY_ID = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE id_usuario = ?"
@@ -12,13 +12,18 @@ class UsuarioDaoJDBC(Conexion):
     SQL_UPDATE = "UPDATE usuarios SET dni=?, nombre=?, telefono=?, email=?, username=?, password_hash=?, id_rol=?, direccion=?, fecha_nacimiento=? WHERE id_usuario=?"
     SQL_DELETE = "DELETE FROM usuarios WHERE id_usuario = ?"
 
+
+    def __init__(self):
+        self._conexion = Conexion()  
+
+
     def _rowToVO(self, row) -> UsuarioVO:
         id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento = row
         return UsuarioVO(id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento)
 
     def select(self) -> list[UsuarioVO]:
         """Recupera todos los usuarios."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         usuarios = []
         try:
             cursor.execute(self.SQL_SELECT)
@@ -28,12 +33,12 @@ class UsuarioDaoJDBC(Conexion):
             print("Error al seleccionar usuarios:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return usuarios
 
     def selectById(self, id_usuario: int) -> UsuarioVO:
         """Recupera un usuario por su ID."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         usuario = None
         try:
             cursor.execute(self.SQL_SELECT_BY_ID, (id_usuario,))
@@ -44,12 +49,12 @@ class UsuarioDaoJDBC(Conexion):
             print("Error al seleccionar usuario por ID:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return usuario
 
     def selectByUsername(self, username: str) -> UsuarioVO:
         """Recupera un usuario por su username."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         usuario = None
         try:
             cursor.execute(self.SQL_SELECT_BY_USERNAME, (username,))
@@ -60,12 +65,12 @@ class UsuarioDaoJDBC(Conexion):
             print("Error al seleccionar usuario por username:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return usuario
 
     def checkLogin(self, username: str, password_hash: str) -> UsuarioVO:
         """Verifica credenciales. Retorna UsuarioVO si son correctas, None si no."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         usuario = None
         try:
             cursor.execute(self.SQL_CHECK_LOGIN, (username, password_hash))
@@ -76,12 +81,12 @@ class UsuarioDaoJDBC(Conexion):
             print("Error al verificar login:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return usuario
 
     def insert(self, usuario: UsuarioVO) -> int:
         """Inserta un nuevo usuario. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_INSERT, (
@@ -94,12 +99,12 @@ class UsuarioDaoJDBC(Conexion):
             print("Error al insertar usuario:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows
 
     def update(self, usuario: UsuarioVO) -> int:
         """Actualiza un usuario existente. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_UPDATE, (
@@ -113,12 +118,12 @@ class UsuarioDaoJDBC(Conexion):
             print("Error al actualizar usuario:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows
 
     def delete(self, id_usuario: int) -> int:
         """Elimina un usuario por su ID. Retorna filas afectadas."""
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
         try:
             cursor.execute(self.SQL_DELETE, (id_usuario,))
@@ -127,5 +132,5 @@ class UsuarioDaoJDBC(Conexion):
             print("Error al eliminar usuario:", e)
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
         return rows

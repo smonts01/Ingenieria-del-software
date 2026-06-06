@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.ContableVO import ContableVO
 
 
-class ContableDaoJDBC(Conexion):
+class ContableDaoJDBC:
 
     SQL_SELECT = """
         SELECT id_contable, id_administrador_registra
@@ -33,12 +33,15 @@ class ContableDaoJDBC(Conexion):
         WHERE id_contable = ?
     """
 
+    def __init__(self):
+        self._conexion = Conexion()  
+
     def _rowToVO(self, row) -> ContableVO:
         id_contable, id_administrador_registra = row
         return ContableVO(id_contable, id_administrador_registra)
 
     def select(self) -> list[ContableVO]:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         contables = []
 
         try:
@@ -52,12 +55,12 @@ class ContableDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return contables
 
     def selectById(self, id_contable: int):
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         contable = None
 
         try:
@@ -72,12 +75,12 @@ class ContableDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return contable
 
     def insert(self, vo: ContableVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -95,12 +98,12 @@ class ContableDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def update(self, vo: ContableVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -118,12 +121,12 @@ class ContableDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def delete(self, id_contable: int) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -135,6 +138,6 @@ class ContableDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows

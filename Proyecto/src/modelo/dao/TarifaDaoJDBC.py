@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.TarifaVO import TarifaVO
 
 
-class TarifaDaoJDBC(Conexion):
+class TarifaDaoJDBC:
 
     SQL_SELECT = """
         SELECT id_tarifa, nombre, precio_mensual, servicios_incluidos, fecha_inicio 
@@ -36,11 +36,15 @@ class TarifaDaoJDBC(Conexion):
         WHERE id_tarifa = ?
     """
 
+    def __init__(self):
+        self._conexion = Conexion()  
+
+
     def _rowToVO(self, row) -> TarifaVO:
         return TarifaVO(*row)
 
     def select(self) -> list[TarifaVO]:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         tarifas = []
 
         try:
@@ -54,12 +58,12 @@ class TarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return tarifas
 
     def selectById(self, id_tarifa: int) -> TarifaVO:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         tarifa = None
 
         try:
@@ -74,12 +78,12 @@ class TarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return tarifa
 
     def insert(self, vo: TarifaVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -100,12 +104,12 @@ class TarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def update(self, vo: TarifaVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -127,12 +131,12 @@ class TarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def delete(self, id_tarifa: int) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -144,6 +148,6 @@ class TarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
