@@ -231,7 +231,7 @@ class ControladorRecepcionista:
 
             id_cliente = self.modelo.crear_cliente_desde_recepcion(
                 dni, nombre, telefono, email, username, password, direccion,
-                fecha_bd, es_menor, dni_tutor, nombre_tutor
+                fecha_bd, es_menor, dni_tutor, nombre_tutor, plan
             )
             MensajeView.information(v, "Correcto", f"Cliente registrado correctamente con ID {id_cliente}")
             for nombre_widget in ["DNI", "NombreCompleto", "Telefono", "Direccion", "Email", "Nacimiento",
