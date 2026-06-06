@@ -1,9 +1,40 @@
+"""
+Controlador del rol Administrador — Patrón MVC según ejemplo de la profesora.
+
+Responsabilidad:
+- Instanciar la Vista y asignarle set_controlador(self)
+- Responder a los eventos que la Vista delega
+- Llamar al Modelo para obtener/guardar datos
+- Llamar a métodos de la Vista para actualizar la UI
+- NO conecta botones, NO toca widgets directamente
+"""
 import os
-from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView, ArchivoView,  BotonesView
-import matplotlib.pyplot as plt
 import io
-import matplotlib
 from datetime import datetime
+
+from src.vista.componentes import MensajeView, TablaView, ImagenView, ArchivoView, BotonesView
+from src.vista.vistas.vista_admin import (
+    VistaAdminInicio,
+    VistaAdminUsuariosClientes,
+    VistaAdminUsuariosTrabajadores,
+    VistaAdminNuevoUsuario,
+    VistaAdminClases,
+    VistaAdminInscripciones,
+    VistaAdminPagos,
+    VistaAdminEstadisticas,
+)
+
+_VISTAS = {
+    'interfaz_admin_inicio.ui':                    VistaAdminInicio,
+    'interfaz_admin_usuarios_clientes.ui':          VistaAdminUsuariosClientes,
+    'interfaz_admin_usuarios_trabajadores.ui':      VistaAdminUsuariosTrabajadores,
+    'interfaz_admin_usuarios_nuevo_usuario.ui':     VistaAdminNuevoUsuario,
+    'interfaz_admin_clases.ui':                     VistaAdminClases,
+    'interfaz_admin_inscripciones.ui':              VistaAdminInscripciones,
+    'interfaz_admin_pagos.ui':                      VistaAdminPagos,
+    'interfaz_admin_estadisticas.ui':               VistaAdminEstadisticas,
+}
+
 
 class ControladorAdministrador:
 
@@ -15,1066 +46,411 @@ class ControladorAdministrador:
         self.ventana = None
 
     def abrir(self):
-        self.abrir_pantalla("interfaz_admin_inicio.ui")
+        self.ir_inicio()
 
     def abrir_pantalla(self, archivo):
         if self.ventana:
             self.ventana.close()
         ruta = os.path.join(self.ruta_ui, archivo)
-        self.ventana = CargadorVista.cargar(ruta)
-        self.conectar_botones()
-        self.cargar_datos()
+        ClaseVista = _VISTAS[archivo]
+        self.ventana = ClaseVista(ruta)
+        self.ventana.set_controlador(self)
         self._añadir_boton_ayuda()
+        self.cargar_datos()
         self.ventana.show()
 
-    def conectar_botones(self):
-        v = self.ventana
+    # ── Navegación ────────────────────────────────────────────────────────
+    def ir_inicio(self):                self.abrir_pantalla('interfaz_admin_inicio.ui')
+    def ir_usuarios_clientes(self):     self.abrir_pantalla('interfaz_admin_usuarios_clientes.ui')
+    def ir_usuarios_trabajadores(self): self.abrir_pantalla('interfaz_admin_usuarios_trabajadores.ui')
+    def ir_nuevo_usuario(self):         self.abrir_pantalla('interfaz_admin_usuarios_nuevo_usuario.ui')
+    def ir_clases(self):                self.abrir_pantalla('interfaz_admin_clases.ui')
+    def ir_inscripciones(self):         self.abrir_pantalla('interfaz_admin_inscripciones.ui')
+    def ir_pagos(self):                 self.abrir_pantalla('interfaz_admin_pagos.ui')
+    def ir_estadisticas(self):          self.abrir_pantalla('interfaz_admin_estadisticas.ui')
 
-        # Menú lateral
-        if hasattr(v, "btnCerrarSesion"):
-            v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
-        if hasattr(v, "btnInicio"):
-            v.btnInicio.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_inicio.ui"))
-        if hasattr(v, "btnUsuarios"):
-            v.btnUsuarios.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_usuarios_clientes.ui"))
-        if hasattr(v, "btnClases"):
-            v.btnClases.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_clases.ui"))
-        if hasattr(v, "btnInscripciones"):
-            v.btnInscripciones.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_inscripciones.ui"))
-        if hasattr(v, "btnPagos"):
-            v.btnPagos.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_pagos.ui"))
-        if hasattr(v, "btnEstadisticas"):
-            v.btnEstadisticas.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_estadisticas.ui"))
-        if hasattr(v, "btnActualizar"):
-            v.btnActualizar.clicked.connect(self.cargar_datos)
-        if hasattr(v, "btnNuevoTrabajador"):
-            v.btnNuevoTrabajador.clicked.connect(lambda: self.abrir_pantalla("interfaz_admin_usuarios_nuevo_usuario.ui"))
-        if hasattr(v, "txtBuscarClientePendiente"):
-            v.txtBuscarClientePendiente.textChanged.connect(self.filtrar_pagos_pendientes)
-        if hasattr(v, "txtBuscarDNI"):
-            v.txtBuscarDNI.textChanged.connect(self.filtrar_pagos_pendientes)
-        if hasattr(v, "cmbRolUsuario") and v.cmbRolUsuario.count() == 0:
-            v.cmbRolUsuario.addItems(["Cliente", "Entrenador", "Recepcionista", "Administrador", "Contable"])
-
-        if hasattr(v, "txtBuscar") and hasattr(v, "tablaClases"):
-            v.txtBuscar.textChanged.connect(self.filtrar_clases)
-
-        if hasattr(v, "txtBuscarInscripciones"):
-            v.txtBuscarInscripciones.textChanged.connect(self.filtrar_inscripciones)
-
-        # Tabs clientes/trabajadores
-        if hasattr(v, "lblTabClientes"):
-            v.lblTabClientes.mousePressEvent = lambda e: self.abrir_pantalla("interfaz_admin_usuarios_clientes.ui")
-        if hasattr(v, "lblTabTrabajadores"):
-            v.lblTabTrabajadores.mousePressEvent = lambda e: self.abrir_pantalla("interfaz_admin_usuarios_trabajadores.ui")
-
-        # Pantalla clientes
-        if hasattr(v, "txtBuscarCliente"):
-            v.txtBuscarCliente.textChanged.connect(self.filtrar_clientes)
-
-        # Pantalla trabajadores
-        if hasattr(v, "txtBuscarTrabajador"):
-            v.txtBuscarTrabajador.textChanged.connect(self.filtrar_trabajadores)
-
-        if hasattr(v, "cmbRoles"):
-            v.cmbRoles.currentIndexChanged.connect(self.filtrar_por_rol)
-            if v.cmbRoles.count() == 0:
-                v.cmbRoles.addItems(["Todos los roles", "entrenador", "recepcionista", "contable", "administrador"])
-        if hasattr(v, "btnGuardarCambios_2"):
-            v.btnGuardarCambios_2.clicked.connect(self.guardar_cambios_trabajador)
-
-        # CRUD usuarios
-        if hasattr(v, "btnRegistrarUsuario"):
-            v.btnRegistrarUsuario.clicked.connect(self.registrar_usuario)
-        if hasattr(v, "btnGuardarCambios") and hasattr(v, "tablaClases"):
-            v.btnGuardarCambios.clicked.connect(self.guardar_cambios_clase)
-
-        # CRUD clases
-        if hasattr(v, "btnNuevaClase") and hasattr(v, "tablaClases"):
-            v.btnNuevaClase.clicked.connect(self.anadir_fila_clase)
-
-        # Copia de seguridad
-        if hasattr(v, "btnCrearBackup"):
-            v.btnCrearBackup.clicked.connect(self.crear_copia_seguridad)
-
-        if hasattr(v, "btnRestaurarBackup"):
-            v.btnRestaurarBackup.clicked.connect(self.restaurar_copia_seguridad)
-
+    # ── Carga de datos por pantalla ───────────────────────────────────────
     def cargar_datos(self):
         v = self.ventana
+        if isinstance(v, VistaAdminInicio):             self._cargar_inicio()
+        elif isinstance(v, VistaAdminUsuariosClientes): self._cargar_clientes()
+        elif isinstance(v, VistaAdminUsuariosTrabajadores): self._cargar_trabajadores()
+        elif isinstance(v, VistaAdminClases):           self._cargar_clases()
+        elif isinstance(v, VistaAdminInscripciones):    self._cargar_inscripciones()
+        elif isinstance(v, VistaAdminPagos):            self._cargar_pagos()
+        elif isinstance(v, VistaAdminEstadisticas):     self._cargar_estadisticas()
 
-        if hasattr(v, "lblUsuariosNum"):
-            try:
-                v.lblUsuariosNum.setText(str(self.modelo.contar_usuarios()))
-            except Exception as e:
-                print(f"Error contando clientes en inicio admin: {e}")
-                v.lblUsuariosNum.setText("0")
-
-        self._actualizar_resumen_clases()
-
-        if hasattr(v, "lblTotalClases"):
-            try: v.lblTotalClases.setText(str(self.modelo.contar_clases()))
-            except: v.lblTotalClases.setText("0")
-
-        for lbl, clase in [("lblClasesNum_2","spinning"),("lblClasesNum_3","zumba"),
-                            ("lblClasesNum_4","yoga"),("lblClasesNum_5","pilates"),
-                            ("lblClasesNum_6","crossfit")]:
-            if hasattr(v, lbl):
-                try: getattr(v, lbl).setText(str(self.modelo.contar_inscripciones_clase(clase)))
-                except: getattr(v, lbl).setText("0")
-
-        
-        if hasattr(v, "clientesbasico"):
-            try: v.clientesbasico.setText(str(self.modelo.contar_clientes_tarifa("basico")))
-            except: v.clientesbasico.setText("0")
-
-        if hasattr(v, "ClientesPremium"):
-            try: v.ClientesPremium.setText(str(self.modelo.contar_clientes_tarifa("premium")))
-            except: v.ClientesPremium.setText("0")
-
-        if hasattr(v, "tablaInscripciones"):
-            try:
-                datos = self.modelo.listar_inscripciones_resumen()
-                self._rellenar_tabla_inscripciones(v.tablaInscripciones, datos)
-                self._actualizar_resumen_inscripciones(datos)
-            except Exception as e:
-                print(f"Error tablaInscripciones: {e}")
-
-        if hasattr(v, "tablaClientesPagosPendientes"):
-            try:
-                datos = self.modelo.clientes_pendientes_admin()
-                cabeceras = ["ID cliente", "Nombre", "Tarifa", "Precio"]
-                self._rellenar_con_cabeceras(
-                    v.tablaClientesPagosPendientes,
-                    datos,
-                    cabeceras
-                )
-            except Exception as e:
-                print(f"Error clientes pendientes administrador: {e}")
-
-        if hasattr(v, "graficoFake"):
-            self._dibujar_grafico_ingresos(v.graficoFake)
-
-
-        if hasattr(v, "tablaPagoAdmin") or hasattr(v, "tableWidget"):
-            try:
-                datos = self.modelo.clientes_pendientes_admin()
-                tabla = v.tablaPagoAdmin if hasattr(v, "tablaPagoAdmin") else v.tableWidget
-                self._rellenar_tabla_pagos_admin(tabla, datos)
-                self._actualizar_resumen_pagos_admin()
-            except Exception as e:
-                print(f"Error pagos admin: {e}")
-
-        if hasattr(v, "lblNumTrabajadores"):
-            try: v.lblNumTrabajadores.setText(str(self.modelo.contar_trabajadores()))
-            except: v.lblNumTrabajadores.setText("0")
-
-        if hasattr(v, "Entrenadores"):
-            try: v.Entrenadores.setText(str(self.modelo.contar_por_rol("entrenador")))
-            except: v.Entrenadores.setText("0")
-
-        if hasattr(v, "Recepcionista"):
-            try: v.Recepcionista.setText(str(self.modelo.contar_por_rol("recepcionista")))
-            except: v.Recepcionista.setText("0")
-
-        if hasattr(v, "Contables"):
-            try: v.Contables.setText(str(self.modelo.contar_por_rol("contable")))
-            except: v.Contables.setText("0")
-
-        if hasattr(v, "Administradores"):
-            try: v.Administradores.setText(str(self.modelo.contar_por_rol("administrador")))
-            except: v.Administradores.setText("0")
-
-        if hasattr(v, "tablaTrabajadores_2"):
-            try:
-                datos = self.modelo.listar_trabajadores_completo()
-                self._rellenar_tabla_trabajadores_admin(v.tablaTrabajadores_2, datos)
-
-                # Actualiza el texto de abajo
-                if hasattr(v, "lblMostrando_2"):
-                    v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
-
-                # Actualiza el resumen de la derecha
-                self._actualizar_resumen_trabajadores(datos)
-
-            except Exception as e:
-                print(f"Error tablaTrabajadores_2: {e}")
-
-        if hasattr(v, "lblNumUsuarios"):
-            try: v.lblNumUsuarios.setText(str(self.modelo.contar_usuarios()))
-            except: v.lblNumUsuarios.setText("0")
-
-        if hasattr(v, "tablaClientes_2"):
-            try:
-                datos = self.modelo.listar_clientes_completo()
-                self._rellenar_tabla_clientes_admin(v.tablaClientes_2, datos)
-                if hasattr(v, "lblMostrando_2"):
-                    v.lblMostrando_2.setText(f"Mostrando {len(datos)} clientes")
-            except Exception as e:
-                print(f"Error tablaClientes_2: {e}")
-
-        if hasattr(v, "lblNumR1") and hasattr(v, "tablaRanking"):
-            try:
-                self.cargar_estadisticas_admin()
-            except Exception as e:
-                print(f"Error estadísticas admin: {e}")
-                
-        if hasattr(v, "tablaClases"):
-            try:
-                datos = self.modelo.listar_clases()
-                self._rellenar_tabla_clases(v.tablaClases, datos)
-                self._actualizar_resumen_clases(datos)
-            except Exception as e:
-                print(f"Error tablaClases: {e}")
-
-        if hasattr(v, "tablaInscripciones") and hasattr(v, "lblTotal"):
-            try:
-                self._rellenar_tabla_inscripciones(
-                    v.tablaInscripciones,
-                    self.modelo.listar_inscripciones_resumen()
-                )
-                stats = self.modelo.estadisticas_inscripciones()
-                v.lblTotal.setText(str(stats["total"]))
-                if hasattr(v, "label_4"):
-                    v.label_4.setText(str(stats["clase_mas"]))
-                if hasattr(v, "label_5"):
-                    v.label_5.setText(str(stats["num_mas"]))
-                if hasattr(v, "label_8"):
-                    v.label_8.setText(str(stats["clase_menos"]))
-                if hasattr(v, "label_9"):
-                    v.label_9.setText(str(stats["num_menos"]))
-                if hasattr(v, "label_15"):
-                    v.label_15.setText(f"{stats['ocupacion']}%")
-            except Exception as e:
-                print(f"Error inscripciones stats: {e}")
-
-
-    def _dibujar_grafico_ingresos(self, label):
+    def _cargar_inicio(self):
+        v = self.ventana
+        try: v.set_num_usuarios(str(self.modelo.contar_usuarios()))
+        except: v.set_num_usuarios('0')
+        try: v.set_num_clases(str(self.modelo.contar_clases()))
+        except: pass
+        for tipo in ['spinning','zumba','yoga','pilates','crossfit']:
+            try: v.set_clases_por_tipo(tipo, str(self.modelo.contar_inscripciones_clase(tipo)))
+            except: v.set_clases_por_tipo(tipo, '0')
+        try: v.set_clientes_basico(str(self.modelo.contar_clientes_tarifa('basico')))
+        except: pass
+        try: v.set_clientes_premium(str(self.modelo.contar_clientes_tarifa('premium')))
+        except: pass
+        try: v.cargar_tabla_inscripciones(self.modelo.listar_inscripciones_resumen())
+        except Exception as e: print('Error tabla inscripciones inicio:', e)
         try:
-            
-            matplotlib.use("Agg")
-            
+            datos_pend = self.modelo.clientes_pendientes_admin()
+            v.cargar_tabla_pagos_pendientes(
+                ['ID cliente','Nombre','Tarifa','Precio'], datos_pend
+            )
+        except Exception as e: print('Error tabla pagos pendientes inicio:', e)
+        try: self._dibujar_grafico()
+        except Exception as e: print('Error grafico:', e)
 
-            datos = self.modelo.ingresos_por_mes()
-            if not datos:
-                label.setText("Sin datos de ingresos")
-                return
+    def _cargar_clientes(self):
+        v = self.ventana
+        try:
+            datos = self.modelo.listar_clientes_completo()
+            v.cargar_tabla(datos)
+            v.set_num_usuarios(str(len(datos)))
+            v.set_texto_mostrando(f'Mostrando {len(datos)} clientes')
+        except Exception as e: print('Error cargar clientes:', e)
 
-            meses_nombres = ["","Ene","Feb","Mar","Abr","May","Jun",
-                             "Jul","Ago","Sep","Oct","Nov","Dic"]
-            etiquetas = [f"{meses_nombres[int(r[1])]}\n{str(r[0])[-2:]}" for r in datos][::-1]
-            valores   = [float(r[2]) for r in datos][::-1]
+    def _cargar_trabajadores(self):
+        v = self.ventana
+        try:
+            datos = self.modelo.listar_trabajadores_completo()
+            v.cargar_tabla(datos)
+            resumen = self.modelo.resumen_trabajadores_por_rol(datos)
+            v.set_resumen(
+                resumen['total'], resumen['entrenadores'],
+                resumen['recepcionistas'], resumen['contables'],
+                resumen['administradores']
+            )
+            v.set_texto_mostrando(f'Mostrando {len(datos)} trabajadores')
+        except Exception as e: print('Error cargar trabajadores:', e)
 
-            fig, ax = plt.subplots(figsize=(4.0, 2.3), dpi=92)
-            fig.patch.set_facecolor("#F8F9FA")
-            ax.set_facecolor("#F8F9FA")
-            colores = ["#00BFA5" if v == max(valores) else "#80CBC4" for v in valores]
-            bars = ax.bar(etiquetas, valores, color=colores, width=0.55, edgecolor="white")
-            ax.set_ylabel("€", fontsize=8)
-            ax.set_title("Ingresos por mes", fontsize=9, fontweight="bold", color="#333")
-            ax.tick_params(axis="x", labelsize=7)
-            ax.tick_params(axis="y", labelsize=7)
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            max_val = max(valores) if valores else 1
-            for bar, val in zip(bars, valores):
-                ax.text(bar.get_x() + bar.get_width()/2,
-                        bar.get_height() + max_val*0.03,
-                        f"{val:.0f}€", ha="center", va="bottom", fontsize=6.5)
-            plt.tight_layout(pad=0.5)
-            buf = io.BytesIO()
-            plt.savefig(buf, format="png", bbox_inches="tight", dpi=92)
-            plt.close(fig)
-            buf.seek(0)
-            pixmap = ImagenView.desde_bytes(buf.read())
-            label.setPixmap(pixmap.scaled(label.width() or 391, label.height() or 231, 1))
-        except ImportError:
-            label.setText("pip install matplotlib")
-        except Exception as e:
-            label.setText(f"Error gráfico:\n{str(e)[:60]}")
+    def _cargar_clases(self):
+        v = self.ventana
+        try:
+            datos = self.modelo.listar_clases()
+            v.cargar_tabla(datos)
+            v.set_total_clases(str(len(datos)))
+        except Exception as e: print('Error cargar clases:', e)
 
+    def _cargar_inscripciones(self):
+        v = self.ventana
+        try:
+            datos = self.modelo.listar_inscripciones_resumen()
+            v.cargar_tabla(datos)
+            try:
+                stats = self.modelo.estadisticas_inscripciones()
+                v.set_stats(stats)
+            except: pass
+            v.set_texto_mostrando(f'Mostrando {len(datos)} inscripciones')
+        except Exception as e: print('Error cargar inscripciones:', e)
 
-    def _rellenar_tabla_editable(self, tabla, datos):
-        headers = ["ID","DNI","Nombre","Teléfono","Email","Usuario","Rol","Dirección","Fecha Nac."]
-        tabla.setColumnCount(len(headers))
-        tabla.setHorizontalHeaderLabels(headers)
-        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
-        tabla.setSelectionBehavior(tabla.SelectRows)
-        tabla.setRowCount(len(datos))
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro):
-                item = TablaView.crear_item(str(valor) if valor is not None else "")
-                if col in (0, 6):
-                    item = TablaView.crear_item(valor, editable=False)
-                tabla.setItem(fila, col, item)
+    def _cargar_pagos(self):
+        v = self.ventana
+        try:
+            datos = self.modelo.clientes_pendientes_admin()
+            v.cargar_tabla_pagos(datos)
+        except Exception as e: print('Error cargar pagos:', e)
+        try:
+            v.set_resumen_pagos(
+                float(self.modelo.ingresos_mes_actual()),
+                float(self.modelo.ingresos_anio_actual()),
+                int(self.modelo.numero_clientes_pendientes_pago()),
+                float(self.modelo.importe_pendiente_cobrar())
+            )
+        except Exception as e: print('Error resumen pagos:', e)
+
+    def _cargar_estadisticas(self):
+        v = self.ventana
+        try:
+            stats = self.modelo.estadisticas_admin()
+            v.set_stats(stats)
+        except Exception as e: print('Error stats admin:', e)
+        try:
+            ranking = self.modelo.ranking_usuarios_activos_estadisticas()
+            v.cargar_tabla_ranking(ranking)
+        except Exception as e: print('Error ranking:', e)
+        try:
+            ocupacion = self.modelo.ocupacion_por_clase_estadisticas()
+            for i in range(4):
+                if i < len(ocupacion):
+                    nombre = str(ocupacion[i][0])
+                    pct = int(ocupacion[i][1]) if ocupacion[i][1] is not None else 0
+                else:
+                    nombre, pct = '-', 0
+                v.set_ocupacion_clase(i, nombre, pct)
+        except Exception as e: print('Error ocupacion:', e)
+
+    # ── Acciones ──────────────────────────────────────────────────────────
+    def filtrar_clientes(self):
+        v = self.ventana
+        try:
+            texto = v.get_texto_buscar()
+            datos = self.modelo.buscar_clientes(texto) if texto else self.modelo.listar_clientes_completo()
+            v.cargar_tabla(datos)
+            v.set_texto_mostrando(f'Mostrando {len(datos)} clientes')
+        except Exception as e: print('Error filtrar clientes:', e)
 
     def filtrar_trabajadores(self):
         v = self.ventana
-        if not hasattr(v, "tablaTrabajadores_2"):
-            return
-        texto = v.txtBuscarTrabajador.text().strip() if hasattr(v, "txtBuscarTrabajador") else ""
         try:
+            texto = v.get_texto_buscar()
             datos = self.modelo.buscar_trabajadores(texto) if texto else self.modelo.listar_trabajadores_completo()
-            self._rellenar_tabla_trabajadores_admin(v.tablaTrabajadores_2, datos)
-            if hasattr(v, "lblMostrando_2"):
-                v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
-        except Exception as e:
-            print(f"Error filtrar_trabajadores: {e}")
+            v.cargar_tabla(datos)
+            v.set_texto_mostrando(f'Mostrando {len(datos)} trabajadores')
+        except Exception as e: print('Error filtrar trabajadores:', e)
 
     def filtrar_por_rol(self):
         v = self.ventana
-        if not hasattr(v, "tablaTrabajadores_2") or not hasattr(v, "cmbRoles"):
-            return
-        rol = v.cmbRoles.currentText()
         try:
-            datos = self.modelo.listar_trabajadores_completo() if rol == "Todos los roles" else self.modelo.buscar_trabajadores_rol(rol)
-            self._rellenar_tabla_trabajadores_admin(v.tablaTrabajadores_2, datos)
-            if hasattr(v, "lblMostrando_2"):
-                v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
-        except Exception as e:
-            print(f"Error filtrar_por_rol: {e}")
+            rol = v.get_rol_filtro()
+            datos = (self.modelo.listar_trabajadores_completo()
+                     if rol == 'Todos los roles'
+                     else self.modelo.buscar_trabajadores_rol(rol))
+            v.cargar_tabla(datos)
+            v.set_texto_mostrando(f'Mostrando {len(datos)} trabajadores')
+        except Exception as e: print('Error filtrar rol:', e)
 
     def guardar_cambios_trabajador(self):
         v = self.ventana
-        if not hasattr(v, "tablaTrabajadores_2"):
-            return
-        tabla = v.tablaTrabajadores_2
         try:
-            for fila in range(tabla.rowCount()):
-                id_item = tabla.item(fila, 0)
-                if not id_item or not id_item.text():
+            filas = v.get_datos_tabla()
+            for fila in filas:
+                id_str = fila[0]
+                if not id_str:
                     continue
-                id_usuario = int(id_item.text())
-                nombre    = tabla.item(fila, 2).text() if tabla.item(fila, 2) else ""
-                telefono  = tabla.item(fila, 3).text() if tabla.item(fila, 3) else ""
-                email     = tabla.item(fila, 4).text() if tabla.item(fila, 4) else ""
-                direccion = tabla.item(fila, 7).text() if tabla.item(fila, 7) else ""
-                self.modelo.guardar_cambios_trabajador(id_usuario, nombre, telefono, email, direccion)
-            MensajeView.information(v, "Correcto", "Cambios guardados correctamente")
+                id_usuario = int(id_str)
+                nombre, telefono, email, direccion = fila[2], fila[3], fila[4], fila[7]
+                self.modelo.guardar_cambios_trabajador(
+                    id_usuario, nombre, telefono, email, direccion
+                )
+            v.mostrar_exito('Cambios guardados correctamente')
         except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
-
-
-    def filtrar_clientes(self):
-        v = self.ventana
-
-        if not hasattr(v, "tablaClientes_2"):
-            return
-
-        texto = v.txtBuscarCliente.text().strip() if hasattr(v, "txtBuscarCliente") else ""
-
-        try:
-            datos = self.modelo.buscar_clientes(texto) if texto else self.modelo.listar_clientes_completo()
-            self._rellenar_tabla_clientes_admin(v.tablaClientes_2, datos)
-
-            if hasattr(v, "lblMostrando_2"):
-                v.lblMostrando_2.setText(f"Mostrando {len(datos)} clientes")
-
-        except Exception as e:
-            print(f"Error filtrar_clientes: {e}")
-
+            v.mostrar_error(str(e))
 
     def registrar_usuario(self):
         v = self.ventana
         try:
-            dni       = v.txtDni.text().strip()              if hasattr(v,"txtDni")             else ""
-            nombre    = v.txtNombre.text().strip()            if hasattr(v,"txtNombre")          else ""
-            telefono  = v.txtTelefono.text().strip()          if hasattr(v,"txtTelefono")        else ""
-            email     = v.txtEmail.text().strip()             if hasattr(v,"txtEmail")           else ""
-            direccion = v.txtDireccion.text().strip()         if hasattr(v,"txtDireccion")       else ""
-            fecha     = v.txtFechaNacimiento.text().strip()   if hasattr(v,"txtFechaNacimiento") else "01/01/2000"
-            username  = v.txtUsuario.text().strip()           if hasattr(v,"txtUsuario")         else ""
-            password  = v.txtPassword.text().strip()          if hasattr(v,"txtPassword")        else ""
-            confirmar = v.txtConfirmarPassword.text().strip() if hasattr(v,"txtConfirmarPassword") else ""
-            rol_texto = v.cmbRolUsuario.currentText()         if hasattr(v,"cmbRolUsuario")      else "cliente"
+            dni       = v.get_dni()
+            nombre    = v.get_nombre()
+            telefono  = v.get_telefono()
+            email     = v.get_email()
+            direccion = v.get_direccion()
+            fecha     = v.get_fecha()
+            username  = v.get_username()
+            password  = v.get_password()
+            confirmar = v.get_confirmar()
+            rol_texto = v.get_rol()
 
             if not all([dni, nombre, telefono, email, username, password]):
-                MensajeView.warning(v, "Error", "Todos los campos son obligatorios")
+                v.mostrar_error('Todos los campos son obligatorios')
                 return
             if password != confirmar:
-                MensajeView.warning(v, "Error", "Las contraseñas no coinciden")
+                v.mostrar_error('Las contraseñas no coinciden')
                 return
             if len(password) < 4:
-                MensajeView.warning(v, "Error", "La contraseña debe tener al menos 4 caracteres")
+                v.mostrar_error('La contraseña debe tener al menos 4 caracteres')
                 return
-
-        
-            
             try:
-                fecha = datetime.strptime(fecha, "%d/%m/%Y").strftime("%Y-%m-%d")
+                fecha_bd = datetime.strptime(fecha, '%d/%m/%Y').strftime('%Y-%m-%d')
             except ValueError:
-                MensajeView.warning(v, "Error", "Formato de fecha incorrecto. Usa DD/MM/YYYY (ej: 25/07/2001)")
+                v.mostrar_error('Formato de fecha incorrecto. Usa DD/MM/YYYY')
                 return
 
-            roles_map = {"Cliente":1, "Entrenador":2, "Recepcionista":3, "Administrador":4, "Contable":5}
+            roles_map = {'Cliente':1,'Entrenador':2,'Recepcionista':3,
+                         'Administrador':4,'Contable':5}
             id_rol = roles_map.get(rol_texto, 1)
 
             self.modelo.crear_usuario_completo(
                 dni, nombre, telefono, email, username, password,
-                id_rol, direccion, fecha, self.usuario["id_usuario"]
+                id_rol, direccion, fecha_bd, self.usuario['id_usuario']
             )
-
-            MensajeView.information(v, "Correcto",
-                f"Usuario '{username}' registrado correctamente como {rol_texto}")
-
-            for campo in ["txtDni","txtNombre","txtTelefono","txtEmail","txtDireccion",
-                          "txtFechaNacimiento","txtUsuario","txtPassword","txtConfirmarPassword"]:
-                if hasattr(v, campo):
-                    getattr(v, campo).clear()
-
+            v.mostrar_exito(f"Usuario '{username}' registrado como {rol_texto}")
+            v.limpiar()
         except Exception as e:
-            MensajeView.warning(v, "Error", f"Error al registrar: {str(e)}")
-
-
-
-
-    def _rellenar_tabla_clientes_admin(self, tabla, datos):
-        cabeceras = [
-            "ID",
-            "DNI",
-            "Nombre",
-            "Teléfono",
-            "Email",
-            "Usuario",
-            "Estado pago",
-            "Dirección",
-            "Fecha nacimiento"
-        ]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, cliente in enumerate(datos):
-            valores = [
-                cliente.id_usuario,
-                cliente.dni,
-                cliente.nombre,
-                cliente.telefono,
-                cliente.email,
-                cliente.username,
-                cliente.estado_pagado,
-                cliente.direccion,
-                cliente.fecha_nacimiento
-            ]
-
-            for col, valor in enumerate(valores):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=True
-                )
-                tabla.setItem(fila, col, item)
-
-
-    def _rellenar(self, tabla, datos):
-        tabla.setRowCount(len(datos))
-        if datos:
-            tabla.setColumnCount(len(datos[0]))
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro):
-                tabla.setItem(fila, col, TablaView.crear_item(
-                    str(valor) if valor is not None else ""))
-
-
-    def _rellenar_con_cabeceras(self, tabla, datos, cabeceras):
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setRowCount(len(datos))
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
-                TablaView.poner_item(tabla, fila, col, valor)
-
-    def _rellenar_tabla_trabajadores_admin(self, tabla, datos):
-        cabeceras = [
-            "ID",
-            "DNI",
-            "Nombre",
-            "Teléfono",
-            "Email",
-            "Usuario",
-            "Rol",
-            "Dirección",
-            "Fecha nacimiento"
-        ]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, trabajador in enumerate(datos):
-            valores = [
-                trabajador.id_usuario,
-                trabajador.dni,
-                trabajador.nombre,
-                trabajador.telefono,
-                trabajador.email,
-                trabajador.username,
-                trabajador.nombre_rol,
-                trabajador.direccion,
-                trabajador.fecha_nacimiento
-            ]
-
-            for col, valor in enumerate(valores):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=True
-                )
-
-                if col in (0, 6):
-                    item = TablaView.crear_item(
-                        str(valor) if valor is not None else "",
-                        editable=False
-                    )
-
-                tabla.setItem(fila, col, item)
-
-    def cerrar_sesion(self):
-        self.ventana.close()
-        self.vista_login.show()
+            v.mostrar_error(f'Error al registrar: {str(e)}')
 
     def filtrar_clases(self):
         v = self.ventana
-
-        if not hasattr(v, "tablaClases"):
-            return
-
-        texto = v.txtBuscar.text().strip() if hasattr(v, "txtBuscar") else ""
-
         try:
-            if texto:
-                datos = self.modelo.buscar_clases(texto)
-            else:
-                datos = self.modelo.listar_clases()
+            texto = v.get_texto_buscar()
+            datos = self.modelo.buscar_clases(texto) if texto else self.modelo.listar_clases()
+            v.cargar_tabla(datos)
+            v.set_total_clases(str(len(datos)))
+        except Exception as e: print('Error filtrar clases:', e)
 
-            self._rellenar_tabla_clases(v.tablaClases, datos)
-            self._actualizar_resumen_clases(datos)
-
-        except Exception as e:
-            print(f"Error filtrar_clases: {e}")
-
-    def filtrar_inscripciones(self):
+    def anadir_fila_clase(self):
         v = self.ventana
+        fi = v.insertar_fila_vacia()
+        v.set_total_clases(str(self.ventana.tablaClases.rowCount()))
 
-        if not hasattr(v, "tablaInscripciones"):
-            return
-
-        texto = v.txtBuscarInscripciones.text().strip() if hasattr(v, "txtBuscarInscripciones") else ""
-
-        try:
-            if texto:
-                datos = self.modelo.buscar_inscripciones(texto)
-            else:
-                datos = self.modelo.listar_inscripciones_resumen()
-
-            self._rellenar_tabla_inscripciones(v.tablaInscripciones, datos)
-            self._actualizar_resumen_inscripciones(datos)
-
-        except Exception as e:
-            print(f"Error filtrar_inscripciones: {e}")
-            
     def guardar_cambios_clase(self):
         v = self.ventana
-
-        if not hasattr(v, "tablaClases"):
-            return
-
-        tabla = v.tablaClases
-
         try:
-            for fila in range(tabla.rowCount()):
-                id_item = tabla.item(fila, 0)
-
-                id_texto = id_item.text().strip() if id_item and id_item.text() else ""
-                nombre = tabla.item(fila, 1).text().strip() if tabla.item(fila, 1) else ""
-                dia = tabla.item(fila, 2).text().strip() if tabla.item(fila, 2) else ""
-                hora_ini = tabla.item(fila, 3).text().strip() if tabla.item(fila, 3) else ""
-                hora_fin = tabla.item(fila, 4).text().strip() if tabla.item(fila, 4) else ""
-                aforo = tabla.item(fila, 5).text().strip() if tabla.item(fila, 5) else ""
-                nivel = tabla.item(fila, 6).text().strip() if tabla.item(fila, 6) else ""
-
+            filas = v.get_datos_tabla()
+            for fila in filas:
+                id_texto, nombre, dia, hora_ini, hora_fin, aforo, nivel = fila
                 if not nombre:
                     continue
-
-                if not dia:
-                    dia = "lunes"
-                if not hora_ini:
-                    hora_ini = "09:00"
-                if not hora_fin:
-                    hora_fin = "10:00"
-                if not aforo:
-                    aforo = "20"
-                if not nivel:
-                    nivel = "media"
-
-                try:
-                    aforo = int(aforo)
+                dia      = dia or 'lunes'
+                hora_ini = hora_ini or '09:00'
+                hora_fin = hora_fin or '10:00'
+                nivel    = nivel or 'media'
+                try: aforo = int(aforo) if aforo else 20
                 except ValueError:
-                    MensajeView.warning(v, "Error", f"El aforo de la fila {fila + 1} debe ser un número")
+                    v.mostrar_error('El aforo debe ser un número')
                     return
-
                 if id_texto:
                     self.modelo.guardar_cambios_clase_tabla(
                         int(id_texto), nombre, dia, hora_ini, hora_fin, aforo, nivel
                     )
                 else:
                     self.modelo.registrar_clase(
-                        2,
-                        1,
-                        nombre,
-                        300,
-                        dia,
-                        hora_ini,
-                        hora_fin,
-                        60,
-                        aforo,
-                        nivel
+                        2, 1, nombre, 300, dia, hora_ini, hora_fin, 60, aforo, nivel
                     )
-
-            MensajeView.information(v, "Correcto", "Clases guardadas correctamente")
-
-            datos_actualizados = self.modelo.listar_clases()
-            self._rellenar_tabla_clases(v.tablaClases, datos_actualizados)
-            self._actualizar_resumen_clases(datos_actualizados)
-
+            v.mostrar_exito('Clases guardadas correctamente')
+            self._cargar_clases()
         except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
+            v.mostrar_error(str(e))
 
-    def _actualizar_resumen_trabajadores(self, trabajadores):
-        resumen = self.modelo.resumen_trabajadores_por_rol(trabajadores)
+    def filtrar_inscripciones(self):
         v = self.ventana
-
-        if hasattr(v, "lblNumTrabajadores"):
-            v.lblNumTrabajadores.setText(str(resumen["total"]))
-
-        if hasattr(v, "Entrenadores"):
-            v.Entrenadores.setText(str(resumen["entrenadores"]))
-
-        if hasattr(v, "Recepcionista"):
-            v.Recepcionista.setText(str(resumen["recepcionistas"]))
-
-        if hasattr(v, "Contables"):
-            v.Contables.setText(str(resumen["contables"]))
-
-        if hasattr(v, "Administradores"):
-            v.Administradores.setText(str(resumen["administradores"]))
-            
-
-    def _rellenar_tabla_clases(self, tabla, datos):
-        cabeceras = ["ID", "Nombre", "Día", "Hora inicio", "Hora fin", "Aforo", "Nivel"]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, clase in enumerate(datos):
-
-            if hasattr(clase, "id_clase"):
-                valores = [
-                    clase.id_clase,
-                    clase.nombre_actividad,
-                    clase.dia_semana,
-                    clase.hora_inicio,
-                    clase.hora_fin,
-                    clase.aforo_maximo,
-                    clase.nivel_intensidad
-                ]
-            else:
-                valores = list(clase)[:len(cabeceras)]
-
-            for col, valor in enumerate(valores):
-                editable = col != 0
-
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=editable
-                )
-
-                tabla.setItem(fila, col, item)
-
-    def _rellenar_tabla_inscripciones(self, tabla, datos):
-        cabeceras = ["Usuario", "Clase", "Fecha", "Estado"]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, registro in enumerate(datos):
-            valores = [
-                registro.nombre_cliente,
-                registro.nombre_actividad,
-                registro.fecha_inscripcion,
-                registro.estado
-            ]
-
-            for col, valor in enumerate(valores):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=True
-                )
-                tabla.setItem(fila, col, item)
-
-
-    def _actualizar_resumen_inscripciones(self, datos):
-        v = self.ventana
-        total = len(datos)
-
-        if hasattr(v, "lblTotalInscripciones"):
-            v.lblTotalInscripciones.setText(str(total))
-
-        if hasattr(v, "lblMostrando"):
-            v.lblMostrando.setText(f"Mostrando {total} inscripciones")
-
-
-    def anadir_fila_clase(self):
-        v = self.ventana
-
-        if not hasattr(v, "tablaClases"):
-            return
-
-        tabla = v.tablaClases
-        fila = tabla.rowCount()
-        tabla.insertRow(fila)
-
-        valores = ["", "Nueva clase", "lunes", "09:00", "10:00", "20", "media"]
-
-        for col, valor in enumerate(valores):
-            editable = col != 0
-            item = TablaView.crear_item(valor, editable=editable)
-            tabla.setItem(fila, col, item)
-
-        tabla.selectRow(fila)
-
-        total = tabla.rowCount()
-
-        if hasattr(v, "lblTotalClases"):
-            v.lblTotalClases.setText(str(total))
-
-        if hasattr(v, "lblMostrando"):
-            v.lblMostrando.setText(f"Mostrando {total} clases")
-
-    def _actualizar_resumen_clases(self, datos=None):
-        v = self.ventana
-
-        if datos is None:
-            try:
-                total = self.modelo.contar_clases()
-            except:
-                total = 0
-        else:
-            total = len(datos)
-
-        # Tarjeta de Inicio: "Clases activas"
-        if hasattr(v, "lblClasesNum"):
-            v.lblClasesNum.setText(str(total))
-
-        # Pantalla de Clases: "Resumen de clases"
-        if hasattr(v, "lblTotalClases"):
-            v.lblTotalClases.setText(str(total))
-
-        # Texto inferior de la tabla
-        if hasattr(v, "lblMostrando"):
-            v.lblMostrando.setText(f"Mostrando {total} clases")
-
-    def _rellenar_tabla_pagos_admin(self, tabla, datos):
-        cabeceras = ["Cliente", "DNI", "Tarifa", "Importe pendiente", "Fecha límite"]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro[:len(cabeceras)]):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=False
-                )
-                tabla.setItem(fila, col, item)
-
-
-    def _actualizar_resumen_pagos_admin(self):
-        v = self.ventana
-
         try:
-            ingresos_mes = float(self.modelo.ingresos_mes_actual())
-        except:
-            ingresos_mes = 0
-
-        try:
-            ingresos_anio = float(self.modelo.ingresos_anio_actual())
-        except:
-            ingresos_anio = 0
-
-        try:
-            clientes_pendientes = int(self.modelo.numero_clientes_pendientes_pago())
-        except:
-            clientes_pendientes = 0
-
-        try:
-            importe_pendiente = float(self.modelo.importe_pendiente_cobrar())
-        except:
-            importe_pendiente = 0
-
-        if hasattr(v, "label_4"):
-            v.label_4.setText(f"{ingresos_mes:.2f}€")
-
-        if hasattr(v, "label_8"):
-            v.label_8.setText(f"{ingresos_anio:.2f}€")
-
-        if hasattr(v, "label_13"):
-            v.label_13.setText(str(clientes_pendientes))
-
-        if hasattr(v, "label_5"):
-            v.label_5.setText(f"{importe_pendiente:.2f}€")
-
+            texto = v.get_texto_buscar()
+            datos = (self.modelo.buscar_inscripciones(texto)
+                     if texto else self.modelo.listar_inscripciones_resumen())
+            v.cargar_tabla(datos)
+            v.set_texto_mostrando(f'Mostrando {len(datos)} inscripciones')
+        except Exception as e: print('Error filtrar inscripciones:', e)
 
     def filtrar_pagos_pendientes(self):
-            v = self.ventana
-
-            if hasattr(v, "txtBuscarDNI"):
-                texto = v.txtBuscarDNI.text().strip()
-            elif hasattr(v, "txtBuscarClientePendiente"):
-                texto = v.txtBuscarClientePendiente.text().strip()
-            else:
-                texto = ""
-
+        v = self.ventana
+        try:
+            texto = v.get_texto_buscar()
+            datos = (self.modelo.buscar_cliente_pendiente_por_dni_admin(texto)
+                     if texto else self.modelo.clientes_pendientes_admin())
+            v.cargar_tabla_pagos(datos)
             try:
-                if texto:
-                    datos = self.modelo.buscar_cliente_pendiente_por_dni_admin(texto)
-                else:
-                    datos = self.modelo.clientes_pendientes_admin()
-
-                if hasattr(v, "tablaPagoAdmin"):
-                    tabla = v.tablaPagoAdmin
-                elif hasattr(v, "tableWidget"):
-                    tabla = v.tableWidget
-                else:
-                    return
-
-                self._rellenar_tabla_pagos_admin(tabla, datos)
-                self._actualizar_resumen_pagos_admin()
-
-            except Exception as e:
-                print(f"Error filtrar_pagos_pendientes: {e}")
-
-    def cargar_estadisticas_admin(self):
-        v = self.ventana
-
-        stats = self.modelo.estadisticas_admin()
-
-        if hasattr(v, "lblNumR1"):
-            v.lblNumR1.setText(str(stats["clientes_activos"]))
-
-        if hasattr(v, "lblNumR2"):
-            v.lblNumR2.setText(str(stats["reservas"]))
-
-        if hasattr(v, "lblNumR3"):
-            v.lblNumR3.setText(f'{stats["ocupacion"]}%')
-
-        if hasattr(v, "lblNumR4"):
-            v.lblNumR4.setText(str(stats["asistencias"]))
-
-        if hasattr(v, "lblNumClasesActivas"):
-            v.lblNumClasesActivas.setText(str(stats["clases_activas"]))
-
-        if hasattr(v, "lblNumEntrenadores"):
-            v.lblNumEntrenadores.setText(str(stats["entrenadores"]))
-
-        if hasattr(v, "lblNumSalas"):
-            v.lblNumSalas.setText(str(stats["salas"]))
-
-        if hasattr(v, "tablaRanking"):
-            datos_ranking = self.modelo.ranking_usuarios_activos_estadisticas()
-            self._rellenar_tabla_ranking_estadisticas(v.tablaRanking, datos_ranking)
-
-        datos_ocupacion = self.modelo.ocupacion_por_clase_estadisticas()
-        self._actualizar_ocupacion_por_clase(datos_ocupacion)
-
-
-    def _rellenar_tabla_ranking_estadisticas(self, tabla, datos):
-        cabeceras = ["#", "Cliente", "Asistencias", "Última clase", "Estado"]
-
-        TablaView.configurar_columnas(tabla, cabeceras)
-        tabla.setColumnCount(len(cabeceras))
-        tabla.setHorizontalHeaderLabels(cabeceras)
-        tabla.setRowCount(len(datos))
-        tabla.setSelectionBehavior(tabla.SelectRows)
-
-        for fila, registro in enumerate(datos):
-            numero = fila + 1
-            nombre = registro[0]
-            asistencias = registro[1]
-            ultima_clase = registro[2]
-            estado = registro[3]
-
-            valores = [numero, nombre, asistencias, ultima_clase, estado]
-
-            for col, valor in enumerate(valores):
-                item = TablaView.crear_item(
-                    str(valor) if valor is not None else "",
-                    editable=False
+                v.set_resumen_pagos(
+                    float(self.modelo.ingresos_mes_actual()),
+                    float(self.modelo.ingresos_anio_actual()),
+                    int(self.modelo.numero_clientes_pendientes_pago()),
+                    float(self.modelo.importe_pendiente_cobrar())
                 )
-                tabla.setItem(fila, col, item)
-
-
-    def _actualizar_ocupacion_por_clase(self, datos):
-        v = self.ventana
-
-        for i in range(4):
-            label_nombre = f"lblOcc{i}"
-            barra_nombre = f"progOcc{i}"
-
-            if i < len(datos):
-                nombre_clase = str(datos[i][0])
-                porcentaje = int(datos[i][1]) if datos[i][1] is not None else 0
-            else:
-                nombre_clase = "-"
-                porcentaje = 0
-
-            if hasattr(v, label_nombre):
-                getattr(v, label_nombre).setText(nombre_clase)
-
-            if hasattr(v, barra_nombre):
-                barra = getattr(v, barra_nombre)
-                barra.setValue(porcentaje)
-                barra.setFormat(f"{porcentaje}%")
+            except: pass
+        except Exception as e: print('Error filtrar pagos:', e)
 
     def crear_copia_seguridad(self):
         v = self.ventana
-
         try:
-            ruta_backup = self.modelo.crear_copia_seguridad()
-
-            MensajeView.information(
-                v,
-                "Copia de seguridad creada",
-                f"La copia de seguridad se ha creado correctamente:\n\n{ruta_backup}"
-            )
-
+            ruta = self.modelo.crear_copia_seguridad()
+            v.mostrar_exito(f'Copia creada correctamente:\n\n{ruta}')
         except Exception as e:
-            MensajeView.warning(
-                v,
-                "Error",
-                f"No se pudo crear la copia de seguridad:\n\n{e}"
-            )
+            v.mostrar_error(f'No se pudo crear la copia:\n\n{e}')
 
     def restaurar_copia_seguridad(self):
         v = self.ventana
-
-        ruta_sql = ArchivoView.seleccionar_archivo_sql(
-            v,
-            "Seleccionar copia de seguridad"
-        )
-
+        ruta_sql = ArchivoView.seleccionar_archivo_sql(v, 'Seleccionar copia de seguridad')
         if not ruta_sql:
             return
-
         try:
             self.modelo.restaurar_copia_seguridad(ruta_sql)
-
-            MensajeView.information(
-                v,
-                "Copia restaurada",
-                "La copia de seguridad se ha restaurado correctamente."
-            )
-
+            v.mostrar_exito('Copia restaurada correctamente.')
             self.cargar_datos()
-
         except Exception as e:
-            MensajeView.warning(
-                v,
-                "Error",
-                f"No se pudo restaurar la copia de seguridad:\n\n{e}"
-            )
+            v.mostrar_error(f'No se pudo restaurar:\n\n{e}')
 
+    # ── Gráfico ───────────────────────────────────────────────────────────
+    def _dibujar_grafico(self):
+        try:
+            import matplotlib
+            import matplotlib.pyplot as plt
+            matplotlib.use('Agg')
+            datos = self.modelo.ingresos_por_mes()
+            if not datos:
+                return
+            meses = ['','Ene','Feb','Mar','Abr','May','Jun',
+                     'Jul','Ago','Sep','Oct','Nov','Dic']
+            etiquetas = [f"{meses[int(r[1])]}\n{str(r[0])[-2:]}" for r in datos][::-1]
+            valores   = [float(r[2]) for r in datos][::-1]
+            fig, ax = plt.subplots(figsize=(4.0, 2.3), dpi=92)
+            fig.patch.set_facecolor('#F8F9FA')
+            ax.set_facecolor('#F8F9FA')
+            colores = ['#00BFA5' if v == max(valores) else '#80CBC4' for v in valores]
+            bars = ax.bar(etiquetas, valores, color=colores, width=0.55, edgecolor='white')
+            ax.set_ylabel('€', fontsize=8)
+            ax.set_title('Ingresos por mes', fontsize=9, fontweight='bold', color='#333')
+            ax.tick_params(axis='x', labelsize=7)
+            ax.tick_params(axis='y', labelsize=7)
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            max_val = max(valores) if valores else 1
+            for bar, val in zip(bars, valores):
+                ax.text(bar.get_x() + bar.get_width()/2,
+                        bar.get_height() + max_val*0.03,
+                        f'{val:.0f}€', ha='center', va='bottom', fontsize=6.5)
+            plt.tight_layout(pad=0.5)
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight', dpi=92)
+            plt.close(fig)
+            buf.seek(0)
+            pixmap = ImagenView.desde_bytes(buf.read())
+            v = self.ventana
+            w = v.graficoFake.width() if hasattr(v, 'graficoFake') else 391
+            h = v.graficoFake.height() if hasattr(v, 'graficoFake') else 231
+            v.set_grafico(pixmap, w, h)
+        except Exception as e:
+            print('Error grafico:', e)
 
+    # ── Cerrar sesión ─────────────────────────────────────────────────────
+    def cerrar_sesion(self):
+        if self.ventana:
+            self.ventana.close()
+        self.vista_login.show()
 
+    # ── Ayuda ─────────────────────────────────────────────────────────────
     def _añadir_boton_ayuda(self):
         BotonesView.crear_boton_ayuda(self.ventana, 1015, 20, self._mostrar_ayuda)
 
-
     def _mostrar_ayuda(self):
         v = self.ventana
-
-        if hasattr(v, "lblUsuariosNum") and not hasattr(v, "tablaClases"):
-            # Pantalla inicio admin
-            MensajeView.information(v, "Ayuda — Inicio",
-                "Panel de control del administrador.\n\n"
-                "• Aquí ves el resumen global del gimnasio: usuarios, clases e inscripciones.\n"
-                "• Desde el menú lateral accedes a todas las secciones.\n"
-                "• Usa 'Backup' para crear o restaurar copias de seguridad de la base de datos.")
-
-        elif hasattr(v, "tablaClientes_2") and hasattr(v, "lblTabClientes"):
-            # Pantalla usuarios — clientes
-            MensajeView.information(v, "Ayuda — Gestión de clientes",
-                "Aquí puedes consultar y gestionar los clientes del gimnasio.\n\n"
-                "• Usa el buscador para filtrar por nombre.\n"
-                "• Haz clic en 'Trabajadores' para ver el personal.\n"
-                "• El botón 'Nuevo trabajador' permite registrar un nuevo trabajador.")
-
-        elif hasattr(v, "tablaTrabajadores_2") and hasattr(v, "lblTabTrabajadores"):
-            # Pantalla usuarios — trabajadores
-            MensajeView.information(v, "Ayuda — Gestión de trabajadores",
-                "Lista del personal del gimnasio.\n\n"
-                "• Filtra por rol usando el desplegable (entrenador, recepcionista, etc.).\n"
-                "• Usa el buscador para localizar un trabajador por nombre.\n"
-                "• Selecciona una fila y edita los campos para modificar sus datos.\n"
-                "• Pulsa 'Guardar cambios' para confirmar la edición.")
-
-        elif hasattr(v, "btnRegistrarUsuario"):
-            # Pantalla nuevo usuario
-            MensajeView.information(v, "Ayuda — Nuevo usuario",
-                "Formulario para registrar un nuevo usuario en el sistema.\n\n"
-                "• Selecciona el rol antes de rellenar el formulario.\n"
-                "• Todos los campos marcados son obligatorios.\n"
-                "• La contraseña se guardará cifrada automáticamente.\n"
-                "• Pulsa 'Registrar' para crear el usuario.")
-
-        elif hasattr(v, "tablaClases") and hasattr(v, "btnNuevaClase"):
-            # Pantalla clases
-            MensajeView.information(v, "Ayuda — Gestión de clases",
-                "Administra las clases del gimnasio.\n\n"
-                "• Usa el buscador para filtrar por nombre de clase.\n"
-                "• Haz doble clic en una celda para editar sus datos.\n"
-                "• Pulsa 'Nueva clase' para añadir una fila vacía.\n"
-                "• Pulsa 'Guardar cambios' para confirmar todas las modificaciones.")
-
-        elif hasattr(v, "tablaInscripciones") and hasattr(v, "lblTotal"):
-            # Pantalla inscripciones
-            MensajeView.information(v, "Ayuda — Inscripciones",
-                "Consulta todas las inscripciones activas del gimnasio.\n\n"
-                "• Usa el buscador para filtrar por nombre de cliente o clase.\n"
-                "• La tabla muestra cliente, clase, fecha de inscripción y estado.")
-
-        elif hasattr(v, "tablaPagoAdmin") or hasattr(v, "txtBuscarClientePendiente"):
-            # Pantalla pagos
-            MensajeView.information(v, "Ayuda — Pagos",
-                "Gestión de pagos y cobros pendientes.\n\n"
-                "• La tabla superior muestra todos los pagos registrados.\n"
-                "• La tabla inferior muestra clientes con pagos pendientes.\n"
-                "• Filtra por nombre o DNI para localizar un cliente.\n"
-                "• El administrador puede consultar el estado de cada pago.")
-
-        elif hasattr(v, "lblNumR1") and hasattr(v, "tablaRanking"):
-            # Pantalla estadísticas
-            MensajeView.information(v, "Ayuda — Estadísticas",
-                "Vista global de la actividad del gimnasio.\n\n"
-                "• El ranking muestra los clientes más activos del mes.\n"
-                "• La ocupación por clase indica el porcentaje de aforo usado.")
-
-        else:
-            MensajeView.information(v, "Ayuda",
-                "Usa el menú lateral para navegar entre las secciones.\n"
-                "El botón ? en cada pantalla muestra la ayuda específica.")
+        if isinstance(v, VistaAdminInicio):
+            MensajeView.information(v, 'Ayuda — Inicio',
+                'Panel de control del administrador.\n\n'
+                '• Resumen global: usuarios, clases e inscripciones.\n'
+                '• Usa Backup para crear o restaurar copias de seguridad.')
+        elif isinstance(v, VistaAdminUsuariosClientes):
+            MensajeView.information(v, 'Ayuda — Clientes',
+                'Consulta y gestiona los clientes del gimnasio.\n\n'
+                '• Usa el buscador para filtrar por nombre.\n'
+                '• Haz doble clic en una celda para editar.')
+        elif isinstance(v, VistaAdminUsuariosTrabajadores):
+            MensajeView.information(v, 'Ayuda — Trabajadores',
+                'Lista del personal del gimnasio.\n\n'
+                '• Filtra por rol con el desplegable.\n'
+                '• Edita celdas y pulsa Guardar cambios.')
+        elif isinstance(v, VistaAdminNuevoUsuario):
+            MensajeView.information(v, 'Ayuda — Nuevo usuario',
+                'Registra un nuevo usuario en el sistema.\n\n'
+                '• Selecciona el rol antes de rellenar el formulario.\n'
+                '• Todos los campos son obligatorios.')
+        elif isinstance(v, VistaAdminClases):
+            MensajeView.information(v, 'Ayuda — Clases',
+                'Administra las clases del gimnasio.\n\n'
+                '• Pulsa Nueva clase para añadir una fila.\n'
+                '• Edita y pulsa Guardar cambios.')
+        elif isinstance(v, VistaAdminInscripciones):
+            MensajeView.information(v, 'Ayuda — Inscripciones',
+                'Consulta todas las inscripciones activas.\n\n'
+                '• Filtra por nombre de cliente o clase.')
+        elif isinstance(v, VistaAdminPagos):
+            MensajeView.information(v, 'Ayuda — Pagos',
+                'Gestión de pagos y cobros pendientes.\n\n'
+                '• Filtra por DNI para localizar un cliente.')
+        elif isinstance(v, VistaAdminEstadisticas):
+            MensajeView.information(v, 'Ayuda — Estadísticas',
+                'Vista global de la actividad del gimnasio.\n\n'
+                '• Ranking de clientes más activos.\n'
+                '• Ocupación por clase.')

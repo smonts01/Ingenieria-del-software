@@ -1,12 +1,46 @@
-import os
-from src.vista.componentes import CargadorVista, MensajeView, TablaView, BotonesView
-from datetime import date, datetime
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
+"""
+Controlador del rol Contable — Patrón MVC según ejemplo de la profesora.
+
+Responsabilidad:
+- Instanciar la Vista y asignarle set_controlador(self)
+- Responder a los eventos que la Vista delega
+- Llamar al Modelo para obtener/guardar datos
+- Llamar a métodos de la Vista para actualizar la UI
+- NO conecta botones, NO toca widgets directamente
+"""
 import os
 import ctypes.wintypes
+from datetime import datetime
+
+from src.vista.componentes import MensajeView, BotonesView, ArchivoView
+from src.vista.vistas.vista_contable import (
+    VistaContableInicio,
+    VistaContableRegistrarPago,
+    VistaContablePagosPendientes,
+    VistaContableGestionEconomica,
+    VistaContableInformes,
+    VistaContablePerfil,
+    VistaContableInfo,
+    VistaContableInformeGestionEconomica,
+    VistaContableInformeDePagos,
+    VistaContableInformePagosPendientes,
+    VistaContableInformeBalanceMensual,
+)
+
+_VISTAS = {
+    'interfaz_contable.ui':                             VistaContableInicio,
+    'interfaz_contable_registrar_pago.ui':              VistaContableRegistrarPago,
+    'interfaz_contable_pagos_pendientes.ui':            VistaContablePagosPendientes,
+    'interfaz_contable_gestion_economica.ui':           VistaContableGestionEconomica,
+    'interfaz_contable_informes.ui':                    VistaContableInformes,
+    'interfaz_contable_perfil.ui':                      VistaContablePerfil,
+    'interfaz_contable_info.ui':                        VistaContableInfo,
+    'interfaz_contable_informes_gestion_economica.ui':  VistaContableInformeGestionEconomica,
+    'interfaz_contable_informes_de_pagos.ui':           VistaContableInformeDePagos,
+    'interfaz_contable_informes_pagos_pendientes.ui':   VistaContableInformePagosPendientes,
+    'interfaz_contable_informes_balance_mensual.ui':    VistaContableInformeBalanceMensual,
+}
+
 
 class ControladorContable:
 
@@ -16,923 +50,359 @@ class ControladorContable:
         self.ruta_ui = ruta_ui
         self.vista_login = vista_login
         self.ventana = None
+        self._tipo_informe_actual = 'informe'
+        self.id_pago_seleccionado = None
+        self.id_cliente_seleccionado = None
 
     def abrir(self):
-        self.abrir_pantalla("interfaz_contable.ui")
+        self.ir_inicio()
 
     def abrir_pantalla(self, archivo):
         if self.ventana:
             self.ventana.close()
         ruta = os.path.join(self.ruta_ui, archivo)
-        self.ventana = CargadorVista.cargar(ruta)
-        self.conectar_botones()
-        self.cargar_datos()
+        ClaseVista = _VISTAS[archivo]
+        self.ventana = ClaseVista(ruta)
+        self.ventana.set_controlador(self)
         self._añadir_boton_ayuda()
+        self.cargar_datos()
         self.ventana.show()
 
-    def conectar_botones(self):
-        v = self.ventana
+    # ── Navegación ────────────────────────────────────────────────────────
+    def ir_inicio(self):              self.abrir_pantalla('interfaz_contable.ui')
+    def ir_registrar_pago(self):      self.abrir_pantalla('interfaz_contable_registrar_pago.ui')
+    def ir_pagos_pendientes(self):    self.abrir_pantalla('interfaz_contable_pagos_pendientes.ui')
+    def ir_gestion_economica(self):   self.abrir_pantalla('interfaz_contable_gestion_economica.ui')
+    def ir_informes(self):            self.abrir_pantalla('interfaz_contable_informes.ui')
+    def ir_perfil(self):              self.abrir_pantalla('interfaz_contable_perfil.ui')
+    def ir_informacion(self):         self.abrir_pantalla('interfaz_contable_info.ui')
 
-        if hasattr(v, "btnCerrarSesion"):
-            v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
+    def generar_y_abrir_informe(self, tipo, archivo):
+        self._tipo_informe_actual = tipo
+        self.abrir_pantalla(archivo)
 
-        if hasattr(v, "btnInicio"):
-            v.btnInicio.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable.ui")
-            )
-
-        if hasattr(v, "btnRegistrarPago"):
-            v.btnRegistrarPago.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_registrar_pago.ui")
-            )
-
-        if hasattr(v, "btnPagosPendientes"):
-            v.btnPagosPendientes.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_pagos_pendientes.ui")
-            )
-
-        if hasattr(v, "btnGestionEconomica"):
-            v.btnGestionEconomica.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_gestion_economica.ui")
-            )
-
-        if hasattr(v, "btnInformes"):
-            v.btnInformes.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_informes.ui")
-            )
-
-        if hasattr(v, "btnPerfil"):
-            v.btnPerfil.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_perfil.ui")
-            )
-
-        if hasattr(v, "btnInformacion"):
-            v.btnInformacion.clicked.connect(
-                lambda: self.abrir_pantalla("interfaz_contable_info.ui")
-            )
-
-        
-
-        if hasattr(v, "btnInformeGestionEconomica"):
-            v.btnInformeGestionEconomica.clicked.connect(
-                lambda: self.generar_y_abrir_informe(
-                    "Gestión económica",
-                    "interfaz_contable_informes_gestion_economica.ui"
-                )
-            )
-
-        if hasattr(v, "btnInformePagos"):
-            v.btnInformePagos.clicked.connect(
-                lambda: self.generar_y_abrir_informe(
-                    "Informe de pagos",
-                    "interfaz_contable_informes_de_pagos.ui"
-                )
-            )
-
-        if hasattr(v, "btnInformePagosPendientes"):
-            v.btnInformePagosPendientes.clicked.connect(
-                lambda: self.generar_y_abrir_informe(
-                    "Informe de pagos pendientes",
-                    "interfaz_contable_informes_pagos_pendientes.ui"
-                )
-            )
-
-        if hasattr(v, "btnInformeBalanceMensual"):
-            v.btnInformeBalanceMensual.clicked.connect(
-                lambda: self.generar_y_abrir_informe(
-                    "Balance mensual",
-                    "interfaz_contable_informes_balance_mensual.ui"
-                )
-            )
-        
-
-        if hasattr(v, "btnConfirmarRegistrarPago"):
-            v.btnConfirmarRegistrarPago.clicked.connect(self.registrar_pago)
-
-        
-        if hasattr(v, "btnInicio_2"):
-            v.btnInicio_2.clicked.connect(self.registrar_pago)
-
-       
-        if hasattr(v, "btnMarcarAbonado"):
-            v.btnMarcarAbonado.clicked.connect(self.marcar_abonado)
-
-        
-        if hasattr(v, "btnGenerarInforme"):
-            v.btnGenerarInforme.clicked.connect(self.generar_informe)
-
-
-        if hasattr(v, "comboFiltroPagos"):
-            v.comboFiltroPagos.currentTextChanged.connect(
-                self.cargar_pagos_pendientes_filtrados
-            )
-
-        
-        if hasattr(v, "btnExportarPDF"):
-            v.btnExportarPDF.clicked.connect(self.exportar_pdf)
-
-        # Buscar por el DNI
-        if hasattr(v, "lineEdit") and hasattr(v, "lblNombreCliente_8"):
-            v.lineEdit.returnPressed.connect(self.buscar_cliente_registrar_pago)
-
-
+    # ── Carga de datos ────────────────────────────────────────────────────
     def cargar_datos(self):
         v = self.ventana
+        if isinstance(v, VistaContableInicio):              self._cargar_inicio()
+        elif isinstance(v, VistaContableRegistrarPago):     self._cargar_registrar_pago()
+        elif isinstance(v, VistaContablePagosPendientes):   self._cargar_pagos_pendientes()
+        elif isinstance(v, VistaContableGestionEconomica):  self._cargar_gestion_economica()
+        elif isinstance(v, VistaContableInformes):          self._cargar_informes()
+        elif isinstance(v, VistaContablePerfil):            self._cargar_perfil()
+        elif isinstance(v, VistaContableInformeGestionEconomica):
+            try: v.cargar_tabla(self.modelo.informe_gestion_economica_contable())
+            except Exception as e: print('Error informe gestion eco:', e)
+        elif isinstance(v, VistaContableInformeDePagos):
+            try: v.cargar_tabla(self.modelo.informe_pagos_realizados())
+            except Exception as e: print('Error informe pagos:', e)
+        elif isinstance(v, VistaContableInformePagosPendientes):
+            try: v.cargar_tabla(self.modelo.pagos_pendientes())
+            except Exception as e: print('Error informe pendientes:', e)
+        elif isinstance(v, VistaContableInformeBalanceMensual):
+            try: v.cargar_tabla(self.modelo.informe_balance_mensual_contable())
+            except Exception as e: print('Error informe balance:', e)
 
-        # ============================================================
-        # INICIO 
-        # ============================================================
+    def _cargar_inicio(self):
+        v = self.ventana
+        try: v.set_num_pagos_pendientes(str(self.modelo.num_pagos_pendientes_contable()))
+        except: v.set_num_pagos_pendientes('0')
+        try: v.set_ingresos_mes(f'{float(self.modelo.ingresos_mes_contable()):.2f} €')
+        except: v.set_ingresos_mes('0.00 €')
+        try: v.set_num_tarifas(str(self.modelo.num_tarifas_activas_contable()))
+        except: v.set_num_tarifas('0')
+        try: v.set_num_informes(str(self.modelo.num_informes_mes_contable()))
+        except: pass
+        try: v.cargar_tabla_ultimos_pagos(self.modelo.ultimos_pagos_inicio_contable())
+        except Exception as e: print('Error tabla ultimos pagos:', e)
+        try: v.cargar_tabla_pagos_pendientes(self.modelo.pagos_pendientes_inicio_contable())
+        except Exception as e: print('Error tabla pagos pendientes inicio:', e)
 
-        if hasattr(v, "tablaUltimosPagos"):
-            datos = self.modelo.ultimos_pagos_inicio_contable()
-            self.rellenar_tabla(
-                v.tablaUltimosPagos,
-                datos,
-                ["Cliente", "Tarifa", "Importe", "Fecha", "Estado"]
-            )
-
-        if hasattr(v, "tablaClientesPagosPendientes"):
-            datos = self.modelo.pagos_pendientes_inicio_contable()
-            self.rellenar_tabla(
-                v.tablaClientesPagosPendientes,
-                datos,
-                ["Cliente", "Importe Pendiente", "Fecha límite"]
-            )
-
-        if hasattr(v, "labelNumPagosPend"):
-            total_pendientes = self.modelo.num_pagos_pendientes_contable()
-            v.labelNumPagosPend.setText(str(total_pendientes))
-
-        if hasattr(v, "labelIngresosMes"):
-            ingresos = self.modelo.ingresos_mes_contable()
-            v.labelIngresosMes.setText(f"{float(ingresos):.2f} \u20ac")
-
-        if hasattr(v, "labelNumTarifas"):
-            total_tarifas = self.modelo.num_tarifas_activas_contable()
-            v.labelNumTarifas.setText(str(total_tarifas))
-
-        if hasattr(v, "lblInformesGen"):
-            total_informes = self.modelo.num_informes_mes_contable()
-            v.lblInformesGen.setText(str(total_informes))
-
-        # ============================================================
-        # PANTALLA REGISTRAR PAGO
-        # ============================================================
-
-        if hasattr(v, "labelPagosPendientesRegistro"):
-            total_pendientes = self.modelo.num_pagos_pendientes_contable()
-            v.labelPagosPendientesRegistro.setText(str(total_pendientes))
-
-        if hasattr(v, "labelCobrosHoyRegistro"):
-            cobros_hoy = self.modelo.cobros_hoy_contable()
-            v.labelCobrosHoyRegistro.setText(str(cobros_hoy))
-
-        if hasattr(v, "labelInformesRegistro"):
-            total_informes = self.modelo.num_informes_mes_contable()
-            v.labelInformesRegistro.setText(str(total_informes))
-
-        if hasattr(v, "lblNombreCliente_8"):
+    def _cargar_registrar_pago(self):
+        v = self.ventana
+        try: v.set_num_pendientes(str(self.modelo.num_pagos_pendientes_contable()))
+        except: pass
+        try: v.set_cobros_hoy(str(self.modelo.cobros_hoy_contable()))
+        except: pass
+        try: v.set_num_informes(str(self.modelo.num_informes_mes_contable()))
+        except: pass
+        try:
             pago = self.modelo.primer_pago_pendiente()
-
             if pago:
-                self.mostrar_pago_pendiente(pago)
+                self._mostrar_pago_en_vista(pago)
             else:
-                v.lblNombreCliente_8.setText("Sin pagos pendientes")
-                v.lblNombreCliente_9.setText("DNI: -")
-                v.lblNombreCliente_10.setText("ID: -")
+                v.set_sin_pago()
+        except Exception as e: print('Error primer pago:', e)
 
-                if hasattr(v, "btnCalorias_2"):
-                    v.btnCalorias_2.setText("Sin datos")
+    def _cargar_pagos_pendientes(self):
+        v = self.ventana
+        try:
+            v.set_resumen(
+                self.modelo.contable_clientes_con_deuda(),
+                self.modelo.contable_importe_pendiente(),
+                self.modelo.contable_pagos_vencidos(),
+                self.modelo.contable_pagos_vencen_semana(),
+                self.modelo.num_pagos_pendientes_contable()
+            )
+        except Exception as e: print('Error resumen pagos pend:', e)
+        self.cargar_pagos_pendientes_filtrados()
 
-                if hasattr(v, "lblSubAs_3"):
-                    v.lblSubAs_3.setText("-")
-
-                if hasattr(v, "lblSubAs_4"):
-                    v.lblSubAs_4.setText("-")
-
-                if hasattr(v, "lblSubAs_5"):
-                    v.lblSubAs_5.setText("0.00€")
-
-
-
-        # ============================================================
-        # PANTALLA PAGOS PENDIENTES
-        # 
-        # ============================================================
-
-        if hasattr(v, "comboFiltroPagos"):
-            self.cargar_pagos_pendientes_filtrados()
-
-            clientes_deuda = self.modelo.contable_clientes_con_deuda()
-            importe_pendiente = self.modelo.contable_importe_pendiente()
-            vencidos = self.modelo.contable_pagos_vencidos()
-            vencen_semana = self.modelo.contable_pagos_vencen_semana()
-            total_pendientes = self.modelo.num_pagos_pendientes_contable()
-
-            if hasattr(v, "labelClientesDeuda"):
-                v.labelClientesDeuda.setText(str(clientes_deuda))
-
-            if hasattr(v, "labelImportePendiente"):
-                v.labelImportePendiente.setText(f"{float(importe_pendiente):.2f} €")
-
-            if hasattr(v, "labelPagosVencidos"):
-                v.labelPagosVencidos.setText(str(vencidos))
-
-            if hasattr(v, "labelVencenSemana"):
-                v.labelVencenSemana.setText(str(vencen_semana))
-
-            if hasattr(v, "label_Num_Pagos_Pend"):
-                v.label_Num_Pagos_Pend.setText(str(total_pendientes))
-
-            if hasattr(v, "label_Num_Vencidos"):
-                v.label_Num_Vencidos.setText(str(vencidos))
-
-            if hasattr(v, "label_ImporteTotal"):
-                v.label_ImporteTotal.setText(f"{float(importe_pendiente):.2f} €")
-
-
-
-
-        # ============================================================
-        # PANTALLA GESTIÓN ECONÓMICA
-        # ============================================================
-
-        if (
-            hasattr(v, "labelBasicoPrecio")
-            and hasattr(v, "labelBasicoBuracion")
-            and hasattr(v, "labelPremiumPrecio")
-            and hasattr(v, "labelPremiumDuracion")
-        ):
+    def _cargar_gestion_economica(self):
+        v = self.ventana
+        try:
             tarifas = self.modelo.contable_tarifas_economica()
-
-            for tarifa in tarifas:
-                nombre = str(tarifa[0]).lower()
-                precio = str(tarifa[1])
-                duracion = str(tarifa[2])
-
-                if nombre == "basico":
-                    v.labelBasicoPrecio.setText(precio)
-                    v.labelBasicoBuracion.setText(duracion)
-
-                elif nombre == "premium":
-                    v.labelPremiumPrecio.setText(precio)
-                    v.labelPremiumDuracion.setText(duracion)
-
-        
-        if hasattr(v, "tablaSalariosEconomica"):
-            datos = self.modelo.contable_salarios_personal()
-            self.rellenar_tabla(
-                v.tablaSalariosEconomica,
-                datos,
-                ["Empleado", "Rol", "Salario"]
-            )
-
-        if hasattr(v, "labelTarifasActivasEco"):
-            total_tarifas = self.modelo.num_tarifas_activas_contable()
-            v.labelTarifasActivasEco.setText(str(total_tarifas))
-
-        if hasattr(v, "labelNominasMesEco"):
-            nominas = self.modelo.contable_total_nominas()
-            v.labelNominasMesEco.setText(f"{float(nominas):.2f} €")
-
-        if hasattr(v, "labelPagosPendientesEco"):
-            pendiente = self.modelo.contable_importe_pendiente()
-            v.labelPagosPendientesEco.setText(f"{float(pendiente):.2f} €")
-
-        if (
-            hasattr(v, "labelIngresosEco")
-            and hasattr(v, "labelGastosEco")
-            and hasattr(v, "labelBalanceEco")
-        ):
+            for t in tarifas:
+                v.set_tarifa(str(t[0]).lower(), str(t[1]), str(t[2]))
+        except Exception as e: print('Error tarifas:', e)
+        try: v.cargar_tabla_salarios(self.modelo.contable_salarios_personal())
+        except Exception as e: print('Error salarios:', e)
+        try: v.set_num_tarifas(str(self.modelo.num_tarifas_activas_contable()))
+        except: pass
+        try: v.set_nominas(f'{float(self.modelo.contable_total_nominas()):.2f} €')
+        except: pass
+        try: v.set_pagos_pendientes(f'{float(self.modelo.contable_importe_pendiente()):.2f} €')
+        except: pass
+        try:
             ingresos, gastos, balance = self.modelo.contable_balance_economico()
+            v.set_balance(f'{float(ingresos):.2f} €',
+                          f'{float(gastos):.2f} €',
+                          f'{float(balance):.2f} €')
+        except Exception as e: print('Error balance eco:', e)
 
-            v.labelIngresosEco.setText(f"{float(ingresos):.2f} €")
-            v.labelGastosEco.setText(f"{float(gastos):.2f} €")
-            v.labelBalanceEco.setText(f"{float(balance):.2f} €")
+    def _cargar_informes(self):
+        v = self.ventana
+        try: v.set_num_informes(str(self.modelo.num_informes_mes_contable()))
+        except: pass
+        try: v.set_ingresos_mes(f'{float(self.modelo.ingresos_mes_contable()):.2f} €')
+        except: pass
+        try: v.set_gastos_mes(f'{float(self.modelo.contable_gastos_mes()):.2f} €')
+        except: pass
+        try: v.set_balance_mes(f'{float(self.modelo.contable_balance_mes()):.2f} €')
+        except: pass
+        try: v.cargar_tabla_historial(self.modelo.historial_informes_contable())
+        except Exception as e: print('Error historial informes:', e)
 
-        # ============================================================
-        # PANTALLA INFORMES
-        # ============================================================
-
-        if hasattr(v, "labelInformesGeneradosInf"):
-            total_informes = self.modelo.num_informes_mes_contable()
-            v.labelInformesGeneradosInf.setText(str(total_informes))
-
-        if hasattr(v, "labelIngresosMesInf"):
-            ingresos = self.modelo.ingresos_mes_contable()
-            v.labelIngresosMesInf.setText(f"{float(ingresos):.2f} €")
-
-        if hasattr(v, "labelGastosMesInf"):
-            gastos = self.modelo.contable_gastos_mes()
-            v.labelGastosMesInf.setText(f"{float(gastos):.2f} €")
-
-        if hasattr(v, "labelBalanceInf"):
-            balance = self.modelo.contable_balance_mes()
-            v.labelBalanceInf.setText(f"{float(balance):.2f} €")
-
-        if hasattr(v, "tablaHistorialInformes"):
-            datos = self.modelo.historial_informes_contable()
-            self.rellenar_tabla(
-                v.tablaHistorialInformes,
-                datos,
-                ["ID", "Contable", "Tipo", "Fecha"]
-            )
-
-        # ============================================================
-        # INFORME GESTIÓN ECONÓMICA
-        # ============================================================
-
-        if hasattr(v, "tablaInformeGestionEconomica"):
-            datos = self.modelo.informe_gestion_economica_contable()
-            self.rellenar_tabla(
-                v.tablaInformeGestionEconomica,
-                datos,
-                ["Concepto", "Valor"]
-            )
-
-        # ============================================================
-        # INFORME DE PAGOS
-        # ============================================================
-
-        if hasattr(v, "tablaInformePagos"):
-            datos = self.modelo.informe_pagos_realizados()
-            self.rellenar_tabla(
-                v.tablaInformePagos,
-                datos,
-                ["Cliente", "Tarifa", "Importe", "Fecha", "Método"]
-            )
-
-        # ============================================================
-        # INFORME DE PAGOS PENDIENTES
-        # ============================================================
-
-        if hasattr(v, "tablaInformePagosPendientes"):
-            datos = self.modelo.pagos_pendientes()
-            self.rellenar_tabla(
-                v.tablaInformePagosPendientes,
-                datos,
-                ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
-            )
-
-        # ============================================================
-        # INFORME BALANCE MENSUAL
-        # ============================================================
-
-        if hasattr(v, "tablaInformeBalanceMensual"):
-            datos = self.modelo.informe_balance_mensual_contable()
-            self.rellenar_tabla(
-                v.tablaInformeBalanceMensual,
-                datos,
-                ["Año", "Mes", "Ingresos", "Gastos", "Balance"]
-            )
-
-        # ============================================================
-        # PANTALLA PERFIL CONTABLE
-        # ============================================================
-
-        if hasattr(v, "labelPerfilNombre"):
-            perfil = self.modelo.perfil_usuario(self.usuario["id_usuario"])
-
+    def _cargar_perfil(self):
+        v = self.ventana
+        try:
+            perfil = self.modelo.perfil_usuario(self.usuario['id_usuario'])
             if perfil:
-
-                v.labelPerfilNombre.setText(str(perfil[2]))
-                v.labelPerfilRol.setText(str(perfil[6]).capitalize())
-                v.labelPerfilEmail.setText(str(perfil[4]))
-                v.labelPerfilTelefono.setText(str(perfil[3]))
-                v.labelPerfilDireccion.setText(str(perfil[7]))
-
-                if perfil[8]:
-                    v.labelPerfilFechaAlta.setText(f"Miembro desde: {perfil[8]}")
-                else:
-                    v.labelPerfilFechaAlta.setText("Miembro desde: -")
-
-            pagos_registrados = self.modelo.contable_pagos_registrados(
-                self.usuario["id_usuario"]
+                fecha_alta = f'Miembro desde: {perfil[8]}' if perfil[8] else 'Miembro desde: -'
+                v.set_perfil(str(perfil[2]), str(perfil[6]).capitalize(),
+                             str(perfil[4]), str(perfil[3]),
+                             str(perfil[7]), fecha_alta)
+            v.set_stats(
+                self.modelo.contable_pagos_registrados(self.usuario['id_usuario']),
+                self.modelo.contable_pendientes_revisados(),
+                self.modelo.contable_informes_generados_usuario(self.usuario['id_usuario']),
+                self.modelo.contable_importe_gestionado(self.usuario['id_usuario'])
             )
+        except Exception as e: print('Error perfil:', e)
 
-            pendientes_revisados = self.modelo.contable_pendientes_revisados()
-
-            informes_generados = self.modelo.contable_informes_generados_usuario(
-                self.usuario["id_usuario"]
-            )
-
-            importe_gestionado = self.modelo.contable_importe_gestionado(
-                self.usuario["id_usuario"]
-            )
-
-            if hasattr(v, "labelPerfilPagosRegistrados"):
-                v.labelPerfilPagosRegistrados.setText(str(pagos_registrados))
-
-            if hasattr(v, "labelPerfilPendientesRevisados"):
-                v.labelPerfilPendientesRevisados.setText(str(pendientes_revisados))
-
-            if hasattr(v, "labelPerfilInformesGenerados"):
-                v.labelPerfilInformesGenerados.setText(str(informes_generados))
-
-            if hasattr(v, "labelPerfilImporteGestionado"):
-                v.labelPerfilImporteGestionado.setText(f"{float(importe_gestionado):.2f} €")
-
-        # ============================================================
-        # El resto de pantallas
-        # ============================================================
-
-        if hasattr(v, "tableWidget") and not hasattr(v, "comboFiltroPagos"):
-            self.rellenar_tabla(
-                v.tableWidget,
-                self.modelo.pagos_pendientes(),
-                ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
-            )
-
-        if hasattr(v, "tableWidget_2"):
-            self.rellenar_tabla(
-                v.tableWidget_2,
-                self.modelo.informe_pagos_realizados(),
-                ["Cliente", "Tarifa", "Importe", "Fecha", "Método"]
-            )
-
-        if hasattr(v, "tableWidget_3"):
-            self.rellenar_tabla(
-                v.tableWidget_3,
-                self.modelo.informe_pagos_por_mes(),
-                ["Año", "Mes", "Total"]
-            )
-
-        if hasattr(v, "tablaInformes"):
-            self.rellenar_tabla(
-                v.tablaInformes,
-                self.modelo.listar_informes(),
-                ["ID", "Contable", "Tipo", "Fecha"]
-            )
-
-        if hasattr(v, "tablaSalarios"):
-            self.rellenar_tabla(
-                v.tablaSalarios,
-                self.modelo.informe_salarios(),
-                ["Empleado", "Rol", "Salario"]
-            )
-
-
-    #filtrar en tabla de clientes x clientes con pagos pendientes, pendiente vencido y todos
-    def cargar_pagos_pendientes_filtrados(self, *args):
-        v = self.ventana
-
-        if not hasattr(v, "tableWidget"):
-            return
-
-        if hasattr(v, "comboFiltroPagos"):
-            filtro = v.comboFiltroPagos.currentText().strip().lower()
-        else:
-            filtro = "todos"
-
-        datos = self.modelo.pagos_pendientes()
-        datos_filtrados = []
-
-        
-
-        for fila in datos:
-            id_pago = fila[0]
-            cliente = fila[1]
-            tarifa = fila[2]
-            importe = fila[3]
-            fecha_pago = fila[4]
-            cuota = fila[5] if len(fila) > 5 else ""
-
-            es_vencido = self.modelo.es_pago_vencido(fecha_pago)
-
-            if filtro == "vencido" and not es_vencido:
-                continue
-
-            if filtro == "pendiente" and es_vencido:
-                continue
-
-            datos_filtrados.append((
-                id_pago,
-                cliente,
-                tarifa,
-                importe,
-                fecha_pago,
-                cuota
-            ))
-
-        self.rellenar_tabla(
-            v.tableWidget,
-            datos_filtrados,
-            ["ID Pago", "Cliente", "Tarifa", "Importe", "Fecha", "Cuota"]
-        )
-
-
-    def mostrar_pago_pendiente(self, pago):
-        v = self.ventana
-
-        id_pago = pago[0]
-        id_cliente = pago[1]
-        nombre = pago[2]
-        dni_real = pago[3]
-        id_tarifa = pago[4]
-        tarifa = pago[5]
-        importe = pago[6]
-        fecha_pago = pago[7]
-        estado = "pendiente"
-
-        self.id_pago_seleccionado = id_pago
-        self.id_cliente_seleccionado = id_cliente
-
-        v.lblNombreCliente_8.setText(str(nombre))
-        v.lblNombreCliente_9.setText(f"DNI: {dni_real}")
-        v.lblNombreCliente_10.setText(f"ID:{id_cliente}")
-
-        if hasattr(v, "btnCalorias_2"):
-            v.btnCalorias_2.setText(str(estado).capitalize())
-
-        if hasattr(v, "lblSubAs_3"):
-            v.lblSubAs_3.setText(str(tarifa))
-
-        if hasattr(v, "lblSubAs_5"):
-            v.lblSubAs_5.setText(f"{float(importe):.2f}€")
-
-        if hasattr(v, "lblSubAs_4"):
-            v.lblSubAs_4.setText(str(fecha_pago))
-
+    # ── Acciones ──────────────────────────────────────────────────────────
     def buscar_cliente_registrar_pago(self):
         v = self.ventana
-        dni = v.lineEdit.text().strip().upper()
-
+        dni = v.get_dni()
         if not dni:
             return
+        try:
+            pago = self.modelo.buscar_pago_pendiente_por_dni(dni)
+            if pago:
+                self._mostrar_pago_en_vista(pago)
+            else:
+                v.set_sin_pago(dni)
+        except Exception as e:
+            v.mostrar_error(str(e))
 
-        pago = self.modelo.buscar_pago_pendiente_por_dni(dni)
-
-        if pago:
-            id_pago = pago[0]
-            id_cliente = pago[1]
-            nombre = pago[2]
-            dni_real = pago[3]
-            id_tarifa = pago[4]
-            tarifa = pago[5]
-            importe = pago[6]
-            fecha_pago = pago[7]
-            estado = "pendiente"
-
-            self.id_pago_seleccionado = id_pago
-            self.id_cliente_seleccionado = id_cliente
-
-            v.lblNombreCliente_8.setText(str(nombre))
-            v.lblNombreCliente_9.setText(f"DNI: {dni_real}")
-            v.lblNombreCliente_10.setText(f"ID:{id_cliente}")
-
-            if hasattr(v, "btnCalorias_2"):
-                v.btnCalorias_2.setText(str(estado).capitalize())
-
-            if hasattr(v, "lblSubAs_3"):
-                v.lblSubAs_3.setText(str(tarifa))
-
-            if hasattr(v, "lblSubAs_5"):
-                v.lblSubAs_5.setText(f"{float(importe):.2f}€")
-
-            if hasattr(v, "lblSubAs_4"):
-                v.lblSubAs_4.setText(str(fecha_pago))
-
-        else:
-            v.lblNombreCliente_8.setText("Sin pago pendiente")
-            v.lblNombreCliente_9.setText(f"DNI: {dni}")
-            v.lblNombreCliente_10.setText("ID: -")
-
-            if hasattr(v, "btnCalorias_2"):
-                v.btnCalorias_2.setText("Al corriente")
-
-            if hasattr(v, "lblSubAs_3"):
-                v.lblSubAs_3.setText("-")
-
-            if hasattr(v, "lblSubAs_5"):
-                v.lblSubAs_5.setText("0.00€")
-
-            if hasattr(v, "lblSubAs_4"):
-                v.lblSubAs_4.setText("-")
+    def _mostrar_pago_en_vista(self, pago):
+        id_pago, id_cliente, nombre, dni_real, id_tarifa, tarifa, importe, fecha_pago = pago[:8]
+        self.id_pago_seleccionado = id_pago
+        self.id_cliente_seleccionado = id_cliente
+        self.ventana.set_cliente(nombre, dni_real, id_cliente, 'pendiente',
+                                 tarifa, importe, fecha_pago)
 
     def registrar_pago(self):
         v = self.ventana
-
         try:
-            # En tu pantalla, lineEdit es el DNI del cliente
-            if not hasattr(v, "lineEdit"):
-                MensajeView.warning(v, "Error", "No existe el campo para introducir el DNI.")
+            dni = v.get_dni()
+            if not dni:
+                v.mostrar_error('Introduce el DNI del cliente.')
                 return
-
-            dni = v.lineEdit.text().strip().upper()
-
-            if dni == "":
-                MensajeView.warning(v, "Error", "Introduce el DNI del cliente.")
-                return
-
-            # comboBox es el método de pago
-            if hasattr(v, "comboBox"):
-                metodo_pago = v.comboBox.currentText().strip().lower()
-            else:
-                metodo_pago = "efectivo"
-
+            metodo_pago = v.get_metodo_pago()
             try:
                 metodo_pago = self.modelo.normalizar_metodo_pago(metodo_pago)
             except ValueError as e:
-                MensajeView.warning(v, "Error", str(e))
+                v.mostrar_error(str(e))
                 return
-            
-            
-            # lineEdit_2 es la fecha del pago
-            if hasattr(v, "lineEdit_2"):
-                fecha_texto = v.lineEdit_2.text().strip()
-            else:
-                fecha_texto = ""
-
-            if fecha_texto == "":
-                
-                fecha_pago = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            else:
-                
-                fecha_pago = fecha_texto + " 00:00:00"
-
+            fecha_texto = v.get_fecha_texto()
+            fecha_pago = (fecha_texto + ' 00:00:00') if fecha_texto else datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             correcto, mensaje = self.modelo.registrar_pago_contable(
-                dni,
-                self.usuario["id_usuario"],
-                metodo_pago,
-                fecha_pago
+                dni, self.usuario['id_usuario'], metodo_pago, fecha_pago
             )
-
             if correcto:
-                MensajeView.information(v, "Correcto", mensaje)
-
-                v.lineEdit.clear()
-
-                if hasattr(v, "lineEdit_2"):
-                    v.lineEdit_2.clear()
-
-                if hasattr(v, "btnCalorias_2"):
-                    v.btnCalorias_2.setText("Abonado")
-
+                v.mostrar_exito(mensaje)
+                v.limpiar_dni()
+                v.set_estado_abonado()
                 self.cargar_datos()
-
             else:
-                MensajeView.warning(v, "Error", mensaje)
-
+                v.mostrar_error(mensaje)
         except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
+            v.mostrar_error(str(e))
 
+    def cargar_pagos_pendientes_filtrados(self, *args):
+        v = self.ventana
+        try:
+            filtro = v.get_filtro()
+            datos = self.modelo.pagos_pendientes()
+            datos_filtrados = []
+            for fila in datos:
+                fecha_pago = fila[4]
+                es_vencido = self.modelo.es_pago_vencido(fecha_pago)
+                if filtro == 'vencido' and not es_vencido:
+                    continue
+                if filtro == 'pendiente' and es_vencido:
+                    continue
+                datos_filtrados.append(fila)
+            v.cargar_tabla(datos_filtrados)
+        except Exception as e:
+            print('Error filtrar pagos pendientes:', e)
 
     def marcar_abonado(self):
         v = self.ventana
         try:
-            for tabla_name in ("tableWidget", "tablaClientesPagosPendientes"):
-                if hasattr(v, tabla_name):
-                    tabla = getattr(v, tabla_name)
-                    fila = tabla.currentRow()
-
-                    if fila >= 0 and tabla.item(fila, 0):
-                        id_pago = int(tabla.item(fila, 0).text())
-
-                        self.modelo.marcar_pago_abonado(id_pago)
-
-                        MensajeView.information(
-                            v,
-                            "Correcto",
-                            "Pago marcado como abonado"
-                        )
-
-                        self.cargar_datos()
-                        return
-
-            MensajeView.warning(v, "Error", "Selecciona un pago primero")
-
+            id_pago = v.get_id_pago_seleccionado()
+            if id_pago is None:
+                v.mostrar_error('Selecciona un pago primero')
+                return
+            self.modelo.marcar_pago_abonado(id_pago)
+            v.mostrar_exito('Pago marcado como abonado')
+            self.cargar_datos()
         except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
-
-
-     
-    def generar_y_abrir_informe(self, tipo_informe, archivo_ui):
-        try:
-            self._tipo_informe_actual = tipo_informe  
-            self.abrir_pantalla(archivo_ui)            
-        except Exception as e:
-            MensajeView.warning(self.ventana, "Error", f"No se pudo generar el informe: {e}")
-
-
+            v.mostrar_error(str(e))
 
     def generar_informe(self):
         v = self.ventana
         try:
-            tipo = "general"
-            if hasattr(v, "cmbTipoInforme"):
-                tipo = v.cmbTipoInforme.currentText()
-            self.modelo.generar_informe(self.usuario["id_usuario"], tipo)
-            MensajeView.information(v, "Correcto", f"Informe '{tipo}' generado correctamente")
+            self.modelo.generar_informe(self.usuario['id_usuario'], 'general')
+            v.mostrar_exito("Informe generado correctamente")
             self.cargar_datos()
         except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
+            v.mostrar_error(str(e))
 
-    def rellenar_tabla(self, tabla, datos, cabeceras=None):
-        tabla.clear()
-
-        if cabeceras:
-            tabla.setColumnCount(len(cabeceras))
-            tabla.setHorizontalHeaderLabels(cabeceras)
-        elif datos:
-            tabla.setColumnCount(len(datos[0]))
-        else:
-            tabla.setColumnCount(0)
-
-        tabla.setRowCount(len(datos))
-
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro):
-                texto = str(valor) if valor is not None else ""
-                tabla.setItem(fila, col, TablaView.crear_item(texto))
-
-        
-        tabla.resizeColumnsToContents()
-        tabla.resizeRowsToContents()
-
-
-    
     def exportar_pdf(self):
-
-
         v = self.ventana
-
-        # Busca qué tabla tiene datos en la pantalla actual
-        tabla_widget = None
-        for nombre in ("tablaInformeGestionEconomica", "tablaInformePagos",
-                    "tablaInformePagosPendientes", "tablaInformeBalanceMensual"):
-            if hasattr(v, nombre):
-                tabla_widget = getattr(v, nombre)
-                break
-
-        if tabla_widget is None:
-            MensajeView.warning(v, "Error", "No hay tabla de informe en esta pantalla.")
-            return
-
-        # Extrae cabeceras y datos de la tabla Qt
-        cabeceras = []
-        for col in range(tabla_widget.columnCount()):
-            item = tabla_widget.horizontalHeaderItem(col)
-            cabeceras.append(item.text() if item else "")
-
-        filas = [cabeceras]
-        for fila in range(tabla_widget.rowCount()):
-            fila_datos = []
-            for col in range(tabla_widget.columnCount()):
-                item = tabla_widget.item(fila, col)
-                fila_datos.append(item.text() if item else "")
-            filas.append(fila_datos)
-
-        if len(filas) <= 1:
-            MensajeView.warning(v, "Sin datos", "El informe no tiene datos para exportar.")
-            return
-
-        # Nombre del archivo con fecha
-        tipo = getattr(self, "_tipo_informe_actual", "informe")
-        fecha_str = datetime.now().strftime("%Y%m%d_%H%M%S")
-        nombre_archivo = f"{tipo.replace(' ', '_')}_{fecha_str}.pdf"
-        
-
-        buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-        ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, buf)
-        ruta = os.path.join(buf.value, nombre_archivo)
-
-        # Genera el PDF
-        doc = SimpleDocTemplate(ruta, pagesize=A4)
-        estilos = getSampleStyleSheet()
-        elementos = []
-
-        elementos.append(Paragraph(f"StayFit — {tipo}", estilos["Title"]))
-        elementos.append(Paragraph(
-            f"Generado el {datetime.now().strftime('%d/%m/%Y a las %H:%M')}",
-            estilos["Normal"]
-        ))
-        elementos.append(Spacer(1, 20))
-
-        tabla_pdf = Table(filas, repeatRows=1)
-        tabla_pdf.setStyle(TableStyle([
-            ("BACKGROUND",  (0, 0), (-1, 0),  colors.HexColor("#1D9E75")),
-            ("TEXTCOLOR",   (0, 0), (-1, 0),  colors.white),
-            ("FONTNAME",    (0, 0), (-1, 0),  "Helvetica-Bold"),
-            ("FONTSIZE",    (0, 0), (-1, 0),  11),
-            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F1FFF8")]),
-            ("FONTSIZE",    (0, 1), (-1, -1), 9),
-            ("GRID",        (0, 0), (-1, -1), 0.5, colors.HexColor("#9FE1CB")),
-            ("ALIGN",       (0, 0), (-1, -1), "CENTER"),
-            ("VALIGN",      (0, 0), (-1, -1), "MIDDLE"),
-            ("TOPPADDING",  (0, 0), (-1, -1), 6),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
-        ]))
-        elementos.append(tabla_pdf)
-
-        doc.build(elementos)
-
-       
         try:
-            tipo_actual = getattr(self, "_tipo_informe_actual", "informe")
-            self.modelo.generar_informe(self.usuario["id_usuario"], tipo_actual)
-            self.cargar_datos()
-        except Exception:
-            pass
+            # Busca la tabla de informe en la vista actual
+            tabla_widget = None
+            for nombre in ('tablaInformeGestionEconomica', 'tablaInformePagos',
+                           'tablaInformePagosPendientes', 'tablaInformeBalanceMensual'):
+                if hasattr(v, nombre):
+                    tabla_widget = getattr(v, nombre)
+                    break
+            if tabla_widget is None:
+                v.mostrar_error('No hay tabla de informe en esta pantalla.')
+                return
 
-        MensajeView.information(v, "PDF exportado", f"Guardado en:\n{ruta}")
+            from reportlab.lib.pagesizes import A4
+            from reportlab.lib import colors
+            from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+            from reportlab.lib.styles import getSampleStyleSheet
 
+            cabeceras = []
+            for col in range(tabla_widget.columnCount()):
+                item = tabla_widget.horizontalHeaderItem(col)
+                cabeceras.append(item.text() if item else '')
+            filas = [cabeceras]
+            for fi in range(tabla_widget.rowCount()):
+                filas.append([
+                    tabla_widget.item(fi, ci).text() if tabla_widget.item(fi, ci) else ''
+                    for ci in range(tabla_widget.columnCount())
+                ])
+            if len(filas) <= 1:
+                v.mostrar_error('El informe no tiene datos para exportar.')
+                return
+
+            tipo = self._tipo_informe_actual
+            fecha_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+            nombre_archivo = f"{tipo.replace(' ', '_')}_{fecha_str}.pdf"
+            buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+            ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, buf)
+            ruta = os.path.join(buf.value, nombre_archivo)
+
+            doc = SimpleDocTemplate(ruta, pagesize=A4)
+            estilos = getSampleStyleSheet()
+            elementos = [
+                Paragraph(f'StayFit — {tipo}', estilos['Title']),
+                Paragraph(f"Generado el {datetime.now().strftime('%d/%m/%Y a las %H:%M')}", estilos['Normal']),
+                Spacer(1, 20)
+            ]
+            tabla_pdf = Table(filas, repeatRows=1)
+            tabla_pdf.setStyle(TableStyle([
+                ('BACKGROUND',  (0, 0), (-1, 0),  colors.HexColor('#1D9E75')),
+                ('TEXTCOLOR',   (0, 0), (-1, 0),  colors.white),
+                ('FONTNAME',    (0, 0), (-1, 0),  'Helvetica-Bold'),
+                ('FONTSIZE',    (0, 0), (-1, 0),  11),
+                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F1FFF8')]),
+                ('FONTSIZE',    (0, 1), (-1, -1), 9),
+                ('GRID',        (0, 0), (-1, -1), 0.5, colors.HexColor('#9FE1CB')),
+                ('ALIGN',       (0, 0), (-1, -1), 'CENTER'),
+                ('VALIGN',      (0, 0), (-1, -1), 'MIDDLE'),
+                ('TOPPADDING',  (0, 0), (-1, -1), 6),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+            ]))
+            elementos.append(tabla_pdf)
+            doc.build(elementos)
+
+            try:
+                self.modelo.generar_informe(self.usuario['id_usuario'], tipo)
+                self.cargar_datos()
+            except Exception:
+                pass
+
+            v.mostrar_exito(f'Guardado en:\n{ruta}')
+        except Exception as e:
+            v.mostrar_error(str(e))
+
+    # ── Cerrar sesión ─────────────────────────────────────────────────────
+    def cerrar_sesion(self):
+        if self.ventana:
+            self.ventana.close()
+        self.vista_login.show()
+
+    # ── Ayuda ─────────────────────────────────────────────────────────────
     def _añadir_boton_ayuda(self):
-        BotonesView.crear_boton_ayuda(self.ventana, 1015, 20, self._mostrar_ayuda)
-
-
+        BotonesView.crear_boton_ayuda(self.ventana, 1015, 30, self._mostrar_ayuda)
 
     def _mostrar_ayuda(self):
         v = self.ventana
-
-        if hasattr(v, "tablaUltimosPagos") and hasattr(v, "labelIngresosMes"):
-            # Pantalla inicio contable
-            MensajeView.information(v, "Ayuda — Inicio",
-                "Panel de control del contable.\n\n"
-                "• Aquí ves el resumen económico del mes: ingresos, pagos pendientes e informes.\n"
-                "• La tabla inferior muestra los últimos pagos registrados.\n"
-                "• Usa el menú lateral para acceder a todas las secciones.")
-
-        elif hasattr(v, "btnConfirmarRegistrarPago") or hasattr(v, "lblNombreCliente_8"):
-            # Pantalla registrar pago
-            MensajeView.information(v, "Ayuda — Registrar pago",
-                "Formulario para registrar un nuevo pago de un cliente.\n\n"
-                "• Busca al cliente por nombre o DNI usando el buscador.\n"
-                "• Selecciona la tarifa correspondiente.\n"
-                "• Pulsa 'Confirmar' para guardar el pago en el sistema.\n"
-                "• El estado del cliente se actualizará automáticamente a 'abonado'.")
-
-        elif hasattr(v, "comboFiltroPagos") and hasattr(v, "labelClientesDeuda"):
-            # Pantalla pagos pendientes
-            MensajeView.information(v, "Ayuda — Pagos pendientes",
-                "Lista de clientes con pagos pendientes o vencidos.\n\n"
-                "• Usa el desplegable para filtrar por estado del pago.\n"
-                "• 'Vencidos' son pagos cuya fecha límite ya ha pasado.\n"
-                "• 'Vencen esta semana' muestra los más urgentes.\n"
-                "• Pulsa 'Marcar como abonado' para actualizar el estado de un cliente.")
-
-        elif hasattr(v, "labelBasicoPrecio") and hasattr(v, "tablaSalariosEconomica"):
-            # Pantalla gestión económica
-            MensajeView.information(v, "Ayuda — Gestión económica",
-                "Resumen completo de la situación económica del gimnasio.\n\n"
-                "• Consulta las tarifas activas y sus precios.\n"
-                "• La tabla de salarios muestra el coste mensual del personal.\n"
-                "• El balance refleja ingresos menos gastos del mes actual.")
-
-        elif hasattr(v, "btnInformeGestionEconomica") and hasattr(v, "labelInformesGeneradosInf"):
-            # Pantalla informes — menú principal
-            MensajeView.information(v, "Ayuda — Informes",
-                "Centro de generación de informes económicos.\n\n"
-                "• 'Informe de pagos' muestra todos los cobros realizados.\n"
-                "• 'Pagos pendientes' lista las deudas activas.\n"
-                "• 'Balance mensual' compara ingresos y gastos mes a mes.\n"
-                "• 'Gestión económica' ofrece una visión global de las finanzas.\n"
-                "• Usa 'Exportar PDF' para guardar cualquier informe.")
-
-        elif hasattr(v, "btnInformeBalanceMensual") and not hasattr(v, "btnInformeGestionEconomica"):
-            # Sub-informe balance mensual
-            MensajeView.information(v, "Ayuda — Balance mensual",
-                "Informe comparativo de ingresos y gastos por mes.\n\n"
-                "• Cada fila representa un mes del año en curso.\n"
-                "• El balance es la diferencia entre ingresos y gastos.\n"
-                "• Un balance positivo indica beneficio en ese mes.")
-
-        elif hasattr(v, "btnInformePagos") and not hasattr(v, "btnInformeGestionEconomica"):
-            # Sub-informe pagos realizados
-            MensajeView.information(v, "Ayuda — Informe de pagos",
-                "Listado detallado de todos los pagos realizados.\n\n"
-                "• Filtra por fecha o cliente para acotar los resultados.\n"
-                "• Puedes exportar el informe a PDF con el botón correspondiente.")
-
-        elif hasattr(v, "btnInformePagosPendientes") and not hasattr(v, "btnInformeGestionEconomica"):
-            # Sub-informe pagos pendientes
-            MensajeView.information(v, "Ayuda — Informe de pagos pendientes",
-                "Informe de clientes con deudas pendientes.\n\n"
-                "• Muestra el importe pendiente y la fecha de vencimiento.\n"
-                "• Exporta el informe a PDF para su gestión externa.")
-
-        elif hasattr(v, "btnInformeGestionEconomica") and not hasattr(v, "labelInformesGeneradosInf"):
-            # Sub-informe gestión económica
-            MensajeView.information(v, "Ayuda — Informe gestión económica",
-                "Informe detallado de la situación financiera del gimnasio.\n\n"
-                "• Incluye ingresos por tarifas, gastos en nóminas y balance final.\n"
-                "• Exporta a PDF para presentar a la dirección.")
-
-        elif hasattr(v, "btnInicio_2") and not hasattr(v, "tablaUltimosPagos"):
-            # Pantalla perfil contable
-            MensajeView.information(v, "Ayuda — Mi perfil",
-                "Información de tu cuenta de contable.\n\n"
-                "• Aquí puedes consultar y actualizar tus datos personales.\n"
-                "• Pulsa 'Guardar cambios' para confirmar cualquier modificación.")
-
+        if isinstance(v, VistaContableInicio):
+            MensajeView.information(v, 'Ayuda — Inicio',
+                'Panel de control del contable.\n\n'
+                '• Resumen económico: ingresos, pagos pendientes e informes.\n'
+                '• Las tablas muestran últimos pagos y pendientes.')
+        elif isinstance(v, VistaContableRegistrarPago):
+            MensajeView.information(v, 'Ayuda — Registrar pago',
+                'Registra el pago de un cliente.\n\n'
+                '• Busca al cliente por DNI y pulsa Enter.\n'
+                '• Selecciona el método de pago.\n'
+                '• Pulsa Confirmar para registrar el pago.')
+        elif isinstance(v, VistaContablePagosPendientes):
+            MensajeView.information(v, 'Ayuda — Pagos pendientes',
+                'Clientes con pagos pendientes.\n\n'
+                '• Filtra por estado con el desplegable.\n'
+                '• Selecciona una fila y pulsa Marcar como abonado.')
+        elif isinstance(v, VistaContableGestionEconomica):
+            MensajeView.information(v, 'Ayuda — Gestión económica',
+                'Situación económica del gimnasio.\n\n'
+                '• Tarifas activas, nóminas y balance del mes.')
+        elif isinstance(v, VistaContableInformes):
+            MensajeView.information(v, 'Ayuda — Informes',
+                'Generación de informes económicos.\n\n'
+                '• Selecciona el tipo de informe y pulsa el botón.\n'
+                '• Usa Exportar PDF para guardar el informe.')
+        elif isinstance(v, VistaContablePerfil):
+            MensajeView.information(v, 'Ayuda — Mi perfil',
+                'Información de tu cuenta de contable.')
         else:
-            # Pantalla información general
-            MensajeView.information(v, "Ayuda — Información",
-                "Sección de información general del gimnasio.\n\n"
-                "• Aquí encontrarás datos de contacto y ubicación del centro.\n"
-                "• Usa el menú lateral para volver a cualquier sección.")
-
-
-
-    def cerrar_sesion(self):
-        self.ventana.close()
-        self.vista_login.show()
+            MensajeView.information(v, 'Ayuda',
+                'Usa el menú lateral para navegar entre secciones.')
