@@ -440,6 +440,7 @@ INSERT INTO usuarios
 VALUES
 (2, '00000002B', 'Entrenador Principal', '600000002', 'entrenador@stayfit.com', 'entrenador', 'entrenador1', 2, 'Calle Entrenador 1', '1990-02-02');
 
+
 INSERT INTO empleados
 (id_empleado, salario)
 SELECT 
@@ -462,6 +463,8 @@ INSERT INTO tarifa
 VALUES
 (1, 'Basico', 30.00, 'Acceso a instalaciones y clases grupales', '2026-01-01'),
 (2, 'Premium', 45.00, 'Acceso ilimitado, clases y entrenador personal', '2026-01-01');
+
+
 
 -- =====================================================
 -- SALAS FIJAS
