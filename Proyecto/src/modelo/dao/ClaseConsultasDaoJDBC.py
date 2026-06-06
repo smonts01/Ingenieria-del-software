@@ -77,6 +77,9 @@ class ClaseConsultasDaoJDBC(DaoJDBCBase):
                                 "WHEN 6 THEN 'viernes' "
                                 "WHEN 7 THEN 'sabado' "
                                 "END)")
+    
+
+    
 
 
     def clases_hoy_entrenador(self, id_entrenador):

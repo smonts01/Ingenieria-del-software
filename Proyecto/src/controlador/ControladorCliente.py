@@ -293,6 +293,35 @@ class ControladorCliente:
             else:
                 label.setText("")
 
+    def filtrar_clases(self):
+        v = self.ventana
+
+        if not hasattr(v, "txtBuscarClases"):
+            return
+
+        texto = v.txtBuscarClases.text().strip().lower()
+
+        # Cambia este nombre si tu tabla se llama de otra forma
+        if hasattr(v, "tablaClases"):
+            tabla = v.tablaClases
+        elif hasattr(v, "tablaTodasClases"):
+            tabla = v.tablaTodasClases
+        elif hasattr(v, "tablaClasesTodas"):
+            tabla = v.tablaClasesTodas
+        else:
+            return
+
+        for fila in range(tabla.rowCount()):
+            coincide = False
+
+            for col in range(tabla.columnCount()):
+                item = tabla.item(fila, col)
+                if item and texto in item.text().lower():
+                    coincide = True
+                    break
+
+            tabla.setRowHidden(fila, not coincide)
+
     def cerrar_sesion(self):
         if self.ventana:
             self.ventana.close()
