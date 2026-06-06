@@ -23,16 +23,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             u.direccion,
             DATE_FORMAT(u.fecha_nacimiento, '%d/%m/%Y')  AS fecha_nacimiento,
             DATE_FORMAT(u.fecha_registro,   '%M %Y')     AS fecha_registro,
-            COALESCE(
-                (
-                    SELECT p.estado
-                    FROM pago p
-                    WHERE p.id_cliente = c.id_cliente
-                    ORDER BY p.fecha_pago DESC
-                    LIMIT 1
-                ),
-                c.estado_pagado
-            ) AS estado_pagado,
+            c.estado_pagado AS estado_pagado,
             c.calorias_acumuladas
         FROM clientes c
         JOIN usuarios u ON u.id_usuario = c.id_cliente
@@ -53,7 +44,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
         SELECT
             p.importe,
             DATE_FORMAT(p.fecha_pago, '%M %Y') AS mes_pago,
-            p.estado
+            'abonado' AS estado
         FROM pago p
         WHERE p.id_cliente = ?
         ORDER BY p.fecha_pago DESC

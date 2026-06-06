@@ -67,7 +67,7 @@ CREATE TABLE `adulto` (
 
 LOCK TABLES `adulto` WRITE;
 /*!40000 ALTER TABLE `adulto` DISABLE KEYS */;
-INSERT INTO `adulto` VALUES (6);
+INSERT INTO `adulto` VALUES (6),(7);
 /*!40000 ALTER TABLE `adulto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +83,7 @@ CREATE TABLE `asistencia` (
   `id_cliente` int NOT NULL,
   `id_clase` int NOT NULL,
   `fecha` date NOT NULL,
-  `presente` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `presente` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_asistencia`),
   KEY `fk_asistencia_cliente` (`id_cliente`),
   KEY `fk_asistencia_clase` (`id_clase`),
@@ -113,14 +113,14 @@ CREATE TABLE `clase` (
   `id_clase` int NOT NULL AUTO_INCREMENT,
   `id_entrenador` int NOT NULL,
   `id_sala` int NOT NULL,
-  `nombre_actividad` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_actividad` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
   `calorias_estimadas` int NOT NULL DEFAULT '0',
-  `dia_semana` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dia_semana` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fin` time NOT NULL,
   `duracion` int NOT NULL,
   `aforo_maximo` int NOT NULL,
-  `nivel_intensidad` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nivel_intensidad` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_clase`),
   KEY `fk_clase_entrenador` (`id_entrenador`),
   KEY `fk_clase_sala` (`id_sala`),
@@ -140,7 +140,7 @@ CREATE TABLE `clase` (
 
 LOCK TABLES `clase` WRITE;
 /*!40000 ALTER TABLE `clase` DISABLE KEYS */;
-INSERT INTO `clase` VALUES (1,2,1,'Yoga',200,'lunes','09:00:00','10:00:00',60,20,'media'),(2,2,1,'Pilates',250,'martes','10:00:00','11:00:00',60,20,'baja'),(3,2,2,'Spinning',450,'miercoles','09:00:00','10:00:00',60,19,'alta'),(4,2,1,'Zumba',350,'jueves','10:00:00','11:00:00',60,20,'media'),(5,2,3,'Crossfit',600,'viernes','09:00:00','10:00:00',60,12,'alta');
+INSERT INTO `clase` VALUES (1,2,1,'Yoga',200,'lunes','09:00:00','10:00:00',60,20,'baja'),(2,2,1,'Pilates',250,'martes','10:00:00','11:00:00',60,20,'baja'),(3,2,2,'Spinning',450,'miercoles','09:00:00','10:00:00',60,19,'alta'),(4,2,1,'Zumba',350,'jueves','10:00:00','11:00:00',60,20,'media'),(5,2,3,'Crossfit',600,'viernes','09:00:00','10:00:00',60,12,'alta');
 /*!40000 ALTER TABLE `clase` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,14 +156,14 @@ CREATE TABLE `cliente_tarifa` (
   `id_cliente` int NOT NULL,
   `id_tarifa` int NOT NULL,
   `fecha_contratacion` date NOT NULL DEFAULT (curdate()),
-  `estado` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activa',
+  `estado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activa',
   PRIMARY KEY (`id_cliente_tarifa`),
   KEY `fk_cliente_tarifa_cliente` (`id_cliente`),
   KEY `fk_cliente_tarifa_tarifa` (`id_tarifa`),
   CONSTRAINT `fk_cliente_tarifa_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_cliente_tarifa_tarifa` FOREIGN KEY (`id_tarifa`) REFERENCES `tarifa` (`id_tarifa`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `chk_cliente_tarifa_estado` CHECK ((`estado` in (_utf8mb4'activa',_utf8mb4'cancelada')))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `cliente_tarifa` (
 
 LOCK TABLES `cliente_tarifa` WRITE;
 /*!40000 ALTER TABLE `cliente_tarifa` DISABLE KEYS */;
-INSERT INTO `cliente_tarifa` VALUES (1,5,1,'2026-06-06','activa'),(2,6,2,'2026-06-06','activa');
+INSERT INTO `cliente_tarifa` VALUES (1,5,1,'2026-06-06','activa'),(2,6,2,'2026-06-06','activa'),(3,7,1,'2026-06-06','activa');
 /*!40000 ALTER TABLE `cliente_tarifa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +185,7 @@ DROP TABLE IF EXISTS `clientes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clientes` (
   `id_cliente` int NOT NULL,
-  `estado_pagado` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pendiente',
+  `estado_pagado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pendiente',
   `calorias_acumuladas` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_cliente`),
   CONSTRAINT `fk_cliente_usuario` FOREIGN KEY (`id_cliente`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -200,7 +200,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (5,'pendiente',0),(6,'pendiente',0);
+INSERT INTO `clientes` VALUES (5,'pendiente',0),(6,'pendiente',0),(7,'pendiente',0);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,7 @@ CREATE TABLE `contable` (
 
 LOCK TABLES `contable` WRITE;
 /*!40000 ALTER TABLE `contable` DISABLE KEYS */;
-INSERT INTO `contable` VALUES (4,1);
+INSERT INTO `contable` VALUES (3,1);
 /*!40000 ALTER TABLE `contable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,7 +253,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES (1,2000.00),(2,1600.00),(3,0.00),(4,0.00);
+INSERT INTO `empleados` VALUES (1,2000.00),(2,1600.00),(3,1800.00),(4,1200.00);
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +294,7 @@ DROP TABLE IF EXISTS `informe`;
 CREATE TABLE `informe` (
   `id_informe` int NOT NULL AUTO_INCREMENT,
   `id_contable` int NOT NULL,
-  `tipo_informe` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_informe` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_generacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_informe`),
   KEY `fk_informe_contable` (`id_contable`),
@@ -323,7 +323,7 @@ CREATE TABLE `inscripcion` (
   `id_cliente` int NOT NULL,
   `id_clase` int NOT NULL,
   `fecha_inscripcion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `estado` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'inscrito',
+  `estado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'inscrito',
   PRIMARY KEY (`id_inscripcion`),
   UNIQUE KEY `uq_cliente_clase` (`id_cliente`,`id_clase`),
   KEY `fk_inscripcion_clase` (`id_clase`),
@@ -351,8 +351,8 @@ DROP TABLE IF EXISTS `menor`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `menor` (
   `id_cliente` int NOT NULL,
-  `dni_tutor` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_tutor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dni_tutor` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_tutor` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_cliente`),
   CONSTRAINT `fk_menor_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -364,7 +364,7 @@ CREATE TABLE `menor` (
 
 LOCK TABLES `menor` WRITE;
 /*!40000 ALTER TABLE `menor` DISABLE KEYS */;
-INSERT INTO `menor` VALUES (5,'77788996J','Ana');
+INSERT INTO `menor` VALUES (5,'55112114H','Paula');
 /*!40000 ALTER TABLE `menor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,7 +381,7 @@ CREATE TABLE `pago` (
   `id_contable` int NOT NULL,
   `id_tarifa` int NOT NULL,
   `importe` decimal(10,2) NOT NULL,
-  `metodo_pago` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `metodo_pago` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_pago` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pago`),
   KEY `fk_pago_cliente` (`id_cliente`),
@@ -441,7 +441,7 @@ CREATE TABLE `registro_acceso` (
   `id_registro` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int NOT NULL,
   `fecha_hora_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `tipo_acceso` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_acceso` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_registro`),
   KEY `fk_registro_acceso_usuario` (`id_usuario`),
   CONSTRAINT `fk_registro_acceso_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -455,7 +455,7 @@ CREATE TABLE `registro_acceso` (
 
 LOCK TABLES `registro_acceso` WRITE;
 /*!40000 ALTER TABLE `registro_acceso` DISABLE KEYS */;
-INSERT INTO `registro_acceso` VALUES (1,6,'2026-06-06 16:00:08','entrada'),(2,6,'2026-06-06 16:00:09','salida');
+INSERT INTO `registro_acceso` VALUES (1,6,'2026-06-06 18:04:32','entrada'),(2,6,'2026-06-06 18:04:33','salida');
 /*!40000 ALTER TABLE `registro_acceso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -468,7 +468,7 @@ DROP TABLE IF EXISTS `roles`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
   `id_rol` int NOT NULL AUTO_INCREMENT,
-  `nombre_rol` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_rol` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_rol`),
   UNIQUE KEY `nombre_rol` (`nombre_rol`),
   CONSTRAINT `chk_roles_nombre` CHECK ((`nombre_rol` in (_utf8mb4'cliente',_utf8mb4'entrenador',_utf8mb4'recepcionista',_utf8mb4'administrador',_utf8mb4'contable')))
@@ -494,7 +494,7 @@ DROP TABLE IF EXISTS `sala`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sala` (
   `id_sala` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
   `aforo_maximo` int NOT NULL,
   PRIMARY KEY (`id_sala`),
   UNIQUE KEY `nombre` (`nombre`),
@@ -522,7 +522,7 @@ DROP TABLE IF EXISTS `salario_trabajador`;
 CREATE TABLE `salario_trabajador` (
   `id_salario` int NOT NULL AUTO_INCREMENT,
   `id_rol` int NOT NULL,
-  `nombre_puesto` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_puesto` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `salario_base` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id_salario`),
   UNIQUE KEY `id_rol` (`id_rol`),
@@ -551,9 +551,9 @@ DROP TABLE IF EXISTS `tarifa`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tarifa` (
   `id_tarifa` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `precio_mensual` decimal(10,2) NOT NULL,
-  `servicios_incluidos` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `servicios_incluidos` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_inicio` date NOT NULL,
   PRIMARY KEY (`id_tarifa`),
   UNIQUE KEY `nombre` (`nombre`),
@@ -580,14 +580,14 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `dni` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefono` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password_hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dni` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_rol` int NOT NULL,
-  `direccion` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_nacimiento` date NOT NULL,
   PRIMARY KEY (`id_usuario`),
@@ -596,7 +596,7 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `username` (`username`),
   KEY `fk_usuario_rol` (`id_rol`),
   CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -605,7 +605,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'00000001A','Admin Principal','600000001','admin@stayfit.com','admin','admin1',4,'Calle Admin 1','2026-06-06 14:26:45','1980-01-01'),(2,'00000002B','Entrenador Principal','600000002','entrenador@stayfit.com','entrenador','entrenador1',2,'Calle Entrenador 1','2026-06-06 14:26:45','1990-02-02'),(3,'11111111K','Recepcionista principal','444555666','recepcionista@gmail.com','recepcionista','dd9485cfacee1e3da810c678c92901f30ac48f22ee859e77ddf6213e521cca40',3,'Calle 3','2026-06-06 15:11:51','2000-07-01'),(4,'55555555L','Contable Principal','666555777','contable@gmail.com','contable','40fc8c4faec03f77999287695c59455a72e34b263b2ebea40999298974a75b0a',5,'Calle 2','2026-06-06 15:12:34','2000-10-01'),(5,'44444444L','Andrea','888999444','andrea@gmail.com','andrea','41d42da01baa7b1fb1b8b926b294e7ae31920596e176f81dc2701a1d65b887fa',1,'Calle 33','2026-06-06 15:59:06','1978-05-01'),(6,'55555555J','Sonia','444555666','sonia@gmail.com','sonia','bd4ff2fd93a94793657f95f540289ccd658c7231ea64c0b6eaa442b4ab493d96',1,'Calle 67','2026-06-06 15:59:44','2006-07-25');
+INSERT INTO `usuarios` VALUES (1,'00000001A','Admin Principal','600000001','admin@stayfit.com','admin','admin1',4,'Calle Admin 1','2026-06-06 17:57:12','1980-01-01'),(2,'00000002B','Entrenador Principal','600000002','entrenador@stayfit.com','entrenador','entrenador1',2,'Calle Entrenador 1','2026-06-06 17:57:12','1990-02-02'),(3,'00000000J','Contable Principal','777555666','contable@gmail.com','contable','40fc8c4faec03f77999287695c59455a72e34b263b2ebea40999298974a75b0a',5,'Calle 56','2026-06-06 18:00:25','2003-05-01'),(4,'77777777K','recepcionista Principal','88552200','recep@gmail.com','recepcionista','dd9485cfacee1e3da810c678c92901f30ac48f22ee859e77ddf6213e521cca40',3,'Calle 34','2026-06-06 18:01:23','1978-01-15'),(5,'22222222H','Andrea','555444666','andrea@gmail.com','andrea','41d42da01baa7b1fb1b8b926b294e7ae31920596e176f81dc2701a1d65b887fa',1,'Calle 83','2026-06-06 18:02:53','2014-02-01'),(6,'33333333D','Sonia','444555666','sonia@gmail.com','sonia','bd4ff2fd93a94793657f95f540289ccd658c7231ea64c0b6eaa442b4ab493d96',1,'Calle 35','2026-06-06 18:03:34','2006-07-14'),(7,'00012452F','Ana','444777888','ana@gmail.com','ana','d63b28a0d327f7965cdeb951ece1d516dc98e8ba9d570c6517e1e4555de5ee93',1,'Calle 33','2026-06-06 18:04:10','2001-05-14');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -626,4 +626,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-06 16:00:25
+-- Dump completed on 2026-06-06 18:04:53
