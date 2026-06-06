@@ -464,31 +464,7 @@ VALUES
 (1, 'Basico', 30.00, 'Acceso a instalaciones y clases grupales', '2026-01-01'),
 (2, 'Premium', 45.00, 'Acceso ilimitado, clases y entrenador personal', '2026-01-01');
 
--- =====================================================
--- CLIENTE INICIAL
--- Usuario: lucia
--- Contraseña: lucia1
--- =====================================================
 
-INSERT INTO usuarios
-(id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
-VALUES
-(3, '00000003C', 'Lucía Pérez', '600000003', 'lucia@stayfit.com', 'lucia', 'lucia1', 1, 'Calle Cliente 1', '2002-06-15');
-
-INSERT INTO clientes
-(id_cliente, estado_pagado, calorias_acumuladas)
-VALUES
-(3, 'abonado', 0);
-
-INSERT INTO adulto
-(id_cliente)
-VALUES
-(3);
-
-INSERT INTO cliente_tarifa
-(id_cliente, id_tarifa, fecha_contratacion, estado)
-VALUES
-(3, 1, '2026-06-01', 'activa');
 
 -- =====================================================
 -- SALAS FIJAS
