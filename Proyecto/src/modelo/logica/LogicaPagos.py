@@ -393,6 +393,5 @@ class LogicaPagos:
             pago.nombre_cliente,
             pago.nombre_tarifa,
             pago.importe,
-            pago.fecha,
-            pago.tipo_cuota
+            pago.fecha
         )
