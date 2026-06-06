@@ -5,26 +5,26 @@ from src.modelo.VO.ContableVO import ContableVO
 class ContableDaoJDBC(Conexion):
 
     SQL_SELECT = """
-        SELECT id_contable, titulacion, id_administrador_registra
+        SELECT id_contable, id_administrador_registra
         FROM contable
     """
 
     SQL_SELECT_BY_ID = """
-        SELECT id_contable, titulacion, id_administrador_registra
+        SELECT id_contable, id_administrador_registra
         FROM contable
         WHERE id_contable = ?
     """
 
     SQL_INSERT = """
         INSERT INTO contable
-            (id_contable, titulacion, id_administrador_registra)
+            (id_contable, id_administrador_registra)
         VALUES
-            (?, ?, ?)
+            (?, ?)
     """
 
     SQL_UPDATE = """
         UPDATE contable
-        SET titulacion = ?, id_administrador_registra = ?
+        SET id_administrador_registra = ?
         WHERE id_contable = ?
     """
 
@@ -34,8 +34,8 @@ class ContableDaoJDBC(Conexion):
     """
 
     def _rowToVO(self, row) -> ContableVO:
-        id_contable, titulacion, id_administrador_registra = row
-        return ContableVO(id_contable, titulacion, id_administrador_registra)
+        id_contable, id_administrador_registra = row
+        return ContableVO(id_contable, id_administrador_registra)
 
     def select(self) -> list[ContableVO]:
         cursor = self.getCursor()
@@ -85,7 +85,6 @@ class ContableDaoJDBC(Conexion):
                 self.SQL_INSERT,
                 (
                     vo.id_contable,
-                    vo.titulacion,
                     vo.id_administrador_registra
                 )
             )
@@ -108,7 +107,6 @@ class ContableDaoJDBC(Conexion):
             cursor.execute(
                 self.SQL_UPDATE,
                 (
-                    vo.titulacion,
                     vo.id_administrador_registra,
                     vo.id_contable
                 )

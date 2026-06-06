@@ -177,6 +177,25 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 9pt &
       <string/>
      </property>
     </widget>
+    <widget class="QLabel" name="label_19">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>20</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../imagenes/ola.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="frameMenu">
     <property name="geometry">
@@ -1259,15 +1278,15 @@ QPushButton:checked {
       <rect>
        <x>350</x>
        <y>20</y>
-       <width>35</width>
-       <height>35</height>
+       <width>51</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>src/vista/imagenes/ola.png</pixmap>
+      <pixmap>../imagenes/ola.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

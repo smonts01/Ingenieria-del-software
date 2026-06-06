@@ -1,11 +1,14 @@
-DROP DATABASE IF EXISTS Stayfit_database;
-CREATE DATABASE Stayfit_database
+DROP DATABASE IF EXISTS stayfit_database;
+
+CREATE DATABASE stayfit_database
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
 USE stayfit_database;
 
-
+-- =====================================================
+-- ROLES
+-- =====================================================
 
 CREATE TABLE roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
@@ -15,12 +18,29 @@ CREATE TABLE roles (
     )
 );
 
-INSERT INTO roles (nombre_rol) VALUES
-('cliente'),
-('entrenador'),
-('recepcionista'),
-('administrador'),
-('contable');
+-- =====================================================
+-- SALARIOS FIJOS POR TIPO DE TRABAJADOR
+-- =====================================================
+
+CREATE TABLE salario_trabajador (
+    id_salario INT AUTO_INCREMENT PRIMARY KEY,
+    id_rol INT NOT NULL UNIQUE,
+    nombre_puesto VARCHAR(50) NOT NULL UNIQUE,
+    salario_base DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT chk_salario_base CHECK (
+        salario_base >= 0
+    ),
+
+    CONSTRAINT fk_salario_trabajador_rol
+        FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
+
+-- =====================================================
+-- USUARIOS
+-- =====================================================
 
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,13 +61,19 @@ CREATE TABLE usuarios (
         ON DELETE RESTRICT
 );
 
+-- =====================================================
+-- REGISTRO DE ACCESO
+-- =====================================================
+
 CREATE TABLE registro_acceso (
     id_registro INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     fecha_hora_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     tipo_acceso VARCHAR(20) NOT NULL,
 
-    CONSTRAINT chk_registro_tipo_acceso CHECK (tipo_acceso IN ('entrada', 'salida')),
+    CONSTRAINT chk_registro_tipo_acceso CHECK (
+        tipo_acceso IN ('entrada', 'salida')
+    ),
 
     CONSTRAINT fk_registro_acceso_usuario
         FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
@@ -55,28 +81,25 @@ CREATE TABLE registro_acceso (
         ON DELETE CASCADE
 );
 
+-- =====================================================
+-- CLIENTES
+-- =====================================================
+
 CREATE TABLE clientes (
     id_cliente INT PRIMARY KEY,
     estado_pagado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
     calorias_acumuladas INT NOT NULL DEFAULT 0,
 
-    CONSTRAINT chk_cliente_estado_pagado CHECK (estado_pagado IN ('abonado', 'pendiente')),
-    CONSTRAINT chk_cliente_calorias CHECK (calorias_acumuladas >= 0),
+    CONSTRAINT chk_cliente_estado_pagado CHECK (
+        estado_pagado IN ('abonado', 'pendiente')
+    ),
+
+    CONSTRAINT chk_cliente_calorias CHECK (
+        calorias_acumuladas >= 0
+    ),
 
     CONSTRAINT fk_cliente_usuario
         FOREIGN KEY (id_cliente) REFERENCES usuarios(id_usuario)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);
-
-CREATE TABLE empleados (
-    id_empleado INT PRIMARY KEY,
-    salario DECIMAL(10,2) NOT NULL,
-
-    CONSTRAINT chk_empleado_salario CHECK (salario >= 0),
-
-    CONSTRAINT fk_empleado_usuario
-        FOREIGN KEY (id_empleado) REFERENCES usuarios(id_usuario)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -101,6 +124,24 @@ CREATE TABLE adulto (
         ON DELETE CASCADE
 );
 
+-- =====================================================
+-- EMPLEADOS
+-- =====================================================
+
+CREATE TABLE empleados (
+    id_empleado INT PRIMARY KEY,
+    salario DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT chk_empleado_salario CHECK (
+        salario >= 0
+    ),
+
+    CONSTRAINT fk_empleado_usuario
+        FOREIGN KEY (id_empleado) REFERENCES usuarios(id_usuario)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 CREATE TABLE administrador (
     id_administrador INT PRIMARY KEY,
 
@@ -112,7 +153,6 @@ CREATE TABLE administrador (
 
 CREATE TABLE entrenador (
     id_entrenador INT PRIMARY KEY,
-    especialidad VARCHAR(100) NOT NULL,
     id_administrador_registra INT NOT NULL,
 
     CONSTRAINT fk_entrenador_empleado
@@ -128,7 +168,6 @@ CREATE TABLE entrenador (
 
 CREATE TABLE recepcionista (
     id_recepcionista INT PRIMARY KEY,
-    turno VARCHAR(50) NOT NULL,
     id_administrador_registra INT NOT NULL,
 
     CONSTRAINT fk_recepcionista_empleado
@@ -144,7 +183,6 @@ CREATE TABLE recepcionista (
 
 CREATE TABLE contable (
     id_contable INT PRIMARY KEY,
-    titulacion VARCHAR(100) NOT NULL,
     id_administrador_registra INT NOT NULL,
 
     CONSTRAINT fk_contable_empleado
@@ -158,13 +196,18 @@ CREATE TABLE contable (
         ON DELETE RESTRICT
 );
 
+-- =====================================================
+-- SALAS Y CLASES
+-- =====================================================
+
 CREATE TABLE sala (
     id_sala INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(80) NOT NULL UNIQUE,
     aforo_maximo INT NOT NULL,
-    tipo_zona VARCHAR(50) NOT NULL,
 
-    CONSTRAINT chk_sala_aforo CHECK (aforo_maximo > 0)
+    CONSTRAINT chk_sala_aforo CHECK (
+        aforo_maximo > 0
+    )
 );
 
 CREATE TABLE clase (
@@ -180,11 +223,25 @@ CREATE TABLE clase (
     aforo_maximo INT NOT NULL,
     nivel_intensidad VARCHAR(20) NOT NULL,
 
-    CONSTRAINT chk_clase_nivel CHECK (nivel_intensidad IN ('baja', 'media', 'alta')),
-    CONSTRAINT chk_clase_calorias CHECK (calorias_estimadas >= 0),
-    CONSTRAINT chk_clase_duracion CHECK (duracion > 0),
-    CONSTRAINT chk_clase_aforo CHECK (aforo_maximo > 0),
-    CONSTRAINT chk_clase_horas CHECK (hora_fin > hora_inicio),
+    CONSTRAINT chk_clase_nivel CHECK (
+        nivel_intensidad IN ('baja', 'media', 'alta')
+    ),
+
+    CONSTRAINT chk_clase_calorias CHECK (
+        calorias_estimadas >= 0
+    ),
+
+    CONSTRAINT chk_clase_duracion CHECK (
+        duracion > 0
+    ),
+
+    CONSTRAINT chk_clase_aforo CHECK (
+        aforo_maximo > 0
+    ),
+
+    CONSTRAINT chk_clase_horas CHECK (
+        hora_fin > hora_inicio
+    ),
 
     CONSTRAINT fk_clase_entrenador
         FOREIGN KEY (id_entrenador) REFERENCES entrenador(id_entrenador)
@@ -204,7 +261,9 @@ CREATE TABLE asistencia (
     fecha DATE NOT NULL,
     presente VARCHAR(5) NOT NULL,
 
-    CONSTRAINT chk_asistencia_presente CHECK (presente IN ('si', 'no')),
+    CONSTRAINT chk_asistencia_presente CHECK (
+        presente IN ('si', 'no')
+    ),
 
     CONSTRAINT fk_asistencia_cliente
         FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
@@ -224,8 +283,13 @@ CREATE TABLE inscripcion (
     fecha_inscripcion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado VARCHAR(20) NOT NULL DEFAULT 'inscrito',
 
-    CONSTRAINT chk_inscripcion_estado CHECK (estado IN ('inscrito', 'cancelado')),
-    CONSTRAINT uq_cliente_clase UNIQUE (id_cliente, id_clase),
+    CONSTRAINT chk_inscripcion_estado CHECK (
+        estado IN ('inscrito', 'cancelado')
+    ),
+
+    CONSTRAINT uq_cliente_clase UNIQUE (
+        id_cliente, id_clase
+    ),
 
     CONSTRAINT fk_inscripcion_cliente
         FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
@@ -238,16 +302,20 @@ CREATE TABLE inscripcion (
         ON DELETE CASCADE
 );
 
+-- =====================================================
+-- TARIFAS Y PAGOS
+-- =====================================================
+
 CREATE TABLE tarifa (
     id_tarifa INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE,
     precio_mensual DECIMAL(10,2) NOT NULL,
     servicios_incluidos TEXT NOT NULL,
     fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NULL,
 
-    CONSTRAINT chk_tarifa_precio CHECK (precio_mensual > 0),
-    CONSTRAINT chk_tarifa_fechas CHECK (fecha_fin IS NULL OR fecha_fin >= fecha_inicio)
+    CONSTRAINT chk_tarifa_precio CHECK (
+        precio_mensual > 0
+    )
 );
 
 CREATE TABLE cliente_tarifa (
@@ -257,7 +325,9 @@ CREATE TABLE cliente_tarifa (
     fecha_contratacion DATE NOT NULL DEFAULT (CURRENT_DATE),
     estado VARCHAR(20) NOT NULL DEFAULT 'activa',
 
-    CONSTRAINT chk_cliente_tarifa_estado CHECK (estado IN ('activa', 'caducada', 'cancelada')),
+    CONSTRAINT chk_cliente_tarifa_estado CHECK (
+        estado IN ('activa', 'cancelada')
+    ),
 
     CONSTRAINT fk_cliente_tarifa_cliente
         FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
@@ -278,12 +348,14 @@ CREATE TABLE pago (
     importe DECIMAL(10,2) NOT NULL,
     metodo_pago VARCHAR(30) NOT NULL,
     fecha_pago DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
-    tipo_cuota VARCHAR(50) NOT NULL,
 
-    CONSTRAINT chk_pago_metodo CHECK (metodo_pago IN ('efectivo', 'tarjeta', 'transferencia', 'bizum')),
-    CONSTRAINT chk_pago_estado CHECK (estado IN ('abonado', 'pendiente')),
-    CONSTRAINT chk_pago_importe CHECK (importe > 0),
+    CONSTRAINT chk_pago_metodo CHECK (
+        metodo_pago IN ('efectivo', 'tarjeta', 'transferencia', 'bizum')
+    ),
+
+    CONSTRAINT chk_pago_importe CHECK (
+        importe > 0
+    ),
 
     CONSTRAINT fk_pago_cliente
         FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
@@ -313,174 +385,133 @@ CREATE TABLE informe (
         ON DELETE RESTRICT
 );
 
-DELIMITER //
+-- =====================================================
+-- DATOS INICIALES
+-- =====================================================
 
-CREATE TRIGGER trg_clasificar_cliente
-AFTER INSERT ON clientes
-FOR EACH ROW
-BEGIN
-    DECLARE edad INT;
+INSERT INTO roles (id_rol, nombre_rol)
+VALUES
+(1, 'cliente'),
+(2, 'entrenador'),
+(3, 'recepcionista'),
+(4, 'administrador'),
+(5, 'contable');
 
-    SELECT TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE())
-    INTO edad
-    FROM usuarios
-    WHERE id_usuario = NEW.id_cliente;
+INSERT INTO salario_trabajador
+(id_rol, nombre_puesto, salario_base)
+VALUES
+(2, 'entrenador', 1600.00),
+(3, 'recepcionista', 1200.00),
+(4, 'administrador', 2000.00),
+(5, 'contable', 1800.00);
 
-    IF edad < 18 THEN
-        INSERT INTO menor (id_cliente, dni_tutor, nombre_tutor)
-        VALUES (NEW.id_cliente, 'PENDIENTE', 'PENDIENTE');
-    ELSE
-        INSERT INTO adulto (id_cliente)
-        VALUES (NEW.id_cliente);
-    END IF;
-END//
-
-DELIMITER ;
-
-
+-- =====================================================
+-- ADMINISTRADOR INICIAL
+-- Usuario: admin
+-- Contraseña: admin1
+-- =====================================================
 
 INSERT INTO usuarios
 (id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
 VALUES
-(1, '00000001A', 'Admin Principal', '600000001', 'admin@stayfit.com', 'admin', 'admin1', 4, 'Calle Admin 1', '1980-01-01'),
-(2, '00000002B', 'Carlos Entrenador', '600000002', 'carlos@stayfit.com', 'entrenador', 'entrenador1', 2, 'Calle Entrenador 2', '1990-02-02'),
-(10, '11111111A', 'Marta González', '600111111', 'marta@stayfit.com', 'marta', 'marta1', 1, 'Calle Uno', '2000-05-10'),
-(11, '22222222B', 'Pablo Ruiz', '600222222', 'pablo@stayfit.com', 'pablo', 'pablo1', 1, 'Calle Dos', '1998-03-15'),
-(12, '33333333C', 'Lucía Pérez', '600333333', 'lucia@stayfit.com', 'lucia', 'lucia1', 1, 'Calle Tres', '2001-07-20');
+(1, '00000001A', 'Admin Principal', '600000001', 'admin@stayfit.com', 'admin', 'admin1', 4, 'Calle Admin 1', '1980-01-01');
 
-INSERT INTO empleados (id_empleado, salario) VALUES
-(1, 2000.00),
-(2, 1600.00);
+INSERT INTO empleados
+(id_empleado, salario)
+SELECT 
+    1,
+    salario_base
+FROM salario_trabajador
+WHERE nombre_puesto = 'administrador';
 
-INSERT INTO administrador (id_administrador) VALUES
+INSERT INTO administrador
+(id_administrador)
+VALUES
 (1);
 
-INSERT INTO entrenador (id_entrenador, especialidad, id_administrador_registra) VALUES
-(2, 'Fitness y clases dirigidas', 1);
+-- =====================================================
+-- ENTRENADOR FIJO PARA LAS CLASES
+-- Usuario: entrenador
+-- Contraseña: entrenador1
+-- =====================================================
 
-INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES
-(10, 'pendiente', 0),
-(11, 'pendiente', 0),
-(12, 'pendiente', 0);
-
-INSERT INTO sala (id_sala, nombre, aforo_maximo, tipo_zona) VALUES
-(1, 'Sala Agility', 25, 'Agility'),
-(2, 'Zona Speed', 19, 'Speed'),
-(3, 'Zona Cross', 12, 'Cross');
-
-
--- Insertar solo las 5 clases correctas
-INSERT INTO clase (id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad) VALUES
-(2, 1, 'Yoga',     200, 'lunes',     '09:00', '10:00', 60, 20, 'baja'),
-(2, 1, 'Pilates',  250, 'martes',    '10:00', '11:00', 60, 20, 'baja'),
-(2, 1, 'Spinning', 450, 'miercoles', '09:00', '10:00', 60, 20, 'alta'),
-(2, 1, 'Zumba',    350, 'jueves',    '10:00', '11:00', 60, 20, 'media'),
-(2, 1, 'Crossfit', 600, 'viernes',   '09:00', '10:00', 60, 20, 'alta');
-
-INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES
-(10, 1, 'inscrito'),
-(11, 1, 'inscrito'),
-(12, 1, 'inscrito'),
-(10, 2, 'inscrito'),
-(11, 3, 'inscrito');
-
-INSERT INTO tarifa (nombre, precio_mensual, servicios_incluidos, fecha_inicio) VALUES
-('Basico',  30.00, 'Acceso a instalaciones y clases grupales', '2026-01-01'),
-('Premium', 45.00, 'Acceso ilimitado, clases y entrenador personal', '2026-01-01');
-
-
-INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado) VALUES
-(10, 1, '2026-01-01', 'activa'),
-(11, 2, '2026-01-01', 'activa'),
-(12, 1, '2026-01-01', 'activa');
-
-
--- Crear usuario contable
-INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
-VALUES ('99999999Z', 'Marta Contable', '600000099', 'contable@stayfit.com', 'contable', 'contable1' , 5, 'Calle Contable 1', '1988-07-10');
-
--- Crear usuario recepcionista
-INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
-VALUES ('72260110K', 'Sonia Recepcionista', '600555099', 'recepcionista@stayfit.com', 'recepcionista', 'recepcionista1' , 3, 'Calle Recepcion 1', '1998-08-10');
-
--- Crear empleado y contable con el id que acaba de crearse
-INSERT INTO empleados (id_empleado, salario) VALUES (LAST_INSERT_ID(), 2500.00);
-INSERT INTO contable (id_contable, titulacion, id_administrador_registra) VALUES (LAST_INSERT_ID(), 'ADE', 1);
-
-DELETE FROM contable
-WHERE id_contable = 14;
-
-INSERT INTO empleados (id_empleado, salario)
-VALUES (13, 1200.00);
-INSERT INTO contable (id_contable, titulacion, id_administrador_registra)
-VALUES (13, 'ADE', 1);
-
-
-INSERT INTO pago
-(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
-VALUES
-(10, 13, 1, 30.00, 'tarjeta', '2026-01-15 10:00:00', 'abonado', 'mensual'),
-(11, 13, 2, 45.00, 'efectivo', '2026-01-20 11:30:00', 'abonado', 'mensual'),
-(12, 13, 1, 30.00, 'bizum', '2026-02-10 09:45:00', 'abonado', 'mensual'),
-(10, 13, 1, 30.00, 'transferencia', '2026-02-18 12:15:00', 'abonado', 'mensual'),
-(11, 13, 2, 45.00, 'tarjeta', '2026-03-05 16:20:00', 'abonado', 'mensual'),
-(12, 13, 1, 30.00, 'efectivo', '2026-03-22 17:00:00', 'abonado', 'mensual'),
-(10, 13, 1, 30.00, 'bizum', '2026-04-08 10:10:00', 'abonado', 'mensual'),
-(11, 13, 2, 45.00, 'transferencia', '2026-04-19 13:40:00', 'abonado', 'mensual');
-
-
-
--- Cliente pendiente 1
 INSERT INTO usuarios
-(dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
+(id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
 VALUES
-('44444444D', 'Ana Torres', '600444444', 'ana@stayfit.com', 'ana', 'ana1', 1, 'Calle Cuatro', '1999-04-12');
+(2, '00000002B', 'Entrenador Principal', '600000002', 'entrenador@stayfit.com', 'entrenador', 'entrenador1', 2, 'Calle Entrenador 1', '1990-02-02');
 
-SET @id_ana = LAST_INSERT_ID();
+INSERT INTO empleados
+(id_empleado, salario)
+SELECT 
+    2,
+    salario_base
+FROM salario_trabajador
+WHERE nombre_puesto = 'entrenador';
 
-INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas)
-VALUES (@id_ana, 'pendiente', 0);
-
-INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado)
-VALUES (@id_ana, 1, '2026-05-01', 'activa');
-
-INSERT INTO pago
-(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+INSERT INTO entrenador
+(id_entrenador, id_administrador_registra)
 VALUES
-(@id_ana, 13, 1, 30.00, 'tarjeta', '2026-06-06 10:00:00', 'pendiente', 'mensual');
+(2, 1);
 
+-- =====================================================
+-- TARIFAS FIJAS
+-- =====================================================
 
--- Cliente pendiente 2
-INSERT INTO usuarios
-(dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento)
+INSERT INTO tarifa
+(id_tarifa, nombre, precio_mensual, servicios_incluidos, fecha_inicio)
 VALUES
-('55555555E', 'Diego Martín', '600555555', 'diego@stayfit.com', 'diego', 'diego1', 1, 'Calle Cinco', '1997-09-25');
+(1, 'Basico', 30.00, 'Acceso a instalaciones y clases grupales', '2026-01-01'),
+(2, 'Premium', 45.00, 'Acceso ilimitado, clases y entrenador personal', '2026-01-01');
 
-SET @id_diego = LAST_INSERT_ID();
+-- =====================================================
+-- SALAS FIJAS
+-- =====================================================
 
-INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas)
-VALUES (@id_diego, 'pendiente', 0);
-
-INSERT INTO cliente_tarifa (id_cliente, id_tarifa, fecha_contratacion, estado)
-VALUES (@id_diego, 2, '2026-05-01', 'activa');
-
-INSERT INTO pago
-(id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago, estado, tipo_cuota)
+INSERT INTO sala
+(id_sala, nombre, aforo_maximo)
 VALUES
-(@id_diego, 13, 2, 45.00, 'efectivo', '2026-05-20 11:30:00', 'pendiente', 'mensual');
+(1, 'Sala Agility', 25),
+(2, 'Zona Speed', 19),
+(3, 'Zona Cross', 12);
+
+-- =====================================================
+-- CLASES FIJAS
+-- Crossfit -> Zona Cross
+-- Yoga, Pilates y Zumba -> Sala Agility
+-- Spinning -> Zona Speed
+-- =====================================================
+
+INSERT INTO clase
+(id_clase, id_entrenador, id_sala, nombre_actividad, calorias_estimadas, dia_semana, hora_inicio, hora_fin, duracion, aforo_maximo, nivel_intensidad)
+VALUES
+(1, 2, 1, 'Yoga',     200, 'lunes',     '09:00:00', '10:00:00', 60, 20, 'baja'),
+(2, 2, 1, 'Pilates',  250, 'martes',    '10:00:00', '11:00:00', 60, 20, 'baja'),
+(3, 2, 2, 'Spinning', 450, 'miercoles', '09:00:00', '10:00:00', 60, 19, 'alta'),
+(4, 2, 1, 'Zumba',    350, 'jueves',    '10:00:00', '11:00:00', 60, 20, 'media'),
+(5, 2, 3, 'Crossfit', 600, 'viernes',   '09:00:00', '10:00:00', 60, 12, 'alta');
+
+-- =====================================================
+-- COMPROBACIÓN RÁPIDA
+-- =====================================================
 
 SHOW TABLES;
-SELECT * FROM usuarios;
-SELECT * FROM clase;
-SELECT * FROM cliente_tarifa;
-SELECT * FROM tarifa;
-SELECT * FROM pago WHERE estado = 'pendiente';
-SELECT id_cliente, estado_pagado FROM clientes;
-USE stayfit_database;
-SELECT * FROM usuarios ORDER BY id_usuario DESC LIMIT 3;
-SELECT * FROM clientes ORDER BY id_cliente DESC LIMIT 3;
-SELECT * FROM adulto ORDER BY id_cliente DESC LIMIT 3;
-SELECT * FROM inscripcion;
-SELECT * FROM pago;
-DESCRIBE pago;
+SELECT * FROM clientes;
+SELECT * FROM menor;
+SELECT * FROM adulto;
+SELECT * FROM entrenador;
+SELECT * FROM recepcionista;
 SELECT * FROM contable;
+SELECT * FROM clase;
+SELECT * FROM inscripcion;
+SELECT * FROM cliente_tarifa;
+SELECT * FROM pago;
+SELECT * FROM asistencia;
+SELECT * FROM registro_acceso;
+SELECT * FROM informe;
+SELECT * FROM administrador;
+SELECT * FROM  empleados;
+SELECT * FROM roles;
+SELECT * FROM sala;
+SELECT * FROM salario_trabajador;
+SELECT * FROM tarifa;
+SELECT * FROM usuarios;

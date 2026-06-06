@@ -67,7 +67,7 @@ CREATE TABLE `adulto` (
 
 LOCK TABLES `adulto` WRITE;
 /*!40000 ALTER TABLE `adulto` DISABLE KEYS */;
-INSERT INTO `adulto` VALUES (10),(11),(12);
+INSERT INTO `adulto` VALUES (6);
 /*!40000 ALTER TABLE `adulto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +131,7 @@ CREATE TABLE `clase` (
   CONSTRAINT `chk_clase_duracion` CHECK ((`duracion` > 0)),
   CONSTRAINT `chk_clase_horas` CHECK ((`hora_fin` > `hora_inicio`)),
   CONSTRAINT `chk_clase_nivel` CHECK ((`nivel_intensidad` in (_utf8mb4'baja',_utf8mb4'media',_utf8mb4'alta')))
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `clase` (
 
 LOCK TABLES `clase` WRITE;
 /*!40000 ALTER TABLE `clase` DISABLE KEYS */;
-INSERT INTO `clase` VALUES (1,2,1,'Yoga',200,'lunes','09:00:00','10:00:00',60,20,'baja'),(2,2,1,'Pilates',250,'martes','10:00:00','11:00:00',60,20,'baja'),(3,2,1,'Spinning',450,'miercoles','09:00:00','10:00:00',60,20,'alta'),(4,2,1,'Zumba',350,'jueves','10:00:00','11:00:00',60,20,'media'),(5,2,1,'Crossfit',600,'viernes','09:00:00','10:00:00',60,20,'alta'),(6,2,1,'Yoga',300,'martes','09:00:00','10:00:00',60,20,'media');
+INSERT INTO `clase` VALUES (1,2,1,'Yoga',200,'lunes','09:00:00','10:00:00',60,20,'media'),(2,2,1,'Pilates',250,'martes','10:00:00','11:00:00',60,20,'baja'),(3,2,2,'Spinning',450,'miercoles','09:00:00','10:00:00',60,19,'alta'),(4,2,1,'Zumba',350,'jueves','10:00:00','11:00:00',60,20,'media'),(5,2,3,'Crossfit',600,'viernes','09:00:00','10:00:00',60,12,'alta');
 /*!40000 ALTER TABLE `clase` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,8 +162,8 @@ CREATE TABLE `cliente_tarifa` (
   KEY `fk_cliente_tarifa_tarifa` (`id_tarifa`),
   CONSTRAINT `fk_cliente_tarifa_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_cliente_tarifa_tarifa` FOREIGN KEY (`id_tarifa`) REFERENCES `tarifa` (`id_tarifa`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `chk_cliente_tarifa_estado` CHECK ((`estado` in (_utf8mb4'activa',_utf8mb4'caducada',_utf8mb4'cancelada')))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `chk_cliente_tarifa_estado` CHECK ((`estado` in (_utf8mb4'activa',_utf8mb4'cancelada')))
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `cliente_tarifa` (
 
 LOCK TABLES `cliente_tarifa` WRITE;
 /*!40000 ALTER TABLE `cliente_tarifa` DISABLE KEYS */;
-INSERT INTO `cliente_tarifa` VALUES (1,10,1,'2026-01-01','activa'),(2,11,2,'2026-01-01','activa'),(3,12,1,'2026-01-01','activa');
+INSERT INTO `cliente_tarifa` VALUES (1,5,1,'2026-06-06','activa'),(2,6,2,'2026-06-06','activa');
 /*!40000 ALTER TABLE `cliente_tarifa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,39 +200,9 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (10,'pendiente',0),(11,'pendiente',0),(12,'pendiente',0);
+INSERT INTO `clientes` VALUES (5,'pendiente',0),(6,'pendiente',0);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_clasificar_cliente` AFTER INSERT ON `clientes` FOR EACH ROW BEGIN
-    DECLARE edad INT;
-
-    SELECT TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE())
-    INTO edad
-    FROM usuarios
-    WHERE id_usuario = NEW.id_cliente;
-
-    IF edad < 18 THEN
-        INSERT INTO menor (id_cliente, dni_tutor, nombre_tutor)
-        VALUES (NEW.id_cliente, 'PENDIENTE', 'PENDIENTE');
-    ELSE
-        INSERT INTO adulto (id_cliente)
-        VALUES (NEW.id_cliente);
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `contable`
@@ -243,7 +213,6 @@ DROP TABLE IF EXISTS `contable`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contable` (
   `id_contable` int NOT NULL,
-  `titulacion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_administrador_registra` int NOT NULL,
   PRIMARY KEY (`id_contable`),
   KEY `fk_contable_administrador` (`id_administrador_registra`),
@@ -258,7 +227,7 @@ CREATE TABLE `contable` (
 
 LOCK TABLES `contable` WRITE;
 /*!40000 ALTER TABLE `contable` DISABLE KEYS */;
-INSERT INTO `contable` VALUES (13,'ADE',1);
+INSERT INTO `contable` VALUES (4,1);
 /*!40000 ALTER TABLE `contable` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +253,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
-INSERT INTO `empleados` VALUES (1,2000.00),(2,1600.00),(13,1200.00),(14,2500.00),(15,0.00);
+INSERT INTO `empleados` VALUES (1,2000.00),(2,1600.00),(3,0.00),(4,0.00);
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +266,6 @@ DROP TABLE IF EXISTS `entrenador`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entrenador` (
   `id_entrenador` int NOT NULL,
-  `especialidad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_administrador_registra` int NOT NULL,
   PRIMARY KEY (`id_entrenador`),
   KEY `fk_entrenador_administrador` (`id_administrador_registra`),
@@ -312,7 +280,7 @@ CREATE TABLE `entrenador` (
 
 LOCK TABLES `entrenador` WRITE;
 /*!40000 ALTER TABLE `entrenador` DISABLE KEYS */;
-INSERT INTO `entrenador` VALUES (2,'Fitness y clases dirigidas',1),(15,'General',1);
+INSERT INTO `entrenador` VALUES (2,1);
 /*!40000 ALTER TABLE `entrenador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,7 +299,7 @@ CREATE TABLE `informe` (
   PRIMARY KEY (`id_informe`),
   KEY `fk_informe_contable` (`id_contable`),
   CONSTRAINT `fk_informe_contable` FOREIGN KEY (`id_contable`) REFERENCES `contable` (`id_contable`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,7 +308,6 @@ CREATE TABLE `informe` (
 
 LOCK TABLES `informe` WRITE;
 /*!40000 ALTER TABLE `informe` DISABLE KEYS */;
-INSERT INTO `informe` VALUES (1,13,'Gestión económica','2026-06-05 23:31:36'),(2,13,'Informe de pagos','2026-06-05 23:32:22');
 /*!40000 ALTER TABLE `informe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,7 +330,7 @@ CREATE TABLE `inscripcion` (
   CONSTRAINT `fk_inscripcion_clase` FOREIGN KEY (`id_clase`) REFERENCES `clase` (`id_clase`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `fk_inscripcion_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `chk_inscripcion_estado` CHECK ((`estado` in (_utf8mb4'inscrito',_utf8mb4'cancelado')))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,7 +339,6 @@ CREATE TABLE `inscripcion` (
 
 LOCK TABLES `inscripcion` WRITE;
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
-INSERT INTO `inscripcion` VALUES (1,10,1,'2026-06-05 23:24:44','inscrito'),(2,11,1,'2026-06-05 23:24:44','inscrito'),(3,12,1,'2026-06-05 23:24:44','inscrito'),(4,10,2,'2026-06-05 23:24:44','inscrito'),(5,11,3,'2026-06-05 23:24:44','inscrito');
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -398,6 +364,7 @@ CREATE TABLE `menor` (
 
 LOCK TABLES `menor` WRITE;
 /*!40000 ALTER TABLE `menor` DISABLE KEYS */;
+INSERT INTO `menor` VALUES (5,'77788996J','Ana');
 /*!40000 ALTER TABLE `menor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,8 +383,6 @@ CREATE TABLE `pago` (
   `importe` decimal(10,2) NOT NULL,
   `metodo_pago` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_pago` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `estado` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pendiente',
-  `tipo_cuota` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_pago`),
   KEY `fk_pago_cliente` (`id_cliente`),
   KEY `fk_pago_contable` (`id_contable`),
@@ -425,10 +390,9 @@ CREATE TABLE `pago` (
   CONSTRAINT `fk_pago_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_pago_contable` FOREIGN KEY (`id_contable`) REFERENCES `contable` (`id_contable`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_pago_tarifa` FOREIGN KEY (`id_tarifa`) REFERENCES `tarifa` (`id_tarifa`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `chk_pago_estado` CHECK ((`estado` in (_utf8mb4'abonado',_utf8mb4'pendiente'))),
   CONSTRAINT `chk_pago_importe` CHECK ((`importe` > 0)),
   CONSTRAINT `chk_pago_metodo` CHECK ((`metodo_pago` in (_utf8mb4'efectivo',_utf8mb4'tarjeta',_utf8mb4'transferencia',_utf8mb4'bizum')))
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -437,7 +401,6 @@ CREATE TABLE `pago` (
 
 LOCK TABLES `pago` WRITE;
 /*!40000 ALTER TABLE `pago` DISABLE KEYS */;
-INSERT INTO `pago` VALUES (1,10,13,1,30.00,'tarjeta','2026-01-15 10:00:00','abonado','mensual'),(2,11,13,2,45.00,'efectivo','2026-01-20 11:30:00','abonado','mensual'),(3,12,13,1,30.00,'bizum','2026-02-10 09:45:00','abonado','mensual'),(4,10,13,1,30.00,'transferencia','2026-02-18 12:15:00','abonado','mensual'),(5,11,13,2,45.00,'tarjeta','2026-03-05 16:20:00','abonado','mensual'),(6,12,13,1,30.00,'efectivo','2026-03-22 17:00:00','abonado','mensual'),(7,10,13,1,30.00,'bizum','2026-04-08 10:10:00','abonado','mensual'),(8,11,13,2,45.00,'transferencia','2026-04-19 13:40:00','abonado','mensual');
 /*!40000 ALTER TABLE `pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -450,7 +413,6 @@ DROP TABLE IF EXISTS `recepcionista`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recepcionista` (
   `id_recepcionista` int NOT NULL,
-  `turno` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_administrador_registra` int NOT NULL,
   PRIMARY KEY (`id_recepcionista`),
   KEY `fk_recepcionista_administrador` (`id_administrador_registra`),
@@ -484,7 +446,7 @@ CREATE TABLE `registro_acceso` (
   KEY `fk_registro_acceso_usuario` (`id_usuario`),
   CONSTRAINT `fk_registro_acceso_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `chk_registro_tipo_acceso` CHECK ((`tipo_acceso` in (_utf8mb4'entrada',_utf8mb4'salida')))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -493,6 +455,7 @@ CREATE TABLE `registro_acceso` (
 
 LOCK TABLES `registro_acceso` WRITE;
 /*!40000 ALTER TABLE `registro_acceso` DISABLE KEYS */;
+INSERT INTO `registro_acceso` VALUES (1,6,'2026-06-06 16:00:08','entrada'),(2,6,'2026-06-06 16:00:09','salida');
 /*!40000 ALTER TABLE `registro_acceso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -533,7 +496,6 @@ CREATE TABLE `sala` (
   `id_sala` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `aforo_maximo` int NOT NULL,
-  `tipo_zona` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id_sala`),
   UNIQUE KEY `nombre` (`nombre`),
   CONSTRAINT `chk_sala_aforo` CHECK ((`aforo_maximo` > 0))
@@ -546,8 +508,38 @@ CREATE TABLE `sala` (
 
 LOCK TABLES `sala` WRITE;
 /*!40000 ALTER TABLE `sala` DISABLE KEYS */;
-INSERT INTO `sala` VALUES (1,'Sala Agility',25,'Agility'),(2,'Zona Speed',19,'Speed'),(3,'Zona Cross',12,'Cross');
+INSERT INTO `sala` VALUES (1,'Sala Agility',25),(2,'Zona Speed',19),(3,'Zona Cross',12);
 /*!40000 ALTER TABLE `sala` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `salario_trabajador`
+--
+
+DROP TABLE IF EXISTS `salario_trabajador`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `salario_trabajador` (
+  `id_salario` int NOT NULL AUTO_INCREMENT,
+  `id_rol` int NOT NULL,
+  `nombre_puesto` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `salario_base` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id_salario`),
+  UNIQUE KEY `id_rol` (`id_rol`),
+  UNIQUE KEY `nombre_puesto` (`nombre_puesto`),
+  CONSTRAINT `fk_salario_trabajador_rol` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `chk_salario_base` CHECK ((`salario_base` >= 0))
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `salario_trabajador`
+--
+
+LOCK TABLES `salario_trabajador` WRITE;
+/*!40000 ALTER TABLE `salario_trabajador` DISABLE KEYS */;
+INSERT INTO `salario_trabajador` VALUES (1,2,'entrenador',1600.00),(2,3,'recepcionista',1200.00),(3,4,'administrador',2000.00),(4,5,'contable',1800.00);
+/*!40000 ALTER TABLE `salario_trabajador` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -563,10 +555,8 @@ CREATE TABLE `tarifa` (
   `precio_mensual` decimal(10,2) NOT NULL,
   `servicios_incluidos` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_inicio` date NOT NULL,
-  `fecha_fin` date DEFAULT NULL,
   PRIMARY KEY (`id_tarifa`),
   UNIQUE KEY `nombre` (`nombre`),
-  CONSTRAINT `chk_tarifa_fechas` CHECK (((`fecha_fin` is null) or (`fecha_fin` >= `fecha_inicio`))),
   CONSTRAINT `chk_tarifa_precio` CHECK ((`precio_mensual` > 0))
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -577,7 +567,7 @@ CREATE TABLE `tarifa` (
 
 LOCK TABLES `tarifa` WRITE;
 /*!40000 ALTER TABLE `tarifa` DISABLE KEYS */;
-INSERT INTO `tarifa` VALUES (1,'Basico',30.00,'Acceso a instalaciones y clases grupales','2026-01-01',NULL),(2,'Premium',45.00,'Acceso ilimitado, clases y entrenador personal','2026-01-01',NULL);
+INSERT INTO `tarifa` VALUES (1,'Basico',30.00,'Acceso a instalaciones y clases grupales','2026-01-01'),(2,'Premium',45.00,'Acceso ilimitado, clases y entrenador personal','2026-01-01');
 /*!40000 ALTER TABLE `tarifa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -606,7 +596,7 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `username` (`username`),
   KEY `fk_usuario_rol` (`id_rol`),
   CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id_rol`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -615,7 +605,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'00000001A','Admin Principal','600000001','admin@stayfit.com','admin','admin1',4,'Calle Admin 1','2026-06-05 23:24:44','1980-01-01'),(2,'00000002B','Carlos Entrenador','600000002','carlos@stayfit.com','entrenador','entrenador1',2,'Calle Entrenador 2','2026-06-05 23:24:44','1990-02-02'),(10,'11111111A','Marta González','600111111','marta@stayfit.com','marta','marta1',1,'Calle Uno','2026-06-05 23:24:44','2000-05-10'),(11,'22222222B','Pablo Ruiz','600222222','pablo@stayfit.com','pablo','pablo1',1,'Calle Dos','2026-06-05 23:24:44','1998-03-15'),(12,'33333333C','Lucía Pérez','600333333','lucia@stayfit.com','lucia','lucia1',1,'Calle Tres','2026-06-05 23:24:44','2001-07-20'),(13,'99999999Z','Marta Contable','600000099','contable@stayfit.com','contable','contable1',5,'Calle Contable 1','2026-06-05 23:24:44','1988-07-10'),(14,'72260110K','Sonia Recepcionista','600555099','recepcionista@stayfit.com','recepcionista','recepcionista1',3,'Calle Recepcion 1','2026-06-05 23:24:44','1998-08-10'),(15,'75561223G','kdsnkagln','855777555','gelkngkel','asmdlfnl','a5c3dd48facf21ed5f916d0ae979091fead570e6aea6c1d8038d1f68b26fa51f',2,'dmslañmñlf','2026-06-06 12:37:15','2000-08-01');
+INSERT INTO `usuarios` VALUES (1,'00000001A','Admin Principal','600000001','admin@stayfit.com','admin','admin1',4,'Calle Admin 1','2026-06-06 14:26:45','1980-01-01'),(2,'00000002B','Entrenador Principal','600000002','entrenador@stayfit.com','entrenador','entrenador1',2,'Calle Entrenador 1','2026-06-06 14:26:45','1990-02-02'),(3,'11111111K','Recepcionista principal','444555666','recepcionista@gmail.com','recepcionista','dd9485cfacee1e3da810c678c92901f30ac48f22ee859e77ddf6213e521cca40',3,'Calle 3','2026-06-06 15:11:51','2000-07-01'),(4,'55555555L','Contable Principal','666555777','contable@gmail.com','contable','40fc8c4faec03f77999287695c59455a72e34b263b2ebea40999298974a75b0a',5,'Calle 2','2026-06-06 15:12:34','2000-10-01'),(5,'44444444L','Andrea','888999444','andrea@gmail.com','andrea','41d42da01baa7b1fb1b8b926b294e7ae31920596e176f81dc2701a1d65b887fa',1,'Calle 33','2026-06-06 15:59:06','1978-05-01'),(6,'55555555J','Sonia','444555666','sonia@gmail.com','sonia','bd4ff2fd93a94793657f95f540289ccd658c7231ea64c0b6eaa442b4ab493d96',1,'Calle 67','2026-06-06 15:59:44','2006-07-25');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,4 +626,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-06 12:37:20
+-- Dump completed on 2026-06-06 16:00:25

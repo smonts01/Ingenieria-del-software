@@ -4,84 +4,113 @@ from src.modelo.VO.PagoPendienteVO import PagoPendienteVO
 
 class PagoConsultasDaoJDBC(DaoJDBCBase):
 
-    SQL_SELECT_CLIENTE_POR_PAGO = "SELECT id_cliente FROM pago WHERE id_pago = ?"
-
-    SQL_MARCAR_ABONADO = """
-        UPDATE pago SET estado = 'abonado', fecha_pago = CURRENT_TIMESTAMP
-        WHERE id_pago = ?
+    SQL_MARCAR_CLIENTE_ABONADO = """
+        UPDATE clientes
+        SET estado_pagado = 'abonado'
+        WHERE id_cliente = ?
     """
 
     SQL_LISTAR_PAGOS_PENDIENTES_ADMIN = """
         SELECT 
-            p.id_pago,
+            0 AS id_pago,
             u.dni,
             u.nombre,
-            t.nombre,
-            p.importe,
-            p.fecha_pago,
-            p.estado
-        FROM pago p
+            COALESCE(t.nombre, 'Sin tarifa') AS tarifa,
+            COALESCE(t.precio_mensual, 0) AS precio,
+            COALESCE(ct.fecha_contratacion, CURDATE()) AS fecha_pago,
+            c.estado_pagado AS estado
+        FROM clientes c
         INNER JOIN usuarios u 
-            ON p.id_cliente = u.id_usuario
+            ON c.id_cliente = u.id_usuario
+        LEFT JOIN cliente_tarifa ct 
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
         LEFT JOIN tarifa t 
-            ON p.id_tarifa = t.id_tarifa
-        WHERE p.estado = 'pendiente'
-        ORDER BY p.fecha_pago DESC
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        ORDER BY ct.fecha_contratacion DESC
     """
 
-    SQL_MARCAR_CLIENTE_ABONADO = "UPDATE clientes SET estado_pagado = 'abonado' WHERE id_cliente = ?"
-
     SQL_PAGOS_PENDIENTES = """
-        SELECT p.id_pago, u.nombre AS cliente, t.nombre AS tarifa,
-               CONCAT(p.importe, ' €') AS importe,
-               DATE(p.fecha_pago) AS fecha, p.tipo_cuota
-        FROM pago p
-        INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
-        INNER JOIN tarifa t ON p.id_tarifa = t.id_tarifa
-        WHERE p.estado = 'pendiente'
-        ORDER BY p.fecha_pago ASC
+        SELECT 
+            0 AS id_pago,
+            u.nombre AS cliente,
+            COALESCE(t.nombre, 'Sin tarifa') AS tarifa,
+            CONCAT(COALESCE(t.precio_mensual, 0), ' €') AS importe,
+            COALESCE(ct.fecha_contratacion, CURDATE()) AS fecha,
+            'mensual' AS tipo_cuota
+        FROM clientes c
+        INNER JOIN usuarios u 
+            ON c.id_cliente = u.id_usuario
+        LEFT JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        LEFT JOIN tarifa t 
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        ORDER BY ct.fecha_contratacion ASC
     """
 
     SQL_INFORME_PAGOS_REALIZADOS = """
-        SELECT u.nombre, t.nombre, p.importe, p.fecha_pago, p.metodo_pago
+        SELECT 
+            u.nombre, 
+            t.nombre, 
+            p.importe, 
+            p.fecha_pago, 
+            p.metodo_pago
         FROM pago p
-        JOIN usuarios u ON p.id_cliente = u.id_usuario
-        JOIN tarifa t ON p.id_tarifa = t.id_tarifa
-        WHERE p.estado = 'abonado'
+        INNER JOIN usuarios u 
+            ON p.id_cliente = u.id_usuario
+        INNER JOIN tarifa t 
+            ON p.id_tarifa = t.id_tarifa
         ORDER BY p.fecha_pago DESC
     """
 
-    SQL_TOTAL_INGRESOS = "SELECT COALESCE(SUM(importe),0) FROM pago WHERE estado='abonado'"
+    SQL_TOTAL_INGRESOS = """
+        SELECT COALESCE(SUM(importe), 0)
+        FROM pago
+    """
 
     SQL_INGRESOS_POR_MES = """
-        SELECT YEAR(fecha_pago) anio, MONTH(fecha_pago) mes, SUM(importe) total
-        FROM pago WHERE estado='abonado'
+        SELECT 
+            YEAR(fecha_pago) AS anio,
+            MONTH(fecha_pago) AS mes,
+            COALESCE(SUM(importe), 0) AS total
+        FROM pago
         GROUP BY YEAR(fecha_pago), MONTH(fecha_pago)
-        ORDER BY anio DESC, mes DESC LIMIT 6
+        ORDER BY anio DESC, mes DESC
+        LIMIT 6
     """
 
     SQL_INGRESOS_MES_ACTUAL = """
-        SELECT COALESCE(SUM(importe), 0) FROM pago
-        WHERE estado = 'abonado'
-          AND YEAR(fecha_pago) = YEAR(CURDATE())
+        SELECT COALESCE(SUM(importe), 0)
+        FROM pago
+        WHERE YEAR(fecha_pago) = YEAR(CURDATE())
           AND MONTH(fecha_pago) = MONTH(CURDATE())
     """
 
     SQL_INGRESOS_ANIO_ACTUAL = """
-        SELECT COALESCE(SUM(importe), 0) FROM pago
-        WHERE estado = 'abonado' AND YEAR(fecha_pago) = YEAR(CURDATE())
+        SELECT COALESCE(SUM(importe), 0)
+        FROM pago
+        WHERE YEAR(fecha_pago) = YEAR(CURDATE())
     """
 
     SQL_NUM_CLIENTES_PENDIENTES = """
         SELECT COUNT(*)
-        FROM clientes c
-        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        FROM clientes
+        WHERE LOWER(estado_pagado) = 'pendiente'
     """
 
     SQL_IMPORTE_PENDIENTE = """
-        SELECT COALESCE(SUM(importe), 0)
-        FROM pago
-        WHERE estado = 'pendiente'
+        SELECT 
+            COALESCE(SUM(t.precio_mensual), 0)
+        FROM clientes c
+        LEFT JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        LEFT JOIN tarifa t
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
     """
 
     SQL_CLIENTES_PENDIENTES_ADMIN = """
@@ -103,7 +132,6 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         ORDER BY u.nombre
     """
 
-
     SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN = """
         SELECT 
             u.nombre AS cliente,
@@ -116,167 +144,209 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
             ON c.id_cliente = u.id_usuario
         LEFT JOIN cliente_tarifa ct 
             ON c.id_cliente = ct.id_cliente
-        AND ct.estado = 'activa'
+           AND ct.estado = 'activa'
         LEFT JOIN tarifa t 
             ON ct.id_tarifa = t.id_tarifa
         WHERE LOWER(c.estado_pagado) = 'pendiente'
-        AND LOWER(u.dni) LIKE ?
+          AND LOWER(u.dni) LIKE ?
         ORDER BY u.nombre
     """
 
     SQL_COBROS_HOY = """
-        SELECT COUNT(*) FROM pago
-        WHERE estado = 'abonado' AND DATE(fecha_pago) = CURRENT_DATE
+        SELECT COUNT(*)
+        FROM pago
+        WHERE DATE(fecha_pago) = CURDATE()
     """
 
     SQL_ULTIMOS_PAGOS_CONTABLE = """
-        SELECT u.nombre AS cliente, t.nombre AS tarifa,
-               CONCAT(p.importe, ' €') AS importe,
-               DATE(p.fecha_pago) AS fecha, p.estado
+        SELECT 
+            u.nombre AS cliente,
+            COALESCE(t.nombre, 'Sin tarifa') AS tarifa,
+            p.importe,
+            DATE(p.fecha_pago) AS fecha,
+            'abonado' AS estado
         FROM pago p
-        INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
-        INNER JOIN tarifa t ON p.id_tarifa = t.id_tarifa
-        ORDER BY p.fecha_pago DESC LIMIT 10
+        INNER JOIN usuarios u 
+            ON p.id_cliente = u.id_usuario
+        LEFT JOIN tarifa t
+            ON p.id_tarifa = t.id_tarifa
+        ORDER BY p.fecha_pago DESC
+        LIMIT 10
     """
 
     SQL_PAGOS_PENDIENTES_CONTABLE = """
-        SELECT u.nombre AS cliente,
-               CONCAT(SUM(p.importe), ' €') AS importe_pendiente,
-               MIN(DATE(p.fecha_pago)) AS fecha_limite
-        FROM pago p
-        INNER JOIN usuarios u ON p.id_cliente = u.id_usuario
-        WHERE p.estado = 'pendiente'
-        GROUP BY p.id_cliente, u.nombre
-        ORDER BY fecha_limite ASC LIMIT 10
+        SELECT 
+            u.nombre AS cliente,
+            CONCAT(COALESCE(t.precio_mensual, 0), ' €') AS importe_pendiente,
+            COALESCE(DATE_ADD(ct.fecha_contratacion, INTERVAL 30 DAY), CURDATE()) AS fecha_limite
+        FROM clientes c
+        INNER JOIN usuarios u 
+            ON c.id_cliente = u.id_usuario
+        LEFT JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        LEFT JOIN tarifa t
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        ORDER BY fecha_limite ASC
+        LIMIT 10
     """
 
-    SQL_NUM_PAGOS_PENDIENTES = "SELECT COUNT(*) FROM pago WHERE estado = 'pendiente'"
+    SQL_NUM_PAGOS_PENDIENTES = """
+        SELECT COUNT(*)
+        FROM clientes
+        WHERE LOWER(estado_pagado) = 'pendiente'
+    """
 
     SQL_INGRESOS_MES_CONTABLE = """
-        SELECT COALESCE(SUM(importe), 0) FROM pago
-        WHERE estado = 'abonado'
-          AND YEAR(fecha_pago) = YEAR(CURRENT_DATE)
-          AND MONTH(fecha_pago) = MONTH(CURRENT_DATE)
+        SELECT COALESCE(SUM(importe), 0)
+        FROM pago
+        WHERE YEAR(fecha_pago) = YEAR(CURDATE())
+          AND MONTH(fecha_pago) = MONTH(CURDATE())
     """
 
-    SQL_CLIENTES_CON_DEUDA = "SELECT COUNT(DISTINCT id_cliente) FROM pago WHERE estado = 'pendiente'"
+    SQL_CLIENTES_CON_DEUDA = """
+        SELECT COUNT(*)
+        FROM clientes
+        WHERE LOWER(estado_pagado) = 'pendiente'
+    """
 
     SQL_PAGOS_VENCIDOS = """
-        SELECT COUNT(*) FROM pago
-        WHERE estado = 'pendiente' AND DATE(fecha_pago) < CURRENT_DATE
+        SELECT COUNT(*)
+        FROM clientes c
+        INNER JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+          AND DATE_ADD(ct.fecha_contratacion, INTERVAL 30 DAY) < CURRENT_DATE
     """
 
     SQL_PAGOS_VENCEN_SEMANA = """
-        SELECT COUNT(*) FROM pago
-        WHERE estado = 'pendiente'
-        AND DATE(fecha_pago) >= CURRENT_DATE
-        AND DATE(fecha_pago) <= DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY)
+        SELECT COUNT(*)
+        FROM clientes c
+        INNER JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+          AND DATE_ADD(ct.fecha_contratacion, INTERVAL 30 DAY) >= CURRENT_DATE
+          AND DATE_ADD(ct.fecha_contratacion, INTERVAL 30 DAY) <= DATE_ADD(CURRENT_DATE, INTERVAL 7 DAY)
     """
 
     SQL_BUSCAR_PAGO_PENDIENTE_DNI = """
-            SELECT 
-                p.id_pago,
-                u.id_usuario,
-                u.nombre,
-                u.dni,
-                t.id_tarifa,
-                t.nombre,
-                p.importe,
-                p.fecha_pago,
-                p.estado
-            FROM pago p
-            INNER JOIN usuarios u 
-                ON p.id_cliente = u.id_usuario
-            INNER JOIN tarifa t 
-                ON p.id_tarifa = t.id_tarifa
-            WHERE p.estado = 'pendiente'
-            AND UPPER(u.dni) = UPPER(?)
-            ORDER BY p.fecha_pago DESC
-            LIMIT 1
-        """
-
-    SQL_BUSCAR_CLIENTE_TARIFA_DNI = """
-        SELECT u.id_usuario, u.nombre, u.dni,
-               t.id_tarifa, t.nombre, t.precio_mensual
-        FROM usuarios u
-        INNER JOIN clientes c ON u.id_usuario = c.id_cliente
-        INNER JOIN cliente_tarifa ct ON c.id_cliente = ct.id_cliente
-        INNER JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
-        WHERE u.dni = ? AND ct.estado = 'activa' LIMIT 1
-    """
-
-    SQL_PAGO_YA_ABONADO_MES = """
-        SELECT id_pago FROM pago
-        WHERE id_cliente = ? AND estado = 'abonado'
-          AND YEAR(fecha_pago) = YEAR(?) AND MONTH(fecha_pago) = MONTH(?)
-        LIMIT 1
-    """
-
-    SQL_PAGO_PENDIENTE_CLIENTE = """
-        SELECT id_pago FROM pago
-        WHERE id_cliente = ? AND estado = 'pendiente'
-        ORDER BY fecha_pago DESC LIMIT 1
-    """
-
-    SQL_UPDATE_PAGO_ABONADO = """
-        UPDATE pago SET estado = 'abonado', metodo_pago = ?, fecha_pago = ?, id_contable = ?
-        WHERE id_pago = ?
-    """
-
-    SQL_INSERT_PAGO_ABONADO = """
-        INSERT INTO pago (id_cliente, id_contable, id_tarifa, importe, metodo_pago,
-                          fecha_pago, estado, tipo_cuota)
-        VALUES (?, ?, ?, ?, ?, ?, 'abonado', 'mensual')
-    """
-
-    SQL_TOTAL_NOMINAS = "SELECT COALESCE(SUM(salario), 0) FROM empleados"
-
-    SQL_PAGOS_REGISTRADOS_CONTABLE = """
-        SELECT COUNT(*) FROM pago WHERE id_contable = ? AND estado = 'abonado'
-    """
-
-    SQL_PENDIENTES_REVISADOS = "SELECT COUNT(*) FROM pago WHERE estado = 'pendiente'"
-
-    SQL_IMPORTE_GESTIONADO = """
-        SELECT COALESCE(SUM(importe), 0) FROM pago WHERE id_contable = ? AND estado = 'abonado'
-    """
-    SQL_PRIMER_PAGO_PENDIENTE = """
         SELECT 
-            p.id_pago,
+            0 AS id_pago,
             u.id_usuario,
             u.nombre,
             u.dni,
             t.id_tarifa,
             t.nombre,
-            p.importe,
-            p.fecha_pago,
-            p.estado
-        FROM pago p
+            t.precio_mensual AS importe,
+            COALESCE(ct.fecha_contratacion, CURDATE()) AS fecha_pago
+        FROM clientes c
         INNER JOIN usuarios u 
-            ON p.id_cliente = u.id_usuario
+            ON c.id_cliente = u.id_usuario
+        INNER JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
         INNER JOIN tarifa t 
-            ON p.id_tarifa = t.id_tarifa
-        WHERE p.estado = 'pendiente'
-        ORDER BY p.fecha_pago DESC
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+          AND UPPER(u.dni) = UPPER(?)
+        ORDER BY ct.fecha_contratacion DESC
         LIMIT 1
     """
 
+    SQL_BUSCAR_CLIENTE_TARIFA_DNI = """
+        SELECT 
+            u.id_usuario, 
+            u.nombre, 
+            u.dni,
+            t.id_tarifa, 
+            t.nombre, 
+            t.precio_mensual
+        FROM usuarios u
+        INNER JOIN clientes c 
+            ON u.id_usuario = c.id_cliente
+        INNER JOIN cliente_tarifa ct 
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        INNER JOIN tarifa t 
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE UPPER(u.dni) = UPPER(?)
+        LIMIT 1
+    """
+
+    SQL_PAGO_YA_ABONADO_MES = """
+        SELECT id_pago 
+        FROM pago
+        WHERE id_cliente = ?
+          AND YEAR(fecha_pago) = YEAR(?) 
+          AND MONTH(fecha_pago) = MONTH(?)
+        LIMIT 1
+    """
+
+    SQL_INSERT_PAGO_ABONADO = """
+        INSERT INTO pago 
+            (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago)
+        VALUES 
+            (?, ?, ?, ?, ?, ?)
+    """
+
+    SQL_TOTAL_NOMINAS = """
+        SELECT COALESCE(SUM(salario), 0) 
+        FROM empleados
+    """
+
+    SQL_PAGOS_REGISTRADOS_CONTABLE = """
+        SELECT COUNT(*)
+        FROM pago p
+        WHERE p.id_contable = ?
+    """
+
+    SQL_PENDIENTES_REVISADOS = """
+        SELECT COUNT(*)
+        FROM clientes
+        WHERE LOWER(estado_pagado) = 'pendiente'
+    """
+
+    SQL_IMPORTE_GESTIONADO = """
+        SELECT COALESCE(SUM(importe), 0)
+        FROM pago
+        WHERE id_contable = ?
+    """
+
+    SQL_PRIMER_PAGO_PENDIENTE = """
+        SELECT 
+            0 AS id_pago,
+            u.id_usuario,
+            u.nombre,
+            u.dni,
+            t.id_tarifa,
+            t.nombre,
+            t.precio_mensual AS importe,
+            COALESCE(ct.fecha_contratacion, CURDATE()) AS fecha_pago
+        FROM clientes c
+        INNER JOIN usuarios u 
+            ON c.id_cliente = u.id_usuario
+        INNER JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+           AND ct.estado = 'activa'
+        INNER JOIN tarifa t 
+            ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        ORDER BY ct.fecha_contratacion DESC
+        LIMIT 1
+    """
 
     def primer_pago_pendiente(self):
         datos = self.consultar(self.SQL_PRIMER_PAGO_PENDIENTE)
         return datos[0] if datos else None
-    
+
     def listar_pagos_pendientes_admin(self):
         return self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
 
     def marcar_pago_abonado(self, id_pago: int):
-        datos = self.consultar(self.SQL_SELECT_CLIENTE_POR_PAGO, (id_pago,))
-        if not datos:
-            raise ValueError("No existe ningún pago con ese ID.")
-        id_cliente = datos[0][0]
-        self.ejecutar(self.SQL_MARCAR_ABONADO, (id_pago,))
-        self.ejecutar(self.SQL_MARCAR_CLIENTE_ABONADO, (id_cliente,))
-        return True
+        raise ValueError("Con la base nueva no se actualiza pago.estado. Se registra el pago y se marca el cliente como abonado.")
 
     def pagos_pendientes(self):
         filas = self.consultar(self.SQL_PAGOS_PENDIENTES)
@@ -310,6 +380,10 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
 
     def clientes_pendientes_admin(self):
         return self.consultar(self.SQL_CLIENTES_PENDIENTES_ADMIN)
+
+    def buscar_cliente_pendiente_por_dni_admin(self, dni):
+        d = f"%{dni.lower().strip()}%"
+        return self.consultar(self.SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN, (d,))
 
     def buscar_pago_pendiente_por_dni(self, dni):
         d = dni.strip().upper()
@@ -356,26 +430,27 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
 
     def registrar_pago_contable(self, dni_cliente, id_contable, metodo_pago, fecha_pago):
         cliente = self.buscar_cliente_tarifa_por_dni(dni_cliente)
+
         if not cliente:
             return False, "No se ha encontrado ningún cliente con ese DNI o no tiene tarifa activa."
-        id_cliente, nombre_cliente, _, id_tarifa, nombre_tarifa, importe = cliente
 
-        ya_abonado = self.consultar(self.SQL_PAGO_YA_ABONADO_MES,
-                                    (id_cliente, fecha_pago, fecha_pago))
-        if ya_abonado:
-            return False, f"El cliente {nombre_cliente} ya tiene un pago abonado en ese mes."
+        id_cliente, nombre_cliente, dni, id_tarifa, nombre_tarifa, importe = cliente
 
-        pendiente = self.consultar(self.SQL_PAGO_PENDIENTE_CLIENTE, (id_cliente,))
-        if pendiente:
-            self.ejecutar(self.SQL_UPDATE_PAGO_ABONADO,
-                          (metodo_pago, fecha_pago, id_contable, pendiente[0][0]))
-        else:
-            self.ejecutar(self.SQL_INSERT_PAGO_ABONADO,
-                          (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago))
+        if self.consultar(self.SQL_PAGO_YA_ABONADO_MES, (id_cliente, fecha_pago, fecha_pago)):
+            return False, f"El cliente {nombre_cliente} ya tiene un pago registrado en ese mes."
+
+        self.ejecutar(
+            self.SQL_INSERT_PAGO_ABONADO,
+            (id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago)
+        )
 
         self.ejecutar(self.SQL_MARCAR_CLIENTE_ABONADO, (id_cliente,))
-        return True, (f"Pago registrado correctamente para {nombre_cliente}.\n"
-                      f"Tarifa: {nombre_tarifa}\nImporte: {importe} €")
+
+        return True, (
+            f"Pago registrado correctamente para {nombre_cliente}.\n"
+            f"Tarifa: {nombre_tarifa}\n"
+            f"Importe: {importe} €"
+        )
 
     def contable_total_nominas(self):
         datos = self.consultar(self.SQL_TOTAL_NOMINAS)
@@ -403,7 +478,3 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     def contable_importe_gestionado(self, id_contable):
         datos = self.consultar(self.SQL_IMPORTE_GESTIONADO, (id_contable,))
         return datos[0][0] if datos else 0
-
-    def buscar_cliente_pendiente_por_dni_admin(self, dni):
-        d = f"%{dni.lower().strip()}%"
-        return self.consultar(self.SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN, (d,))

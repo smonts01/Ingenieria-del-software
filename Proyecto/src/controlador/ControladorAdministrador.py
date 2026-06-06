@@ -142,7 +142,7 @@ class ControladorAdministrador:
         if hasattr(v, "tablaClientesPagosPendientes"):
             try:
                 datos = self.modelo.clientes_pendientes_admin()
-                cabeceras = ["ID cliente", "Nombre", "Tarifa", "Estado pago"]
+                cabeceras = ["ID cliente", "Nombre", "Tarifa", "Precio"]
                 self._rellenar_con_cabeceras(
                     v.tablaClientesPagosPendientes,
                     datos,
