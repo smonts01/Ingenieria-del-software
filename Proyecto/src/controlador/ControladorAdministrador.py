@@ -1000,7 +1000,6 @@ class ControladorAdministrador:
             )
 
 
-
     def _añadir_boton_ayuda(self):
         BotonesView.crear_boton_ayuda(self.ventana, 1015, 20, self._mostrar_ayuda)
 
