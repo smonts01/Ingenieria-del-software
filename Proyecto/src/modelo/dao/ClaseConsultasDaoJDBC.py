@@ -11,11 +11,14 @@ class ClaseConsultasDaoJDBC(DaoJDBCBase):
                          "WHERE LOWER(nombre_actividad) LIKE ? "
                          "ORDER BY nombre_actividad")
 
-    SQL_OCUPACION_CLASE = ("SELECT c.id_clase, c.nombre_actividad, COUNT(i.id_inscripcion) AS inscritos, c.aforo_maximo, ROUND(COUNT(i.id_inscripcion)*100.0/c.aforo_maximo,1) AS pct "
-                           "FROM clase c "
-                           "LEFT JOIN inscripcion i ON c.id_clase=i.id_clase AND i.estado='inscrito' "
-                           "GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo "
-                           "ORDER BY pct DESC")
+    SQL_OCUPACION_CLASE = (
+        "SELECT c.id_clase, c.nombre_actividad, COUNT(i.id_inscripcion) AS inscritos, "
+        "c.aforo_maximo, ROUND(COUNT(i.id_inscripcion)*100.0/c.aforo_maximo,1) AS pct "
+        "FROM clase c "
+        "LEFT JOIN inscripcion i ON c.id_clase=i.id_clase AND i.estado='inscrito' "
+        "GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo "
+        "ORDER BY pct DESC"
+    )
 
     SQL_CLASES_ENTRENADOR_TABLA = ("SELECT c.nombre_actividad, "
                                     "s.nombre AS sala, "

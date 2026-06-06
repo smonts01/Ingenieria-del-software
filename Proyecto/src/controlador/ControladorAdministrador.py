@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView
+from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView, ArchivoView
 import matplotlib.pyplot as plt
 import io
 import matplotlib
@@ -78,7 +78,7 @@ class ControladorAdministrador:
         if hasattr(v, "cmbRoles"):
             v.cmbRoles.currentIndexChanged.connect(self.filtrar_por_rol)
             if v.cmbRoles.count() == 0:
-                v.cmbRoles.addItems(["Todos", "entrenador", "recepcionista", "contable", "administrador"])
+                v.cmbRoles.addItems(["Todos los roles", "entrenador", "recepcionista", "contable", "administrador"])
         if hasattr(v, "btnGuardarCambios_2"):
             v.btnGuardarCambios_2.clicked.connect(self.guardar_cambios_trabajador)
 
@@ -91,6 +91,13 @@ class ControladorAdministrador:
         # CRUD clases
         if hasattr(v, "btnNuevaClase") and hasattr(v, "tablaClases"):
             v.btnNuevaClase.clicked.connect(self.anadir_fila_clase)
+
+        # Copia de seguridad
+        if hasattr(v, "btnCrearBackup"):
+            v.btnCrearBackup.clicked.connect(self.crear_copia_seguridad)
+
+        if hasattr(v, "btnRestaurarBackup"):
+            v.btnRestaurarBackup.clicked.connect(self.restaurar_copia_seguridad)
 
     def cargar_datos(self):
         v = self.ventana
@@ -319,7 +326,7 @@ class ControladorAdministrador:
             return
         rol = v.cmbRoles.currentText()
         try:
-            datos = self.modelo.listar_trabajadores_completo() if rol == "Todos" else self.modelo.buscar_trabajadores_rol(rol)
+            datos = self.modelo.listar_trabajadores_completo() if rol == "Todos los roles" else self.modelo.buscar_trabajadores_rol(rol)
             self._rellenar_tabla_trabajadores_admin(v.tablaTrabajadores_2, datos)
             if hasattr(v, "lblMostrando_2"):
                 v.lblMostrando_2.setText(f"Mostrando {len(datos)} trabajadores")
@@ -942,3 +949,51 @@ class ControladorAdministrador:
                 barra = getattr(v, barra_nombre)
                 barra.setValue(porcentaje)
                 barra.setFormat(f"{porcentaje}%")
+
+    def crear_copia_seguridad(self):
+        v = self.ventana
+
+        try:
+            ruta_backup = self.modelo.crear_copia_seguridad()
+
+            MensajeView.information(
+                v,
+                "Copia de seguridad creada",
+                f"La copia de seguridad se ha creado correctamente:\n\n{ruta_backup}"
+            )
+
+        except Exception as e:
+            MensajeView.warning(
+                v,
+                "Error",
+                f"No se pudo crear la copia de seguridad:\n\n{e}"
+            )
+
+    def restaurar_copia_seguridad(self):
+        v = self.ventana
+
+        ruta_sql = ArchivoView.seleccionar_archivo_sql(
+            v,
+            "Seleccionar copia de seguridad"
+        )
+
+        if not ruta_sql:
+            return
+
+        try:
+            self.modelo.restaurar_copia_seguridad(ruta_sql)
+
+            MensajeView.information(
+                v,
+                "Copia restaurada",
+                "La copia de seguridad se ha restaurado correctamente."
+            )
+
+            self.cargar_datos()
+
+        except Exception as e:
+            MensajeView.warning(
+                v,
+                "Error",
+                f"No se pudo restaurar la copia de seguridad:\n\n{e}"
+            )

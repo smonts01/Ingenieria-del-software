@@ -5,6 +5,7 @@ from src.modelo.logica.LogicaPagos import LogicaPagos
 from src.modelo.logica.LogicaClases import LogicaClases
 from src.modelo.logica.LogicaEstadisticas import LogicaEstadisticas
 from src.modelo.logica.LogicaUsuarios import LogicaUsuarios
+from src.modelo.logica.LogicaBackup import LogicaBackup
 
 
 class Logica:
@@ -24,6 +25,7 @@ class Logica:
         self._pagos = LogicaPagos()
         self._clases = LogicaClases()
         self._estadisticas = LogicaEstadisticas()
+        self._backup = LogicaBackup()
 
     # ── Autenticación ───────────────────────────────────────────────────
     def iniciar_sesion(self, username, password):
@@ -468,3 +470,10 @@ class Logica:
 
     def ocupacion_por_clase_estadisticas(self):
         return self._estadisticas.ocupacion_por_clase_estadisticas()
+
+    # ── Copias de seguridad ─────────────────────────────────────────────
+    def crear_copia_seguridad(self):
+        return self._backup.crear_copia_seguridad()
+
+    def restaurar_copia_seguridad(self, ruta_sql):
+        return self._backup.restaurar_copia_seguridad(ruta_sql)

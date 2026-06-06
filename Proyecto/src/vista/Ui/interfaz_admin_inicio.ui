@@ -793,7 +793,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
        <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>Gráfico de barras de la comparativa de gastos y beneficios de cada mes.</string>
+       <string>Gráfico de barras con los  beneficios de cada mes.</string>
       </property>
      </widget>
     </widget>
@@ -1467,6 +1467,60 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       </item>
      </widget>
     </widget>
+    <widget class="QPushButton" name="btnCrearBackup">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>40</y>
+       <width>161</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #00A99D;
+}</string>
+     </property>
+     <property name="text">
+      <string>Crear copia de seguridad</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnRestaurarBackup">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>40</y>
+       <width>150</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #18B7A5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #00A99D;
+}</string>
+     </property>
+     <property name="text">
+      <string>Restaurar copia</string>
+     </property>
+    </widget>
     <zorder>label</zorder>
     <zorder>labelFondoOla</zorder>
     <zorder>lblTitulo</zorder>
@@ -1479,6 +1533,8 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <zorder>label_16</zorder>
     <zorder>cardPopulares_2</zorder>
     <zorder>asist</zorder>
+    <zorder>btnCrearBackup</zorder>
+    <zorder>btnRestaurarBackup</zorder>
    </widget>
   </widget>
  </widget>
