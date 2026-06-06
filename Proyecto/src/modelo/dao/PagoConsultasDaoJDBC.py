@@ -350,7 +350,7 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
 
     def pagos_pendientes(self):
         filas = self.consultar(self.SQL_PAGOS_PENDIENTES)
-        return [PagoPendienteVO(f[0], f[1], f[2], f[3], f[4], f[5]) for f in filas]
+        return [PagoPendienteVO(f[0], f[1], f[2], f[3], f[4]) for f in filas]
 
     def informe_pagos_realizados(self):
         return self.consultar(self.SQL_INFORME_PAGOS_REALIZADOS)

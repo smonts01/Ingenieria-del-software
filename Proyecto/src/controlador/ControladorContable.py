@@ -1,12 +1,5 @@
 """
 Controlador del rol Contable — Patrón MVC según ejemplo de la profesora.
-
-Responsabilidad:
-- Instanciar la Vista y asignarle set_controlador(self)
-- Responder a los eventos que la Vista delega
-- Llamar al Modelo para obtener/guardar datos
-- Llamar a métodos de la Vista para actualizar la UI
-- NO conecta botones, NO toca widgets directamente
 """
 import os
 import ctypes.wintypes
@@ -135,6 +128,7 @@ class ControladorContable:
         except Exception as e: print('Error primer pago:', e)
 
     def _cargar_pagos_pendientes(self):
+        """Carga la pantalla de pagos pendientes completa."""
         v = self.ventana
         try:
             v.set_resumen(
@@ -146,6 +140,24 @@ class ControladorContable:
             )
         except Exception as e: print('Error resumen pagos pend:', e)
         self.cargar_pagos_pendientes_filtrados()
+
+    def cargar_pagos_pendientes_filtrados(self, *args):
+        v = self.ventana
+        try:
+            filtro = v.get_filtro()
+            datos = self.modelo.pagos_pendientes()
+            datos_filtrados = []
+            for fila in datos:
+                fecha_pago = fila[4]
+                es_vencido = self.modelo.es_pago_vencido(fecha_pago)
+                if filtro == 'vencido' and not es_vencido:
+                    continue
+                if filtro == 'pendiente' and es_vencido:
+                    continue
+                datos_filtrados.append(fila)
+            v.cargar_tabla(datos_filtrados)
+        except Exception as e:
+            print('Error filtrar pagos pendientes:', e)
 
     def _cargar_gestion_economica(self):
         v = self.ventana
@@ -249,24 +261,6 @@ class ControladorContable:
         except Exception as e:
             v.mostrar_error(str(e))
 
-    def cargar_pagos_pendientes_filtrados(self, *args):
-        v = self.ventana
-        try:
-            filtro = v.get_filtro()
-            datos = self.modelo.pagos_pendientes()
-            datos_filtrados = []
-            for fila in datos:
-                fecha_pago = fila[4]
-                es_vencido = self.modelo.es_pago_vencido(fecha_pago)
-                if filtro == 'vencido' and not es_vencido:
-                    continue
-                if filtro == 'pendiente' and es_vencido:
-                    continue
-                datos_filtrados.append(fila)
-            v.cargar_tabla(datos_filtrados)
-        except Exception as e:
-            print('Error filtrar pagos pendientes:', e)
-
     def marcar_abonado(self):
         v = self.ventana
         try:
@@ -284,7 +278,7 @@ class ControladorContable:
         v = self.ventana
         try:
             self.modelo.generar_informe(self.usuario['id_usuario'], 'general')
-            v.mostrar_exito("Informe generado correctamente")
+            v.mostrar_exito('Informe generado correctamente')
             self.cargar_datos()
         except Exception as e:
             v.mostrar_error(str(e))
@@ -292,7 +286,6 @@ class ControladorContable:
     def exportar_pdf(self):
         v = self.ventana
         try:
-            # Busca la tabla de informe en la vista actual
             tabla_widget = None
             for nombre in ('tablaInformeGestionEconomica', 'tablaInformePagos',
                            'tablaInformePagosPendientes', 'tablaInformeBalanceMensual'):
@@ -308,10 +301,9 @@ class ControladorContable:
             from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
             from reportlab.lib.styles import getSampleStyleSheet
 
-            cabeceras = []
-            for col in range(tabla_widget.columnCount()):
-                item = tabla_widget.horizontalHeaderItem(col)
-                cabeceras.append(item.text() if item else '')
+            cabeceras = [tabla_widget.horizontalHeaderItem(col).text()
+                         if tabla_widget.horizontalHeaderItem(col) else ''
+                         for col in range(tabla_widget.columnCount())]
             filas = [cabeceras]
             for fi in range(tabla_widget.rowCount()):
                 filas.append([
@@ -338,27 +330,25 @@ class ControladorContable:
             ]
             tabla_pdf = Table(filas, repeatRows=1)
             tabla_pdf.setStyle(TableStyle([
-                ('BACKGROUND',  (0, 0), (-1, 0),  colors.HexColor('#1D9E75')),
-                ('TEXTCOLOR',   (0, 0), (-1, 0),  colors.white),
-                ('FONTNAME',    (0, 0), (-1, 0),  'Helvetica-Bold'),
-                ('FONTSIZE',    (0, 0), (-1, 0),  11),
-                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F1FFF8')]),
-                ('FONTSIZE',    (0, 1), (-1, -1), 9),
-                ('GRID',        (0, 0), (-1, -1), 0.5, colors.HexColor('#9FE1CB')),
-                ('ALIGN',       (0, 0), (-1, -1), 'CENTER'),
-                ('VALIGN',      (0, 0), (-1, -1), 'MIDDLE'),
-                ('TOPPADDING',  (0, 0), (-1, -1), 6),
-                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                ('BACKGROUND',    (0, 0), (-1, 0),  colors.HexColor('#1D9E75')),
+                ('TEXTCOLOR',     (0, 0), (-1, 0),  colors.white),
+                ('FONTNAME',      (0, 0), (-1, 0),  'Helvetica-Bold'),
+                ('FONTSIZE',      (0, 0), (-1, 0),  11),
+                ('ROWBACKGROUNDS',(0, 1), (-1, -1),  [colors.white, colors.HexColor('#F1FFF8')]),
+                ('FONTSIZE',      (0, 1), (-1, -1),  9),
+                ('GRID',          (0, 0), (-1, -1),  0.5, colors.HexColor('#9FE1CB')),
+                ('ALIGN',         (0, 0), (-1, -1),  'CENTER'),
+                ('VALIGN',        (0, 0), (-1, -1),  'MIDDLE'),
+                ('TOPPADDING',    (0, 0), (-1, -1),  6),
+                ('BOTTOMPADDING', (0, 0), (-1, -1),  6),
             ]))
             elementos.append(tabla_pdf)
             doc.build(elementos)
-
             try:
                 self.modelo.generar_informe(self.usuario['id_usuario'], tipo)
                 self.cargar_datos()
             except Exception:
                 pass
-
             v.mostrar_exito(f'Guardado en:\n{ruta}')
         except Exception as e:
             v.mostrar_error(str(e))

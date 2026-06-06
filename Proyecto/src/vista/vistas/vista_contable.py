@@ -154,17 +154,19 @@ class VistaContablePagosPendientes(QMainWindow):
         if hasattr(self, 'label_ImporteTotal'):     self.label_ImporteTotal.setText(f'{float(importe_pendiente):.2f} €')
 
     def cargar_tabla(self, datos):
-        _rellenar(self.tableWidget,
-                  ['ID Pago', 'Cliente', 'Tarifa', 'Importe', 'Fecha', 'Cuota'], datos)
-
-    def get_id_pago_seleccionado(self):
-        fila = self.tableWidget.currentRow()
-        if fila >= 0 and self.tableWidget.item(fila, 0):
-            return int(self.tableWidget.item(fila, 0).text())
-        return None
-
-    def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
-    def mostrar_exito(self, msg): QMessageBox.information(self, 'Correcto', msg)
+        cabeceras = ['Cliente', 'Tarifa', 'Importe', 'Fecha']
+        tabla = self.tableWidget
+        tabla.clear()
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        for fi, fila in enumerate(datos):
+            # fila = (id_pago, nombre, tarifa, importe, fecha)
+            # saltamos fila[0] porque id_pago siempre es 0
+            vals = [fila[1], fila[2], fila[3], fila[4]]
+            for ci, val in enumerate(vals):
+                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+        tabla.resizeColumnsToContents()
 
 
 # ── Vista gestión económica ───────────────────────────────────────────────────

@@ -34,14 +34,13 @@ class InformeConsultasDaoJDBC(DaoJDBCBase):
         """
 
     SQL_BALANCE_MENSUAL = """
-            SELECT YEAR(fecha_pago) AS anio,
-                   MONTH(fecha_pago) AS mes,
-                   COALESCE(SUM(importe), 0) AS ingresos
-            FROM pago
-            WHERE estado = 'abonado'
-            GROUP BY YEAR(fecha_pago), MONTH(fecha_pago)
-            ORDER BY anio DESC, mes DESC
-        """
+        SELECT YEAR(fecha_pago) AS anio,
+            MONTH(fecha_pago) AS mes,
+            COALESCE(SUM(importe), 0) AS ingresos
+        FROM pago
+        GROUP BY YEAR(fecha_pago), MONTH(fecha_pago)
+        ORDER BY anio DESC, mes DESC
+    """
 
     SQL_INFORMES_USUARIO = """
             SELECT COUNT(*)
