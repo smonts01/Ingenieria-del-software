@@ -742,7 +742,7 @@ QPushButton:checked {
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_Num_Clases_semana">
+      <widget class="QLabel" name="regege">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -826,7 +826,7 @@ border: None;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="label_Num_Clases_Hoy">
+      <widget class="QLabel" name="jsjsj">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -904,7 +904,7 @@ border:None</string>
        </property>
       </widget>
       <zorder>lblIconCal</zorder>
-      <zorder>label_Num_Clases_Hoy</zorder>
+      <zorder>jsjsj</zorder>
       <zorder>label_30</zorder>
       <zorder>label_5</zorder>
      </widget>
@@ -930,7 +930,7 @@ border:None</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="label_Num_Clientes_Total">
+      <widget class="QLabel" name="kskks">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -1046,7 +1046,7 @@ border: None;</string>
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_Num_Clientes_Total_2">
+      <widget class="QLabel" name="kskks_2">
        <property name="geometry">
         <rect>
          <x>120</x>

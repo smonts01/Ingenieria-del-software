@@ -16,13 +16,18 @@ class EstadisticasConsultasDaoJDBC(DaoJDBCBase):
     SQL_SALAS = "SELECT COUNT(DISTINCT id_sala) FROM clase"
  
     SQL_OCUPACION_GLOBAL = """
-        SELECT COALESCE(ROUND(
-            (COUNT(i.id_inscripcion) / NULLIF(SUM(c.aforo_maximo), 0)) * 100
-        ), 0)
-        FROM clase c
-        LEFT JOIN inscripcion i
-            ON c.id_clase = i.id_clase
+        SELECT COALESCE(ROUND(AVG(pct), 1), 0)
+        FROM (
+            SELECT 
+                (COUNT(i.id_inscripcion) * 100.0 / NULLIF(c.aforo_maximo, 0)) AS pct
+            FROM clase c
+            LEFT JOIN inscripcion i
+                ON c.id_clase = i.id_clase
             AND i.estado = 'inscrito'
+            GROUP BY 
+                c.id_clase,
+                c.aforo_maximo
+        ) AS ocupaciones
     """
  
     SQL_RANKING_USUARIOS_ACTIVOS = """
@@ -44,13 +49,13 @@ class EstadisticasConsultasDaoJDBC(DaoJDBCBase):
  
     SQL_OCUPACION_POR_CLASE = """
         SELECT c.nombre_actividad,
-               COALESCE(ROUND(
-                   (COUNT(i.id_inscripcion) / NULLIF(c.aforo_maximo, 0)) * 100
-               ), 0) AS ocupacion
+            COALESCE(ROUND(
+                (COUNT(i.id_inscripcion) * 100.0 / NULLIF(c.aforo_maximo, 0))
+            ), 0) AS ocupacion
         FROM clase c
         LEFT JOIN inscripcion i
             ON c.id_clase = i.id_clase
-            AND i.estado = 'inscrito'
+        AND i.estado = 'inscrito'
         GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo
         ORDER BY ocupacion DESC
         LIMIT 4

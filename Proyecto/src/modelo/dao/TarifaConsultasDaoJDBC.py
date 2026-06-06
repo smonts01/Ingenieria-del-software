@@ -4,23 +4,26 @@ from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 class TarifaConsultasDaoJDBC(DaoJDBCBase):
 
     SQL_CONTAR_CLIENTE = """
-            SELECT COUNT(*) FROM cliente_tarifa ct
-            JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
-            WHERE LOWER(t.nombre) LIKE ? AND ct.estado = 'activa'
-        """
+        SELECT COUNT(*)
+        FROM cliente_tarifa ct
+        JOIN tarifa t ON ct.id_tarifa = t.id_tarifa
+        WHERE LOWER(t.nombre) LIKE ? 
+          AND ct.estado = 'activa'
+    """
+
     SQL_TARIFAS_ACTIVAS = """
-            SELECT COUNT(*)
-            FROM tarifa
-            WHERE fecha_fin IS NULL OR fecha_fin >= CURRENT_DATE
-        """
+        SELECT COUNT(*)
+        FROM tarifa
+    """
+
     SQL_TARIFAS_ECONOMICA = """
-            SELECT nombre,
-                   CONCAT(precio_mensual, ' €') AS precio,
-                   'Mensual' AS duracion
-            FROM tarifa
-            WHERE fecha_fin IS NULL OR fecha_fin >= CURRENT_DATE
-            ORDER BY precio_mensual ASC
-        """
+        SELECT 
+            nombre,
+            CONCAT(precio_mensual, ' €') AS precio,
+            'Mensual' AS duracion
+        FROM tarifa
+        ORDER BY precio_mensual ASC
+    """
 
     def contar_clientes_tarifa(self, nombre_tarifa: str):
         t = f"%{nombre_tarifa.lower().strip()}%"

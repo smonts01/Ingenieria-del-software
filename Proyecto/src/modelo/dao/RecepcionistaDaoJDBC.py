@@ -11,8 +11,8 @@ class RecepcionistaDaoJDBC(Conexion):
     SQL_DELETE = "DELETE FROM recepcionista WHERE id_recepcionista = ?"
 
     def _rowToVO(self, row) -> RecepcionistaVO:
-        id_recepcionista, turno, id_administrador_registra = row
-        return RecepcionistaVO(id_recepcionista, turno, id_administrador_registra)
+        id_recepcionista, id_administrador_registra = row
+        return RecepcionistaVO(id_recepcionista, id_administrador_registra)
 
     def select(self) -> list[RecepcionistaVO]:
         """Recupera todos los recepcionistas."""
@@ -50,7 +50,7 @@ class RecepcionistaDaoJDBC(Conexion):
         cursor = self.getCursor()
         rows = 0
         try:
-            cursor.execute(self.SQL_INSERT, (vo.id_recepcionista, vo.turno, vo.id_administrador_registra))
+            cursor.execute(self.SQL_INSERT, (vo.id_recepcionista, vo.id_administrador_registra))
             rows = cursor.rowcount
         except Exception as e:
             print("Error al insertar recepcionista:", e)
@@ -64,7 +64,7 @@ class RecepcionistaDaoJDBC(Conexion):
         cursor = self.getCursor()
         rows = 0
         try:
-            cursor.execute(self.SQL_UPDATE, (vo.turno, vo.id_administrador_registra, vo.id_recepcionista))
+            cursor.execute(self.SQL_UPDATE, (vo.id_administrador_registra, vo.id_recepcionista))
             rows = cursor.rowcount
         except Exception as e:
             print("Error al actualizar recepcionista:", e)

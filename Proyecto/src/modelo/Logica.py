@@ -5,6 +5,7 @@ from src.modelo.logica.LogicaPagos import LogicaPagos
 from src.modelo.logica.LogicaClases import LogicaClases
 from src.modelo.logica.LogicaEstadisticas import LogicaEstadisticas
 from src.modelo.logica.LogicaUsuarios import LogicaUsuarios
+from src.modelo.logica.LogicaBackup import LogicaBackup
 
 
 class Logica:
@@ -24,6 +25,7 @@ class Logica:
         self._pagos = LogicaPagos()
         self._clases = LogicaClases()
         self._estadisticas = LogicaEstadisticas()
+        self._backup = LogicaBackup()
 
     # ── Autenticación ───────────────────────────────────────────────────
     def iniciar_sesion(self, username, password):
@@ -98,6 +100,19 @@ class Logica:
         return self._usuarios.listar_empleados(*args, **kwargs)
 
     # ── Clientes ────────────────────────────────────────────────────────
+
+    def calorias_semana_por_dia(self, id_cliente):
+        return self._clientes.calorias_semana_por_dia(id_cliente)
+    
+    def calcular_objetivo_semanal(self, calorias_semana):
+        return self._clientes.calcular_objetivo_semanal(calorias_semana)
+
+    def clases_asistidas_cliente(self, id_cliente):
+        return self._clientes.clases_asistidas_cliente(id_cliente)
+
+    def desapuntarse_clase_por_nombre(self, id_cliente, nombre_actividad):
+        return self._clientes.desapuntarse_clase_por_nombre(id_cliente, nombre_actividad)
+    
     def contar_usuarios(self):
         return self._clientes.contar_usuarios()
 
@@ -177,6 +192,8 @@ class Logica:
         return self._clientes.convertir_fecha_a_bd(fecha)
 
     # ── Clases / inscripciones / asistencia ─────────────────────────────
+    def clases_ocupacion_cliente(self):
+        return self._clases.clases_ocupacion_cliente()
 
     def clases_hoy_entrenador(self, id_entrenador):
         return self._clases.clases_hoy_entrenador(id_entrenador)
@@ -468,3 +485,10 @@ class Logica:
 
     def ocupacion_por_clase_estadisticas(self):
         return self._estadisticas.ocupacion_por_clase_estadisticas()
+
+    # ── Copias de seguridad ─────────────────────────────────────────────
+    def crear_copia_seguridad(self):
+        return self._backup.crear_copia_seguridad()
+
+    def restaurar_copia_seguridad(self, ruta_sql):
+        return self._backup.restaurar_copia_seguridad(ruta_sql)

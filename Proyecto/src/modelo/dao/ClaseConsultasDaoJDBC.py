@@ -11,11 +11,14 @@ class ClaseConsultasDaoJDBC(DaoJDBCBase):
                          "WHERE LOWER(nombre_actividad) LIKE ? "
                          "ORDER BY nombre_actividad")
 
-    SQL_OCUPACION_CLASE = ("SELECT c.id_clase, c.nombre_actividad, COUNT(i.id_inscripcion) AS inscritos, c.aforo_maximo, ROUND(COUNT(i.id_inscripcion)*100.0/c.aforo_maximo,1) AS pct "
-                           "FROM clase c "
-                           "LEFT JOIN inscripcion i ON c.id_clase=i.id_clase AND i.estado='inscrito' "
-                           "GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo "
-                           "ORDER BY pct DESC")
+    SQL_OCUPACION_CLASE = (
+        "SELECT c.id_clase, c.nombre_actividad, COUNT(i.id_inscripcion) AS inscritos, "
+        "c.aforo_maximo, ROUND(COUNT(i.id_inscripcion)*100.0/c.aforo_maximo,1) AS pct "
+        "FROM clase c "
+        "LEFT JOIN inscripcion i ON c.id_clase=i.id_clase AND i.estado='inscrito' "
+        "GROUP BY c.id_clase, c.nombre_actividad, c.aforo_maximo "
+        "ORDER BY pct DESC"
+    )
 
     SQL_CLASES_ENTRENADOR_TABLA = ("SELECT c.nombre_actividad, "
                                     "s.nombre AS sala, "
@@ -78,9 +81,37 @@ class ClaseConsultasDaoJDBC(DaoJDBCBase):
                                 "WHEN 7 THEN 'sabado' "
                                 "END)")
     
+    SQL_CLASES_OCUPACION_CLIENTE = """
+        SELECT 
+            c.id_clase,
+            c.nombre_actividad,
+            c.dia_semana,
+            c.hora_inicio,
+            c.hora_fin,
+            s.nombre AS sala,
+            COUNT(i.id_inscripcion) AS inscritos,
+            c.aforo_maximo
+        FROM clase c
+        JOIN sala s ON c.id_sala = s.id_sala
+        LEFT JOIN inscripcion i 
+            ON c.id_clase = i.id_clase
+            AND i.estado = 'inscrito'
+        GROUP BY 
+            c.id_clase,
+            c.nombre_actividad,
+            c.dia_semana,
+            c.hora_inicio,
+            c.hora_fin,
+            s.nombre,
+            c.aforo_maximo
+        ORDER BY FIELD(c.dia_semana, 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'),
+                c.hora_inicio
+    """
+        
 
     
-
+    def clases_ocupacion_cliente(self):
+        return self.consultar(self.SQL_CLASES_OCUPACION_CLIENTE)
 
     def clases_hoy_entrenador(self, id_entrenador):
         datos = self.consultar(self.SQL_CLASES_HOY_ENTRENADOR, (id_entrenador,))

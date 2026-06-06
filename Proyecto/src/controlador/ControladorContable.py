@@ -531,7 +531,7 @@ class ControladorContable:
         tarifa = pago[5]
         importe = pago[6]
         fecha_pago = pago[7]
-        estado = pago[8]
+        estado = "pendiente"
 
         self.id_pago_seleccionado = id_pago
         self.id_cliente_seleccionado = id_cliente
@@ -570,7 +570,7 @@ class ControladorContable:
             tarifa = pago[5]
             importe = pago[6]
             fecha_pago = pago[7]
-            estado = pago[8]
+            estado = "pendiente"
 
             self.id_pago_seleccionado = id_pago
             self.id_cliente_seleccionado = id_cliente
@@ -607,7 +607,6 @@ class ControladorContable:
 
             if hasattr(v, "lblSubAs_4"):
                 v.lblSubAs_4.setText("-")
-            
 
     def registrar_pago(self):
         v = self.ventana

@@ -1,7 +1,7 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 from src.modelo.VO.ClientesVO import ClientesVO
 from src.modelo.VO.ClienteInicioVO import ClienteInicioVO
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from src.modelo.conexion.Conexion import Conexion
 
 class ClienteDaoJDBC(DaoJDBCBase):
@@ -23,16 +23,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             u.direccion,
             DATE_FORMAT(u.fecha_nacimiento, '%d/%m/%Y')  AS fecha_nacimiento,
             DATE_FORMAT(u.fecha_registro,   '%M %Y')     AS fecha_registro,
-            COALESCE(
-                (
-                    SELECT p.estado
-                    FROM pago p
-                    WHERE p.id_cliente = c.id_cliente
-                    ORDER BY p.fecha_pago DESC
-                    LIMIT 1
-                ),
-                c.estado_pagado
-            ) AS estado_pagado,
+            c.estado_pagado AS estado_pagado,
             c.calorias_acumuladas
         FROM clientes c
         JOIN usuarios u ON u.id_usuario = c.id_cliente
@@ -53,7 +44,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
         SELECT
             p.importe,
             DATE_FORMAT(p.fecha_pago, '%M %Y') AS mes_pago,
-            p.estado
+            'abonado' AS estado
         FROM pago p
         WHERE p.id_cliente = ?
         ORDER BY p.fecha_pago DESC
@@ -107,7 +98,14 @@ class ClienteDaoJDBC(DaoJDBCBase):
         JOIN clase cl ON cl.id_clase  = i.id_clase
         JOIN sala  s  ON s.id_sala    = cl.id_sala
         WHERE i.id_cliente = ?
-          AND i.estado = 'inscrito'
+        AND i.estado = 'inscrito'
+        AND NOT EXISTS (
+            SELECT 1
+            FROM asistencia a
+            WHERE a.id_cliente = i.id_cliente
+                AND a.id_clase = i.id_clase
+                AND a.presente = 'si'
+        )
         ORDER BY
             FIELD(cl.dia_semana,
                   'lunes','martes','miércoles','jueves',
@@ -157,6 +155,28 @@ class ClienteDaoJDBC(DaoJDBCBase):
         GROUP BY cl.nombre_actividad
         ORDER BY total DESC
     """
+
+    SQL_CLASES_ASISTIDAS_CLIENTE = """
+        SELECT DISTINCT id_clase
+        FROM asistencia
+        WHERE id_cliente = ?
+        AND presente = 'si'
+    """
+
+    SQL_CALORIAS_SEMANA_POR_DIA = """
+        SELECT 
+            DAYOFWEEK(a.fecha) AS num_dia,
+            COALESCE(SUM(c.calorias_estimadas), 0) AS calorias
+        FROM asistencia a
+        JOIN clase c ON a.id_clase = c.id_clase
+        WHERE a.id_cliente = ?
+        AND a.presente = 'si'
+        AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1)
+        AND DAYOFWEEK(a.fecha) BETWEEN 2 AND 7
+        GROUP BY DAYOFWEEK(a.fecha)
+        ORDER BY DAYOFWEEK(a.fecha)
+    """
+
 
     def __init__(self):
         self._conexion = Conexion()
@@ -386,31 +406,48 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     @staticmethod
     def _calcular_racha(fechas: list) -> int:
-        """
-        Dado un listado de objetos date ordenados de más reciente a más
-        antiguo (sin duplicados), calcula cuántos días consecutivos hay
-        hacia atrás desde hoy.
-        """
-        
-
         if not fechas:
             return 0
 
+        fechas_normalizadas = []
+
+        for fecha in fechas:
+            if isinstance(fecha, datetime):
+                fechas_normalizadas.append(fecha.date())
+
+            elif isinstance(fecha, date):
+                fechas_normalizadas.append(fecha)
+
+            elif isinstance(fecha, str):
+                try:
+                    fechas_normalizadas.append(
+                        datetime.strptime(fecha[:10], "%Y-%m-%d").date()
+                    )
+                except ValueError:
+                    pass
+
+        if not fechas_normalizadas:
+            return 0
+
+        fechas_normalizadas.sort(reverse=True)
+
         hoy = date.today()
-        # Si el cliente no entrenó ni hoy ni ayer, la racha ya rompió
-        if fechas[0] < hoy - timedelta(days=1):
+
+        if fechas_normalizadas[0] < hoy - timedelta(days=1):
             return 0
 
         racha = 0
-        dia_esperado = fechas[0]  # empezamos desde la asistencia más reciente
-        for fecha in fechas:
+        dia_esperado = fechas_normalizadas[0]
+
+        for fecha in fechas_normalizadas:
             if fecha == dia_esperado:
                 racha += 1
                 dia_esperado -= timedelta(days=1)
             else:
                 break
-        return racha
 
+        return racha
+    
     @staticmethod
     def _calcular_distribucion(rows: list) -> dict:
         """
@@ -435,4 +472,39 @@ class ClienteDaoJDBC(DaoJDBCBase):
                 pct = round(total * 100 / total_global)
                 resultado[tipo] = pct
                 acumulado += pct
+        return resultado
+    
+    def clases_asistidas_cliente(self, id_cliente):
+        filas = self.consultar(self.SQL_CLASES_ASISTIDAS_CLIENTE, (id_cliente,))
+        return [f[0] for f in filas]
+    
+    def calorias_semana_por_dia(self, id_cliente):
+        filas = self.consultar(self.SQL_CALORIAS_SEMANA_POR_DIA, (id_cliente,))
+
+        resultado = {
+            "lunes": 0,
+            "martes": 0,
+            "miercoles": 0,
+            "jueves": 0,
+            "viernes": 0,
+            "sabado": 0,
+        }
+
+        mapa_dias = {
+            2: "lunes",
+            3: "martes",
+            4: "miercoles",
+            5: "jueves",
+            6: "viernes",
+            7: "sabado",
+        }
+
+        for fila in filas:
+            num_dia = int(fila[0])
+            calorias = int(fila[1])
+            dia = mapa_dias.get(num_dia)
+
+            if dia:
+                resultado[dia] = calorias
+
         return resultado

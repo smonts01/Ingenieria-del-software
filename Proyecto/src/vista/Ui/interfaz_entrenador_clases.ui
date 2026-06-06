@@ -718,7 +718,7 @@ QPushButton:checked {
        <string>Clases hoy</string>
       </property>
      </widget>
-     <widget class="QLabel" name="labelHora">
+     <widget class="QLabel" name="claseshoy">
       <property name="geometry">
        <rect>
         <x>70</x>

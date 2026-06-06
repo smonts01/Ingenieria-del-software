@@ -703,6 +703,19 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        <string>80%</string>
       </property>
      </widget>
+     <widget class="QLabel" name="lblTotalCalorias_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>80</y>
+        <width>151</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Objetivo : 1.000 kcal</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="cardGraficoCalorias">
      <property name="geometry">
@@ -949,7 +962,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        </rect>
       </property>
       <property name="text">
-       <string>Total semanal : 1.250 kcal</string>
+       <string>Total de calorías : 1.000 kcal</string>
       </property>
      </widget>
     </widget>
@@ -981,9 +994,9 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      <widget class="QLabel" name="lblSigueRacha">
       <property name="geometry">
        <rect>
-        <x>260</x>
-        <y>50</y>
-        <width>150</width>
+        <x>130</x>
+        <y>60</y>
+        <width>281</width>
         <height>20</height>
        </rect>
       </property>
@@ -997,7 +1010,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
      <widget class="QLabel" name="lblNumEntrenos_2">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>50</x>
         <y>50</y>
         <width>70</width>
         <height>28</height>

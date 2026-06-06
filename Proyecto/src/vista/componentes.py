@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem as _QTableWidgetItem,
     QCheckBox as _QCheckBox,
 )
+from PyQt5.QtWidgets import QFileDialog
 
 
 class CargadorVista:
@@ -73,3 +74,25 @@ class ImagenView:
         pixmap = _QPixmap()
         pixmap.loadFromData(datos)
         return pixmap
+
+class ArchivoView:
+    """Componente de vista para seleccionar archivos desde la interfaz."""
+
+    @staticmethod
+    def seleccionar_archivo_sql(parent=None, titulo="Seleccionar copia de seguridad"):
+        ruta, _ = QFileDialog.getOpenFileName(
+            parent,
+            titulo,
+            "",
+            "Archivos SQL (*.sql)"
+        )
+        return ruta
+
+    @staticmethod
+    def seleccionar_carpeta(parent=None, titulo="Seleccionar carpeta"):
+        ruta = QFileDialog.getExistingDirectory(
+            parent,
+            titulo,
+            ""
+        )
+        return ruta
