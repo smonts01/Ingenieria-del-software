@@ -6,6 +6,7 @@ from src.modelo.logica.LogicaClases import LogicaClases
 from src.modelo.logica.LogicaEstadisticas import LogicaEstadisticas
 from src.modelo.logica.LogicaUsuarios import LogicaUsuarios
 from src.modelo.logica.LogicaBackup import LogicaBackup
+from src.modelo.logica.LogicaInformes import LogicaInformes
 
 
 class Logica:
@@ -26,6 +27,7 @@ class Logica:
         self._clases = LogicaClases()
         self._estadisticas = LogicaEstadisticas()
         self._backup = LogicaBackup()
+        self._informes = LogicaInformes()
 
     # ── Autenticación ───────────────────────────────────────────────────
     def iniciar_sesion(self, username, password):
@@ -371,8 +373,11 @@ class Logica:
     def listar_tarifas(self):
         return self._pagos.listar_tarifas()
 
-    def generar_informe(self, *args, **kwargs):
-        return self._pagos.generar_informe(*args, **kwargs)
+    def generar_informe(self, id_contable, tipo):
+        return self._informes.generar_informe(id_contable, tipo)
+    
+    def exportar_pdf_informe(self, id_contable, tipo, cabeceras, filas):
+        return self._informes.exportar_pdf(id_contable, tipo, cabeceras, filas)
 
     def listar_informes(self):
         return self._pagos.listar_informes()
@@ -412,7 +417,7 @@ class Logica:
         return self._pagos.num_tarifas_activas_contable()
 
     def num_informes_mes_contable(self):
-        return self._pagos.num_informes_mes_contable()
+        return self._informes.num_informes_mes_contable()
 
     def contable_clientes_con_deuda(self):
         return self._pagos.contable_clientes_con_deuda()

@@ -276,80 +276,38 @@ class ControladorContable:
 
     def generar_informe(self):
         v = self.ventana
+
         try:
             self.modelo.generar_informe(self.usuario['id_usuario'], 'general')
             v.mostrar_exito('Informe generado correctamente')
-            self.cargar_datos()
+
+            if isinstance(v, VistaContableInformes):
+                self._cargar_informes()
+            else:
+                self.cargar_datos()
+
         except Exception as e:
             v.mostrar_error(str(e))
 
     def exportar_pdf(self):
         v = self.ventana
+
         try:
-            tabla_widget = None
-            for nombre in ('tablaInformeGestionEconomica', 'tablaInformePagos',
-                           'tablaInformePagosPendientes', 'tablaInformeBalanceMensual'):
-                if hasattr(v, nombre):
-                    tabla_widget = getattr(v, nombre)
-                    break
-            if tabla_widget is None:
-                v.mostrar_error('No hay tabla de informe en esta pantalla.')
-                return
-
-            from reportlab.lib.pagesizes import A4
-            from reportlab.lib import colors
-            from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
-            from reportlab.lib.styles import getSampleStyleSheet
-
-            cabeceras = [tabla_widget.horizontalHeaderItem(col).text()
-                         if tabla_widget.horizontalHeaderItem(col) else ''
-                         for col in range(tabla_widget.columnCount())]
-            filas = [cabeceras]
-            for fi in range(tabla_widget.rowCount()):
-                filas.append([
-                    tabla_widget.item(fi, ci).text() if tabla_widget.item(fi, ci) else ''
-                    for ci in range(tabla_widget.columnCount())
-                ])
-            if len(filas) <= 1:
-                v.mostrar_error('El informe no tiene datos para exportar.')
-                return
-
             tipo = self._tipo_informe_actual
-            fecha_str = datetime.now().strftime('%Y%m%d_%H%M%S')
-            nombre_archivo = f"{tipo.replace(' ', '_')}_{fecha_str}.pdf"
-            buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-            ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, buf)
-            ruta = os.path.join(buf.value, nombre_archivo)
 
-            doc = SimpleDocTemplate(ruta, pagesize=A4)
-            estilos = getSampleStyleSheet()
-            elementos = [
-                Paragraph(f'StayFit — {tipo}', estilos['Title']),
-                Paragraph(f"Generado el {datetime.now().strftime('%d/%m/%Y a las %H:%M')}", estilos['Normal']),
-                Spacer(1, 20)
-            ]
-            tabla_pdf = Table(filas, repeatRows=1)
-            tabla_pdf.setStyle(TableStyle([
-                ('BACKGROUND',    (0, 0), (-1, 0),  colors.HexColor('#1D9E75')),
-                ('TEXTCOLOR',     (0, 0), (-1, 0),  colors.white),
-                ('FONTNAME',      (0, 0), (-1, 0),  'Helvetica-Bold'),
-                ('FONTSIZE',      (0, 0), (-1, 0),  11),
-                ('ROWBACKGROUNDS',(0, 1), (-1, -1),  [colors.white, colors.HexColor('#F1FFF8')]),
-                ('FONTSIZE',      (0, 1), (-1, -1),  9),
-                ('GRID',          (0, 0), (-1, -1),  0.5, colors.HexColor('#9FE1CB')),
-                ('ALIGN',         (0, 0), (-1, -1),  'CENTER'),
-                ('VALIGN',        (0, 0), (-1, -1),  'MIDDLE'),
-                ('TOPPADDING',    (0, 0), (-1, -1),  6),
-                ('BOTTOMPADDING', (0, 0), (-1, -1),  6),
-            ]))
-            elementos.append(tabla_pdf)
-            doc.build(elementos)
-            try:
-                self.modelo.generar_informe(self.usuario['id_usuario'], tipo)
-                self.cargar_datos()
-            except Exception:
-                pass
+            cabeceras, filas = v.obtener_datos_tabla_informe()
+
+            ruta = self.modelo.exportar_pdf_informe(
+                self.usuario['id_usuario'],
+                tipo,
+                cabeceras,
+                filas
+            )
+
+            self.cargar_datos()
+
             v.mostrar_exito(f'Guardado en:\n{ruta}')
+
         except Exception as e:
             v.mostrar_error(str(e))
 

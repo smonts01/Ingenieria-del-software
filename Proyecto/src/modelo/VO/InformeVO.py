@@ -4,21 +4,19 @@ class InformeVO:
         self._id_contable = id_contable
         self._tipo_informe = tipo_informe
         self._fecha_generacion = fecha_generacion
-        
-        
+
     @property
     def id_informe(self):
         return self._id_informe
-    
+
     @property
     def id_contable(self):
         return self._id_contable
-    
+
     @property
-    def tipo_inform(self):
+    def tipo_informe(self):
         return self._tipo_informe
-    
+
     @property
-    def fecha_genracion(self):
+    def fecha_generacion(self):
         return self._fecha_generacion
-    
