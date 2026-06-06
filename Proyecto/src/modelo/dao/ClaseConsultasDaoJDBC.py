@@ -81,9 +81,37 @@ class ClaseConsultasDaoJDBC(DaoJDBCBase):
                                 "WHEN 7 THEN 'sabado' "
                                 "END)")
     
+    SQL_CLASES_OCUPACION_CLIENTE = """
+        SELECT 
+            c.id_clase,
+            c.nombre_actividad,
+            c.dia_semana,
+            c.hora_inicio,
+            c.hora_fin,
+            s.nombre AS sala,
+            COUNT(i.id_inscripcion) AS inscritos,
+            c.aforo_maximo
+        FROM clase c
+        JOIN sala s ON c.id_sala = s.id_sala
+        LEFT JOIN inscripcion i 
+            ON c.id_clase = i.id_clase
+            AND i.estado = 'inscrito'
+        GROUP BY 
+            c.id_clase,
+            c.nombre_actividad,
+            c.dia_semana,
+            c.hora_inicio,
+            c.hora_fin,
+            s.nombre,
+            c.aforo_maximo
+        ORDER BY FIELD(c.dia_semana, 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'),
+                c.hora_inicio
+    """
+        
 
     
-
+    def clases_ocupacion_cliente(self):
+        return self.consultar(self.SQL_CLASES_OCUPACION_CLIENTE)
 
     def clases_hoy_entrenador(self, id_entrenador):
         datos = self.consultar(self.SQL_CLASES_HOY_ENTRENADOR, (id_entrenador,))

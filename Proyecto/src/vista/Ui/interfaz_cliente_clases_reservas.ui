@@ -548,7 +548,7 @@ al ritmo de la música.</string>
       <property name="class" stdset="0">
        <string>badgeOk</string>
       </property>
-      <widget class="QLabel" name="lblBadge1">
+      <widget class="QLabel" name="lblEstadoReserva1">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -692,7 +692,7 @@ y reduce el estrés.</string>
       <property name="class" stdset="0">
        <string>badgeOk</string>
       </property>
-      <widget class="QLabel" name="lblBadge1_2">
+      <widget class="QLabel" name="lblEstadoReserva2">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -820,7 +820,7 @@ sesión de alta intensidad.</string>
       <property name="class" stdset="0">
        <string>badgeOk</string>
       </property>
-      <widget class="QLabel" name="lblBadge1_3">
+      <widget class="QLabel" name="lblEstadoReserva3">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -948,7 +948,7 @@ mejora tu postura.</string>
       <property name="class" stdset="0">
        <string>badgeOk</string>
       </property>
-      <widget class="QLabel" name="lblBadge1_4">
+      <widget class="QLabel" name="lblEstadoReserva4">
        <property name="geometry">
         <rect>
          <x>10</x>

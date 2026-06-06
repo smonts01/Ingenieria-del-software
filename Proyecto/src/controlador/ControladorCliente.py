@@ -67,6 +67,13 @@ class ControladorCliente:
         if hasattr(v, "btnInformacion"):
             v.btnInformacion.clicked.connect(lambda: self.abrir_pantalla("interfaz_cliente_informacion.ui"))
 
+        if hasattr(v, "lblTabRes"):
+            v.lblTabRes.mousePressEvent = lambda event: self.abrir_pantalla("interfaz_cliente_clases_reservas.ui")
+
+        if hasattr(v, "lblTabTodas"):
+            v.lblTabTodas.mousePressEvent = lambda event: self.abrir_pantalla("interfaz_cliente_clases_todas.ui")
+        
+        
         # Pantalla de clases: botones de reserva
         for i in range(1, 6):
             boton = getattr(v, f"btnReservar{i}", None)
@@ -177,13 +184,263 @@ class ControladorCliente:
             self._rellenar_tabla_proximas(v.tablaProximasClases, vo.proximas_clases)
 
     def _cargar_clases_todas(self):
-        # Las cards de clases vienen diseñadas en el .ui.
-        # El controlador solo mantiene el nombre del cliente en cabecera y conecta reservas.
-        pass
+        v = self.ventana
+        id_cliente = self.usuario["id_usuario"]
+
+        clases = self.modelo.clases_ocupacion_cliente()
+        inscritas = self.modelo.clases_inscritas_cliente(id_cliente)
+
+        asistidas = self.modelo.clases_asistidas_cliente(id_cliente)
+
+    
+
+        ids_inscritas = []
+
+        descripciones = {
+            "yoga": "Flexibilidad y relajación.",
+            "pilates": "Core y postura.",
+            "spinning": "Cardio de alta intensidad.",
+            "zumba": "Baile y cardio.",
+            "crossfit": "Fuerza y resistencia.",
+        }
+
+        for ins in inscritas:
+            ids_inscritas.append(ins.id_clase)
+
+
+        self._cards_clases = []
+
+
+
+        for i, clase in enumerate(clases[:5], start=1):
+            
+            id_clase = clase[0]
+            nombre = clase[1]
+            dia = clase[2]
+            hora_inicio = str(clase[3])[:5]
+            hora_fin = str(clase[4])[:5]
+            sala = clase[5]
+            inscritos = clase[6]
+            aforo = clase[7]
+            
+            horario = f"{hora_inicio} - {hora_fin}"
+
+            lbl_clase = getattr(v, f"lblClase{i}", None)
+            
+            labels_desc = {
+                1: "lblDesc1",
+                2: "lblDesc2",
+                3: "lblDesc3",
+                4: "lblDesc4",
+                5: "lblDesc4_2",
+            }
+
+            lbl_desc = getattr(v, labels_desc.get(i), None)
+
+            if lbl_desc:
+                descripcion = descripciones.get(
+                    str(nombre).strip().lower(),
+                    "Clase disponible para reservar."
+                )
+                lbl_desc.setText(descripcion)
+            
+            labels_fecha = {
+                1: "lblFecha1",
+                2: "lblFecha2",
+                3: "lblFecha3",
+                4: "lblFecha4",
+                5: "lblFecha4_2",
+            }
+
+            lbl_fecha = getattr(v, labels_fecha.get(i), None)
+
+
+            labels_plazas = {
+                1: "lblPlazas1",
+                2: "lblPlazas2",
+                3: "lblPlazas3",
+                4: "lblPlazas4",
+                5: "lblPlazas4_2",
+            }
+
+            lbl_ocupacion = getattr(v, labels_plazas.get(i), None)
+            btn = getattr(v, f"btnReservar{i}", None)
+
+            if lbl_clase:
+                lbl_clase.setText(str(nombre))
+
+           
+
+            if lbl_fecha:
+                lbl_fecha.setText(f"{dia}\n{hora_inicio} - {hora_fin}\n{sala}")
+
+            if lbl_ocupacion:
+                lbl_ocupacion.setText(f"{inscritos} / {aforo}")
+
+            if btn:
+                if id_clase in asistidas:
+                    btn.setText("Realizada")
+                    btn.setEnabled(False)
+                elif id_clase in ids_inscritas:
+                    btn.setText("Cancelar")
+                    btn.setEnabled(True)
+                else:
+                    btn.setText("Reservar")
+                    btn.setEnabled(True)
+
+            nombres_cards = {
+                1: "cardClase1",
+                2: "cardClase2",
+                3: "cardClase3",
+                4: "cardClase4",
+                5: "cardClase4_2",
+            }
+
+            card = getattr(v, nombres_cards.get(i), None)
+
+            self._cards_clases.append({
+                "card": card,
+                "nombre": str(nombre).lower(),
+                "horario": horario,
+            })
+            
+        
+        if hasattr(v, "lblProxDatos"):
+            proxima = None
+
+            for clase in clases:
+                id_clase = clase[0]
+
+                if id_clase not in asistidas:
+                    proxima = clase
+                    break
+
+            if proxima:
+                nombre = proxima[1]
+                dia = proxima[2]
+                hora_inicio = str(proxima[3])[:5]
+                hora_fin = str(proxima[4])[:5]
+                sala = proxima[5]
+
+                v.lblProxDatos.setText(f"{nombre}\n{dia} · {hora_inicio} - {hora_fin}\n{sala}")
+            else:
+                v.lblProxDatos.setText("No tienes próximas clases")
 
     def _cargar_reservas(self):
-        # Pantalla visual de reservas. Los datos dinámicos principales se cargan en Inicio.
-        pass
+        v = self.ventana
+        id_cliente = self.usuario["id_usuario"]
+
+        
+        reservas = self._vo.proximas_clases
+
+        clases_ocupacion = self.modelo.clases_ocupacion_cliente()
+
+        ocupacion_por_id = {}
+        for clase in clases_ocupacion:
+            id_clase = clase[0]
+            ocupacion_por_id[id_clase] = {
+                "inscritos": clase[6],
+                "aforo": clase[7],
+            }
+
+        descripciones = {
+            "yoga": "Flexibilidad y relajación.",
+            "pilates": "Core y postura.",
+            "spinning": "Cardio de alta intensidad.",
+            "zumba": "Baile y cardio.",
+            "crossfit": "Fuerza y resistencia.",
+        }
+
+        cards = {
+            1: "cardReserva1",
+            2: "cardReserva2",
+            3: "cardReserva3",
+            4: "cardReserva4",
+        }
+
+        labels_clase = {
+            1: "lblReservaClase1",
+            2: "lblReservaClase2",
+            3: "lblReservaClase3",
+            4: "lblReservaClase4",
+        }
+
+        labels_desc = {
+            1: "lblReservaDesc1",
+            2: "lblReservaDesc2",
+            3: "lblReservaDesc3",
+            4: "lblReservaDesc4",
+        }
+
+        labels_fecha = {
+            1: "lblReservaFecha1",
+            2: "lblReservaFecha2",
+            3: "lblReservaFecha3",
+            4: "lblReservaFecha4",
+        }
+
+        labels_plazas = {
+            1: "lblPlazasReserva1",
+            2: "lblPlazasReserva2",
+            3: "lblPlazasReserva3",
+            4: "lblPlazasReserva4",
+        }
+
+        labels_estado = {
+            1: "lblEstadoReserva1",
+            2: "lblEstadoReserva2",
+            3: "lblEstadoReserva3",
+            4: "lblEstadoReserva4",
+        }
+
+        for i in range(1, 5):
+            card = getattr(v, cards.get(i), None)
+            if card:
+                card.setVisible(False)
+
+        for i, reserva in enumerate(reservas[:4], start=1):
+            nombre = reserva.get("nombre_actividad", "")
+            dia = reserva.get("fecha", "")
+            hora_inicio = str(reserva.get("hora_inicio", ""))[:5]
+            hora_fin = ""
+            sala = reserva.get("nombre_sala", "")
+
+            
+            inscritos = 0
+            aforo = 0
+
+            for clase in clases_ocupacion:
+                if str(clase[1]).lower() == str(nombre).lower():
+                    inscritos = clase[6]
+                    aforo = clase[7]
+                    break
+            
+
+            card = getattr(v, cards.get(i), None)
+            lbl_clase = getattr(v, labels_clase.get(i), None)
+            lbl_desc = getattr(v, labels_desc.get(i), None)
+            lbl_fecha = getattr(v, labels_fecha.get(i), None)
+            lbl_plazas = getattr(v, labels_plazas.get(i), None)
+            lbl_estado = getattr(v, labels_estado.get(i), None)
+
+            if card:
+                card.setVisible(True)
+
+            if lbl_clase:
+                lbl_clase.setText(str(nombre))
+
+            if lbl_desc:
+                clave = str(nombre).strip().lower()
+                lbl_desc.setText(descripciones.get(clave, "Clase reservada."))
+
+            if lbl_fecha:
+                lbl_fecha.setText(f"{dia}\n{hora_inicio}\n{sala}")
+
+            if lbl_plazas:
+                lbl_plazas.setText(f"Plazas: {inscritos} / {aforo}")
+
+            if lbl_estado:
+                lbl_estado.setText("Reserva confirmada")
 
     def _cargar_estadisticas(self):
         v = self.ventana
@@ -199,12 +456,70 @@ class ControladorCliente:
             v.lblSubTiempo.setText(vo.get_delta_tiempo_str())
         if hasattr(v, "lblNumCalorias"):
             v.lblNumCalorias.setText(f"{vo.calorias_semana} kcal")
+
+        objetivo = self.modelo.calcular_objetivo_semanal(vo.calorias_semana)
+
+        if hasattr(v, "lblNumObjetivo"):
+            v.lblNumObjetivo.setText(objetivo["texto_porcentaje"])
+
+        if hasattr(v, "lblTextoObjetivo"):
+            v.lblTextoObjetivo.setText(objetivo["texto_objetivo"])
+
+
+
         if hasattr(v, "btnMini"):
             v.btnMini.setText(f"Total semanal: {vo.calorias_semana} kcal")
-        if hasattr(v, "lblNumRacha"):
-            v.lblNumRacha.setText(str(vo.racha_dias))
-        if hasattr(v, "lblTextoRacha"):
-            v.lblTextoRacha.setText(f"Llevas {vo.racha_dias} días consecutivos entrenando.")
+
+        
+        calorias_dias = self.modelo.calorias_semana_por_dia(self.usuario["id_usuario"])
+
+        barras = {
+            "lunes": getattr(v, "barLun", None),
+            "martes": getattr(v, "barMar", None),
+            "miercoles": getattr(v, "barMie", None),
+            "jueves": getattr(v, "barJue", None),
+            "viernes": getattr(v, "barVie", None),
+            "sabado": getattr(v, "barSab", None),
+        }
+
+        max_kcal = max(calorias_dias.values()) if calorias_dias else 0
+
+        if max_kcal == 0:
+            max_kcal = 1
+
+        altura_maxima = 80
+
+        for dia, barra in barras.items():
+            if barra:
+                kcal = calorias_dias.get(dia, 0)
+                altura = int((kcal / max_kcal) * altura_maxima)
+
+                if kcal == 0:
+                    altura = 0
+                elif altura < 8:
+                    altura = 8
+
+                geo = barra.geometry()
+                bottom = geo.y() + geo.height()
+
+                barra.setGeometry(
+                    geo.x(),
+                    bottom - altura,
+                    geo.width(),
+                    altura
+                )
+
+        if hasattr(v, "dias"):
+            v.dias.setText("Lun          Mar          Mié          Jue          Vie          Sáb")
+
+        if hasattr(v, "lblTotalCalorias"):
+            v.lblTotalCalorias.setText(f"Total semanal: {sum(calorias_dias.values())} kcal")
+                        
+
+        if hasattr(v, "lblNumEntrenos_2"):
+            v.lblNumEntrenos_2.setText(str(vo.racha_dias))
+        if hasattr(v, "lblSigueRacha"):
+            v.lblSigueRacha.setText(f"Llevas {vo.racha_dias} días consecutivos entrenando.")
 
         self._rellenar_leyendas_distribucion(vo.distribucion_tipos)
 
@@ -212,42 +527,89 @@ class ControladorCliente:
         v = self.ventana
         vo = self._vo
 
-        if hasattr(v, "lblNombrePerfil"):
-            v.lblNombrePerfil.setText(str(vo.nombre))
+        if hasattr(v, "lblNombreCompleto"):
+            v.lblNombreCompleto.setText(str(vo.nombre))
         if hasattr(v, "lblEmailPerfil"):
             v.lblEmailPerfil.setText(str(vo.email))
         if hasattr(v, "txtNombre"):
             v.txtNombre.setText(str(vo.nombre))
-        if hasattr(v, "txtTelefono"):
-            v.txtTelefono.setText(str(vo.telefono))
-        if hasattr(v, "txtEmail"):
-            v.txtEmail.setText(str(vo.email))
-        if hasattr(v, "txtFecha"):
-            v.txtFecha.setText(str(vo.fecha_nacimiento))
-        if hasattr(v, "txtDireccion"):
-            v.txtDireccion.setText(str(vo.direccion))
+        if hasattr(v, "lblNumTelefono"):
+            v.lblNumTelefono.setText(str(vo.telefono))
+        if hasattr(v, "lblCorreoElectronico"):
+            v.lblCorreoElectronico.setText(str(vo.email))
+        if hasattr(v, "lblFechaNacimiento"):
+            v.lblFechaNacimiento.setText(str(vo.fecha_nacimiento))
+        if hasattr(v, "lblDireccion"):
+            v.lblDireccion.setText(str(vo.direccion))
         if hasattr(v, "lblAsistenciasValor"):
             v.lblAsistenciasValor.setText(f"{vo.asistencias_mes} / {vo.inscripciones_mes} clases")
 
+        objetivo = self.modelo.calcular_objetivo_semanal(vo.calorias_semana)
+
+        if hasattr(v, "lblPorcentaje"):
+            v.lblPorcentaje.setText(objetivo["texto_porcentaje"])
+
+        if hasattr(v, "barraProgresoValor") and hasattr(v, "barraProgresoFondo"):
+            porcentaje = objetivo["porcentaje"]
+
+            ancho_fondo = v.barraProgresoFondo.width()
+            ancho_valor = int(ancho_fondo * porcentaje / 100)
+
+            v.barraProgresoValor.setFixedWidth(ancho_valor)
+
     def reservar_clase_card(self, numero_card):
         v = self.ventana
-        label = getattr(v, f"lblClase{numero_card}", None)
+
+        labels_clase = {
+            1: "lblClase1",
+            2: "lblClase2",
+            3: "lblClase3",
+            4: "lblClase4",
+            5: "lblClase4_2",
+        }
+
+        label = getattr(v, labels_clase.get(numero_card), None)
+
         if label is None:
             MensajeView.warning(v, "Error", "No se ha encontrado la clase seleccionada")
             return
 
         nombre_clase = label.text().strip()
+
         if not nombre_clase:
             MensajeView.warning(v, "Error", "No se ha seleccionado ninguna clase")
             return
 
+        boton = getattr(v, f"btnReservar{numero_card}", None)
+        accion = boton.text().strip().lower() if boton else "reservar"
+
         try:
-            self.modelo.inscribirse_clase_por_nombre(self.usuario["id_usuario"], nombre_clase)
-            MensajeView.information(v, "Reserva confirmada", f"Te has inscrito en {nombre_clase}.")
+            if accion == "cancelar":
+                self.modelo.desapuntarse_clase_por_nombre(
+                    self.usuario["id_usuario"],
+                    nombre_clase
+                )
+                MensajeView.information(
+                    v,
+                    "Reserva cancelada",
+                    f"Te has desapuntado de {nombre_clase}."
+                )
+            else:
+                self.modelo.inscribirse_clase_por_nombre(
+                    self.usuario["id_usuario"],
+                    nombre_clase
+                )
+                MensajeView.information(
+                    v,
+                    "Reserva confirmada",
+                    f"Te has inscrito en {nombre_clase}."
+                )
+
             self._cargar_vo_cliente()
             self.cargar_datos()
+
         except Exception as e:
-            MensajeView.warning(v, "Error al reservar", str(e))
+            MensajeView.warning(v, "Error al gestionar la reserva", str(e))
 
     def guardar_perfil(self):
         v = self.ventana
@@ -307,31 +669,32 @@ class ControladorCliente:
     def filtrar_clases(self):
         v = self.ventana
 
-        if not hasattr(v, "txtBuscarClases"):
+        if not hasattr(self, "_cards_clases"):
             return
 
-        texto = v.txtBuscarClases.text().strip().lower()
+        texto = ""
+        if hasattr(v, "txtBuscarClases"):
+            texto = v.txtBuscarClases.text().strip().lower()
 
-        # Cambia este nombre si tu tabla se llama de otra forma
-        if hasattr(v, "tablaClases"):
-            tabla = v.tablaClases
-        elif hasattr(v, "tablaTodasClases"):
-            tabla = v.tablaTodasClases
-        elif hasattr(v, "tablaClasesTodas"):
-            tabla = v.tablaClasesTodas
-        else:
-            return
+        tipo = "todas las categorías"
+        if hasattr(v, "cmbTipo"):
+            tipo = v.cmbTipo.currentText().strip().lower()
 
-        for fila in range(tabla.rowCount()):
-            coincide = False
+        horario = "todos los horarios"
+        if hasattr(v, "cmbHorario"):
+            horario = v.cmbHorario.currentText().strip().lower()
 
-            for col in range(tabla.columnCount()):
-                item = tabla.item(fila, col)
-                if item and texto in item.text().lower():
-                    coincide = True
-                    break
+        for item in self._cards_clases:
+            card = item["card"]
 
-            tabla.setRowHidden(fila, not coincide)
+            if card is None:
+                continue
+
+            coincide_texto = texto == "" or texto in item["nombre"]
+            coincide_tipo = tipo == "todas las categorías" or tipo == item["nombre"]
+            coincide_horario = horario == "todos los horarios" or horario == item["horario"].lower()
+
+            card.setVisible(coincide_texto and coincide_tipo and coincide_horario)
 
     def cerrar_sesion(self):
         if self.ventana:

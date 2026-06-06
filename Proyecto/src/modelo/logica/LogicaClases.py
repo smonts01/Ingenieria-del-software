@@ -22,6 +22,9 @@ class LogicaClases:
 
     # ── CLASES ─────────────────────────────────────────────────────
 
+    def clases_ocupacion_cliente(self):
+        return self._clase_consultas_dao.clases_ocupacion_cliente()
+
     def clases_hoy_entrenador(self, id_entrenador):
         if not id_entrenador:
             raise ValueError("Debe indicarse el entrenador")
