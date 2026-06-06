@@ -38,7 +38,13 @@ class ControladorCliente:
 
     def _cargar_vo_cliente(self):
         id_cliente = self.usuario["id_usuario"]
-        self._vo = self.modelo.datos_inicio_cliente(id_cliente)
+
+        try:
+            self._vo = self.modelo.datos_inicio_cliente(id_cliente)
+            print("VO CLIENTE:", self._vo)
+        except Exception as e:
+            print("ERROR AL CARGAR VO CLIENTE:", repr(e))
+            self._vo = None
 
     def conectar_botones(self):
         v = self.ventana
