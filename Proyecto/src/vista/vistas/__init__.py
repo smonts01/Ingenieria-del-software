@@ -4,7 +4,7 @@ Paquete de vistas - StayFit Gimnasio (MVC)
 
 from .vista_login import VistaLogin
 
-# Admin — todas en vista_admin.py
+# Admin
 from .vista_admin import (
     VistaAdminInicio,
     VistaAdminUsuariosClientes,
@@ -17,22 +17,27 @@ from .vista_admin import (
 )
 
 # Cliente
-from .vista_cliente_inicio import VistaClienteInicio
-from .vista_cliente_clases_todas import VistaClienteClasesTodas
-from .vista_cliente_reservas import VistaClienteReservas
-from .vista_cliente_estadisticas import VistaClienteEstadisticas
-from .vista_cliente_perfil import VistaClientePerfil
-from .vista_cliente_informacion import VistaClienteInformacion
+from .vista_cliente import (
+    VistaClienteInicio,
+    VistaClienteClasesTodas,
+    VistaClienteReservas,
+    VistaClienteEstadisticas,
+    VistaClientePerfil,
+    VistaClienteInformacion,
+)
 
 # Entrenador
-from .vista_entrenador_inicio import VistaEntrenadorInicio
-from .vista_entrenador_clases import VistaEntrenadorClases
-from .vista_entrenador_registrar_asistencia import VistaEntrenadorRegistrarAsistencia
-from .vista_entrenador_lista_clientes import VistaEntrenadorListaClientes
-from .vista_entrenador_ocupacion import VistaEntrenadorOcupacion
-from .vista_entrenador_perfil_info import VistaEntrenadorPerfil, VistaEntrenadorInformacion
+from .vista_entrenador import (
+    VistaEntrenadorInicio,
+    VistaEntrenadorClases,
+    VistaEntrenadorListaClientes,
+    VistaEntrenadorOcupacion,
+    VistaEntrenadorRegistrarAsistencia,
+    VistaEntrenadorPerfil,
+    VistaEntrenadorInformacion,
+)
 
-# Contable — todas en vista_contable.py
+# Contable
 from .vista_contable import (
     VistaContableInicio,
     VistaContableRegistrarPago,
@@ -47,7 +52,7 @@ from .vista_contable import (
     VistaContableInformeBalanceMensual,
 )
 
-# Recepcionista — todas en vista_recepcionista.py
+# Recepcionista
 from .vista_recepcionista import (
     VistaRecepcionistaInicio,
     VistaRecepcionistaClientes,
@@ -66,9 +71,9 @@ __all__ = [
     'VistaClienteInicio', 'VistaClienteClasesTodas', 'VistaClienteReservas',
     'VistaClienteEstadisticas', 'VistaClientePerfil', 'VistaClienteInformacion',
     # Entrenador
-    'VistaEntrenadorInicio', 'VistaEntrenadorClases',
-    'VistaEntrenadorRegistrarAsistencia', 'VistaEntrenadorListaClientes',
-    'VistaEntrenadorOcupacion', 'VistaEntrenadorPerfil', 'VistaEntrenadorInformacion',
+    'VistaEntrenadorInicio', 'VistaEntrenadorClases', 'VistaEntrenadorListaClientes',
+    'VistaEntrenadorOcupacion', 'VistaEntrenadorRegistrarAsistencia',
+    'VistaEntrenadorPerfil', 'VistaEntrenadorInformacion',
     # Contable
     'VistaContableInicio', 'VistaContableRegistrarPago', 'VistaContablePagosPendientes',
     'VistaContableGestionEconomica', 'VistaContableInformes', 'VistaContablePerfil',

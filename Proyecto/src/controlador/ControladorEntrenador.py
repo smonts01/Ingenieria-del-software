@@ -1,6 +1,36 @@
+"""
+Controlador del rol Entrenador — Patrón MVC según ejemplo de la profesora.
+
+Responsabilidad:
+- Instanciar la Vista y asignarle set_controlador(self)
+- Responder a los eventos que la Vista delega
+- Llamar al Modelo para obtener/guardar datos
+- Llamar a métodos de la Vista para actualizar la UI
+- NO conecta botones, NO toca widgets directamente
+"""
 import os
 from datetime import date
-from src.vista.componentes import CargadorVista, MensajeView, TablaView, BotonesView
+
+from src.vista.componentes import MensajeView, TablaView, BotonesView
+from src.vista.vistas.vista_entrenador import (
+    VistaEntrenadorInicio,
+    VistaEntrenadorClases,
+    VistaEntrenadorListaClientes,
+    VistaEntrenadorOcupacion,
+    VistaEntrenadorRegistrarAsistencia,
+    VistaEntrenadorPerfil,
+    VistaEntrenadorInformacion,
+)
+
+_VISTAS = {
+    'interfaz_entrenador.ui':                      VistaEntrenadorInicio,
+    'interfaz_entrenador_clases.ui':               VistaEntrenadorClases,
+    'interfaz_entrenador_verListaClientes.ui':     VistaEntrenadorListaClientes,
+    'interfaz_entrenador_ocupacionClases.ui':      VistaEntrenadorOcupacion,
+    'interfaz_entrenador_registrar_asistencia.ui': VistaEntrenadorRegistrarAsistencia,
+    'interfaz_entrenador_perfil.ui':               VistaEntrenadorPerfil,
+    'interfaz_entrenador_informacion.ui':          VistaEntrenadorInformacion,
+}
 
 
 class ControladorEntrenador:
@@ -13,620 +43,269 @@ class ControladorEntrenador:
         self.ventana = None
 
     def abrir(self):
-        self.abrir_pantalla("interfaz_entrenador.ui")
+        self.ir_inicio()
 
     def abrir_pantalla(self, archivo):
         if self.ventana:
             self.ventana.close()
         ruta = os.path.join(self.ruta_ui, archivo)
-        self.ventana = CargadorVista.cargar(ruta)
-        self.conectar_botones()
-        self.cargar_datos()
+        ClaseVista = _VISTAS[archivo]
+        self.ventana = ClaseVista(ruta)
+        self.ventana.set_controlador(self)
         self._añadir_boton_ayuda()
+        self.cargar_datos()
         self.ventana.show()
 
-    def conectar_botones(self):
-        v = self.ventana
+    # ── Navegación ────────────────────────────────────────────────────────
+    def ir_inicio(self):       self.abrir_pantalla('interfaz_entrenador.ui')
+    def ir_clases(self):       self.abrir_pantalla('interfaz_entrenador_clases.ui')
+    def ir_inscritos(self):    self.abrir_pantalla('interfaz_entrenador_verListaClientes.ui')
+    def ir_ocupacion(self):    self.abrir_pantalla('interfaz_entrenador_ocupacionClases.ui')
+    def ir_asistencia(self):   self.abrir_pantalla('interfaz_entrenador_registrar_asistencia.ui')
+    def ir_perfil(self):       self.abrir_pantalla('interfaz_entrenador_perfil.ui')
+    def ir_informacion(self):  self.abrir_pantalla('interfaz_entrenador_informacion.ui')
 
-        if hasattr(v, "btnCerrarSesion"):
-            v.btnCerrarSesion.clicked.connect(self.cerrar_sesion)
-        for boton in ["btnInicio", "btnInicio_2"]:
-            if hasattr(v, boton):
-                getattr(v, boton).clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador.ui"))
-        if hasattr(v, "btnClases"):
-            v.btnClases.clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador_clases.ui"))
-        if hasattr(v, "btnClases_2"):
-            v.btnClases_2.clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador_clases.ui"))
-        if hasattr(v, "btnInscritos"):
-            v.btnInscritos.clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador_verListaClientes.ui"))
-        if hasattr(v, "btnOcupacion"):
-            v.btnOcupacion.clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador_ocupacionClases.ui"))
-        if hasattr(v, "btnPerfil"):
-            v.btnPerfil.clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador_perfil.ui"))
-        if hasattr(v, "btnInformacion"):
-            v.btnInformacion.clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador_informacion.ui"))
-        if hasattr(v, "btnRegistroAsistencia"):
-            v.btnRegistroAsistencia.clicked.connect(lambda: self.abrir_pantalla("interfaz_entrenador_registrar_asistencia.ui"))
-        if hasattr(v, "pushButton_GuardarAsist"):
-            v.pushButton_GuardarAsist.clicked.connect(self.guardar_asistencia)
-        if hasattr(v, "btnGuardarAsistencia"):
-            v.btnGuardarAsistencia.clicked.connect(self.guardar_asistencia)
-
+    # ── Carga de datos ────────────────────────────────────────────────────
     def cargar_datos(self):
         v = self.ventana
-        id_u = self.usuario["id_usuario"]
+        if isinstance(v, VistaEntrenadorInicio):              self._cargar_inicio()
+        elif isinstance(v, VistaEntrenadorClases):            self._cargar_clases()
+        elif isinstance(v, VistaEntrenadorListaClientes):     self._cargar_inscritos()
+        elif isinstance(v, VistaEntrenadorOcupacion):         self._cargar_ocupacion()
+        elif isinstance(v, VistaEntrenadorRegistrarAsistencia): self._cargar_asistencia()
+        elif isinstance(v, VistaEntrenadorPerfil):            self._cargar_perfil()
 
-        if hasattr(v, "tablaProximasClasesEntrenador"):
-            datos_clases = self.modelo.clases_entrenador_tabla(id_u)
-            self.rellenar_tabla(v.tablaProximasClasesEntrenador, datos_clases)
-            v.tablaProximasClasesEntrenador.verticalHeader().setVisible(False)
+    def _cargar_inicio(self):
+        v = self.ventana
+        id_u = self.usuario['id_usuario']
+        try:
+            datos = self.modelo.clases_entrenador_tabla(id_u)
+            v.cargar_tabla_proximas(datos)
+            v.set_num_clases_hoy(str(self.modelo.clases_hoy_entrenador(id_u)))
+            v.set_num_asistencias(str(self.modelo.total_inscritos_clases_entrenador(id_u)))
+            v.set_ocupacion_media(f'{self.modelo.ocupacion_media_entrenador(id_u)}%')
+            if datos:
+                nombre = datos[0][0]
+                sala   = datos[0][1]
+                hora   = str(datos[0][2]).split(' - ')[0]
+                v.set_proxima_clase(nombre, hora, sala)
+        except Exception as e:
+            print('Error cargar inicio entrenador:', e)
 
-
-        if hasattr(v, "labelNumClases"):
-            total_hoy = self.modelo.clases_hoy_entrenador(id_u)
-            v.labelNumClases.setText(str(total_hoy))
-                
-        
-        if hasattr(v, "labelClase") or hasattr(v, "labelHora") or hasattr(v, "labelSala"):
-            clases_tabla = self.modelo.clases_entrenador_tabla(id_u)
-
-            if clases_tabla:
-                primera_clase = clases_tabla[0]
-
-                nombre = primera_clase[0]
-                sala = primera_clase[1]
-                horario = primera_clase[2]
-
-                hora_inicio = str(horario).split(" - ")[0]
-
-                if hasattr(v, "labelClase"):
-                    v.labelClase.setText(str(nombre))
-
-                if hasattr(v, "labelHora"):
-                    v.labelHora.setText(str(hora_inicio))
-
-                if hasattr(v, "labelSala"):
-                    v.labelSala.setText(str(sala))
-
-        
-        if hasattr(v, "labelNumAsistencias"):
-            total_pendientes = self.modelo.total_inscritos_clases_entrenador(id_u)
-            v.labelNumAsistencias.setText(str(total_pendientes))
-
-        if hasattr(v, "lblPorcentajeOcupacion"):
+    def _cargar_clases(self):
+        v = self.ventana
+        id_u = self.usuario['id_usuario']
+        try:
+            datos = self.modelo.clases_entrenador_tabla(id_u)
+            v.cargar_tabla(datos)
+            v.set_total_clases(str(len(datos)))
+            v.set_clases_hoy(str(self.modelo.clases_hoy_entrenador(id_u)))
             media = self.modelo.ocupacion_media_entrenador(id_u)
-            v.lblPorcentajeOcupacion.setText(f"{media}%")
+            v.set_ocupacion_media(f'{float(media):.1f}%')
+            if datos:
+                nombre  = datos[0][0]
+                horario = datos[0][2]
+                dia     = datos[0][3]
+                hora    = str(horario).split(' - ')[0]
+                v.set_proxima_clase(nombre, f'{dia} {hora}')
+        except Exception as e:
+            print('Error cargar clases entrenador:', e)
 
-
-
-        if hasattr(v, "tablaMisClases"):
-            datos_clases = self.modelo.clases_entrenador_tabla(id_u)
-
-            self.rellenar_tabla(v.tablaMisClases, datos_clases)
-            v.tablaMisClases.verticalHeader().setVisible(False)
-
-            if hasattr(v, "labelTotalClasesAsignadas"):
-                v.labelTotalClasesAsignadas.setText(str(len(datos_clases)))
-
-            if hasattr(v, "labelClasesHoy"):
-                total_hoy = self.modelo.clases_hoy_entrenador(id_u)
-                v.labelClasesHoy.setText(str(total_hoy))
-
-            if hasattr(v, "lblPorcentajeOcupacionClase"):
-                media = self.modelo.ocupacion_media_entrenador(id_u)
-                v.lblPorcentajeOcupacionClase.setText(f"{float(media):.1f}%")
-
-            if datos_clases:
-                primera_clase = datos_clases[0]
-
-                nombre = primera_clase[0]
-                horario = primera_clase[2]
-                dia = primera_clase[3]
-
-                hora_inicio = str(horario).split(" - ")[0]
-
-                if hasattr(v, "labelProximaClase"):
-                    v.labelProximaClase.setText(str(nombre))
-
-                if hasattr(v, "lblHoraProxClase"):
-                    v.lblHoraProxClase.setText(f"{dia} {hora_inicio}")
-        
-        if hasattr(v, "tablaOcupacionClases"):
-            datos_ocupacion = self.modelo.ocupacion_clases_entrenador(id_u)
-
-            tabla = v.tablaOcupacionClases
-            tabla.clear()
-            tabla.setRowCount(len(datos_ocupacion))
-            tabla.setColumnCount(5)
-            tabla.setHorizontalHeaderLabels(["ID", "Clase", "Inscritos", "Aforo", "Ocupación %"])
-
-            for fila, dato in enumerate(datos_ocupacion):
-                for col, valor in enumerate(dato):
-                    tabla.setItem(fila, col, TablaView.crear_item(str(valor)))
-
-            resumen = self.modelo.resumen_ocupacion_entrenador(id_u)
-
-            if hasattr(v, "label_Num_Clases"):
-                v.label_Num_Clases.setText(str(resumen["clases_llenas"]))
-
-
-            clase_mas_llena = resumen["clase_mas_llena"]
-
-            if clase_mas_llena:
-                ocupacion_media = resumen["ocupacion_media"]
-                nombre_clase_mas_llena = clase_mas_llena[1]
-                inscritos_mas_llena = clase_mas_llena[2]
-                aforo_mas_llena = clase_mas_llena[3]
-                plazas_libres = resumen["plazas_libres_mas_llena"]
-
-                if hasattr(v, "label_Porcentaje_Ocupacion"):
-                    v.label_Porcentaje_Ocupacion.setText(f"{ocupacion_media}%")
-
-                if hasattr(v, "label_Clase_masLlena"):
-                    v.label_Clase_masLlena.setText(str(nombre_clase_mas_llena))
-
-                if hasattr(v, "label_inscritos"):
-                    v.label_inscritos.setText(f"{inscritos_mas_llena}/{aforo_mas_llena} inscritos")
-
-                if hasattr(v, "label_plazasLibres"):
-                    v.label_plazasLibres.setText(str(plazas_libres))
-
-
-                if hasattr(v, "label_Porcentaje_Ocupacion_2"):
-                    v.label_Porcentaje_Ocupacion_2.setText(f"{ocupacion_media}%")
-
-
-
-        if hasattr(v, "comboClasesInscritos"):
+    def _cargar_inscritos(self):
+        v = self.ventana
+        id_u = self.usuario['id_usuario']
+        try:
             clases = self.modelo.clases_de_entrenador(id_u)
-            v.comboClasesInscritos.clear()
-
-            for clase in clases:
-                v.comboClasesInscritos.addItem(str(clase[1]), clase[0])
-
-            try:
-                v.comboClasesInscritos.currentIndexChanged.disconnect()
-            except Exception:
-                pass
-
-            v.comboClasesInscritos.currentIndexChanged.connect(self.cargar_clientes_inscritos)
+            v.poblar_combo_clases(clases)
             self.cargar_clientes_inscritos()
+        except Exception as e:
+            print('Error cargar inscritos:', e)
 
-        if hasattr(v, "txtNombre"):
-            perfil = self.modelo.perfil_usuario(id_u)
-            if perfil:
-                v.txtNombre.setText(str(perfil[2]))
-                if hasattr(v, "txtTelefono"): v.txtTelefono.setText(str(perfil[3] or ""))
-                if hasattr(v, "txtEmail"):    v.txtEmail.setText(str(perfil[4] or ""))
-
-        if hasattr(v, "label_Nombre"):
-            perfil = self.modelo.perfil_usuario(id_u)
-            if perfil:
-                v.label_Nombre.setText(str(perfil[2]))
-
-                if hasattr(v, "labelCorreoEntrenador"):
-                    v.labelCorreoEntrenador.setText(str(perfil[4] or ""))
-
-                if hasattr(v, "labelTelefonoEntrenador"):
-                    v.labelTelefonoEntrenador.setText(str(perfil[3] or ""))
-
-                if hasattr(v, "labelDireccionEntrenador"):
-                    v.labelDireccionEntrenador.setText(str(perfil[7] or ""))
-
-                if hasattr(v, "labelFechaAltaEntrenadorPerfil"):
-                    v.labelFechaAltaEntrenadorPerfil.setText(str(perfil[8] or ""))
-
-        if hasattr(v, "label_Num_Clases_semana"):
-            clases = self.modelo.clases_de_entrenador(id_u)
-            v.label_Num_Clases_semana.setText(str(len(clases)))
-
-        if hasattr(v, "label_Num_Clases_Hoy"):
-            clases = self.modelo.clases_de_entrenador(id_u)
-            v.label_Num_Clases_Hoy.setText(str(len(clases)))
-
-        if hasattr(v, "label_Num_Clientes_Total"):
-            clases = self.modelo.clases_de_entrenador(id_u)
-            total_clientes = 0
-
-            for clase in clases:
-                inscritos = self.modelo.clientes_inscritos_clase(clase[0])
-                total_clientes += len(inscritos)
-
-            v.label_Num_Clientes_Total.setText(str(total_clientes))
-
-        if hasattr(v, "label_Porcentaje_Asistencia"):
-            clases = self.modelo.clases_de_entrenador(id_u)
-            total_registros = 0
-            total_presentes = 0
-
-            for clase in clases:
-                asistencias = self.modelo.consultar_asistencia_clase(clase[0])
-
-                for asistencia in asistencias:
-                    total_registros += 1
-                    if asistencia[2] == "si":
-                        total_presentes += 1
-
-            if total_registros > 0:
-                porcentaje = round((total_presentes * 100) / total_registros, 2)
-            else:
-                porcentaje = 0
-
-            v.label_Porcentaje_Asistencia.setText(f"{porcentaje}%")
-
-        if hasattr(v, "comboSeleccionarClase"):
-            clases = self.modelo.clases_de_entrenador(id_u)
-
-            try:
-                v.comboSeleccionarClase.currentIndexChanged.disconnect()
-            except Exception:
-                pass
-
-            v.comboSeleccionarClase.clear()
-
-            for clase in clases:
-                id_clase = clase[0]
-                nombre = clase[1]
-                dia = clase[2]
-                hora_inicio = clase[3]
-                hora_fin = clase[4]
-
-                v.comboSeleccionarClase.addItem(
-                    f"{nombre} - {dia} {hora_inicio} - {hora_fin}",
-                    id_clase
-                )
-
-            v.comboSeleccionarClase.currentIndexChanged.connect(self.cargar_inscritos_asistencia)
-            self.cargar_inscritos_asistencia()
-       
     def cargar_clientes_inscritos(self):
         v = self.ventana
-
-        if not hasattr(v, "comboClasesInscritos"):
-            return
-
-        id_clase = v.comboClasesInscritos.currentData()
-
+        id_clase = v.get_id_clase_seleccionada()
         if not id_clase:
             return
+        try:
+            datos = self.modelo.clientes_inscritos_clase(id_clase)
+            # datos[i] = (id, nombre, telefono, email, ...)
+            filas = [(d[1], d[2], d[3]) for d in datos]
+            v.cargar_tabla_inscritos(filas)
+            v.set_num_inscritos(str(len(datos)))
+            info = self.modelo.informacion_clase_con_sala(id_clase)
+            if info:
+                v.set_info_clase(str(info[0]), str(info[1]),
+                                 str(info[2]), f'{info[3]} - {info[4]}')
+        except Exception as e:
+            print('Error cargar clientes inscritos:', e)
 
-        datos = self.modelo.clientes_inscritos_clase(id_clase)
+    def _cargar_ocupacion(self):
+        v = self.ventana
+        id_u = self.usuario['id_usuario']
+        try:
+            datos = self.modelo.ocupacion_clases_entrenador(id_u)
+            # datos[i] es OcupacionClaseVO o tupla (id, nombre, inscritos, aforo, pct)
+            filas = []
+            for d in datos:
+                if hasattr(d, 'id_clase'):
+                    filas.append((d.id_clase, d.nombre_actividad,
+                                  d.inscritos, d.aforo_maximo, d.ocupacion))
+                else:
+                    filas.append(tuple(d))
+            v.cargar_tabla(filas)
+            resumen = self.modelo.resumen_ocupacion_entrenador(id_u)
+            clase_ml = resumen.get('clase_mas_llena')
+            if clase_ml:
+                nombre_ml = clase_ml[1] if isinstance(clase_ml, (list, tuple)) else str(clase_ml)
+                ins = clase_ml[2] if isinstance(clase_ml, (list, tuple)) else 0
+                afo = clase_ml[3] if isinstance(clase_ml, (list, tuple)) else 0
+                plazas = resumen.get('plazas_libres_mas_llena', 0)
+                media  = resumen.get('ocupacion_media', 0)
+                v.set_resumen(
+                    resumen.get('clases_llenas', 0),
+                    f'{media}%', nombre_ml,
+                    f'{ins}/{afo} inscritos', plazas
+                )
+        except Exception as e:
+            print('Error cargar ocupacion:', e)
 
-        if hasattr(v, "tablaInscritos"):
-            tabla = v.tablaInscritos
-            tabla.clear()
-            tabla.setRowCount(len(datos))
-            tabla.setColumnCount(3)
-            tabla.setHorizontalHeaderLabels(["Cliente", "Teléfono", "Email"])
-
-            for fila, cliente in enumerate(datos):
-                nombre = cliente[1]
-                telefono = cliente[2]
-                email = cliente[3]
-
-                tabla.setItem(fila, 0, TablaView.crear_item(str(nombre)))
-                tabla.setItem(fila, 1, TablaView.crear_item(str(telefono)))
-                tabla.setItem(fila, 2, TablaView.crear_item(str(email)))
-
-        if hasattr(v, "label_numInscritos_ins"):
-            v.label_numInscritos_ins.setText(str(len(datos)))
-
-        if hasattr(v, "label_total_inscritos"):
-            v.label_total_inscritos.setText(str(len(datos)))
-
-        info = self.modelo.informacion_clase_con_sala(id_clase)
-
-        if info:
-            nombre_clase = info[0]
-            sala = info[1]
-            dia = info[2]
-            hora_inicio = info[3]
-            hora_fin = info[4]
-
-            if hasattr(v, "label_nombreclase_ins"):
-                v.label_nombreclase_ins.setText(str(nombre_clase))
-
-            if hasattr(v, "lblSalaClase_ins"):
-                v.lblSalaClase_ins.setText(str(sala))
-
-            if hasattr(v, "label_fecha_ins"):
-                v.label_fecha_ins.setText(str(dia))
-
-            if hasattr(v, "lblHorarioClase_ins"):
-                v.lblHorarioClase_ins.setText(f"{hora_inicio} - {hora_fin}")
-
-            
+    def _cargar_asistencia(self):
+        v = self.ventana
+        id_u = self.usuario['id_usuario']
+        try:
+            clases = self.modelo.clases_de_entrenador(id_u)
+            v.poblar_combo_clases(clases)
+            self.cargar_inscritos_asistencia()
+        except Exception as e:
+            print('Error cargar asistencia:', e)
 
     def cargar_inscritos_asistencia(self):
         v = self.ventana
-
-        if not hasattr(v, "comboSeleccionarClase"):
-            return
-
-        id_clase = v.comboSeleccionarClase.currentData()
-
+        id_clase = v.get_id_clase_seleccionada()
         if id_clase is None:
             return
+        try:
+            datos = self.modelo.clientes_inscritos_clase(id_clase)
+            fecha = date.today().isoformat()
+            asistencias = self.modelo.asistencia_clase_fecha(id_clase, fecha)
+            mapa = {a[0]: a[1] for a in asistencias}
+            v.cargar_tabla_asistencia(datos, mapa)
 
-        datos = self.modelo.clientes_inscritos_clase(id_clase)
+            presentes = sum(1 for a in mapa.values() if a == 'si')
+            ausentes  = sum(1 for a in mapa.values() if a == 'no')
+            pendientes = len(datos) - presentes - ausentes
+            v.set_resumen_asistencia(len(datos), presentes, ausentes, pendientes)
 
-        fecha = date.today().isoformat()
-        asistencias_guardadas = self.modelo.asistencia_clase_fecha(id_clase, fecha)
-        mapa_asistencia = {}
-
-        for asistencia in asistencias_guardadas:
-            id_cliente_guardado = asistencia[0]
-            presente = asistencia[1]
-            mapa_asistencia[id_cliente_guardado] = presente
-
-        if not hasattr(v, "tablaInscritosAsistencia"):
-            return
-
-        tabla = v.tablaInscritosAsistencia
-        tabla.clear()
-        tabla.setRowCount(len(datos))
-        tabla.setColumnCount(3)
-        tabla.setHorizontalHeaderLabels(["Cliente", "Estado", "Acción"])
-
-        for fila, cliente in enumerate(datos):
-            id_cliente = cliente[0]
-            nombre = cliente[1]
-
-            estado_guardado = mapa_asistencia.get(id_cliente, "pendiente")
-
-            if estado_guardado == "si":
-                estado_mostrar = "si"
-            elif estado_guardado == "no":
-                estado_mostrar = "no"
-            else:
-                estado_mostrar = "Pendiente"
-
-            tabla.setItem(fila, 0, TablaView.crear_item(f"{id_cliente} - {nombre}"))
-            tabla.setItem(fila, 1, TablaView.crear_item(estado_mostrar))
-            tabla.setItem(fila, 2, TablaView.crear_item("Escribe si o no"))
-
-        if hasattr(v, "label_TotalInscritos"):
-            v.label_TotalInscritos.setText(str(len(datos)))
-
-        if hasattr(v, "label_numInscritos"):
-            v.label_numInscritos.setText(str(len(datos)))
-
-        presentes = 0
-        ausentes = 0
-        pendientes = 0
-
-        for cliente in datos:
-            id_cliente = cliente[0]
-            estado = mapa_asistencia.get(id_cliente, "pendiente")
-
-            if estado == "si":
-                presentes += 1
-            elif estado == "no":
-                ausentes += 1
-            else:
-                pendientes += 1
-
-        if hasattr(v, "label_numAsist"):
-            v.label_numAsist.setText(str(presentes))
-
-        if hasattr(v, "label_numPend"):
-            v.label_numPend.setText(str(pendientes))
-
-        if hasattr(v, "label_numAus"):
-            v.label_numAus.setText(str(ausentes))
-
-        clase = self.modelo.datos_clase_asistencia(id_clase)
-
-        if clase:
-            if hasattr(v, "label_nombreclase"):
-                v.label_nombreclase.setText(str(clase["nombre"]))
-
-            if hasattr(v, "label_fecha"):
-                v.label_fecha.setText(str(clase["dia"]))
-
-            if hasattr(v, "lblHorarioClase"):
-                v.lblHorarioClase.setText(
-                    f"{clase['hora_inicio']} - {clase['hora_fin']}"
+            clase = self.modelo.datos_clase_asistencia(id_clase)
+            if clase:
+                v.set_info_clase(
+                    str(clase.get('nombre', '')),
+                    str(clase.get('dia', '')),
+                    f"{clase.get('hora_inicio','')} - {clase.get('hora_fin','')}",
+                    ''
                 )
+            info_sala = self.modelo.informacion_clase_con_sala(id_clase)
+            if info_sala:
+                v.set_info_clase(
+                    str(info_sala[0]), str(info_sala[2]),
+                    f'{info_sala[3]} - {info_sala[4]}', str(info_sala[1])
+                )
+        except Exception as e:
+            print('Error cargar inscritos asistencia:', e)
 
-        info_sala = self.modelo.informacion_clase_con_sala(id_clase)
-
-        if info_sala:
-            sala = info_sala[1]
-
-            if hasattr(v, "lblSalaClase"):
-                v.lblSalaClase.setText(str(sala))
-
-    def actualizar_resumen_asistencia(self):
+    def _cargar_perfil(self):
         v = self.ventana
+        id_u = self.usuario['id_usuario']
+        try:
+            perfil = self.modelo.perfil_usuario(id_u)
+            if perfil:
+                v.set_perfil_info(
+                    str(perfil[2]), str(perfil[4] or ''),
+                    str(perfil[3] or ''), str(perfil[7] or ''),
+                    str(perfil[8] or '')
+                )
+            clases = self.modelo.clases_de_entrenador(id_u)
+            total_clientes = sum(
+                len(self.modelo.clientes_inscritos_clase(c[0])) for c in clases
+            )
+            total_reg = total_pres = 0
+            for c in clases:
+                for a in self.modelo.consultar_asistencia_clase(c[0]):
+                    total_reg += 1
+                    if a[2] == 'si':
+                        total_pres += 1
+            pct = f'{round(total_pres*100/total_reg,2)}%' if total_reg > 0 else '0%'
+            v.set_stats(len(clases), self.modelo.clases_hoy_entrenador(id_u),
+                        total_clientes, pct)
+        except Exception as e:
+            print('Error cargar perfil entrenador:', e)
 
-        if not hasattr(v, "tablaInscritosAsistencia"):
-            return
-
-        tabla = v.tablaInscritosAsistencia
-        total = tabla.rowCount()
-        asistieron = 0
-
-        for fila in range(total):
-            check = tabla.cellWidget(fila, 4)
-            if check and check.isChecked():
-                asistieron += 1
-
-        ausencias = total - asistieron
-
-        if hasattr(v, "label_numAsist"):
-            v.label_numAsist.setText(str(asistieron))
-
-        if hasattr(v, "label_numAus"):
-            v.label_numAus.setText(str(ausencias))
-
-        if hasattr(v, "label_numPend"):
-            v.label_numPend.setText("0")
-
-        if hasattr(v, "label_TotalInscritos"):
-            v.label_TotalInscritos.setText(str(total))
-
-        if hasattr(v, "label_numInscritos"):
-            v.label_numInscritos.setText(str(total))
-
+    # ── Acciones ──────────────────────────────────────────────────────────
     def guardar_asistencia(self):
         v = self.ventana
-
         try:
-            if not hasattr(v, "comboSeleccionarClase"):
-                MensajeView.warning(v, "Error", "No hay selector de clase")
-                return
-
-            id_clase = v.comboSeleccionarClase.currentData()
-
+            id_clase = v.get_id_clase_seleccionada()
             if id_clase is None:
-                MensajeView.warning(v, "Error", "Selecciona una clase")
+                v.mostrar_error('Selecciona una clase')
                 return
-
             fecha = date.today().isoformat()
-            total = 0
-            presentes = 0
-            ausencias = 0
-            pendientes = 0
-
-            if hasattr(v, "tablaInscritosAsistencia"):
-                tabla = v.tablaInscritosAsistencia
-
-                for fila in range(tabla.rowCount()):
-                    item_cliente = tabla.item(fila, 0)
-                    item_estado = tabla.item(fila, 1)
-
-                    if not item_cliente or not item_estado:
-                        continue
-
-                    total += 1
-
-                    id_cliente = int(item_cliente.text().split(" - ")[0])
-                    estado = item_estado.text().strip().lower()
-
-                    estado_normalizado = self.modelo.normalizar_estado_asistencia(estado)
-
-                    if estado_normalizado == "si":
-                        self.modelo.registrar_asistencia_normalizada(id_cliente, id_clase, fecha, estado)
-                        presentes += 1
-
-                    elif estado_normalizado == "no":
-                        self.modelo.registrar_asistencia_normalizada(id_cliente, id_clase, fecha, estado)
-                        ausencias += 1
-
-                    else:
-                        pendientes += 1
-
-            if hasattr(v, "label_numAsist"):
-                v.label_numAsist.setText(str(presentes))
-
-            if hasattr(v, "label_numPend"):
-                v.label_numPend.setText(str(pendientes))
-
-            if hasattr(v, "label_numAus"):
-                v.label_numAus.setText(str(ausencias))
-
-            if hasattr(v, "label_TotalInscritos"):
-                v.label_TotalInscritos.setText(str(total))
-
-            MensajeView.information(
-                v,
-                "Correcto",
-                f"Asistencia guardada correctamente.\nAsistieron: {presentes}"
-            )
-
+            filas = v.get_datos_asistencia()
+            presentes = ausentes = pendientes = 0
+            for texto_cliente, estado in filas:
+                id_cliente = int(texto_cliente.split(' - ')[0])
+                estado_norm = self.modelo.normalizar_estado_asistencia(estado)
+                if estado_norm in ('si', 'no'):
+                    self.modelo.registrar_asistencia_normalizada(
+                        id_cliente, id_clase, fecha, estado
+                    )
+                if estado_norm == 'si':   presentes += 1
+                elif estado_norm == 'no': ausentes += 1
+                else:                     pendientes += 1
+            v.set_resumen_asistencia(len(filas), presentes, ausentes, pendientes)
+            v.mostrar_exito(f'Asistencia guardada correctamente.\nAsistieron: {presentes}')
         except Exception as e:
-            MensajeView.warning(v, "Error", str(e))
+            v.mostrar_error(str(e))
 
+    # ── Cerrar sesión ─────────────────────────────────────────────────────
+    def cerrar_sesion(self):
+        if self.ventana:
+            self.ventana.close()
+        self.vista_login.show()
 
-    
-
-    def rellenar_tabla(self, tabla, datos):
-        tabla.setRowCount(len(datos))
-
-        if datos:
-            tabla.setColumnCount(len(datos[0]))
-
-        for fila, registro in enumerate(datos):
-            for col, valor in enumerate(registro):
-                tabla.setItem(
-                    fila,
-                    col,
-                    TablaView.crear_item(str(valor) if valor is not None else "")
-                )
-
+    # ── Ayuda ─────────────────────────────────────────────────────────────
     def _añadir_boton_ayuda(self):
         BotonesView.crear_boton_ayuda(self.ventana, 955, 27, self._mostrar_ayuda)
 
     def _mostrar_ayuda(self):
         v = self.ventana
-
-        if hasattr(v, "tablaProximasClasesEntrenador") and hasattr(v, "labelNumClases"):
-            # Inicio entrenador
-            MensajeView.information(v, "Ayuda — Inicio",
-                "Panel de control del entrenador.\n\n"
-                "• Aquí ves tus clases del día y las próximas de la semana.\n"
-                "• El resumen muestra cuántas clases tienes hoy y el porcentaje de ocupación.\n"
-                "• Usa el menú lateral para gestionar tus clases y alumnos.")
-
-        elif hasattr(v, "tablaMisClases") and hasattr(v, "labelTotalClasesAsignadas"):
-            # Mis clases
-            MensajeView.information(v, "Ayuda — Mis clases",
-                "Lista de todas las clases que tienes asignadas.\n\n"
-                "• La tabla muestra nombre, sala, horario, día y ocupación.\n"
-                "• 'Clases hoy' indica cuántas clases tienes en el día actual.\n"
-                "• 'Próxima clase' muestra la siguiente que debes impartir.")
-
-        elif hasattr(v, "comboClasesInscritos"):
-            # Lista de inscritos
-            MensajeView.information(v, "Ayuda — Alumnos inscritos",
-                "Consulta los alumnos inscritos en cada una de tus clases.\n\n"
-                "• Selecciona una clase en el desplegable para ver su lista.\n"
-                "• La tabla muestra el nombre y datos de cada alumno inscrito.\n"
-                "• Usa esta pantalla para conocer quién asistirá a cada sesión.")
-
-        elif hasattr(v, "tablaOcupacionClases") and hasattr(v, "label_Num_Clases"):
-            # Ocupación de clases
-            MensajeView.information(v, "Ayuda — Ocupación de clases",
-                "Estadísticas de ocupación de tus clases.\n\n"
-                "• Ves el porcentaje de aforo ocupado en cada clase.\n"
-                "• 'Clase más llena' indica cuál tiene más demanda.\n"
-                "• Plazas libres = aforo máximo menos inscritos actuales.\n"
-                "• Usa esta información para proponer ajustes de capacidad.")
-
-        elif hasattr(v, "comboSeleccionarClase") and hasattr(v, "pushButton_GuardarAsist"):
-            # Registrar asistencia
-            MensajeView.information(v, "Ayuda — Registrar asistencia",
-                "Registra la asistencia de los alumnos a tus clases.\n\n"
-                "• Selecciona la clase en el desplegable superior.\n"
-                "• Marca o desmarca cada alumno según haya asistido.\n"
-                "• Pulsa 'Guardar asistencia' cuando hayas terminado.\n"
-                "• Solo puedes registrar asistencia de tus clases asignadas.")
-
-        elif hasattr(v, "txtNombre") and hasattr(v, "txtEmail"):
-            # Perfil entrenador — edición
-            MensajeView.information(v, "Ayuda — Editar perfil",
-                "Modifica tus datos personales de contacto.\n\n"
-                "• Puedes actualizar tu teléfono y dirección.\n"
-                "• El email es tu identificador principal en el sistema.\n"
-                "• Pulsa 'Guardar cambios' para confirmar la edición.")
-
-        elif hasattr(v, "label_Nombre") and hasattr(v, "labelCorreoEntrenador"):
-            # Perfil entrenador — información
-            MensajeView.information(v, "Ayuda — Mi perfil",
-                "Vista de tu información personal registrada en el sistema.\n\n"
-                "• Aquí puedes ver tus datos de contacto y fecha de alta.\n"
-                "• Para modificar tus datos ve a la sección 'Perfil'.")
-
+        if isinstance(v, VistaEntrenadorInicio):
+            MensajeView.information(v, 'Ayuda — Inicio',
+                'Panel de control del entrenador.\n\n'
+                '• Aquí ves tus clases del día y las próximas de la semana.\n'
+                '• Usa el menú lateral para gestionar tus clases y alumnos.')
+        elif isinstance(v, VistaEntrenadorClases):
+            MensajeView.information(v, 'Ayuda — Mis clases',
+                'Lista de todas las clases que tienes asignadas.\n\n'
+                '• La tabla muestra nombre, sala, horario, día y capacidad.\n'
+                '• Próxima clase muestra la siguiente que debes impartir.')
+        elif isinstance(v, VistaEntrenadorListaClientes):
+            MensajeView.information(v, 'Ayuda — Alumnos inscritos',
+                'Consulta los alumnos inscritos en cada clase.\n\n'
+                '• Selecciona una clase en el desplegable para ver su lista.')
+        elif isinstance(v, VistaEntrenadorOcupacion):
+            MensajeView.information(v, 'Ayuda — Ocupación de clases',
+                'Estadísticas de ocupación de tus clases.\n\n'
+                '• Porcentaje de aforo ocupado en cada clase.')
+        elif isinstance(v, VistaEntrenadorRegistrarAsistencia):
+            MensajeView.information(v, 'Ayuda — Registrar asistencia',
+                'Registra la asistencia de los alumnos.\n\n'
+                '• Selecciona la clase en el desplegable.\n'
+                '• Escribe si o no en la columna Estado.\n'
+                '• Pulsa Guardar asistencia cuando termines.')
+        elif isinstance(v, VistaEntrenadorPerfil):
+            MensajeView.information(v, 'Ayuda — Mi perfil',
+                'Información de tu cuenta de entrenador.')
         else:
-            # Pantalla información general
-            MensajeView.information(v, "Ayuda — Información",
-                "Sección de información general del gimnasio.\n\n"
-                "• Aquí encontrarás datos de contacto y ubicación del centro.\n"
-                "• Usa el menú lateral para volver a cualquier sección.")
-
-        
-
-    def cerrar_sesion(self):
-        self.ventana.close()
-        self.vista_login.show()
+            MensajeView.information(v, 'Ayuda — Información',
+                'Información general del gimnasio.\n\n'
+                '• Usa el menú lateral para navegar entre secciones.')
