@@ -1,6 +1,6 @@
 import os
 from datetime import date
-from src.vista.componentes import CargadorVista, MensajeView, TablaView
+from src.vista.componentes import CargadorVista, MensajeView, TablaView, BotonesView
 
 
 class ControladorEntrenador:
@@ -22,6 +22,7 @@ class ControladorEntrenador:
         self.ventana = CargadorVista.cargar(ruta)
         self.conectar_botones()
         self.cargar_datos()
+        self._añadir_boton_ayuda()
         self.ventana.show()
 
     def conectar_botones(self):
@@ -553,6 +554,78 @@ class ControladorEntrenador:
                     col,
                     TablaView.crear_item(str(valor) if valor is not None else "")
                 )
+
+    def _añadir_boton_ayuda(self):
+        BotonesView.crear_boton_ayuda(self.ventana, 955, 27, self._mostrar_ayuda)
+
+    def _mostrar_ayuda(self):
+        v = self.ventana
+
+        if hasattr(v, "tablaProximasClasesEntrenador") and hasattr(v, "labelNumClases"):
+            # Inicio entrenador
+            MensajeView.information(v, "Ayuda — Inicio",
+                "Panel de control del entrenador.\n\n"
+                "• Aquí ves tus clases del día y las próximas de la semana.\n"
+                "• El resumen muestra cuántas clases tienes hoy y el porcentaje de ocupación.\n"
+                "• Usa el menú lateral para gestionar tus clases y alumnos.")
+
+        elif hasattr(v, "tablaMisClases") and hasattr(v, "labelTotalClasesAsignadas"):
+            # Mis clases
+            MensajeView.information(v, "Ayuda — Mis clases",
+                "Lista de todas las clases que tienes asignadas.\n\n"
+                "• La tabla muestra nombre, sala, horario, día y ocupación.\n"
+                "• 'Clases hoy' indica cuántas clases tienes en el día actual.\n"
+                "• 'Próxima clase' muestra la siguiente que debes impartir.")
+
+        elif hasattr(v, "comboClasesInscritos"):
+            # Lista de inscritos
+            MensajeView.information(v, "Ayuda — Alumnos inscritos",
+                "Consulta los alumnos inscritos en cada una de tus clases.\n\n"
+                "• Selecciona una clase en el desplegable para ver su lista.\n"
+                "• La tabla muestra el nombre y datos de cada alumno inscrito.\n"
+                "• Usa esta pantalla para conocer quién asistirá a cada sesión.")
+
+        elif hasattr(v, "tablaOcupacionClases") and hasattr(v, "label_Num_Clases"):
+            # Ocupación de clases
+            MensajeView.information(v, "Ayuda — Ocupación de clases",
+                "Estadísticas de ocupación de tus clases.\n\n"
+                "• Ves el porcentaje de aforo ocupado en cada clase.\n"
+                "• 'Clase más llena' indica cuál tiene más demanda.\n"
+                "• Plazas libres = aforo máximo menos inscritos actuales.\n"
+                "• Usa esta información para proponer ajustes de capacidad.")
+
+        elif hasattr(v, "comboSeleccionarClase") and hasattr(v, "pushButton_GuardarAsist"):
+            # Registrar asistencia
+            MensajeView.information(v, "Ayuda — Registrar asistencia",
+                "Registra la asistencia de los alumnos a tus clases.\n\n"
+                "• Selecciona la clase en el desplegable superior.\n"
+                "• Marca o desmarca cada alumno según haya asistido.\n"
+                "• Pulsa 'Guardar asistencia' cuando hayas terminado.\n"
+                "• Solo puedes registrar asistencia de tus clases asignadas.")
+
+        elif hasattr(v, "txtNombre") and hasattr(v, "txtEmail"):
+            # Perfil entrenador — edición
+            MensajeView.information(v, "Ayuda — Editar perfil",
+                "Modifica tus datos personales de contacto.\n\n"
+                "• Puedes actualizar tu teléfono y dirección.\n"
+                "• El email es tu identificador principal en el sistema.\n"
+                "• Pulsa 'Guardar cambios' para confirmar la edición.")
+
+        elif hasattr(v, "label_Nombre") and hasattr(v, "labelCorreoEntrenador"):
+            # Perfil entrenador — información
+            MensajeView.information(v, "Ayuda — Mi perfil",
+                "Vista de tu información personal registrada en el sistema.\n\n"
+                "• Aquí puedes ver tus datos de contacto y fecha de alta.\n"
+                "• Para modificar tus datos ve a la sección 'Perfil'.")
+
+        else:
+            # Pantalla información general
+            MensajeView.information(v, "Ayuda — Información",
+                "Sección de información general del gimnasio.\n\n"
+                "• Aquí encontrarás datos de contacto y ubicación del centro.\n"
+                "• Usa el menú lateral para volver a cualquier sección.")
+
+        
 
     def cerrar_sesion(self):
         self.ventana.close()

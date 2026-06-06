@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import CargadorVista, MensajeView, TablaView
+from src.vista.componentes import CargadorVista, MensajeView, TablaView, BotonesView
 from datetime import date, datetime
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
@@ -27,6 +27,7 @@ class ControladorContable:
         self.ventana = CargadorVista.cargar(ruta)
         self.conectar_botones()
         self.cargar_datos()
+        self._añadir_boton_ayuda()
         self.ventana.show()
 
     def conectar_botones(self):
@@ -835,7 +836,100 @@ class ControladorContable:
 
         MensajeView.information(v, "PDF exportado", f"Guardado en:\n{ruta}")
 
+    def _añadir_boton_ayuda(self):
+        BotonesView.crear_boton_ayuda(self.ventana, 1015, 20, self._mostrar_ayuda)
 
+
+
+    def _mostrar_ayuda(self):
+        v = self.ventana
+
+        if hasattr(v, "tablaUltimosPagos") and hasattr(v, "labelIngresosMes"):
+            # Pantalla inicio contable
+            MensajeView.information(v, "Ayuda — Inicio",
+                "Panel de control del contable.\n\n"
+                "• Aquí ves el resumen económico del mes: ingresos, pagos pendientes e informes.\n"
+                "• La tabla inferior muestra los últimos pagos registrados.\n"
+                "• Usa el menú lateral para acceder a todas las secciones.")
+
+        elif hasattr(v, "btnConfirmarRegistrarPago") or hasattr(v, "lblNombreCliente_8"):
+            # Pantalla registrar pago
+            MensajeView.information(v, "Ayuda — Registrar pago",
+                "Formulario para registrar un nuevo pago de un cliente.\n\n"
+                "• Busca al cliente por nombre o DNI usando el buscador.\n"
+                "• Selecciona la tarifa correspondiente.\n"
+                "• Pulsa 'Confirmar' para guardar el pago en el sistema.\n"
+                "• El estado del cliente se actualizará automáticamente a 'abonado'.")
+
+        elif hasattr(v, "comboFiltroPagos") and hasattr(v, "labelClientesDeuda"):
+            # Pantalla pagos pendientes
+            MensajeView.information(v, "Ayuda — Pagos pendientes",
+                "Lista de clientes con pagos pendientes o vencidos.\n\n"
+                "• Usa el desplegable para filtrar por estado del pago.\n"
+                "• 'Vencidos' son pagos cuya fecha límite ya ha pasado.\n"
+                "• 'Vencen esta semana' muestra los más urgentes.\n"
+                "• Pulsa 'Marcar como abonado' para actualizar el estado de un cliente.")
+
+        elif hasattr(v, "labelBasicoPrecio") and hasattr(v, "tablaSalariosEconomica"):
+            # Pantalla gestión económica
+            MensajeView.information(v, "Ayuda — Gestión económica",
+                "Resumen completo de la situación económica del gimnasio.\n\n"
+                "• Consulta las tarifas activas y sus precios.\n"
+                "• La tabla de salarios muestra el coste mensual del personal.\n"
+                "• El balance refleja ingresos menos gastos del mes actual.")
+
+        elif hasattr(v, "btnInformeGestionEconomica") and hasattr(v, "labelInformesGeneradosInf"):
+            # Pantalla informes — menú principal
+            MensajeView.information(v, "Ayuda — Informes",
+                "Centro de generación de informes económicos.\n\n"
+                "• 'Informe de pagos' muestra todos los cobros realizados.\n"
+                "• 'Pagos pendientes' lista las deudas activas.\n"
+                "• 'Balance mensual' compara ingresos y gastos mes a mes.\n"
+                "• 'Gestión económica' ofrece una visión global de las finanzas.\n"
+                "• Usa 'Exportar PDF' para guardar cualquier informe.")
+
+        elif hasattr(v, "btnInformeBalanceMensual") and not hasattr(v, "btnInformeGestionEconomica"):
+            # Sub-informe balance mensual
+            MensajeView.information(v, "Ayuda — Balance mensual",
+                "Informe comparativo de ingresos y gastos por mes.\n\n"
+                "• Cada fila representa un mes del año en curso.\n"
+                "• El balance es la diferencia entre ingresos y gastos.\n"
+                "• Un balance positivo indica beneficio en ese mes.")
+
+        elif hasattr(v, "btnInformePagos") and not hasattr(v, "btnInformeGestionEconomica"):
+            # Sub-informe pagos realizados
+            MensajeView.information(v, "Ayuda — Informe de pagos",
+                "Listado detallado de todos los pagos realizados.\n\n"
+                "• Filtra por fecha o cliente para acotar los resultados.\n"
+                "• Puedes exportar el informe a PDF con el botón correspondiente.")
+
+        elif hasattr(v, "btnInformePagosPendientes") and not hasattr(v, "btnInformeGestionEconomica"):
+            # Sub-informe pagos pendientes
+            MensajeView.information(v, "Ayuda — Informe de pagos pendientes",
+                "Informe de clientes con deudas pendientes.\n\n"
+                "• Muestra el importe pendiente y la fecha de vencimiento.\n"
+                "• Exporta el informe a PDF para su gestión externa.")
+
+        elif hasattr(v, "btnInformeGestionEconomica") and not hasattr(v, "labelInformesGeneradosInf"):
+            # Sub-informe gestión económica
+            MensajeView.information(v, "Ayuda — Informe gestión económica",
+                "Informe detallado de la situación financiera del gimnasio.\n\n"
+                "• Incluye ingresos por tarifas, gastos en nóminas y balance final.\n"
+                "• Exporta a PDF para presentar a la dirección.")
+
+        elif hasattr(v, "btnInicio_2") and not hasattr(v, "tablaUltimosPagos"):
+            # Pantalla perfil contable
+            MensajeView.information(v, "Ayuda — Mi perfil",
+                "Información de tu cuenta de contable.\n\n"
+                "• Aquí puedes consultar y actualizar tus datos personales.\n"
+                "• Pulsa 'Guardar cambios' para confirmar cualquier modificación.")
+
+        else:
+            # Pantalla información general
+            MensajeView.information(v, "Ayuda — Información",
+                "Sección de información general del gimnasio.\n\n"
+                "• Aquí encontrarás datos de contacto y ubicación del centro.\n"
+                "• Usa el menú lateral para volver a cualquier sección.")
 
 
 

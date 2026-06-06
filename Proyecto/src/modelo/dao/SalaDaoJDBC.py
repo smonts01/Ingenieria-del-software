@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.SalaVO import SalaVO
 
 
-class SalaDaoJDBC(Conexion):
+class SalaDaoJDBC:
 
     SQL_SELECT = """
         SELECT id_sala, nombre, aforo_maximo
@@ -47,12 +47,8 @@ class SalaDaoJDBC(Conexion):
         )
 
     def select(self) -> list[SalaVO]:
-<<<<<<< Updated upstream
-        cursor = self.getCursor()
-=======
         """Recupera todas las salas."""
         cursor = self._conexion.getCursor()
->>>>>>> Stashed changes
         salas = []
 
         try:
@@ -66,21 +62,12 @@ class SalaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-<<<<<<< Updated upstream
-            self.closeConnection()
-
-        return salas
-
-    def selectById(self, id_sala: int) -> SalaVO:
-        cursor = self.getCursor()
-=======
             self._conexion.closeConnection()
         return salas
 
     def selectById(self, id_sala: int) -> SalaVO:
         """Recupera una sala por su ID."""
         cursor = self._conexion.getCursor()
->>>>>>> Stashed changes
         sala = None
 
         try:
@@ -95,21 +82,12 @@ class SalaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-<<<<<<< Updated upstream
-            self.closeConnection()
-
-        return sala
-
-    def insert(self, vo: SalaVO) -> int:
-        cursor = self.getCursor()
-=======
             self._conexion.closeConnection()
         return sala
 
     def insert(self, vo: SalaVO) -> int:
         """Inserta una nueva sala. Retorna filas afectadas."""
         cursor = self._conexion.getCursor()
->>>>>>> Stashed changes
         rows = 0
 
         try:
@@ -128,21 +106,12 @@ class SalaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-<<<<<<< Updated upstream
-            self.closeConnection()
-
-        return rows
-
-    def update(self, vo: SalaVO) -> int:
-        cursor = self.getCursor()
-=======
             self._conexion.closeConnection()
         return rows
 
     def update(self, vo: SalaVO) -> int:
         """Actualiza una sala existente. Retorna filas afectadas."""
         cursor = self._conexion.getCursor()
->>>>>>> Stashed changes
         rows = 0
 
         try:
@@ -162,21 +131,12 @@ class SalaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-<<<<<<< Updated upstream
-            self.closeConnection()
-
-        return rows
-
-    def delete(self, id_sala: int) -> int:
-        cursor = self.getCursor()
-=======
             self._conexion.closeConnection()
         return rows
 
     def delete(self, id_sala: int) -> int:
         """Elimina una sala por su ID. Retorna filas afectadas."""
         cursor = self._conexion.getCursor()
->>>>>>> Stashed changes
         rows = 0
 
         try:
@@ -188,11 +148,5 @@ class SalaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-<<<<<<< Updated upstream
-            self.closeConnection()
-
-        return rows
-=======
             self._conexion.closeConnection()
         return rows
->>>>>>> Stashed changes

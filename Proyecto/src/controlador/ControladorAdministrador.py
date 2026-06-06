@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView, ArchivoView
+from src.vista.componentes import CargadorVista, MensajeView, TablaView, ImagenView, ArchivoView,  BotonesView
 import matplotlib.pyplot as plt
 import io
 import matplotlib
@@ -24,6 +24,7 @@ class ControladorAdministrador:
         self.ventana = CargadorVista.cargar(ruta)
         self.conectar_botones()
         self.cargar_datos()
+        self._añadir_boton_ayuda()
         self.ventana.show()
 
     def conectar_botones(self):
@@ -997,3 +998,83 @@ class ControladorAdministrador:
                 "Error",
                 f"No se pudo restaurar la copia de seguridad:\n\n{e}"
             )
+
+
+
+    def _añadir_boton_ayuda(self):
+        BotonesView.crear_boton_ayuda(self.ventana, 1015, 20, self._mostrar_ayuda)
+
+
+    def _mostrar_ayuda(self):
+        v = self.ventana
+
+        if hasattr(v, "lblUsuariosNum") and not hasattr(v, "tablaClases"):
+            # Pantalla inicio admin
+            MensajeView.information(v, "Ayuda — Inicio",
+                "Panel de control del administrador.\n\n"
+                "• Aquí ves el resumen global del gimnasio: usuarios, clases e inscripciones.\n"
+                "• Desde el menú lateral accedes a todas las secciones.\n"
+                "• Usa 'Backup' para crear o restaurar copias de seguridad de la base de datos.")
+
+        elif hasattr(v, "tablaClientes_2") and hasattr(v, "lblTabClientes"):
+            # Pantalla usuarios — clientes
+            MensajeView.information(v, "Ayuda — Gestión de clientes",
+                "Aquí puedes consultar y gestionar los clientes del gimnasio.\n\n"
+                "• Usa el buscador para filtrar por nombre.\n"
+                "• Haz clic en 'Trabajadores' para ver el personal.\n"
+                "• El botón 'Nuevo trabajador' permite registrar un nuevo trabajador.")
+
+        elif hasattr(v, "tablaTrabajadores_2") and hasattr(v, "lblTabTrabajadores"):
+            # Pantalla usuarios — trabajadores
+            MensajeView.information(v, "Ayuda — Gestión de trabajadores",
+                "Lista del personal del gimnasio.\n\n"
+                "• Filtra por rol usando el desplegable (entrenador, recepcionista, etc.).\n"
+                "• Usa el buscador para localizar un trabajador por nombre.\n"
+                "• Selecciona una fila y edita los campos para modificar sus datos.\n"
+                "• Pulsa 'Guardar cambios' para confirmar la edición.")
+
+        elif hasattr(v, "btnRegistrarUsuario"):
+            # Pantalla nuevo usuario
+            MensajeView.information(v, "Ayuda — Nuevo usuario",
+                "Formulario para registrar un nuevo usuario en el sistema.\n\n"
+                "• Selecciona el rol antes de rellenar el formulario.\n"
+                "• Todos los campos marcados son obligatorios.\n"
+                "• La contraseña se guardará cifrada automáticamente.\n"
+                "• Pulsa 'Registrar' para crear el usuario.")
+
+        elif hasattr(v, "tablaClases") and hasattr(v, "btnNuevaClase"):
+            # Pantalla clases
+            MensajeView.information(v, "Ayuda — Gestión de clases",
+                "Administra las clases del gimnasio.\n\n"
+                "• Usa el buscador para filtrar por nombre de clase.\n"
+                "• Haz doble clic en una celda para editar sus datos.\n"
+                "• Pulsa 'Nueva clase' para añadir una fila vacía.\n"
+                "• Pulsa 'Guardar cambios' para confirmar todas las modificaciones.")
+
+        elif hasattr(v, "tablaInscripciones") and hasattr(v, "lblTotal"):
+            # Pantalla inscripciones
+            MensajeView.information(v, "Ayuda — Inscripciones",
+                "Consulta todas las inscripciones activas del gimnasio.\n\n"
+                "• Usa el buscador para filtrar por nombre de cliente o clase.\n"
+                "• La tabla muestra cliente, clase, fecha de inscripción y estado.")
+
+        elif hasattr(v, "tablaPagoAdmin") or hasattr(v, "txtBuscarClientePendiente"):
+            # Pantalla pagos
+            MensajeView.information(v, "Ayuda — Pagos",
+                "Gestión de pagos y cobros pendientes.\n\n"
+                "• La tabla superior muestra todos los pagos registrados.\n"
+                "• La tabla inferior muestra clientes con pagos pendientes.\n"
+                "• Filtra por nombre o DNI para localizar un cliente.\n"
+                "• El administrador puede consultar el estado de cada pago.")
+
+        elif hasattr(v, "lblNumR1") and hasattr(v, "tablaRanking"):
+            # Pantalla estadísticas
+            MensajeView.information(v, "Ayuda — Estadísticas",
+                "Vista global de la actividad del gimnasio.\n\n"
+                "• El ranking muestra los clientes más activos del mes.\n"
+                "• La ocupación por clase indica el porcentaje de aforo usado.")
+
+        else:
+            MensajeView.information(v, "Ayuda",
+                "Usa el menú lateral para navegar entre las secciones.\n"
+                "El botón ? en cada pantalla muestra la ayuda específica.")

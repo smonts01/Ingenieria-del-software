@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from src.vista.componentes import CargadorVista, MensajeView, TablaView
+from src.vista.componentes import CargadorVista, MensajeView, TablaView, BotonesView
 
 
 class ControladorRecepcionista:
@@ -29,6 +29,7 @@ class ControladorRecepcionista:
         self.marcar_boton_activo(archivo)
         self.conectar_botones()
         self.cargar_datos()
+        self._añadir_boton_ayuda()
         self.ventana.show()
 
     def conectar_botones(self):
@@ -430,3 +431,52 @@ class ControladorRecepcionista:
             getattr(registro, attr, "")
             for attr in vars(registro).keys()
         ][:len(cabeceras)]
+
+    def _añadir_boton_ayuda(self):
+        BotonesView.crear_boton_ayuda(self.ventana, 1005, 30, self._mostrar_ayuda)
+
+    def _mostrar_ayuda(self):
+        v = self.ventana
+
+        if hasattr(v, "lblNumClientes") and hasattr(v, "tablaUltimosRegistros"):
+            # Inicio recepcionista
+            MensajeView.information(v, "Ayuda — Inicio",
+                "Panel de control de la recepción.\n\n"
+                "• Aquí ves el resumen del día: clientes totales, entradas de hoy "
+                "y nuevos registros.\n"
+                "• La tabla inferior muestra los últimos accesos registrados.\n"
+                "• Usa el menú lateral para gestionar clientes, accesos y registros.")
+
+        elif hasattr(v, "DNI") and hasattr(v, "NombreCompleto"):
+            # Registrar nuevo usuario
+            MensajeView.information(v, "Ayuda — Registrar usuario",
+                "Formulario para dar de alta un nuevo cliente en el gimnasio.\n\n"
+                "• Rellena todos los campos: nombre, DNI, email, teléfono y dirección.\n"
+                "• Selecciona si el cliente es adulto o menor de edad.\n"
+                "• Elige el plan de tarifa que ha contratado.\n"
+                "• Pulsa 'Registrar' para guardar el nuevo cliente en el sistema.")
+
+        elif hasattr(v, "txtDNIoID") and hasattr(v, "tableAccesos"):
+            # Control de acceso
+            MensajeView.information(v, "Ayuda — Control de acceso",
+                "Gestiona las entradas y salidas de clientes al gimnasio.\n\n"
+                "• Introduce el DNI o ID del cliente en el buscador.\n"
+                "• Pulsa 'Entrada' cuando el cliente entre al gimnasio.\n"
+                "• Pulsa 'Salida' cuando el cliente abandone el gimnasio.\n"
+                "• La tabla muestra el historial de accesos del día.")
+
+        elif hasattr(v, "tablaClientes") and hasattr(v, "comboBox_adultomenor"):
+            # Gestión de clientes
+            MensajeView.information(v, "Ayuda — Clientes",
+                "Consulta y edita los datos de los clientes del gimnasio.\n\n"
+                "• Usa el buscador por DNI para localizar un cliente concreto.\n"
+                "• Filtra por tipo de cliente (adulto o menor) con el desplegable.\n"
+                "• Selecciona una fila y modifica los campos para editar sus datos.\n"
+                "• Pulsa 'Guardar cambios' para confirmar cualquier modificación.")
+
+        else:
+            # Perfil recepcionista
+            MensajeView.information(v, "Ayuda — Mi perfil",
+                "Información de tu cuenta de recepcionista.\n\n"
+                "• Aquí puedes consultar tus datos personales registrados.\n"
+                "• Contacta con el administrador si necesitas modificar tu información.")

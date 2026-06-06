@@ -1,5 +1,5 @@
 import os
-from src.vista.componentes import CargadorVista, MensajeView, TablaView
+from src.vista.componentes import CargadorVista, MensajeView, TablaView, BotonesView
 from datetime import date, timedelta
 
 
@@ -34,6 +34,7 @@ class ControladorCliente:
         self._cargar_vo_cliente()
         self.conectar_botones()
         self.cargar_datos()
+        self._añadir_boton_ayuda()
         self.ventana.show()
 
     def _cargar_vo_cliente(self):
@@ -695,6 +696,61 @@ class ControladorCliente:
             coincide_horario = horario == "todos los horarios" or horario == item["horario"].lower()
 
             card.setVisible(coincide_texto and coincide_tipo and coincide_horario)
+
+   
+    def _añadir_boton_ayuda(self):
+        BotonesView.crear_boton_ayuda(self.ventana, 1015, 20, self._mostrar_ayuda)
+
+    
+
+    def _mostrar_ayuda(self):
+        v = self.ventana
+
+        if hasattr(v, "lblBienvenida"):
+            MensajeView.information(v, "Ayuda — Inicio",
+                "Esta es tu pantalla de inicio.\n\n"
+                "• Aquí ves un resumen de tus próximas clases.\n"
+                "• Consulta el estado de tu último pago.\n"
+                "• Las calorías muestran tu actividad semanal.\n\n"
+                "Usa el menú lateral izquierdo para navegar.")
+
+        elif hasattr(v, "lblTituloClases"):
+            MensajeView.information(v, "Ayuda — Clases disponibles",
+                "Aquí puedes ver y reservar clases del gimnasio.\n\n"
+                "• Usa el buscador para filtrar por nombre.\n"
+                "• El desplegable 'Categoría' filtra por tipo de actividad.\n"
+                "• El desplegable 'Horario' filtra por franja horaria.\n"
+                "• Pulsa 'Reservar' para inscribirte en una clase.\n"
+                "• Pulsa 'Cancelar' si ya estás inscrito y quieres baja.")
+
+        elif hasattr(v, "lblTituloReservas"):
+            MensajeView.information(v, "Ayuda — Mis reservas",
+                "Aquí aparecen las clases en las que estás inscrito.\n\n"
+                "• Solo se muestran tus próximas reservas activas.\n"
+                "• Para cancelar una reserva ve a 'Clases disponibles'.")
+
+        elif hasattr(v, "lblTituloEstadisticas"):
+            MensajeView.information(v, "Ayuda — Estadísticas",
+                "Resumen de tu actividad semanal.\n\n"
+                "• El gráfico de barras muestra calorías quemadas por día.\n"
+                "• La racha indica los días consecutivos entrenando.\n"
+                "• El objetivo se calcula sobre 1000 kcal semanales.")
+
+        elif hasattr(v, "lblTituloPerfil"):
+            MensajeView.information(v, "Ayuda — Mi perfil",
+                "Visualiza tus datos personales.\n\n"
+                "• Para modificar teléfono, email y dirección contacte con el recepcionista.\n"
+                )
+
+        else:
+            MensajeView.information(v, "Ayuda",
+                "Navega por el menú lateral para acceder a todas las secciones.")
+
+
+
+
+
+
 
     def cerrar_sesion(self):
         if self.ventana:

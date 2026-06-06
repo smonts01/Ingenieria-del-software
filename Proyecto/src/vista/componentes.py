@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import (
     QMessageBox as _QMessageBox,
     QTableWidgetItem as _QTableWidgetItem,
     QCheckBox as _QCheckBox,
+    QPushButton as _QPushButton,
 )
 from PyQt5.QtWidgets import QFileDialog
 
@@ -96,3 +97,26 @@ class ArchivoView:
             ""
         )
         return ruta
+    
+
+class BotonesView:
+    @staticmethod
+    def crear_boton_ayuda(parent, x, y, slot):
+        btn = _QPushButton("?", parent)
+        btn.setFixedSize(36, 36)
+        btn.move(x, y)
+        btn.setStyleSheet("""
+            QPushButton {
+                background-color: transparent;
+                color: #18B7A5;
+                border: 1px solid #18B7A5;
+                border-radius: 8px;
+                font: bold 14pt 'Segoe UI';
+            }
+            QPushButton:hover {
+                background-color: #E6F7F5;
+            }
+        """)
+        btn.clicked.connect(slot)
+        btn.show()
+        return btn
