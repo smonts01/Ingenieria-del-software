@@ -20,7 +20,6 @@ from src.modelo.VO.ContableVO import ContableVO
 
 
 class LogicaUsuarios:
-    
 
     def __init__(self):
         self._usuario_dao = UsuarioDaoJDBC()
@@ -183,7 +182,16 @@ class LogicaUsuarios:
 
         return self._usuario_dao.update(usuario_actualizado)
 
-    # ── TRABAJADORES ─────────────────────────────────────────────────
+    # ── RELACIONES POR ROL ───────────────────────────────────────────
+
+    def registrar_cliente(self, id_cliente):
+        cliente_vo = ClientesVO(
+            id_cliente=id_cliente,
+            estado_pagado="pendiente",
+            calorias_acumuladas=0
+        )
+
+        return self._cliente_dao.insert(cliente_vo)
 
     def registrar_empleado(self, id_empleado, salario=0.0):
         empleado_vo = EmpleadoVO(
@@ -193,7 +201,7 @@ class LogicaUsuarios:
 
         return self._empleado_dao.insert(empleado_vo)
 
-    def registrar_entrenador(self, id_entrenador, especialidad, id_admin=1):
+    def registrar_entrenador(self, id_entrenador, id_admin=1):
         entrenador_vo = EntrenadorVO(
             id_entrenador=id_entrenador,
             id_administrador_registra=id_admin
@@ -201,7 +209,7 @@ class LogicaUsuarios:
 
         return self._entrenador_dao.insert(entrenador_vo)
 
-    def registrar_recepcionista(self, id_recepcionista, turno, id_admin=1):
+    def registrar_recepcionista(self, id_recepcionista, id_admin=1):
         recepcionista_vo = RecepcionistaVO(
             id_recepcionista=id_recepcionista,
             id_administrador_registra=id_admin
@@ -209,7 +217,7 @@ class LogicaUsuarios:
 
         return self._recepcionista_dao.insert(recepcionista_vo)
 
-    def registrar_contable(self, id_contable, titulacion, id_admin=1):
+    def registrar_contable(self, id_contable, id_admin=1):
         contable_vo = ContableVO(
             id_contable=id_contable,
             id_administrador_registra=id_admin
@@ -223,6 +231,29 @@ class LogicaUsuarios:
         )
 
         return self._administrador_dao.insert(administrador_vo)
+
+    def crear_relacion_usuario_por_rol(self, id_usuario, id_rol, id_admin):
+        if id_rol == 1:
+            return self.registrar_cliente(id_usuario)
+
+        salario = self._salario_base_por_rol(id_rol)
+        self.registrar_empleado(id_usuario, salario)
+
+        if id_rol == 2:
+            return self.registrar_entrenador(id_usuario, id_admin)
+
+        if id_rol == 3:
+            return self.registrar_recepcionista(id_usuario, id_admin)
+
+        if id_rol == 4:
+            return self.registrar_administrador(id_usuario)
+
+        if id_rol == 5:
+            return self.registrar_contable(id_usuario, id_admin)
+
+        raise ValueError("Rol no reconocido")
+
+    # ── TRABAJADORES ─────────────────────────────────────────────────
 
     def contar_trabajadores(self):
         return len(self._empleado_dao.select())
@@ -272,84 +303,6 @@ class LogicaUsuarios:
 
         return self._usuario_dao.update(usuario_actualizado)
 
-    # ── RELACIONES POR ROL ───────────────────────────────────────────
-
-    def registrar_empleado(self, id_empleado, salario=0.0):
-        empleado_vo = EmpleadoVO(
-            id_empleado=id_empleado,
-            salario=salario
-        )
-
-        return self._empleado_dao.insert(empleado_vo)
-
-
-    def registrar_entrenador(self, id_entrenador, id_admin=1):
-        entrenador_vo = EntrenadorVO(
-            id_entrenador=id_entrenador,
-            id_administrador_registra=id_admin
-        )
-
-        return self._entrenador_dao.insert(entrenador_vo)
-
-
-    def registrar_recepcionista(self, id_recepcionista, id_admin=1):
-        recepcionista_vo = RecepcionistaVO(
-            id_recepcionista=id_recepcionista,
-            id_administrador_registra=id_admin
-        )
-
-        return self._recepcionista_dao.insert(recepcionista_vo)
-
-
-    def registrar_contable(self, id_contable, id_admin=1):
-        contable_vo = ContableVO(
-            id_contable=id_contable,
-            id_administrador_registra=id_admin
-        )
-
-        return self._contable_dao.insert(contable_vo)
-
-
-    def registrar_administrador(self, id_administrador):
-        administrador_vo = AdminitradorVO(
-            id_administrador=id_administrador
-        )
-
-        return self._administrador_dao.insert(administrador_vo)
-
-
-    def registrar_cliente(self, id_cliente):
-        cliente_vo = ClientesVO(
-            id_cliente=id_cliente,
-            estado_pagado="pendiente",
-            calorias_acumuladas=0
-        )
-
-        return self._cliente_dao.insert(cliente_vo)
-
-
-    def crear_relacion_usuario_por_rol(self, id_usuario, id_rol, id_admin):
-        if id_rol == 1:
-            return self.registrar_cliente(id_usuario)
-
-        salario = self._salario_base_por_rol(id_rol)
-        self.registrar_empleado(id_usuario, salario)
-
-        if id_rol == 2:
-            return self.registrar_entrenador(id_usuario, id_admin)
-
-        if id_rol == 3:
-            return self.registrar_recepcionista(id_usuario, id_admin)
-
-        if id_rol == 4:
-            return self.registrar_administrador(id_usuario)
-
-        if id_rol == 5:
-            return self.registrar_contable(id_usuario, id_admin)
-
-        raise ValueError("Rol no reconocido")
-
-
     def resumen_trabajadores_por_rol(self, trabajadores):
         resumen = {
             "total": len(trabajadores),
@@ -378,37 +331,22 @@ class LogicaUsuarios:
 
         return resumen
 
-
     def _salario_base_por_rol(self, id_rol):
         salarios_por_defecto = {
-            2: 1600.00,  # entrenador
-            3: 1200.00,  # recepcionista
-            4: 2000.00,  # administrador
-            5: 1800.00   # contable
+            2: 1600.00,
+            3: 1200.00,
+            4: 2000.00,
+            5: 1800.00
         }
 
-        cursor = self._usuario_dao.getCursor()
-
         try:
-            cursor.execute(
-                """
-                SELECT salario_base 
-                FROM salario_trabajador 
-                WHERE id_rol = ?
-                """,
-                (id_rol,)
-            )
+            salario = self._empleado_consultas_dao.obtener_salario_base_por_rol(id_rol)
 
-            fila = cursor.fetchone()
-
-            if fila and fila[0] is not None:
-                return float(fila[0])
+            if salario is not None:
+                return float(salario)
 
             return salarios_por_defecto.get(id_rol, 0.0)
 
         except Exception as e:
             print("Error al obtener salario base:", e)
             return salarios_por_defecto.get(id_rol, 0.0)
-
-        finally:
-            cursor.close()

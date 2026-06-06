@@ -10,6 +10,12 @@ class EmpleadoConsultasDaoJDBC(DaoJDBCBase):
         WHERE LOWER(r.nombre_rol) = ?
     """
 
+    SQL_SALARIO_BASE_POR_ROL = """
+        SELECT salario_base
+        FROM salario_trabajador
+        WHERE id_rol = ?
+    """
+
     SQL_LISTAR_TRABAJADORES_COMPLETO = """
         SELECT u.id_usuario, u.dni, u.nombre, u.telefono, u.email,
                u.username, r.nombre_rol, u.direccion, u.fecha_nacimiento
@@ -69,3 +75,11 @@ class EmpleadoConsultasDaoJDBC(DaoJDBCBase):
 
     def contable_salarios_personal(self):
         return self.consultar(self.SQL_SALARIOS_PERSONAL)
+
+    def obtener_salario_base_por_rol(self, id_rol):
+        datos = self.consultar(self.SQL_SALARIO_BASE_POR_ROL, (id_rol,))
+
+        if not datos:
+            return None
+
+        return datos[0][0]

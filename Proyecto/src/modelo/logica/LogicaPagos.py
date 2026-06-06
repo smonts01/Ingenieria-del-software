@@ -28,7 +28,7 @@ class LogicaPagos:
 
     # ── PAGOS ─────────────────────────────────────────────────────
 
-    def registrar_pago(self, id_cliente, id_contable, id_tarifa, importe, metodo_pago, tipo_cuota):
+    def registrar_pago(self, id_cliente, id_contable, id_tarifa, importe, metodo_pago):
         if not id_cliente:
             raise ValueError("Debe indicarse el cliente")
 
@@ -41,9 +41,6 @@ class LogicaPagos:
         if not metodo_pago:
             raise ValueError("Debe indicarse el método de pago")
 
-        if not tipo_cuota:
-            raise ValueError("Debe indicarse el tipo de cuota")
-
         try:
             importe_float = float(importe)
         except ValueError:
@@ -52,25 +49,30 @@ class LogicaPagos:
         if importe_float <= 0:
             raise ValueError("El importe debe ser mayor que cero")
 
+        metodo_pago = self.normalizar_metodo_pago(metodo_pago)
+
         pago_vo = PagoVO(
-            None,
-            id_cliente,
-            id_contable,
-            id_tarifa,
-            importe_float,
-            metodo_pago,
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "pendiente",
-            tipo_cuota
+            id_pago=None,
+            id_cliente=id_cliente,
+            id_contable=id_contable,
+            id_tarifa=id_tarifa,
+            importe=importe_float,
+            metodo_pago=metodo_pago,
+            fecha_pago=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         )
 
-        return self._pago_dao.insert(pago_vo)
+        filas = self._pago_dao.insert(pago_vo)
+
+        if filas:
+            self._pago_consultas_dao.marcar_cliente_abonado(id_cliente)
+
+        return filas
 
     def marcar_pago_abonado(self, id_pago):
-        if not id_pago:
-            raise ValueError("Debe seleccionarse un pago")
-
-        return self._pago_consultas_dao.marcar_pago_abonado(id_pago)
+        raise ValueError(
+            "Con la base de datos nueva no existe pago.estado. "
+            "Para abonar un pago se inserta en pago y se actualiza clientes.estado_pagado."
+        )
 
     def buscar_cliente_pendiente_por_dni_admin(self, dni):
         return self._pago_consultas_dao.buscar_cliente_pendiente_por_dni_admin(dni)
@@ -87,8 +89,7 @@ class LogicaPagos:
                 pago.importe,
                 pago.metodo_pago,
                 pago.fecha_pago,
-                pago.estado,
-                pago.tipo_cuota
+                "abonado"
             )
             for pago in pagos
         ]
@@ -113,8 +114,7 @@ class LogicaPagos:
                 pago.importe,
                 pago.metodo_pago,
                 pago.fecha_pago,
-                pago.estado,
-                pago.tipo_cuota
+                "abonado"
             )
             for pago in pagos
         ]
@@ -127,7 +127,7 @@ class LogicaPagos:
             raise ValueError("Debe introducirse el DNI")
 
         return self._pago_consultas_dao.buscar_pago_pendiente_por_dni(dni)
-    
+
     def primer_pago_pendiente(self):
         return self._pago_consultas_dao.primer_pago_pendiente()
 
@@ -168,8 +168,7 @@ class LogicaPagos:
                 tarifa.nombre,
                 tarifa.precio_mensual,
                 tarifa.servicios_incluidos,
-                tarifa.fecha_inicio,
-                tarifa.fecha_fin
+                tarifa.fecha_inicio
             )
             for tarifa in tarifas
         ]
@@ -217,7 +216,6 @@ class LogicaPagos:
 
     def ultimos_pagos_inicio_contable(self):
         return self._pago_consultas_dao.ultimos_pagos_inicio_contable()
-    
 
     # ── CONTABLE ───────────────────────────────────────────────────
 
@@ -267,6 +265,8 @@ class LogicaPagos:
         if not fecha_pago:
             raise ValueError("Debe indicarse la fecha de pago")
 
+        metodo_pago = self.normalizar_metodo_pago(metodo_pago)
+
         return self._pago_consultas_dao.registrar_pago_contable(
             dni_cliente,
             id_contable,
@@ -282,7 +282,7 @@ class LogicaPagos:
 
     def contable_total_nominas(self):
         return self._pago_consultas_dao.contable_total_nominas()
-    
+
     def contable_balance_economico(self):
         return self._pago_consultas_dao.contable_balance_economico()
 
@@ -339,13 +339,10 @@ class LogicaPagos:
             raise ValueError("Debe indicarse el contable")
 
         return self._pago_consultas_dao.contable_importe_gestionado(id_contable)
-    
+
+    # ── REGLAS DE NEGOCIO ──────────────────────────────────────────
 
     def es_pago_vencido(self, fecha_pago):
-        """
-        Regla de negocio:
-        Un pago está vencido si su fecha es anterior a la fecha actual.
-        """
         fecha_convertida = fecha_pago
 
         if isinstance(fecha_pago, str):
@@ -362,12 +359,7 @@ class LogicaPagos:
 
         return fecha_convertida < date.today()
 
-    
     def normalizar_metodo_pago(self, metodo_pago):
-        """
-        Regla de negocio:
-        Solo se aceptan los métodos de pago válidos de la aplicación.
-        """
         metodo = str(metodo_pago).strip().lower()
 
         metodos_validos = ["tarjeta", "efectivo", "transferencia", "bizum"]
@@ -378,12 +370,8 @@ class LogicaPagos:
             )
 
         return metodo
-    
 
     def _valor(self, objeto, atributos, indice, defecto=None):
-        """
-        Lee un dato tanto si viene como VO como si viene como tupla/lista.
-        """
         if not isinstance(atributos, (list, tuple)):
             atributos = [atributos]
 
@@ -397,11 +385,6 @@ class LogicaPagos:
             return defecto
 
     def _pago_pendiente_a_tupla(self, pago):
-        """
-        Convierte PagoPendienteVO o tupla en:
-        ID Pago, Cliente, Tarifa, Importe, Fecha, Cuota
-        """
-
         if isinstance(pago, (tuple, list)):
             return tuple(pago)
 
