@@ -151,6 +151,27 @@ class ControladorCliente:
 
     def _cargar_estadisticas(self):
         v, vo = self.ventana, self._vo
+        hoy = date.today()
+        lunes = hoy - timedelta(days=hoy.weekday())
+        domingo = lunes + timedelta(days=6)
+
+        meses = {
+            1: "enero",
+            2: "febrero",
+            3: "marzo",
+            4: "abril",
+            5: "mayo",
+            6: "junio",
+            7: "julio",
+            8: "agosto",
+            9: "septiembre",
+            10: "octubre",
+            11: "noviembre",
+            12: "diciembre",
+        }
+
+        v.btnPeriodo.setText(f"{lunes.day} - {domingo.day} {meses[domingo.month]} {domingo.year}")
+
         v.set_entrenos(str(vo.entrenos_semana), vo.get_delta_entrenos_str())
         v.set_tiempo(vo.get_tiempo_semana_str(), vo.get_delta_tiempo_str())
         v.set_calorias(f'{vo.calorias_semana} kcal')
@@ -166,7 +187,7 @@ class ControladorCliente:
             v.set_total_calorias(f'Total semanal: {sum(calorias_dias.values())} kcal')
         except Exception as e:
             print('Error barras:', e)
-        v.set_dias_label('Lun          Mar          Mié          Jue          Vie          Sáb')
+        v.set_dias_label('Lun          Mar          Mié          Jue          Vie          Sáb          Dom')
         v.set_racha(vo.racha_dias)
         v.set_leyendas_distribucion(vo.distribucion_tipos)
 

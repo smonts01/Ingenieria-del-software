@@ -172,7 +172,6 @@ class ClienteDaoJDBC(DaoJDBCBase):
         WHERE a.id_cliente = ?
         AND a.presente = 'si'
         AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1)
-        AND DAYOFWEEK(a.fecha) BETWEEN 2 AND 7
         GROUP BY DAYOFWEEK(a.fecha)
         ORDER BY DAYOFWEEK(a.fecha)
     """
@@ -488,6 +487,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             "jueves": 0,
             "viernes": 0,
             "sabado": 0,
+            "domingo": 0,
         }
 
         mapa_dias = {
@@ -497,6 +497,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
             5: "jueves",
             6: "viernes",
             7: "sabado",
+            1: "domingo",
         }
 
         for fila in filas:

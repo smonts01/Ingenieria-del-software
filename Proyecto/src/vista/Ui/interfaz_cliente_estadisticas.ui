@@ -941,7 +941,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        <rect>
         <x>78</x>
         <y>177</y>
-        <width>300</width>
+        <width>331</width>
         <height>20</height>
        </rect>
       </property>
@@ -949,7 +949,7 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
        <string notr="true">color:#6B7280; font:8pt &quot;Segoe UI&quot;;</string>
       </property>
       <property name="text">
-       <string>Lun          Mar          Mié          Jue          Vie          Sáb</string>
+       <string>Lun          Mar          Mié          Jue          Vie          Sáb          Dom</string>
       </property>
      </widget>
      <widget class="QLabel" name="lblTotalCalorias">
@@ -963,6 +963,19 @@ QPushButton#btnMini, QPushButton#btnDetalleClase, QPushButton#btnEvolucion { bac
       </property>
       <property name="text">
        <string>Total de calorías : 1.000 kcal</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="barDom">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>120</y>
+        <width>18</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#18B7A5; border-radius:4px;</string>
       </property>
      </widget>
     </widget>

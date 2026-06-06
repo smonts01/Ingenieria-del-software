@@ -133,7 +133,8 @@ class VistaClienteClasesTodas(QMainWindow):
         self.cmbHorario.blockSignals(False)
 
     def set_periodo(self, texto):
-        if hasattr(self, 'btnPeriodo'): self.btnPeriodo.setText(texto)
+        if hasattr(self, 'btnPeriodo'): 
+            self.btnPeriodo.setText(texto)
 
     def cargar_cards(self, clases, ids_inscritas, asistidas):
         self._cards_clases = []
@@ -301,10 +302,13 @@ class VistaClienteEstadisticas(QMainWindow):
             'jueves':   getattr(self, 'barJue', None),
             'viernes':  getattr(self, 'barVie', None),
             'sabado':   getattr(self, 'barSab', None),
+            'domingo':  getattr(self, 'barDom', None),
         }
-        max_kcal = max(calorias_dias.values()) if calorias_dias else 1
-        if max_kcal == 0: max_kcal = 1
+        
+
+        max_kcal = 400
         altura_maxima = 80
+        
         for dia, barra in barras.items():
             if barra:
                 kcal = calorias_dias.get(dia, 0)
