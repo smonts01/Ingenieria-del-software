@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.PagoVO import PagoVO
 
 
-class PagoDaoJDBC(Conexion):
+class PagoDaoJDBC:
 
     SQL_SELECT = """
         SELECT id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago
@@ -44,6 +44,9 @@ class PagoDaoJDBC(Conexion):
         WHERE id_pago = ?
     """
 
+    def __init__(self):
+        self._conexion = Conexion()  
+
     def _rowToVO(self, row) -> PagoVO:
         id_pago, id_cliente, id_contable, id_tarifa, importe, metodo_pago, fecha_pago = row
 
@@ -58,7 +61,7 @@ class PagoDaoJDBC(Conexion):
         )
 
     def select(self) -> list[PagoVO]:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         pagos = []
 
         try:
@@ -72,12 +75,12 @@ class PagoDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return pagos
 
     def selectById(self, id_pago: int) -> PagoVO:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         pago = None
 
         try:
@@ -92,12 +95,12 @@ class PagoDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return pago
 
     def selectByCliente(self, id_cliente: int) -> list[PagoVO]:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         pagos = []
 
         try:
@@ -111,12 +114,12 @@ class PagoDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return pagos
 
     def insert(self, vo: PagoVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -139,12 +142,12 @@ class PagoDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def update(self, vo: PagoVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -168,12 +171,12 @@ class PagoDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def delete(self, id_pago: int) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -185,6 +188,6 @@ class PagoDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows

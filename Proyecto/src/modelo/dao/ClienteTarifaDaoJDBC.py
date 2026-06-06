@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.Cliente_tarifaVO import Cliente_tarifaVO
 
 
-class ClienteTarifaDaoJDBC(Conexion):
+class ClienteTarifaDaoJDBC:
     """DAO para la tabla cliente_tarifa."""
 
     SQL_SELECT = """
@@ -63,6 +63,9 @@ class ClienteTarifaDaoJDBC(Conexion):
         WHERE id_cliente_tarifa = ?
     """
 
+    def __init__(self):
+        self._conexion = Conexion()  
+
     def _rowToVO(self, row) -> Cliente_tarifaVO:
         id_cliente_tarifa, id_cliente, id_tarifa, fecha_contratacion, estado = row
 
@@ -75,7 +78,7 @@ class ClienteTarifaDaoJDBC(Conexion):
         )
 
     def select(self) -> list[Cliente_tarifaVO]:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         resultado = []
 
         try:
@@ -89,12 +92,12 @@ class ClienteTarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return resultado
 
     def selectByCliente(self, id_cliente: int) -> list[Cliente_tarifaVO]:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         resultado = []
 
         try:
@@ -108,12 +111,12 @@ class ClienteTarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return resultado
 
     def selectActivaByCliente(self, id_cliente: int):
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         vo = None
 
         try:
@@ -128,12 +131,12 @@ class ClienteTarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return vo
 
     def insert(self, id_cliente: int, id_tarifa: int) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -145,12 +148,12 @@ class ClienteTarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def asignar_tarifa_activa(self, id_cliente: int, id_tarifa: int) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -163,12 +166,12 @@ class ClienteTarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def update(self, vo: Cliente_tarifaVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -188,12 +191,12 @@ class ClienteTarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def delete(self, id_cliente_tarifa: int) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -205,6 +208,6 @@ class ClienteTarifaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows

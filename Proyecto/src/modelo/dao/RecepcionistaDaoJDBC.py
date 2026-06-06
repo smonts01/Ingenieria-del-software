@@ -2,7 +2,7 @@ from src.modelo.conexion.Conexion import Conexion
 from src.modelo.VO.RecepcionistaVO import RecepcionistaVO
 
 
-class RecepcionistaDaoJDBC(Conexion):
+class RecepcionistaDaoJDBC:
 
     SQL_SELECT = """
         SELECT id_recepcionista, id_administrador_registra
@@ -33,6 +33,9 @@ class RecepcionistaDaoJDBC(Conexion):
         WHERE id_recepcionista = ?
     """
 
+    def __init__(self):
+        self._conexion = Conexion()  
+
     def _rowToVO(self, row) -> RecepcionistaVO:
         id_recepcionista, id_administrador_registra = row
 
@@ -42,7 +45,7 @@ class RecepcionistaDaoJDBC(Conexion):
         )
 
     def select(self) -> list[RecepcionistaVO]:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         recepcionistas = []
 
         try:
@@ -56,12 +59,12 @@ class RecepcionistaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return recepcionistas
 
     def selectById(self, id_recepcionista: int) -> RecepcionistaVO:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         recepcionista = None
 
         try:
@@ -76,12 +79,12 @@ class RecepcionistaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return recepcionista
 
     def insert(self, vo: RecepcionistaVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -100,12 +103,12 @@ class RecepcionistaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def update(self, vo: RecepcionistaVO) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -124,12 +127,12 @@ class RecepcionistaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
 
     def delete(self, id_recepcionista: int) -> int:
-        cursor = self.getCursor()
+        cursor = self._conexion.getCursor()
         rows = 0
 
         try:
@@ -141,6 +144,6 @@ class RecepcionistaDaoJDBC(Conexion):
 
         finally:
             cursor.close()
-            self.closeConnection()
+            self._conexion.closeConnection()
 
         return rows
