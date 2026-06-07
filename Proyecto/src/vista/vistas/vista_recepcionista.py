@@ -1,6 +1,5 @@
 """
-Vistas del rol Recepcionista — Patrón MVC según ejemplo de la profesora.
-
+Vistas del rol Recepcionista
 Responsabilidad de la Vista:
 - Cargar el archivo .ui que le pasa el controlador.
 - Conocer sus botones y conectar sus eventos.
@@ -8,20 +7,17 @@ Responsabilidad de la Vista:
 - Exponer métodos get_xxx() para que el controlador lea datos.
 - Exponer métodos set_xxx() / cargar_tabla_xxx() para que el controlador actualice la interfaz.
 - Mostrar mensajes visuales.
-- Nunca ejecutar SQL.
-- Nunca contener lógica de negocio.
 """
 
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
 
 
-# ── Helpers internos de la vista ──────────────────────────────────────────────
+# Compartidos
 
 def _rellenar_tabla_accesos(tabla, cabeceras, datos):
     """
     Rellena una tabla de accesos.
-
     Esta función pertenece a la Vista porque solo pinta datos en una tabla.
     No calcula datos ni consulta la base de datos.
     """
@@ -47,7 +43,6 @@ def _rellenar_tabla_accesos(tabla, cabeceras, datos):
 def _rellenar_tabla_tuplas(tabla, cabeceras, datos):
     """
     Rellena una tabla con tuplas o con objetos VO.
-
     Se usa en las pantallas de recepción para mostrar clientes recientes,
     clientes filtrados y otros datos de resumen.
     """
@@ -82,12 +77,11 @@ def _rellenar_tabla_tuplas(tabla, cabeceras, datos):
     tabla.resizeColumnsToContents()
 
 
-# ── Vista inicio ──────────────────────────────────────────────────────────────
+# Inicio
 
 class VistaRecepcionistaInicio(QMainWindow):
     """
     Vista principal de recepción.
-
     Recibe la ruta completa del .ui desde el controlador.
     La vista carga el .ui y conecta sus botones.
     """
@@ -110,7 +104,7 @@ class VistaRecepcionistaInicio(QMainWindow):
         self.btnClientes.clicked.connect(self._on_clientes)
         self.btnPerfil.clicked.connect(self._on_perfil)
 
-    # ── Delegación al controlador ────────────────────────────────────────
+    # Delegar al controlador
 
     def _on_cerrar_sesion(self):
         self.controlador.cerrar_sesion()
@@ -137,7 +131,7 @@ class VistaRecepcionistaInicio(QMainWindow):
         """
         self.controlador = ctrl
 
-    # ── Métodos que usa el controlador para actualizar la UI ─────────────
+    # Metodos que usa el controlador
 
     def set_num_clientes(self, valor: str):
         self.lblNumClientes.setText(valor)
@@ -155,7 +149,7 @@ class VistaRecepcionistaInicio(QMainWindow):
         _rellenar_tabla_tuplas(self.tablaClientesRecientes, cabeceras, datos)
 
 
-# ── Vista registrar usuario ──────────────────────────────────────────────────
+# Registrar usuario
 
 class VistaRecepcionistaRegistrarUsuario(QMainWindow):
     """
@@ -179,7 +173,7 @@ class VistaRecepcionistaRegistrarUsuario(QMainWindow):
         # Botón de registrar cliente.
         self.btnInicio_20.clicked.connect(self._on_confirmar_registro)
 
-    # ── Delegación al controlador ────────────────────────────────────────
+    # Delegar a controlador
 
     def _on_cerrar_sesion(self):
         self.controlador.cerrar_sesion()
@@ -205,7 +199,7 @@ class VistaRecepcionistaRegistrarUsuario(QMainWindow):
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # ── Getters del formulario ───────────────────────────────────────────
+    # getters formularios
     # El controlador no toca directamente los widgets.
     # Lee los datos usando estos métodos.
 
@@ -261,7 +255,7 @@ class VistaRecepcionistaRegistrarUsuario(QMainWindow):
             return self.ButtomAdulto.isChecked()
         return True
 
-    # ── Métodos visuales ─────────────────────────────────────────────────
+    # Metodos visuales
 
     def limpiar_formulario(self):
         for widget in self.findChildren(QLineEdit):
@@ -274,7 +268,7 @@ class VistaRecepcionistaRegistrarUsuario(QMainWindow):
         QMessageBox.information(self, "Correcto", msg)
 
 
-# ── Vista control de acceso ──────────────────────────────────────────────────
+# Control de acceso
 
 class VistaRecepcionistaControlAcceso(QMainWindow):
     """
@@ -300,7 +294,7 @@ class VistaRecepcionistaControlAcceso(QMainWindow):
         self.btnEntrada.clicked.connect(self._on_entrada)
         self.btnSalida.clicked.connect(self._on_salida)
 
-    # ── Delegación al controlador ────────────────────────────────────────
+    # Delegar al controlador
 
     def _on_cerrar_sesion(self):
         self.controlador.cerrar_sesion()
@@ -332,12 +326,11 @@ class VistaRecepcionistaControlAcceso(QMainWindow):
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # ── Getter ───────────────────────────────────────────────────────────
 
     def get_dni_id(self):
         return self.txtDNIoID.text().strip()
 
-    # ── Métodos para actualizar la UI ────────────────────────────────────
+    # Actualizar ui
 
     def set_cliente_encontrado(self, nombre, dni, id_usuario, estado_pago):
         self.lblNombre.setText(str(nombre))
@@ -367,12 +360,11 @@ class VistaRecepcionistaControlAcceso(QMainWindow):
         QMessageBox.information(self, "Correcto", msg)
 
 
-# ── Vista clientes ────────────────────────────────────────────────────────────
+# Clientes
 
 class VistaRecepcionistaClientes(QMainWindow):
     """
     Vista del listado de clientes de recepción.
-
     Permite filtrar clientes y editar datos de la tabla.
     """
 
@@ -396,7 +388,7 @@ class VistaRecepcionistaClientes(QMainWindow):
         self.comboBox_plan.currentIndexChanged.connect(self._on_filtrar)
         self.btnCambios.clicked.connect(self._on_guardar)
 
-    # ── Delegación al controlador ────────────────────────────────────────
+    # Delegar al controlador
 
     def _on_cerrar_sesion(self):
         self.controlador.cerrar_sesion()
@@ -425,7 +417,7 @@ class VistaRecepcionistaClientes(QMainWindow):
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # ── Getters de filtros ───────────────────────────────────────────────
+    # getter
 
     def get_filtro_dni(self):
         return self.lblBuscarDNI.text().strip()
@@ -436,7 +428,7 @@ class VistaRecepcionistaClientes(QMainWindow):
     def get_filtro_plan(self):
         return self.comboBox_plan.currentText()
 
-    # ── Métodos para actualizar la UI ────────────────────────────────────
+    # actualizar ui
 
     def set_total_clientes(self, valor: str):
         self.lblTotalClientes.setText(valor)
@@ -460,7 +452,6 @@ class VistaRecepcionistaClientes(QMainWindow):
     def get_fila_tabla(self, fila: int, num_cols: int) -> list:
         """
         Devuelve los textos de una fila editada.
-
         El controlador usa esto para enviar los datos al modelo.
         """
         return [
@@ -476,7 +467,7 @@ class VistaRecepcionistaClientes(QMainWindow):
         QMessageBox.information(self, "Correcto", msg)
 
 
-# ── Vista perfil ──────────────────────────────────────────────────────────────
+# Perfil
 
 class VistaRecepcionistaPerfil(QMainWindow):
     """
@@ -497,7 +488,7 @@ class VistaRecepcionistaPerfil(QMainWindow):
         self.btnClientes.clicked.connect(self._on_clientes)
         self.btnPerfil.clicked.connect(self._on_perfil)
 
-    # ── Delegación al controlador ────────────────────────────────────────
+    # Delegar al controlador
 
     def _on_cerrar_sesion(self):
         self.controlador.cerrar_sesion()
@@ -520,7 +511,7 @@ class VistaRecepcionistaPerfil(QMainWindow):
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # ── Métodos para actualizar la UI ────────────────────────────────────
+    # actualizar ui
 
     def set_nombre(self, valor: str):
         self.label_Nombre.setText(valor)

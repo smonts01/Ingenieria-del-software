@@ -1,6 +1,5 @@
 """
 Vista de la pantalla de login (interfaz_grafica.ui)
-Patrón MVC - Capa Vista
 """
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5.uic import loadUi
@@ -36,14 +35,14 @@ class VistaLogin(QDialog):
         """La vista captura el onclick y delega al controlador."""
         self.controlador.iniciarSesion()
 
-    # --- Getters para el controlador ---
+    # Getters para el controlador 
     def get_usuario(self) -> str:
         return self.txtUsuario.text().strip()
 
     def get_contrasena(self) -> str:
         return self.txtContrasea.text()
 
-    # --- Métodos de feedback ---
+    #  Métodos de feedback 
     def mostrar_error(self, mensaje: str):
         QMessageBox.critical(self, "Error de acceso", mensaje)
 
