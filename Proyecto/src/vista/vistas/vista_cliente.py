@@ -1,11 +1,8 @@
 """
-Vistas del rol Cliente — Patrón MVC según ejemplo de la profesora.
-
+Vistas del rol Cliente
 La Vista:
 - Carga el .ui en __init__
 - Conecta sus botones en set_controlador()
-- Expone métodos set_xxx() para que el controlador actualice la UI
-- Nunca contiene lógica de negocio
 """
 from datetime import date, timedelta
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QMessageBox
@@ -31,7 +28,7 @@ def _menu_cliente(v, ctrl):
     v.btnInformacion.clicked.connect(ctrl.ir_informacion)
 
 
-# ── Vista inicio ──────────────────────────────────────────────────────────────
+# Inicio
 
 class VistaClienteInicio(QMainWindow):
 
@@ -79,7 +76,7 @@ class VistaClienteInicio(QMainWindow):
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
 
 
-# ── Vista clases todas ────────────────────────────────────────────────────────
+#  Clases
 
 class VistaClienteClasesTodas(QMainWindow):
 
@@ -200,7 +197,7 @@ class VistaClienteClasesTodas(QMainWindow):
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Reserva', msg)
 
 
-# ── Vista reservas ────────────────────────────────────────────────────────────
+# reservas
 
 class VistaClienteReservas(QMainWindow):
 
@@ -257,7 +254,7 @@ class VistaClienteReservas(QMainWindow):
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
 
 
-# ── Vista estadísticas ────────────────────────────────────────────────────────
+# Estadisticas
 
 class VistaClienteEstadisticas(QMainWindow):
 
@@ -337,7 +334,7 @@ class VistaClienteEstadisticas(QMainWindow):
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
 
 
-# ── Vista perfil ──────────────────────────────────────────────────────────────
+# perfil
 
 class VistaClientePerfil(QMainWindow):
 
@@ -381,7 +378,7 @@ class VistaClientePerfil(QMainWindow):
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Perfil actualizado', msg)
 
 
-# ── Vista información ─────────────────────────────────────────────────────────
+# Informacion
 
 class VistaClienteInformacion(QMainWindow):
 
