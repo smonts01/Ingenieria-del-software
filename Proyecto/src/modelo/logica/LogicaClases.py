@@ -37,19 +37,7 @@ class LogicaClases:
     def listar_clases(self):
         clases = self._clase_dao.select()
 
-        return [
-            (
-                clase.id_clase,
-                clase.nombre_actividad,
-                clase.dia_semana,
-                clase.hora_inicio,
-                clase.hora_fin,
-                clase.aforo_maximo,
-                clase.nivel_intensidad,
-                clase.calorias_estimadas
-            )
-            for clase in clases
-        ]
+        return clases
 
     def buscar_clases(self, texto):
         return self._clase_consultas_dao.buscar_clases(texto)
@@ -273,7 +261,7 @@ class LogicaClases:
         total = 0
 
         for clase in clases:
-            inscritos = self.clientes_inscritos_clase(clase[0])
+            inscritos = self.clientes_inscritos_clase(clase.id_clase)
             total += len(inscritos)
 
         return total
@@ -287,7 +275,7 @@ class LogicaClases:
         suma = 0
 
         for ocupacion in ocupaciones:
-            suma += float(ocupacion[4] or 0)
+            suma += float(ocupacion.porcentaje or 0)
 
         return round(suma / len(ocupaciones), 2)
 

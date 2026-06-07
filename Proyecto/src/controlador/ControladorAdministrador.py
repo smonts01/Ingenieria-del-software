@@ -13,6 +13,7 @@ import io
 from datetime import datetime
 
 from src.vista.componentes import MensajeView, TablaView, ImagenView, ArchivoView, BotonesView
+from src.modelo.VO.NuevoUsuarioFormVO import NuevoUsuarioFormVO
 from src.vista.vistas.vista_admin import (
     VistaAdminInicio,
     VistaAdminUsuariosClientes,
@@ -263,9 +264,16 @@ class ControladorAdministrador:
                          'Administrador':4,'Contable':5}
             id_rol = roles_map.get(rol_texto, 1)
 
-            self.modelo.crear_usuario_completo(
+            nuevo_usuario_vo = NuevoUsuarioFormVO(
                 dni, nombre, telefono, email, username, password,
-                id_rol, direccion, fecha_bd, self.usuario['id_usuario']
+                id_rol, direccion, fecha_bd
+            )
+            self.modelo.crear_usuario_completo(
+                nuevo_usuario_vo.dni, nuevo_usuario_vo.nombre,
+                nuevo_usuario_vo.telefono, nuevo_usuario_vo.email,
+                nuevo_usuario_vo.username, nuevo_usuario_vo.password,
+                nuevo_usuario_vo.id_rol, nuevo_usuario_vo.direccion,
+                nuevo_usuario_vo.fecha_nacimiento, self.usuario['id_usuario']
             )
             v.mostrar_exito(f"Usuario '{username}' registrado como {rol_texto}")
             v.limpiar()

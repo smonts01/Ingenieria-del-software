@@ -12,6 +12,7 @@ import os
 from datetime import date, timedelta
 
 from src.vista.componentes import MensajeView, BotonesView
+from src.modelo.VO.ModificacionPerfilVO import ModificacionPerfilVO
 from src.vista.vistas.vista_cliente import (
     VistaClienteInicio,
     VistaClienteClasesTodas,
@@ -170,7 +171,7 @@ class ControladorCliente:
             12: "diciembre",
         }
 
-        v.btnPeriodo.setText(f"{lunes.day} - {domingo.day} {meses[domingo.month]} {domingo.year}")
+        v.set_periodo(f"{lunes.day} - {domingo.day} {meses[domingo.month]} {domingo.year}")
 
         v.set_entrenos(str(vo.entrenos_semana), vo.get_delta_entrenos_str())
         v.set_tiempo(vo.get_tiempo_semana_str(), vo.get_delta_tiempo_str())
@@ -245,7 +246,11 @@ class ControladorCliente:
             v.mostrar_error('El email no puede estar vacío')
             return
         try:
-            self.modelo.modificar_usuario(self.usuario['id_usuario'], telefono, email, direccion)
+            perfil_vo = ModificacionPerfilVO(self.usuario['id_usuario'], telefono, email, direccion)
+            self.modelo.modificar_usuario(
+                perfil_vo.id_usuario, perfil_vo.telefono,
+                perfil_vo.email, perfil_vo.direccion
+            )
             v.mostrar_exito('Los cambios se han guardado correctamente')
             self._cargar_vo_cliente()
             self.cargar_datos()

@@ -6,6 +6,7 @@ import ctypes.wintypes
 from datetime import datetime
 
 from src.vista.componentes import MensajeView, BotonesView, ArchivoView
+from src.modelo.VO.RegistroPagoVO import RegistroPagoVO
 from src.vista.vistas.vista_contable import (
     VistaContableInicio,
     VistaContableRegistrarPago,
@@ -259,8 +260,10 @@ class ControladorContable:
                 return
             fecha_texto = v.get_fecha_texto()
             fecha_pago = (fecha_texto + ' 00:00:00') if fecha_texto else datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            pago_vo = RegistroPagoVO(dni, self.usuario['id_usuario'], metodo_pago, fecha_pago)
             correcto, mensaje = self.modelo.registrar_pago_contable(
-                dni, self.usuario['id_usuario'], metodo_pago, fecha_pago
+                pago_vo.dni_cliente, pago_vo.id_contable,
+                pago_vo.metodo_pago, pago_vo.fecha_pago
             )
             if correcto:
                 v.mostrar_exito(mensaje)

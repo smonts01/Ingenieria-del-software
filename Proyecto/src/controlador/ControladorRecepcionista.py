@@ -12,6 +12,8 @@ Responsabilidad del Controlador:
 """
 import os
 from src.vista.componentes import MensajeView, BotonesView
+from src.modelo.VO.NuevoUsuarioFormVO import NuevoUsuarioFormVO
+from src.modelo.VO.ModificacionPerfilVO import ModificacionPerfilVO
 from src.vista.vistas.vista_recepcionista import (
     VistaRecepcionistaInicio,
     VistaRecepcionistaRegistrarUsuario,
@@ -178,9 +180,14 @@ class ControladorRecepcionista:
                 v.mostrar_error(str(e))
                 return
 
+            nuevo_vo = NuevoUsuarioFormVO(
+                dni, nombre, telefono, email, username, password, 1, direccion, fecha_bd
+            )
             id_cliente = self.modelo.crear_cliente_desde_recepcion(
-                dni, nombre, telefono, email, username, password,
-                direccion, fecha_bd, es_menor, dni_tutor, nombre_tutor, plan
+                nuevo_vo.dni, nuevo_vo.nombre, nuevo_vo.telefono,
+                nuevo_vo.email, nuevo_vo.username, nuevo_vo.password,
+                nuevo_vo.direccion, nuevo_vo.fecha_nacimiento,
+                es_menor, dni_tutor, nombre_tutor, plan
             )
             v.mostrar_exito(f'Cliente registrado correctamente con ID {id_cliente}')
             v.limpiar_formulario()
