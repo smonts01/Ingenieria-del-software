@@ -391,34 +391,61 @@ class ControladorContable:
         except Exception as e:
             v.mostrar_error(str(e))
 
-    def _mostrar_pago_en_vista(self, pago):
-        id_pago, id_cliente, nombre, dni_real, id_tarifa, tarifa, importe, fecha_pago = pago[:8]
-        self.id_pago_seleccionado = id_pago
-        self.id_cliente_seleccionado = id_cliente
-        self.ventana.set_cliente(nombre, dni_real, id_cliente, 'pendiente',
-                                 tarifa, importe, fecha_pago)
 
+    # Recibe un pago devuelto por el modelo y lo muestra en la pantalla.
+    # También guarda el id del pago y del cliente seleccionados.
+    def _mostrar_pago_en_vista(self, pago):
+
+        #separo los datos del pago
+        id_pago, id_cliente, nombre, dni_real, id_tarifa, tarifa, importe, fecha_pago = pago[:8]
+
+        #guardo el pago seleccionado
+        self.id_pago_seleccionado = id_pago
+        self.id_cliente_seleccionado = id_cliente #guardo el cliente seleccionado
+
+
+        #paso datos a la vista para que los pinte
+        self.ventana.set_cliente(nombre, dni_real, id_cliente, 'pendiente', tarifa, importe, fecha_pago)
+
+
+
+    # Registra un pago realizado por un cliente.
+    # Lee datos de la vista, crea un RegistroPagoVO y llama al modelo para guardar.
     def registrar_pago(self):
         v = self.ventana
+
         try:
-            dni = v.get_dni()
+            dni = v.get_dni() # DNI introducido por el contable.
+            
             if not dni:
                 v.mostrar_error('Introduce el DNI del cliente.')
                 return
-            metodo_pago = v.get_metodo_pago()
+            
+
+            metodo_pago = v.get_metodo_pago() #método de pago selccionado se lo pide a la vista
+
             try:
-                metodo_pago = self.modelo.normalizar_metodo_pago(metodo_pago)
+                metodo_pago = self.modelo.normalizar_metodo_pago(metodo_pago) #normalizo para que sea válido para la BD y se l paos al modelo
             except ValueError as e:
                 v.mostrar_error(str(e))
                 return
-            fecha_texto = v.get_fecha_texto()
+            
+            fecha_texto = v.get_fecha_texto() #fecha escrita en la vista
+
+            # Si hay fecha escrita, uso esa. Si no, uso la fecha actual del modelo.
             fecha_pago = (fecha_texto + ' 00:00:00') if fecha_texto else self.modelo.fecha_pago_actual()
+
+            # Creo un VO para transportar los datos del pago.
             pago_vo = RegistroPagoVO(dni, self.usuario['id_usuario'], metodo_pago, fecha_pago)
+
+            #el modelo registra el pago en la base de datos
             correcto, mensaje = self.modelo.registrar_pago_contable(
                 pago_vo.dni_cliente, pago_vo.id_contable,
                 pago_vo.metodo_pago, pago_vo.fecha_pago
             )
-            if correcto:
+            
+            
+            if correcto: #si se guarda correctamente actualizo la pantalla
                 v.mostrar_exito(mensaje)
                 v.limpiar_dni()
                 v.set_estado_abonado()
@@ -428,26 +455,37 @@ class ControladorContable:
         except Exception as e:
             v.mostrar_error(str(e))
 
+    
+    #marca como abonado un pago seleccionado en la vista
     def marcar_abonado(self):
         v = self.ventana
+        
         try:
-            id_pago = v.get_id_pago_seleccionado()
+            id_pago = v.get_id_pago_seleccionado() #leo el pago seleccionado
+
             if id_pago is None:
                 v.mostrar_error('Selecciona un pago primero')
                 return
+            
+            #el modelo actualiza el estado del pago en la BD
             self.modelo.marcar_pago_abonado(id_pago)
+            
             v.mostrar_exito('Pago marcado como abonado')
-            self.cargar_datos()
+            self.cargar_datos() #recargo la pantalla para ver los cambios
+
         except Exception as e:
             v.mostrar_error(str(e))
 
+    #genera un informe general para el contable actual
     def generar_informe(self):
         v = self.ventana
 
         try:
             self.modelo.generar_informe(self.usuario['id_usuario'], 'general')
+
             v.mostrar_exito('Informe generado correctamente')
 
+            #recargo los datos para que aparezca el nuevo informe
             if isinstance(v, VistaContableInformes):
                 self._cargar_informes()
             else:
@@ -456,14 +494,19 @@ class ControladorContable:
         except Exception as e:
             v.mostrar_error(str(e))
 
+    
+    # Exporta a PDF el informe que se está viendo actualmente.
+    # La vista aporta las cabeceras y filas, y el modelo genera el archivo.
     def exportar_pdf(self):
         v = self.ventana
 
         try:
-            tipo = self._tipo_informe_actual
+            tipo = self._tipo_informe_actual #tipo de informe actual
 
+            #obtengo de la vista los datos de la tabla del informe
             cabeceras, filas = v.obtener_datos_tabla_informe()
 
+            #el modelo genera el pdf y devuelve la ruta donde se ha guardado
             ruta = self.modelo.exportar_pdf_informe(
                 self.usuario['id_usuario'],
                 tipo,
@@ -506,7 +549,7 @@ class ControladorContable:
                 'Registra el pago de un cliente.\n\n'
                 '• Busca al cliente por DNI y pulsa Enter.\n'
                 '• Selecciona el método de pago.\n'
-                '• Pulsa Confirmar para registrar el pago.')
+                '• Pulsa Registrar Pago para registrar el pago.')
         elif isinstance(v, VistaContablePagosPendientes):
             MensajeView.information(v, 'Ayuda — Pagos pendientes',
                 'Clientes con pagos pendientes.\n\n'
