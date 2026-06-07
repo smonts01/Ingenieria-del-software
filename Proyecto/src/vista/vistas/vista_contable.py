@@ -38,6 +38,23 @@ def _rellenar(tabla, cabeceras, datos):
     tabla.resizeColumnsToContents()
 
 
+def _obtener_datos_tabla(tabla):
+    cabeceras = [
+        tabla.horizontalHeaderItem(col).text()
+        if tabla.horizontalHeaderItem(col) else ''
+        for col in range(tabla.columnCount())
+    ]
+
+    filas = []
+
+    for fi in range(tabla.rowCount()):
+        fila = [
+            tabla.item(fi, ci).text() if tabla.item(fi, ci) else ''
+            for ci in range(tabla.columnCount())
+        ]
+        filas.append(fila)
+
+    return cabeceras, filas
 # ── Vista inicio ──────────────────────────────────────────────────────────────
 
 class VistaContableInicio(QMainWindow):
@@ -211,6 +228,7 @@ class VistaContableGestionEconomica(QMainWindow):
 
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
 
+   
 
 # ── Vista informes (menú de informes) ─────────────────────────────────────────
 
@@ -254,6 +272,7 @@ class VistaContableInformes(QMainWindow):
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Correcto', msg)
 
+   
 
 # ── Vista perfil contable ─────────────────────────────────────────────────────
 
@@ -318,8 +337,14 @@ class VistaContableInformeGestionEconomica(QMainWindow):
     def cargar_tabla(self, datos):
         _rellenar(self.tablaInformeGestionEconomica, ['Concepto', 'Valor'], datos)
 
-    def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
-    def mostrar_exito(self, msg): QMessageBox.information(self, 'PDF exportado', msg)
+    def mostrar_error(self, msg): 
+        QMessageBox.warning(self, 'Error', msg)
+    
+    def mostrar_exito(self, msg): 
+        QMessageBox.information(self, 'PDF exportado', msg)
+
+    def obtener_datos_tabla_informe(self):
+        return _obtener_datos_tabla(self.tablaInformeGestionEconomica)
 
 
 class VistaContableInformeDePagos(QMainWindow):
@@ -341,6 +366,9 @@ class VistaContableInformeDePagos(QMainWindow):
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
     def mostrar_exito(self, msg): QMessageBox.information(self, 'PDF exportado', msg)
 
+    def obtener_datos_tabla_informe(self):
+        return _obtener_datos_tabla(self.tablaInformePagos)
+
 
 class VistaContableInformePagosPendientes(QMainWindow):
 
@@ -358,8 +386,14 @@ class VistaContableInformePagosPendientes(QMainWindow):
         _rellenar(self.tablaInformePagosPendientes,
                   ['ID Pago', 'Cliente', 'Tarifa', 'Importe', 'Fecha', 'Cuota'], datos)
 
-    def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
-    def mostrar_exito(self, msg): QMessageBox.information(self, 'PDF exportado', msg)
+    def mostrar_error(self, msg): 
+        QMessageBox.warning(self, 'Error', msg)
+
+    def mostrar_exito(self, msg): 
+        QMessageBox.information(self, 'PDF exportado', msg)
+    
+    def obtener_datos_tabla_informe(self):
+        return _obtener_datos_tabla(self.tablaInformePagosPendientes)
 
 
 class VistaContableInformeBalanceMensual(QMainWindow):
@@ -378,5 +412,11 @@ class VistaContableInformeBalanceMensual(QMainWindow):
         _rellenar(self.tablaInformeBalanceMensual,
                   ['Año', 'Mes', 'Ingresos', 'Gastos', 'Balance'], datos)
 
-    def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
-    def mostrar_exito(self, msg): QMessageBox.information(self, 'PDF exportado', msg)
+    def mostrar_error(self, msg): 
+        QMessageBox.warning(self, 'Error', msg)
+
+    def mostrar_exito(self, msg): 
+        QMessageBox.information(self, 'PDF exportado', msg)
+
+    def obtener_datos_tabla_informe(self):
+        return _obtener_datos_tabla(self.tablaInformeBalanceMensual)
