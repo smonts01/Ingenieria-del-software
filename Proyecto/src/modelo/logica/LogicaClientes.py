@@ -66,7 +66,7 @@ class LogicaClientes:
     def contar_usuarios(self):
         return self._cliente_consultas_dao.recepcion_total_clientes()
 
-        return clientes
+        
 
     def listar_clientes_completo(self):
         return self._cliente_consultas_dao.listar_clientes_completo()
