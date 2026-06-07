@@ -132,9 +132,7 @@ class ControladorEntrenador:
             return
         try:
             datos = self.modelo.clientes_inscritos_clase(id_clase)
-            # datos[i] = (id, nombre, telefono, email, ...)
-            filas = [(d.nombre, d.telefono, d.email) for d in datos]
-            v.cargar_tabla_inscritos(filas)
+            v.cargar_tabla_inscritos(datos)
             v.set_num_inscritos(str(len(datos)))
             info = self.modelo.informacion_clase_con_sala(id_clase)
             if info:
