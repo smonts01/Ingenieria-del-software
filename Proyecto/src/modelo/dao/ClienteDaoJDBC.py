@@ -1,18 +1,60 @@
+from datetime import date, datetime, timedelta
+
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
 from src.modelo.VO.ClientesVO import ClientesVO
 from src.modelo.VO.ClienteInicioVO import ClienteInicioVO
-from datetime import date, datetime, timedelta
 from src.modelo.conexion.Conexion import Conexion
 
-class ClienteDaoJDBC(DaoJDBCBase):
 
-    SQL_SELECT = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes"
-    SQL_SELECT_BY_ID = "SELECT id_cliente, estado_pagado, calorias_acumuladas FROM clientes WHERE id_cliente = ?"
-    SQL_INSERT = "INSERT INTO clientes (id_cliente, estado_pagado, calorias_acumuladas) VALUES (?, ?, ?)"
-    SQL_UPDATE = "UPDATE clientes SET estado_pagado=?, calorias_acumuladas=? WHERE id_cliente=?"
-    SQL_UPDATE_ESTADO = "UPDATE clientes SET estado_pagado=? WHERE id_cliente=?"
-    SQL_UPDATE_CALORIAS = "UPDATE clientes SET calorias_acumuladas=? WHERE id_cliente=?"
-    SQL_DELETE = "DELETE FROM clientes WHERE id_cliente = ?"
+class ClienteDaoJDBC(DaoJDBCBase):
+    """
+    DAO principal de clientes.
+    Responsabilidad:
+    - Acceder a la tabla clientes.
+    - Insertar clientes.
+    - Modificar estado de pago y calorías.
+    - Consultar información completa del cliente para su pantalla de inicio.
+    - Convertir filas de la base de datos en objetos VO.
+    """
+
+
+    SQL_SELECT = """
+        SELECT id_cliente, estado_pagado, calorias_acumuladas
+        FROM clientes
+    """
+
+    SQL_SELECT_BY_ID = """
+        SELECT id_cliente, estado_pagado, calorias_acumuladas
+        FROM clientes
+        WHERE id_cliente = ?
+    """
+
+    SQL_INSERT = """
+        INSERT INTO clientes
+            (id_cliente, estado_pagado, calorias_acumuladas)
+        VALUES
+            (?, ?, ?)
+    """
+
+    SQL_UPDATE = """
+        UPDATE clientes
+        SET estado_pagado = ?,
+            calorias_acumuladas = ?
+        WHERE id_cliente = ?
+    """
+
+    SQL_UPDATE_ESTADO = """
+        UPDATE clientes
+        SET estado_pagado = ?
+        WHERE id_cliente = ?
+    """
+
+    SQL_UPDATE_CALORIAS = """
+        UPDATE clientes
+        SET calorias_acumuladas = ?
+        WHERE id_cliente = ?
+    """
+
 
     _SQL_INICIO_BASE = """
         SELECT
@@ -21,8 +63,8 @@ class ClienteDaoJDBC(DaoJDBCBase):
             u.email,
             u.telefono,
             u.direccion,
-            DATE_FORMAT(u.fecha_nacimiento, '%d/%m/%Y')  AS fecha_nacimiento,
-            DATE_FORMAT(u.fecha_registro,   '%M %Y')     AS fecha_registro,
+            DATE_FORMAT(u.fecha_nacimiento, '%d/%m/%Y') AS fecha_nacimiento,
+            DATE_FORMAT(u.fecha_registro, '%M %Y') AS fecha_registro,
             c.estado_pagado AS estado_pagado,
             c.calorias_acumuladas
         FROM clientes c
@@ -76,7 +118,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
                 WHERE id_cliente = ?
                   AND presente = 'si'
                   AND MONTH(fecha) = MONTH(CURDATE())
-                  AND YEAR(fecha)  = YEAR(CURDATE())
+                  AND YEAR(fecha) = YEAR(CURDATE())
             ) AS asistencias_mes,
             (
                 SELECT COUNT(*)
@@ -84,40 +126,42 @@ class ClienteDaoJDBC(DaoJDBCBase):
                 WHERE id_cliente = ?
                   AND estado = 'inscrito'
                   AND MONTH(fecha_inscripcion) = MONTH(CURDATE())
-                  AND YEAR(fecha_inscripcion)  = YEAR(CURDATE())
+                  AND YEAR(fecha_inscripcion) = YEAR(CURDATE())
             ) AS inscripciones_mes
     """
 
     _SQL_PROXIMAS_CLASES = """
         SELECT
             cl.nombre_actividad,
-            cl.dia_semana           AS fecha,
+            cl.dia_semana AS fecha,
             TIME_FORMAT(cl.hora_inicio, '%H:%i') AS hora_inicio,
-            s.nombre                AS nombre_sala
+            s.nombre AS nombre_sala
         FROM inscripcion i
-        JOIN clase cl ON cl.id_clase  = i.id_clase
-        JOIN sala  s  ON s.id_sala    = cl.id_sala
+        JOIN clase cl ON cl.id_clase = i.id_clase
+        JOIN sala s ON s.id_sala = cl.id_sala
         WHERE i.id_cliente = ?
-        AND i.estado = 'inscrito'
-        AND NOT EXISTS (
-            SELECT 1
-            FROM asistencia a
-            WHERE a.id_cliente = i.id_cliente
+          AND i.estado = 'inscrito'
+          AND NOT EXISTS (
+              SELECT 1
+              FROM asistencia a
+              WHERE a.id_cliente = i.id_cliente
                 AND a.id_clase = i.id_clase
                 AND a.presente = 'si'
-        )
+          )
         ORDER BY
-            FIELD(cl.dia_semana,
-                  'lunes','martes','miércoles','jueves',
-                  'viernes','sábado','domingo'),
+            FIELD(
+                cl.dia_semana,
+                'lunes', 'martes', 'miércoles', 'jueves',
+                'viernes', 'sábado', 'domingo'
+            ),
             cl.hora_inicio
         LIMIT 20
     """
 
     _SQL_STATS_SEMANA_ACTUAL = """
         SELECT
-            COUNT(*)                              AS entrenos,
-            COALESCE(SUM(cl.duracion), 0)         AS tiempo_min
+            COUNT(*) AS entrenos,
+            COALESCE(SUM(cl.duracion), 0) AS tiempo_min
         FROM asistencia a
         JOIN clase cl ON cl.id_clase = a.id_clase
         WHERE a.id_cliente = ?
@@ -127,8 +171,8 @@ class ClienteDaoJDBC(DaoJDBCBase):
 
     _SQL_STATS_SEMANA_ANTERIOR = """
         SELECT
-            COUNT(*)                              AS entrenos,
-            COALESCE(SUM(cl.duracion), 0)         AS tiempo_min
+            COUNT(*) AS entrenos,
+            COALESCE(SUM(cl.duracion), 0) AS tiempo_min
         FROM asistencia a
         JOIN clase cl ON cl.id_clase = a.id_clase
         WHERE a.id_cliente = ?
@@ -147,7 +191,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
     _SQL_DISTRIBUCION = """
         SELECT
             cl.nombre_actividad AS tipo,
-            COUNT(*)            AS total
+            COUNT(*) AS total
         FROM asistencia a
         JOIN clase cl ON cl.id_clase = a.id_clase
         WHERE a.id_cliente = ?
@@ -160,7 +204,7 @@ class ClienteDaoJDBC(DaoJDBCBase):
         SELECT DISTINCT id_clase
         FROM asistencia
         WHERE id_cliente = ?
-        AND presente = 'si'
+          AND presente = 'si'
     """
 
     SQL_CALORIAS_SEMANA_POR_DIA = """
@@ -170,202 +214,272 @@ class ClienteDaoJDBC(DaoJDBCBase):
         FROM asistencia a
         JOIN clase c ON a.id_clase = c.id_clase
         WHERE a.id_cliente = ?
-        AND a.presente = 'si'
-        AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1)
+          AND a.presente = 'si'
+          AND YEARWEEK(a.fecha, 1) = YEARWEEK(CURDATE(), 1)
         GROUP BY DAYOFWEEK(a.fecha)
         ORDER BY DAYOFWEEK(a.fecha)
     """
 
-
     def __init__(self):
+        # Creamos una conexión para que el DAO pueda pedir cursores.
         self._conexion = Conexion()
 
     def _rowToVO(self, row) -> ClientesVO:
+        """
+        Convierte una fila de la tabla clientes en un ClientesVO.
+        """
         id_cliente, estado_pagado, calorias_acumuladas = row
         return ClientesVO(id_cliente, estado_pagado, calorias_acumuladas)
 
     def select(self) -> list[ClientesVO]:
-        """Recupera todos los clientes."""
+        """
+        Recupera todos los clientes básicos.
+        Devuelve:
+        - Lista de ClientesVO.
+        """
         cursor = self._conexion.getCursor()
         clientes = []
+
         try:
             cursor.execute(self.SQL_SELECT)
+
             for row in cursor.fetchall():
                 clientes.append(self._rowToVO(row))
+
         except Exception as e:
             print("Error al seleccionar clientes:", e)
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
+
         return clientes
 
     def selectById(self, id_cliente: int) -> ClientesVO:
-        """Recupera un cliente por su ID."""
+        """
+        Recupera un cliente por su ID.
+        """
         cursor = self._conexion.getCursor()
         cliente = None
+
         try:
             cursor.execute(self.SQL_SELECT_BY_ID, (id_cliente,))
             row = cursor.fetchone()
+
             if row:
                 cliente = self._rowToVO(row)
+
         except Exception as e:
             print("Error al seleccionar cliente por ID:", e)
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
+
         return cliente
 
     def insert(self, vo: ClientesVO) -> int:
-        """Inserta un nuevo cliente. Retorna filas afectadas."""
+        """
+        Inserta un nuevo cliente.
+
+        Esta operación representa un alta en la base de datos.
+        """
         cursor = self._conexion.getCursor()
         rows = 0
+
         try:
-            cursor.execute(self.SQL_INSERT, (
-                vo.id_cliente, vo.estado_pagado, vo.calorias_acumuladas
-            ))
+            cursor.execute(
+                self.SQL_INSERT,
+                (
+                    vo.id_cliente,
+                    vo.estado_pagado,
+                    vo.calorias_acumuladas
+                )
+            )
+
             rows = cursor.rowcount
+
         except Exception as e:
             print("Error al insertar cliente:", e)
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
+
         return rows
 
     def update(self, vo: ClientesVO) -> int:
-        """Actualiza un cliente existente. Retorna filas afectadas."""
+        """
+        Actualiza estado de pago y calorías de un cliente.
+        """
         cursor = self._conexion.getCursor()
         rows = 0
+
         try:
-            cursor.execute(self.SQL_UPDATE, (
-                vo.estado_pagado, vo.calorias_acumuladas, vo.id_cliente
-            ))
+            cursor.execute(
+                self.SQL_UPDATE,
+                (
+                    vo.estado_pagado,
+                    vo.calorias_acumuladas,
+                    vo.id_cliente
+                )
+            )
+
             rows = cursor.rowcount
+
         except Exception as e:
             print("Error al actualizar cliente:", e)
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
+
         return rows
 
     def updateEstadoPagado(self, id_cliente: int, estado_pagado: str) -> int:
-        """Actualiza únicamente el estado de pago de un cliente. Retorna filas afectadas."""
+        """
+        Actualiza solo el estado de pago del cliente.
+        """
         cursor = self._conexion.getCursor()
         rows = 0
+
         try:
             cursor.execute(self.SQL_UPDATE_ESTADO, (estado_pagado, id_cliente))
             rows = cursor.rowcount
+
         except Exception as e:
             print("Error al actualizar estado de pago:", e)
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
+
         return rows
 
     def updateCalorias(self, id_cliente: int, calorias_acumuladas: int) -> int:
-        """Actualiza únicamente las calorías acumuladas de un cliente. Retorna filas afectadas."""
+        """
+        Actualiza solo las calorías acumuladas del cliente.
+        """
         cursor = self._conexion.getCursor()
         rows = 0
+
         try:
-            cursor.execute(self.SQL_UPDATE_CALORIAS, (calorias_acumuladas, id_cliente))
+            cursor.execute(
+                self.SQL_UPDATE_CALORIAS,
+                (calorias_acumuladas, id_cliente)
+            )
+
             rows = cursor.rowcount
+
         except Exception as e:
             print("Error al actualizar calorías:", e)
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
-        return rows
 
-    def delete(self, id_cliente: int) -> int:
-        """Elimina un cliente por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_cliente,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar cliente:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
         return rows
-
-    #  Nuevo método 
 
     def selectInicioCliente(self, id_cliente: int) -> ClienteInicioVO | None:
-
+        """
+        Construye el VO completo de inicio del cliente.
+        Este método reúne muchos datos:
+        Devuelve:
+        - ClienteInicioVO con toda la información del panel del cliente.
+        - None si no se puede cargar.
+        """
         cursor = self._conexion.getCursor()
+
         try:
-            # 1. Datos base 
+            # 1. Datos base del cliente.
             cursor.execute(self._SQL_INICIO_BASE, (id_cliente,))
             row_base = cursor.fetchone()
+
             if not row_base:
                 return None
 
-            (id_usu, nombre, email, telefono, direccion,
-             fecha_nacimiento, fecha_registro,
-             estado_pagado, calorias_acumuladas) = row_base
+            (
+                id_usu,
+                nombre,
+                email,
+                telefono,
+                direccion,
+                fecha_nacimiento,
+                fecha_registro,
+                estado_pagado,
+                calorias_acumuladas
+            ) = row_base
 
-            # 2. Tarifa activa 
+            # 2. Tarifa activa.
             cursor.execute(self._SQL_TARIFA_ACTIVA, (id_cliente,))
             row_tarifa = cursor.fetchone()
-            nombre_tarifa  = row_tarifa[0] if row_tarifa else "Sin tarifa"
-            precio_tarifa  = float(row_tarifa[1]) if row_tarifa else 0.0
 
-            # 3. Último pago
+            nombre_tarifa = row_tarifa[0] if row_tarifa else "Sin tarifa"
+            precio_tarifa = float(row_tarifa[1]) if row_tarifa else 0.0
+
+            # 3. Último pago.
             cursor.execute(self._SQL_ULTIMO_PAGO, (id_cliente,))
             row_pago = cursor.fetchone()
-            ultimo_pago_importe = float(row_pago[0]) if row_pago else 0.0
-            ultimo_pago_fecha   = row_pago[1]        if row_pago else "—"
-            ultimo_pago_estado  = row_pago[2]        if row_pago else "pendiente"
 
-            # 4. Clases asistidas esta semana 
+            ultimo_pago_importe = float(row_pago[0]) if row_pago else 0.0
+            ultimo_pago_fecha = row_pago[1] if row_pago else "—"
+            ultimo_pago_estado = row_pago[2] if row_pago else "pendiente"
+
+            # 4. Clases asistidas esta semana.
             cursor.execute(self._SQL_CLASES_SEMANA, (id_cliente,))
             clases_semana = cursor.fetchone()[0] or 0
 
-            # 5. Calorías esta semana 
+            # 5. Calorías esta semana.
             cursor.execute(self._SQL_CALORIAS_SEMANA, (id_cliente,))
             calorias_semana = cursor.fetchone()[0] or 0
 
-            # 6. Asistencias e inscripciones del mes 
+            # 6. Asistencias e inscripciones del mes.
             cursor.execute(self._SQL_ASISTENCIAS_MES, (id_cliente, id_cliente))
             row_mes = cursor.fetchone()
-            asistencias_mes   = row_mes[0] if row_mes else 0
+
+            asistencias_mes = row_mes[0] if row_mes else 0
             inscripciones_mes = row_mes[1] if row_mes else 0
 
-            # 7. Próximas clases inscritas 
+            # 7. Próximas clases inscritas.
             cursor.execute(self._SQL_PROXIMAS_CLASES, (id_cliente,))
+
             proximas_clases = [
                 {
                     "nombre_actividad": r[0],
-                    "fecha":            r[1],
-                    "hora_inicio":      r[2],
-                    "nombre_sala":      r[3],
+                    "fecha": r[1],
+                    "hora_inicio": r[2],
+                    "nombre_sala": r[3],
                 }
                 for r in cursor.fetchall()
             ]
 
-            # 8. Estadísticas semana actual 
+            # 8. Estadísticas de la semana actual.
             cursor.execute(self._SQL_STATS_SEMANA_ACTUAL, (id_cliente,))
             row_actual = cursor.fetchone()
-            entrenos_semana    = row_actual[0] if row_actual else 0
-            tiempo_semana_min  = int(row_actual[1]) if row_actual else 0
 
-            # 9. Estadísticas semana anterior 
+            entrenos_semana = row_actual[0] if row_actual else 0
+            tiempo_semana_min = int(row_actual[1]) if row_actual else 0
+
+            # 9. Estadísticas de la semana anterior.
             cursor.execute(self._SQL_STATS_SEMANA_ANTERIOR, (id_cliente,))
             row_ant = cursor.fetchone()
-            entrenos_semana_anterior    = row_ant[0] if row_ant else 0
-            tiempo_semana_anterior_min  = int(row_ant[1]) if row_ant else 0
 
-            # 10. Racha de días consecutivos 
+            entrenos_semana_anterior = row_ant[0] if row_ant else 0
+            tiempo_semana_anterior_min = int(row_ant[1]) if row_ant else 0
+
+            # 10. Racha de días consecutivos.
             cursor.execute(self._SQL_FECHAS_ASISTENCIA, (id_cliente,))
-            fechas = [r[0] for r in cursor.fetchall()]  # objetos date, DESC
+            fechas = [r[0] for r in cursor.fetchall()]
+
             racha_dias = self._calcular_racha(fechas)
 
-            # 11. Distribución por tipo de actividad 
+            # 11. Distribución por tipo de actividad.
             cursor.execute(self._SQL_DISTRIBUCION, (id_cliente,))
             rows_dist = cursor.fetchall()
+
             distribucion_tipos = self._calcular_distribucion(rows_dist)
 
+            # Creamos y devolvemos el VO completo.
             return ClienteInicioVO(
                 id_cliente=id_usu,
                 nombre=nombre,
@@ -397,14 +511,23 @@ class ClienteDaoJDBC(DaoJDBCBase):
         except Exception as e:
             print("Error al obtener datos de inicio del cliente:", e)
             return None
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
 
-    #  Helpers privados 
+"""
+Definición de método estático: Un método estático es un método que pertenece a una clase, pero no necesita acceder 
+a los atributos del objeto. Se usa para funciones auxiliares, como calcular una racha o una distribución, porque 
+solo trabajan con los parámetros que reciben.
+"""
 
     @staticmethod
     def _calcular_racha(fechas: list) -> int:
+        """
+        Calcula los días consecutivos con asistencia.
+        Recibe una lista de fechas y devuelve la racha actual.
+        """
         if not fechas:
             return 0
 
@@ -446,38 +569,46 @@ class ClienteDaoJDBC(DaoJDBCBase):
                 break
 
         return racha
-    
+
     @staticmethod
     def _calcular_distribucion(rows: list) -> dict:
         """
-        Convierte las filas (tipo, total) en un dict {tipo: porcentaje_int}.
-        Los porcentajes suman 100; el último tipo absorbe el redondeo.
+        Convierte filas (tipo, total) en un diccionario {tipo: porcentaje}.
         """
         if not rows:
             return {}
 
         total_global = sum(r[1] for r in rows)
+
         if total_global == 0:
             return {}
 
         resultado = {}
         acumulado = 0
         tipos = list(rows)
+
         for i, (tipo, total) in enumerate(tipos):
             if i == len(tipos) - 1:
-                # El último absorbe el residuo de redondeo
                 resultado[tipo] = 100 - acumulado
             else:
                 pct = round(total * 100 / total_global)
                 resultado[tipo] = pct
                 acumulado += pct
+
         return resultado
-    
+
     def clases_asistidas_cliente(self, id_cliente):
+        """
+        Devuelve los IDs de las clases a las que el cliente ya ha asistido.
+        """
         filas = self.consultar(self.SQL_CLASES_ASISTIDAS_CLIENTE, (id_cliente,))
         return [f[0] for f in filas]
-    
+
     def calorias_semana_por_dia(self, id_cliente):
+        """
+        Devuelve las calorías de la semana agrupadas por día.
+        Se usa para pintar el gráfico de estadísticas del cliente.
+        """
         filas = self.consultar(self.SQL_CALORIAS_SEMANA_POR_DIA, (id_cliente,))
 
         resultado = {
