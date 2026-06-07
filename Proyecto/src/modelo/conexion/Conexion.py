@@ -11,7 +11,7 @@ class Conexion:
         host='localhost',
         database='stayfit_database',
         user='root',
-        password='1234' # Esta contraseña hay que cambiarla a la de cada persona
+        password='250706' # Esta contraseña hay que cambiarla a la de cada persona
     ):
         # Dirección del servidor de base de datos.
         self._host = host
