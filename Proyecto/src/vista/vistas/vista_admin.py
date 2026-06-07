@@ -118,6 +118,41 @@ class VistaAdminInicio(QMainWindow):
 
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Correcto', msg)
+    def dibujar_grafico_ingresos(self, etiquetas, valores):
+        try:
+            import io
+            import matplotlib
+            import matplotlib.pyplot as plt
+            matplotlib.use('Agg')
+            from src.vista.componentes import ImagenView
+
+            fig, ax = plt.subplots(figsize=(4.0, 2.3), dpi=92)
+            fig.patch.set_facecolor('#F8F9FA')
+            ax.set_facecolor('#F8F9FA')
+            colores = ['#00BFA5' if v == max(valores) else '#80CBC4' for v in valores]
+            bars = ax.bar(etiquetas, valores, color=colores, width=0.55, edgecolor='white')
+            ax.set_ylabel('€', fontsize=8)
+            ax.set_title('Ingresos por mes', fontsize=9, fontweight='bold', color='#333')
+            ax.tick_params(axis='x', labelsize=7)
+            ax.tick_params(axis='y', labelsize=7)
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            max_val = max(valores) if valores else 1
+            for bar, val in zip(bars, valores):
+                ax.text(bar.get_x() + bar.get_width()/2,
+                        bar.get_height() + max_val*0.03,
+                        f'{val:.0f}€', ha='center', va='bottom', fontsize=6.5)
+            plt.tight_layout(pad=0.5)
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png', bbox_inches='tight', dpi=92)
+            plt.close(fig)
+            buf.seek(0)
+            pixmap = ImagenView.desde_bytes(buf.read())
+            w = self.graficoFake.width() if hasattr(self, 'graficoFake') else 391
+            h = self.graficoFake.height() if hasattr(self, 'graficoFake') else 231
+            self.set_grafico(pixmap, w, h)
+        except Exception as e:
+            print('Error grafico vista:', e)
 
 
 # ── Vista usuarios clientes ───────────────────────────────────────────────────
@@ -399,7 +434,7 @@ class VistaAdminEstadisticas(QMainWindow):
         tabla.setRowCount(len(datos))
         tabla.setSelectionBehavior(tabla.SelectRows)
         for fi, reg in enumerate(datos):
-            vals = [fi + 1, reg[0], reg[1], reg[2], reg[3]]
+            vals = [fi + 1, reg.nombre, reg.asistencias, reg.ultima_clase, reg.estado]
             for ci, val in enumerate(vals):
                 tabla.setItem(fi, ci, TablaView.crear_item(
                     str(val) if val is not None else '', editable=False))

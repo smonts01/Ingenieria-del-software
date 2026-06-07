@@ -139,14 +139,14 @@ class VistaClienteClasesTodas(QMainWindow):
     def cargar_cards(self, clases, ids_inscritas, asistidas):
         self._cards_clases = []
         for i, clase in enumerate(clases[:5], start=1):
-            id_clase    = clase[0]
-            nombre      = str(clase[1])
-            dia         = clase[2]
-            hora_inicio = str(clase[3])[:5]
-            hora_fin    = str(clase[4])[:5]
-            sala        = clase[5]
-            inscritos   = clase[6]
-            aforo       = clase[7]
+            id_clase    = clase.id_clase
+            nombre      = str(clase.nombre_actividad)
+            dia         = clase.dia_semana
+            hora_inicio = str(clase.hora_inicio)[:5]
+            hora_fin    = str(clase.hora_fin)[:5]
+            sala        = clase.sala
+            inscritos   = clase.inscritos
+            aforo       = clase.aforo_maximo
             horario     = f'{hora_inicio} - {hora_fin}'
 
             lbl_c = getattr(self, self._LABELS_CLASE.get(i,''), None)

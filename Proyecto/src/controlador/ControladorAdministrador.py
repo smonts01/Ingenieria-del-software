@@ -362,45 +362,19 @@ class ControladorAdministrador:
         except Exception as e:
             v.mostrar_error(f'No se pudo restaurar:\n\n{e}')
 
-    # ── Gráfico ───────────────────────────────────────────────────────────
+    # Informe
+
     def _dibujar_grafico(self):
         try:
-            import matplotlib
-            import matplotlib.pyplot as plt
-            matplotlib.use('Agg')
             datos = self.modelo.ingresos_por_mes()
             if not datos:
                 return
             meses = ['','Ene','Feb','Mar','Abr','May','Jun',
-                     'Jul','Ago','Sep','Oct','Nov','Dic']
+                    'Jul','Ago','Sep','Oct','Nov','Dic']
             etiquetas = [f"{meses[int(r[1])]}\n{str(r[0])[-2:]}" for r in datos][::-1]
             valores   = [float(r[2]) for r in datos][::-1]
-            fig, ax = plt.subplots(figsize=(4.0, 2.3), dpi=92)
-            fig.patch.set_facecolor('#F8F9FA')
-            ax.set_facecolor('#F8F9FA')
-            colores = ['#00BFA5' if v == max(valores) else '#80CBC4' for v in valores]
-            bars = ax.bar(etiquetas, valores, color=colores, width=0.55, edgecolor='white')
-            ax.set_ylabel('€', fontsize=8)
-            ax.set_title('Ingresos por mes', fontsize=9, fontweight='bold', color='#333')
-            ax.tick_params(axis='x', labelsize=7)
-            ax.tick_params(axis='y', labelsize=7)
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-            max_val = max(valores) if valores else 1
-            for bar, val in zip(bars, valores):
-                ax.text(bar.get_x() + bar.get_width()/2,
-                        bar.get_height() + max_val*0.03,
-                        f'{val:.0f}€', ha='center', va='bottom', fontsize=6.5)
-            plt.tight_layout(pad=0.5)
-            buf = io.BytesIO()
-            plt.savefig(buf, format='png', bbox_inches='tight', dpi=92)
-            plt.close(fig)
-            buf.seek(0)
-            pixmap = ImagenView.desde_bytes(buf.read())
-            v = self.ventana
-            w = v.graficoFake.width() if hasattr(v, 'graficoFake') else 391
-            h = v.graficoFake.height() if hasattr(v, 'graficoFake') else 231
-            v.set_grafico(pixmap, w, h)
+            # Pasa los datos a la vista, que se encarga de dibujar
+            self.ventana.dibujar_grafico_ingresos(etiquetas, valores)
         except Exception as e:
             print('Error grafico:', e)
 

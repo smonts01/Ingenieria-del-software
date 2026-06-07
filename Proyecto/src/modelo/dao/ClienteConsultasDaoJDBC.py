@@ -112,7 +112,9 @@ class ClienteConsultasDaoJDBC(DaoJDBCBase):
         return self.recepcion_total_clientes()
 
     def recepcion_clientes_recientes(self):
-        return self.consultar(self.SQL_CLIENTES_RECIENTES)
+        filas = self.consultar(self.SQL_CLIENTES_RECIENTES)
+        # Devuelve tuplas (nombre, dni, telefono, fecha_registro) — usadas directamente en tabla
+        return filas
 
     def recepcion_nuevos_clientes_mes(self):
         datos = self.consultar(self.SQL_NUEVOS_CLIENTES_MES)
@@ -141,7 +143,8 @@ class ClienteConsultasDaoJDBC(DaoJDBCBase):
             sql += "WHERE " + " AND ".join(condiciones) + " "
         sql += "ORDER BY u.nombre"
 
-        return self.consultar(sql, tuple(parametros))
+        filas = self.consultar(sql, tuple(parametros))
+        return [ClienteResumenVO(f[0], f[1], f[2], f[3], f[4], f[5], f[6], f[7], f[8]) for f in filas]
 
     def recepcion_guardar_cambios_cliente(self, id_cliente, dni, nombre, telefono,
                                            email, direccion, fecha_nacimiento, estado_pagado):

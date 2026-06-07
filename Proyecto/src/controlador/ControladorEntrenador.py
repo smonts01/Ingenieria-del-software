@@ -68,12 +68,12 @@ class ControladorEntrenador:
     # ── Carga de datos ────────────────────────────────────────────────────
     def cargar_datos(self):
         v = self.ventana
-        if isinstance(v, VistaEntrenadorInicio):              self._cargar_inicio()
-        elif isinstance(v, VistaEntrenadorClases):            self._cargar_clases()
-        elif isinstance(v, VistaEntrenadorListaClientes):     self._cargar_inscritos()
-        elif isinstance(v, VistaEntrenadorOcupacion):         self._cargar_ocupacion()
+        if isinstance(v, VistaEntrenadorInicio): self._cargar_inicio()
+        elif isinstance(v, VistaEntrenadorClases): self._cargar_clases()
+        elif isinstance(v, VistaEntrenadorListaClientes): self._cargar_inscritos()
+        elif isinstance(v, VistaEntrenadorOcupacion): self._cargar_ocupacion()
         elif isinstance(v, VistaEntrenadorRegistrarAsistencia): self._cargar_asistencia()
-        elif isinstance(v, VistaEntrenadorPerfil):            self._cargar_perfil()
+        elif isinstance(v, VistaEntrenadorPerfil): self._cargar_perfil()
 
     def _cargar_inicio(self):
         v = self.ventana
@@ -85,9 +85,9 @@ class ControladorEntrenador:
             v.set_num_asistencias(str(self.modelo.total_inscritos_clases_entrenador(id_u)))
             v.set_ocupacion_media(f'{self.modelo.ocupacion_media_entrenador(id_u)}%')
             if datos:
-                nombre = datos[0][0]
-                sala   = datos[0][1]
-                hora   = str(datos[0][2]).split(' - ')[0]
+                nombre = datos[0].nombre_actividad
+                sala   = datos[0].sala
+                hora   = str(datos[0].horario).split(' - ')[0]
                 v.set_proxima_clase(nombre, hora, sala)
         except Exception as e:
             print('Error cargar inicio entrenador:', e)
@@ -129,7 +129,7 @@ class ControladorEntrenador:
         try:
             datos = self.modelo.clientes_inscritos_clase(id_clase)
             # datos[i] = (id, nombre, telefono, email, ...)
-            filas = [(d[1], d[2], d[3]) for d in datos]
+            filas = [(d.nombre, d.telefono, d.email) for d in datos]
             v.cargar_tabla_inscritos(filas)
             v.set_num_inscritos(str(len(datos)))
             info = self.modelo.informacion_clase_con_sala(id_clase)
@@ -188,7 +188,7 @@ class ControladorEntrenador:
             datos = self.modelo.clientes_inscritos_clase(id_clase)
             fecha = date.today().isoformat()
             asistencias = self.modelo.asistencia_clase_fecha(id_clase, fecha)
-            mapa = {a[0]: a[1] for a in asistencias}
+            mapa = {a.id_cliente: a.presente for a in asistencias}
             v.cargar_tabla_asistencia(datos, mapa)
 
             presentes = sum(1 for a in mapa.values() if a == 'si')
@@ -207,8 +207,8 @@ class ControladorEntrenador:
             info_sala = self.modelo.informacion_clase_con_sala(id_clase)
             if info_sala:
                 v.set_info_clase(
-                    str(info_sala[0]), str(info_sala[2]),
-                    f'{info_sala[3]} - {info_sala[4]}', str(info_sala[1])
+                    str(info_sala.nombre_actividad), str(info_sala.dia_semana),
+                    f'{info_sala.hora_inicio} - {info_sala.hora_fin}', str(info_sala.sala)
                 )
         except Exception as e:
             print('Error cargar inscritos asistencia:', e)
@@ -226,13 +226,13 @@ class ControladorEntrenador:
                 )
             clases = self.modelo.clases_de_entrenador(id_u)
             total_clientes = sum(
-                len(self.modelo.clientes_inscritos_clase(c[0])) for c in clases
+                len(self.modelo.clientes_inscritos_clase(c.id_clase)) for c in clases
             )
             total_reg = total_pres = 0
             for c in clases:
-                for a in self.modelo.consultar_asistencia_clase(c[0]):
+                for a in self.modelo.consultar_asistencia_clase(c.id_clase):
                     total_reg += 1
-                    if a[2] == 'si':
+                    if a.presente == 'si':
                         total_pres += 1
             pct = f'{round(total_pres*100/total_reg,2)}%' if total_reg > 0 else '0%'
             v.set_stats(len(clases), self.modelo.clases_hoy_entrenador(id_u),
