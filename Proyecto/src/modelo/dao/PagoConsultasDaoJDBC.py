@@ -1,10 +1,10 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.ClientePendienteAdminVO import ClientePendienteAdminVO
 from src.modelo.VO.IngresoMesVO import IngresoMesVO
 from src.modelo.VO.InformePagoVO import InformePagoVO
 from src.modelo.VO.PagoPendienteInicioVO import PagoPendienteInicioVO
 from src.modelo.VO.UltimoPagoVO import UltimoPagoVO
 from src.modelo.VO.PagoPendienteVO import PagoPendienteVO
-from src.modelo.VO.ClientePendienteAdminVO import ClientePendienteAdminVO
 
 
 class PagoConsultasDaoJDBC(DaoJDBCBase):
@@ -200,11 +200,10 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
     SQL_NUM_PAGOS_PENDIENTES = """
         SELECT COUNT(*)
         FROM clientes c
-        INNER JOIN cliente_tarifa ct
+        LEFT JOIN cliente_tarifa ct
             ON c.id_cliente = ct.id_cliente
-        AND ct.estado = 'activa'
+           AND ct.estado = 'activa'
         WHERE LOWER(c.estado_pagado) = 'pendiente'
-        AND DATE(ct.fecha_contratacion) >= CURRENT_DATE
     """
 
     SQL_INGRESOS_MES_CONTABLE = """
@@ -391,11 +390,13 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return datos[0][0] if datos else 0
 
     def clientes_pendientes_admin(self):
-        return self.consultar(self.SQL_CLIENTES_PENDIENTES_ADMIN)
+        filas = self.consultar(self.SQL_CLIENTES_PENDIENTES_ADMIN)
+        return [ClientePendienteAdminVO(f[0],f[1],f[2],f[3],f[4]) for f in filas]
 
     def buscar_cliente_pendiente_por_dni_admin(self, dni):
         d = f"%{dni.lower().strip()}%"
-        return self.consultar(self.SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN, (d,))
+        filas = self.consultar(self.SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN, (d,))
+        return [ClientePendienteAdminVO(f[0],f[1],f[2],f[3],f[4]) for f in filas]
 
     def buscar_pago_pendiente_por_dni(self, dni):
         d = dni.strip().upper()
