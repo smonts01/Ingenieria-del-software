@@ -199,8 +199,12 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
 
     SQL_NUM_PAGOS_PENDIENTES = """
         SELECT COUNT(*)
-        FROM clientes
-        WHERE LOWER(estado_pagado) = 'pendiente'
+        FROM clientes c
+        INNER JOIN cliente_tarifa ct
+            ON c.id_cliente = ct.id_cliente
+        AND ct.estado = 'activa'
+        WHERE LOWER(c.estado_pagado) = 'pendiente'
+        AND DATE(ct.fecha_contratacion) >= CURRENT_DATE
     """
 
     SQL_INGRESOS_MES_CONTABLE = """
@@ -348,7 +352,8 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return datos[0] if datos else None
 
     def listar_pagos_pendientes_admin(self):
-        return self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)  # tuplas para uso interno
+        filas = self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
+        return [ClientePendienteAdminVO(f[2], f[1], f[3], f[4], f[5]) for f in filas]
 
     def marcar_pago_abonado(self, id_pago: int):
         raise ValueError("Con la base nueva no se actualiza pago.estado. Se registra el pago y se marca el cliente como abonado.")
