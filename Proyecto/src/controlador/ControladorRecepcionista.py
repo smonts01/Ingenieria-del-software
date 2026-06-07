@@ -21,11 +21,11 @@ from src.vista.vistas.vista_recepcionista import (
 )
 
 _VISTAS = {
-    'interfaz_recepcionista.ui':                   VistaRecepcionistaInicio,
-    'interfaz_recepcionista_registrar_usuario.ui':  VistaRecepcionistaRegistrarUsuario,
-    'interfaz_recepcionista_control_de_acceso.ui':  VistaRecepcionistaControlAcceso,
-    'interfaz_recepcionista_clientes.ui':           VistaRecepcionistaClientes,
-    'interfaz_recepcionista_perfil.ui':             VistaRecepcionistaPerfil,
+    'interfaz_recepcionista.ui': VistaRecepcionistaInicio,
+    'interfaz_recepcionista_registrar_usuario.ui': VistaRecepcionistaRegistrarUsuario,
+    'interfaz_recepcionista_control_de_acceso.ui': VistaRecepcionistaControlAcceso,
+    'interfaz_recepcionista_clientes.ui': VistaRecepcionistaClientes,
+    'interfaz_recepcionista_perfil.ui': VistaRecepcionistaPerfil,
 }
 
 

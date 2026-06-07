@@ -66,18 +66,7 @@ class LogicaClases:
 
         clases = self._clase_dao.selectByEntrenador(id_entrenador)
 
-        return [
-            (
-                clase.id_clase,
-                clase.nombre_actividad,
-                clase.dia_semana,
-                clase.hora_inicio,
-                clase.hora_fin,
-                clase.aforo_maximo,
-                clase.nivel_intensidad
-            )
-            for clase in clases
-        ]
+        return clases
 
     def registrar_clase(self, id_entrenador, id_sala, nombre_actividad,
                         calorias_estimadas, dia_semana, hora_inicio, hora_fin,

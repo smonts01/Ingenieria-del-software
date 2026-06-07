@@ -177,13 +177,18 @@ class VistaContablePagosPendientes(QMainWindow):
         tabla.setColumnCount(len(cabeceras))
         tabla.setHorizontalHeaderLabels(cabeceras)
         tabla.setRowCount(len(datos))
-        for fi, fila in enumerate(datos):
-            # fila = (id_pago, nombre, tarifa, importe, fecha)
-            # saltamos fila[0] porque id_pago siempre es 0
-            vals = [fila[1], fila[2], fila[3], fila[4]]
+        for fi, pago in enumerate(datos):
+            # pago es un PagoPendienteVO
+            vals = [
+                str(pago.nombre_cliente),
+                str(pago.nombre_tarifa),
+                str(pago.importe),
+                str(pago.fecha),
+            ]
             for ci, val in enumerate(vals):
-                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+                tabla.setItem(fi, ci, QTableWidgetItem(val if val is not None else ''))
         tabla.resizeColumnsToContents()
+
 
 
 # ── Vista gestión económica ───────────────────────────────────────────────────

@@ -125,7 +125,7 @@ class VistaEntrenadorListaClientes(QMainWindow):
         self.comboClasesInscritos.blockSignals(True)
         self.comboClasesInscritos.clear()
         for clase in clases:
-            self.comboClasesInscritos.addItem(str(clase[1]), clase[0])
+            self.comboClasesInscritos.addItem(str(clase.nombre_actividad), clase.id_clase)
         self.comboClasesInscritos.blockSignals(False)
 
     def get_id_clase_seleccionada(self):
@@ -196,7 +196,7 @@ class VistaEntrenadorRegistrarAsistencia(QMainWindow):
         self.comboSeleccionarClase.clear()
         for clase in clases:
             self.comboSeleccionarClase.addItem(
-                f"{clase[1]} - {clase[2]} {clase[3]} - {clase[4]}", clase[0]
+                f"{clase.nombre_actividad} - {clase.dia_semana} {clase.hora_inicio} - {clase.hora_fin}", clase.id_clase
             )
         self.comboSeleccionarClase.blockSignals(False)
 
@@ -210,7 +210,7 @@ class VistaEntrenadorRegistrarAsistencia(QMainWindow):
         tabla.setColumnCount(3)
         tabla.setHorizontalHeaderLabels(['Cliente', 'Estado', 'Acción'])
         for fi, cliente in enumerate(datos):
-            id_c, nombre = cliente[0], cliente[1]
+            id_c, nombre = cliente.id_cliente, cliente.nombre
             estado = mapa_asistencia.get(id_c, 'pendiente')
             estado_str = 'si' if estado == 'si' else ('no' if estado == 'no' else 'Pendiente')
             tabla.setItem(fi, 0, QTableWidgetItem(f'{id_c} - {nombre}'))

@@ -1,4 +1,5 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.AsistenciaRegistroVO import AsistenciaRegistroVO
 from src.modelo.VO.EstadisticaAsistenciaVO import EstadisticaAsistenciaVO
 from src.modelo.VO.RankingClienteVO import RankingClienteVO
 
@@ -53,10 +54,12 @@ class AsistenciaConsultasDaoJDBC(DaoJDBCBase):
         return [RankingClienteVO(f[0], f[1]) for f in filas]
 
     def consultar_asistencia_clase(self, id_clase: int):
-        return self.consultar(self.SQL_ASISTENCIA_CLASE, (id_clase,))
+        filas = self.consultar(self.SQL_ASISTENCIA_CLASE, (id_clase,))
+        return [AsistenciaRegistroVO(f[0], f[1]) for f in filas]
 
     def asistencia_clase_fecha(self, id_clase, fecha):
-        return self.consultar(self.SQL_ASISTENCIA_CLASE_FECHA, (id_clase, fecha))
+        filas = self.consultar(self.SQL_ASISTENCIA_CLASE_FECHA, (id_clase, fecha))
+        return [AsistenciaRegistroVO(f[0], f[1]) for f in filas]
 
     def registrar_asistencia(self, id_cliente, id_clase, fecha, presente):
         self.ejecutar(self.SQL_REGISTRAR_ASISTENCIA, (id_cliente, id_clase, fecha))

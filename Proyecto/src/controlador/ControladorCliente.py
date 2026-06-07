@@ -79,11 +79,11 @@ class ControladorCliente:
             return
         self._rellenar_cabecera()
         v = self.ventana
-        if isinstance(v, VistaClienteInicio):       self._cargar_inicio()
+        if isinstance(v, VistaClienteInicio): self._cargar_inicio()
         elif isinstance(v, VistaClienteClasesTodas):self._cargar_clases_todas()
-        elif isinstance(v, VistaClienteReservas):   self._cargar_reservas()
+        elif isinstance(v, VistaClienteReservas): self._cargar_reservas()
         elif isinstance(v, VistaClienteEstadisticas):self._cargar_estadisticas()
-        elif isinstance(v, VistaClientePerfil):     self._cargar_perfil()
+        elif isinstance(v, VistaClientePerfil): self._cargar_perfil()
 
     def _rellenar_cabecera(self):
         vo = self._vo

@@ -1,4 +1,5 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.ClienteInscritoVO import ClienteInscritoVO
 from src.modelo.VO.InscripcionResumenVO import InscripcionResumenVO
 from src.modelo.VO.ClaseVO import ClaseVO
 
@@ -91,7 +92,8 @@ class InscripcionConsultasDaoJDBC(DaoJDBCBase):
                 for f in filas]
 
     def clientes_inscritos_clase(self, id_clase: int):
-        return self.consultar(self.SQL_CLIENTES_INSCRITOS_CLASE, (id_clase,))
+        filas = self.consultar(self.SQL_CLIENTES_INSCRITOS_CLASE, (id_clase,))
+        return [ClienteInscritoVO(f[0], f[1], f[2], f[3]) for f in filas]
 
     def listar_inscripciones_resumen(self):
         filas = self.consultar(self.SQL_LISTAR_INSCRIPCIONES_RESUMEN)

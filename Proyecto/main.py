@@ -11,7 +11,6 @@ os.chdir(base_dir)
 sys.path.insert(0, base_dir)
 
 
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ventana = MiVentana()
