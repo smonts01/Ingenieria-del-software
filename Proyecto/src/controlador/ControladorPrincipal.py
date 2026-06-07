@@ -16,21 +16,23 @@ class ControladorPrincipal:
         self.ruta_ui = os.path.join("src", "vista", "Ui")
 
     def abrirIniciarSesion(self):
-        self.vista.botonEntrar.clicked.connect(self.iniciarSesion)
+        # La vista conecta su propio botón — solo le asignamos el controlador
+        self.vista.set_controlador(self)
         self.vista.show()
 
     def iniciarSesion(self):
-        usuario = self.vista.txtUsuario.text().strip()
-        password = self.vista.txtPassword.text().strip()
+        # El controlador lee los datos a través de getters de la vista
+        usuario  = self.vista.get_usuario()
+        password = self.vista.get_contrasena()
 
         if not usuario or not password:
-            MensajeView.warning(self.vista, "Error", "Completa usuario y contraseña")
+            self.vista.mostrar_error("Completa usuario y contraseña")
             return
 
         datos_usuario = self.modelo.iniciar_sesion(usuario, password)
 
         if not datos_usuario:
-            MensajeView.warning(self.vista, "Error", "Usuario o contraseña incorrectos")
+            self.vista.mostrar_error("Usuario o contraseña incorrectos")
             return
 
         rol = datos_usuario["rol"]
@@ -49,6 +51,5 @@ class ControladorPrincipal:
             ctrl = ClaseControlador(self.modelo, datos_usuario, self.ruta_ui, self.vista)
             ctrl.abrir()
         else:
-            MensajeView.warning(self.vista, "Error", f"Rol desconocido: {rol}")
-            self.vista.showMaximized()
+            self.vista.mostrar_error(f"Rol desconocido: {rol}")
             self.vista.show()

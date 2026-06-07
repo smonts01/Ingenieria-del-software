@@ -1,6 +1,6 @@
 import hashlib
 from datetime import datetime
-
+from datetime import date, timedelta
 from src.modelo.VO.UsuarioVO import UsuarioVO
 from src.modelo.VO.ClientesVO import ClientesVO
 from src.modelo.VO.MenorVO import MenorVO
@@ -210,7 +210,6 @@ class LogicaClientes:
     def periodo_semana_actual(self):
         """Devuelve el texto del período de la semana actual para la vista.
         Ejemplo: "2 - 8 junio 2026" """
-        from datetime import date, timedelta
         meses = {1:"enero",2:"febrero",3:"marzo",4:"abril",5:"mayo",6:"junio",
                  7:"julio",8:"agosto",9:"septiembre",10:"octubre",
                  11:"noviembre",12:"diciembre"}

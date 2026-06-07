@@ -10,6 +10,7 @@ La Vista:
 from datetime import date, timedelta
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QMessageBox
 from PyQt5.uic import loadUi
+from src.vista.componentes import TablaView
 
 
 _DESCRIPCIONES = {
@@ -65,7 +66,6 @@ class VistaClienteInicio(QMainWindow):
         if hasattr(self, 'lblPendientePago'): self.lblPendientePago.setText(v)
 
     def cargar_tabla_proximas(self, datos):
-        from src.vista.componentes import TablaView
         tabla = self.tablaProximasClases
         cabeceras = ['Clase', 'Fecha', 'Hora', 'Sala']
         TablaView.configurar_columnas(tabla, cabeceras)

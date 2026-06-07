@@ -1,5 +1,5 @@
 import hashlib
-
+from datetime import datetime
 from src.modelo.dao.UsuarioDaoJDBC import UsuarioDaoJDBC
 from src.modelo.dao.UsuarioConsultasDaoJDBC import UsuarioConsultasDaoJDBC
 from src.modelo.dao.ClienteDaoJDBC import ClienteDaoJDBC
@@ -318,7 +318,7 @@ class LogicaUsuarios:
         """Valida los datos del formulario de registro de usuario.
         Lanza ValueError si algo es incorrecto.
         Devuelve la fecha en formato BD (YYYY-MM-DD)."""
-        from datetime import datetime
+
         if not all([dni, nombre, telefono, email, username, password]):
             raise ValueError("Todos los campos son obligatorios")
         if password != confirmar:
