@@ -198,12 +198,8 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
 
     SQL_NUM_PAGOS_PENDIENTES = """
         SELECT COUNT(*)
-        FROM clientes c
-        INNER JOIN cliente_tarifa ct
-            ON c.id_cliente = ct.id_cliente
-        AND ct.estado = 'activa'
-        WHERE LOWER(c.estado_pagado) = 'pendiente'
-        AND DATE(ct.fecha_contratacion) >= CURRENT_DATE
+        FROM clientes
+        WHERE LOWER(estado_pagado) = 'pendiente'
     """
 
     SQL_INGRESOS_MES_CONTABLE = """
