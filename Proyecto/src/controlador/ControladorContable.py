@@ -141,30 +141,41 @@ class ControladorContable:
         except Exception as e: print('Error resumen pagos pend:', e)
         self.cargar_pagos_pendientes_filtrados()
 
+   
+
     def cargar_pagos_pendientes_filtrados(self, *args):
         v = self.ventana
+
         try:
             filtro = v.get_filtro()
             datos = self.modelo.pagos_pendientes()
-            datos_filtrados = []
-            for fila in datos:
-                fecha_pago = fila.fecha
-                es_vencido = self.modelo.es_pago_vencido(fecha_pago)
-                if filtro == 'vencido' and not es_vencido:
-                    continue
-                if filtro == 'pendiente' and es_vencido:
-                    continue
-                datos_filtrados.append(fila)
+
+            if filtro == 'vencido':
+                datos_filtrados = []
+
+                for fila in datos:
+                    fecha_pago = fila.fecha if hasattr(fila, "fecha") else fila[4]
+
+                    if self.modelo.es_pago_vencido(fecha_pago):
+                        datos_filtrados.append(fila)
+
+            else:
+                datos_filtrados = datos
+
             v.cargar_tabla(datos_filtrados)
+
         except Exception as e:
             print('Error filtrar pagos pendientes:', e)
+
+
+
 
     def _cargar_gestion_economica(self):
         v = self.ventana
         try:
             tarifas = self.modelo.contable_tarifas_economica()
             for t in tarifas:
-                v.set_tarifa(str(t.nombre).lower(), str(t.precio), str(t.duracion))
+                v.set_tarifa(str(t[0]).lower(), str(t[1]), str(t[2]))
         except Exception as e: print('Error tarifas:', e)
         try: v.cargar_tabla_salarios(self.modelo.contable_salarios_personal())
         except Exception as e: print('Error salarios:', e)
