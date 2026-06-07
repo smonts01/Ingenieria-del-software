@@ -2,34 +2,55 @@
 Vistas del rol Recepcionista — Patrón MVC según ejemplo de la profesora.
 
 Responsabilidad de la Vista:
-- Cargar el .ui en __init__
-- Conectar sus propios botones en __init__
-- Crear VOs con los datos del formulario y pasarlos al controlador
-- Exponer métodos set_xxx() para que el controlador actualice la UI
-- Nunca contiene lógica de negocio
+- Cargar el archivo .ui que le pasa el controlador.
+- Conocer sus botones y conectar sus eventos.
+- Delegar las acciones al controlador.
+- Exponer métodos get_xxx() para que el controlador lea datos.
+- Exponer métodos set_xxx() / cargar_tabla_xxx() para que el controlador actualice la interfaz.
+- Mostrar mensajes visuales.
+- Nunca ejecutar SQL.
+- Nunca contener lógica de negocio.
 """
+
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
-from src.modelo.VO.RegistroAccesoResumenVO import RegistroAccesoResumenVO
 
+
+# ── Helpers internos de la vista ──────────────────────────────────────────────
 
 def _rellenar_tabla_accesos(tabla, cabeceras, datos):
-    """Rellena tabla con lista de RegistroAccesoResumenVO."""
+    """
+    Rellena una tabla de accesos.
+
+    Esta función pertenece a la Vista porque solo pinta datos en una tabla.
+    No calcula datos ni consulta la base de datos.
+    """
+    tabla.clear()
     tabla.setColumnCount(len(cabeceras))
     tabla.setHorizontalHeaderLabels(cabeceras)
     tabla.setRowCount(len(datos))
+
     for fi, vo in enumerate(datos):
         valores = [
-            str(getattr(vo, 'nombre', '')),
-            str(getattr(vo, 'dni', '')),
-            str(getattr(vo, 'tipo_acceso', '')),
-            str(getattr(vo, 'fecha_hora_registro', '')),
+            str(getattr(vo, "nombre", "")),
+            str(getattr(vo, "dni", "")),
+            str(getattr(vo, "tipo_acceso", "")),
+            str(getattr(vo, "fecha_hora_registro", "")),
         ]
+
         for ci, val in enumerate(valores[:len(cabeceras)]):
             tabla.setItem(fi, ci, QTableWidgetItem(val))
 
+    tabla.resizeColumnsToContents()
+
 
 def _rellenar_tabla_tuplas(tabla, cabeceras, datos):
+    """
+    Rellena una tabla con tuplas o con objetos VO.
+
+    Se usa en las pantallas de recepción para mostrar clientes recientes,
+    clientes filtrados y otros datos de resumen.
+    """
     tabla.clear()
     tabla.setColumnCount(len(cabeceras))
     tabla.setHorizontalHeaderLabels(cabeceras)
@@ -49,23 +70,39 @@ def _rellenar_tabla_tuplas(tabla, cabeceras, datos):
                 getattr(fila, "direccion", ""),
                 getattr(fila, "fecha_nacimiento", ""),
                 getattr(fila, "estado_pagado", ""),
-             
             ]
 
         for ci, val in enumerate(valores[:len(cabeceras)]):
-            tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ""))
+            tabla.setItem(
+                fi,
+                ci,
+                QTableWidgetItem(str(val) if val is not None else "")
+            )
 
     tabla.resizeColumnsToContents()
 
-# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Vista inicio ──────────────────────────────────────────────────────────────
+
 class VistaRecepcionistaInicio(QMainWindow):
-    """Vista del dashboard del recepcionista (interfaz_recepcionista.ui)."""
+    """
+    Vista principal de recepción.
+
+    Recibe la ruta completa del .ui desde el controlador.
+    La vista carga el .ui y conecta sus botones.
+    """
 
     def __init__(self, ruta_ui):
         super().__init__()
+
+        # El controlador ya nos pasa la ruta completa:
+        # src/vista/Ui/interfaz_recepcionista.ui
         loadUi(ruta_ui, self)
+
         self.controlador = None
-        # La vista conecta sus propios botones
+
+        # La vista conoce sus botones y captura los clicks.
+        # Luego delega la acción al controlador.
         self.btnCerrarSesion.clicked.connect(self._on_cerrar_sesion)
         self.btnInicio.clicked.connect(self._on_inicio)
         self.btnRegistroUsuario.clicked.connect(self._on_registrar_usuario)
@@ -73,18 +110,35 @@ class VistaRecepcionistaInicio(QMainWindow):
         self.btnClientes.clicked.connect(self._on_clientes)
         self.btnPerfil.clicked.connect(self._on_perfil)
 
-    # — Delegación al controlador —
-    def _on_cerrar_sesion(self):    self.controlador.cerrar_sesion()
-    def _on_inicio(self):           self.controlador.ir_inicio()
-    def _on_registrar_usuario(self):self.controlador.ir_registrar_usuario()
-    def _on_control_acceso(self):   self.controlador.ir_control_acceso()
-    def _on_clientes(self):         self.controlador.ir_clientes()
-    def _on_perfil(self):           self.controlador.ir_perfil()
+    # ── Delegación al controlador ────────────────────────────────────────
+
+    def _on_cerrar_sesion(self):
+        self.controlador.cerrar_sesion()
+
+    def _on_inicio(self):
+        self.controlador.ir_inicio()
+
+    def _on_registrar_usuario(self):
+        self.controlador.ir_registrar_usuario()
+
+    def _on_control_acceso(self):
+        self.controlador.ir_control_acceso()
+
+    def _on_clientes(self):
+        self.controlador.ir_clientes()
+
+    def _on_perfil(self):
+        self.controlador.ir_perfil()
 
     def set_controlador(self, ctrl):
+        """
+        El controlador se asigna después de crear la vista.
+        Así la vista puede delegarle las acciones.
+        """
         self.controlador = ctrl
 
-    # — Métodos que el controlador llama para actualizar la UI —
+    # ── Métodos que usa el controlador para actualizar la UI ─────────────
+
     def set_num_clientes(self, valor: str):
         self.lblNumClientes.setText(valor)
 
@@ -101,171 +155,289 @@ class VistaRecepcionistaInicio(QMainWindow):
         _rellenar_tabla_tuplas(self.tablaClientesRecientes, cabeceras, datos)
 
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ── Vista registrar usuario ──────────────────────────────────────────────────
+
 class VistaRecepcionistaRegistrarUsuario(QMainWindow):
-    """Vista para registrar un nuevo cliente (interfaz_recepcionista_registrar_usuario.ui)."""
+    """
+    Vista para registrar un nuevo cliente desde recepción.
+    """
 
     def __init__(self, ruta_ui):
         super().__init__()
         loadUi(ruta_ui, self)
+
         self.controlador = None
-        # Menú lateral
+
+        # Menú lateral.
         self.btnCerrarSesion.clicked.connect(self._on_cerrar_sesion)
         self.btnInicio.clicked.connect(self._on_inicio)
         self.btnRegistroUsuario.clicked.connect(self._on_registrar_usuario)
         self.btnControlAcceso.clicked.connect(self._on_control_acceso)
         self.btnClientes.clicked.connect(self._on_clientes)
         self.btnPerfil.clicked.connect(self._on_perfil)
-        # Botón registrar
+
+        # Botón de registrar cliente.
         self.btnInicio_20.clicked.connect(self._on_confirmar_registro)
 
-    # — Delegación al controlador —
-    def _on_cerrar_sesion(self):        self.controlador.cerrar_sesion()
-    def _on_inicio(self):               self.controlador.ir_inicio()
-    def _on_registrar_usuario(self):    self.controlador.ir_registrar_usuario()
-    def _on_control_acceso(self):       self.controlador.ir_control_acceso()
-    def _on_clientes(self):             self.controlador.ir_clientes()
-    def _on_perfil(self):               self.controlador.ir_perfil()
-    def _on_confirmar_registro(self):   self.controlador.registrar_cliente()
+    # ── Delegación al controlador ────────────────────────────────────────
+
+    def _on_cerrar_sesion(self):
+        self.controlador.cerrar_sesion()
+
+    def _on_inicio(self):
+        self.controlador.ir_inicio()
+
+    def _on_registrar_usuario(self):
+        self.controlador.ir_registrar_usuario()
+
+    def _on_control_acceso(self):
+        self.controlador.ir_control_acceso()
+
+    def _on_clientes(self):
+        self.controlador.ir_clientes()
+
+    def _on_perfil(self):
+        self.controlador.ir_perfil()
+
+    def _on_confirmar_registro(self):
+        self.controlador.registrar_cliente()
 
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # — Getters del formulario (el controlador lee los datos a través de estos) —
-    def get_dni(self):          return self.DNI.text().strip()
-    def get_nombre(self):       return self.NombreCompleto.text().strip()
-    def get_telefono(self):     return self.Telefono.text().strip()
-    def get_direccion(self):    return self.Direccion.text().strip()
-    def get_email(self):        return self.Email.text().strip()
-    def get_fecha(self):        return self.Nacimiento.text().strip()
-    def get_username(self):     return self.Usuario.text().strip()
-    def get_password(self):     return self.Contrasea.text().strip()
-    def get_confirmar(self):    return self.ConfirmarContrasea.text().strip()
-    def get_dni_tutor(self):    return self.DNITutor.text().strip() if hasattr(self, 'DNITutor') else ''
-    def get_nombre_tutor(self): return self.NombreTutor.text().strip() if hasattr(self, 'NombreTutor') else ''
-    def get_plan(self):         return self.PlanComboBox.currentText().strip() if hasattr(self, 'PlanComboBox') else 'Basico'
-    def es_menor(self):         return self.ButtomMenor.isChecked() if hasattr(self, 'ButtomMenor') else False
-    def es_adulto(self):        return self.ButtomAdulto.isChecked() if hasattr(self, 'ButtomAdulto') else True
+    # ── Getters del formulario ───────────────────────────────────────────
+    # El controlador no toca directamente los widgets.
+    # Lee los datos usando estos métodos.
 
-    # — Métodos que el controlador llama para actualizar la UI —
+    def get_dni(self):
+        return self.DNI.text().strip()
+
+    def get_nombre(self):
+        return self.NombreCompleto.text().strip()
+
+    def get_telefono(self):
+        return self.Telefono.text().strip()
+
+    def get_direccion(self):
+        return self.Direccion.text().strip()
+
+    def get_email(self):
+        return self.Email.text().strip()
+
+    def get_fecha(self):
+        return self.Nacimiento.text().strip()
+
+    def get_username(self):
+        return self.Usuario.text().strip()
+
+    def get_password(self):
+        return self.Contrasea.text().strip()
+
+    def get_confirmar(self):
+        return self.ConfirmarContrasea.text().strip()
+
+    def get_dni_tutor(self):
+        if hasattr(self, "DNITutor"):
+            return self.DNITutor.text().strip()
+        return ""
+
+    def get_nombre_tutor(self):
+        if hasattr(self, "NombreTutor"):
+            return self.NombreTutor.text().strip()
+        return ""
+
+    def get_plan(self):
+        if hasattr(self, "PlanComboBox"):
+            return self.PlanComboBox.currentText().strip()
+        return "Basico"
+
+    def es_menor(self):
+        if hasattr(self, "ButtomMenor"):
+            return self.ButtomMenor.isChecked()
+        return False
+
+    def es_adulto(self):
+        if hasattr(self, "ButtomAdulto"):
+            return self.ButtomAdulto.isChecked()
+        return True
+
+    # ── Métodos visuales ─────────────────────────────────────────────────
+
     def limpiar_formulario(self):
-        for w in self.findChildren(QLineEdit):
-            w.clear()
+        for widget in self.findChildren(QLineEdit):
+            widget.clear()
 
     def mostrar_error(self, msg: str):
-        QMessageBox.warning(self, 'Error', msg)
+        QMessageBox.warning(self, "Error", msg)
 
     def mostrar_exito(self, msg: str):
-        QMessageBox.information(self, 'Correcto', msg)
+        QMessageBox.information(self, "Correcto", msg)
 
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ── Vista control de acceso ──────────────────────────────────────────────────
+
 class VistaRecepcionistaControlAcceso(QMainWindow):
-    """Vista de control de acceso (interfaz_recepcionista_control_de_acceso.ui)."""
+    """
+    Vista para registrar entradas y salidas de clientes.
+    """
 
     def __init__(self, ruta_ui):
         super().__init__()
         loadUi(ruta_ui, self)
+
         self.controlador = None
-        # Menú lateral
+
+        # Menú lateral.
         self.btnCerrarSesion.clicked.connect(self._on_cerrar_sesion)
         self.btnInicio.clicked.connect(self._on_inicio)
         self.btnRegistroUsuario.clicked.connect(self._on_registrar_usuario)
         self.btnControlAcceso.clicked.connect(self._on_control_acceso)
         self.btnClientes.clicked.connect(self._on_clientes)
         self.btnPerfil.clicked.connect(self._on_perfil)
-        # Buscador y botones de acción
+
+        # Buscador y botones de acción.
         self.txtDNIoID.textChanged.connect(self._on_buscar)
         self.btnEntrada.clicked.connect(self._on_entrada)
         self.btnSalida.clicked.connect(self._on_salida)
 
-    # — Delegación al controlador —
-    def _on_cerrar_sesion(self):        self.controlador.cerrar_sesion()
-    def _on_inicio(self):               self.controlador.ir_inicio()
-    def _on_registrar_usuario(self):    self.controlador.ir_registrar_usuario()
-    def _on_control_acceso(self):       self.controlador.ir_control_acceso()
-    def _on_clientes(self):             self.controlador.ir_clientes()
-    def _on_perfil(self):               self.controlador.ir_perfil()
-    def _on_buscar(self):               self.controlador.buscar_cliente_control_acceso()
-    def _on_entrada(self):              self.controlador.registrar_acceso_control('entrada')
-    def _on_salida(self):               self.controlador.registrar_acceso_control('salida')
+    # ── Delegación al controlador ────────────────────────────────────────
+
+    def _on_cerrar_sesion(self):
+        self.controlador.cerrar_sesion()
+
+    def _on_inicio(self):
+        self.controlador.ir_inicio()
+
+    def _on_registrar_usuario(self):
+        self.controlador.ir_registrar_usuario()
+
+    def _on_control_acceso(self):
+        self.controlador.ir_control_acceso()
+
+    def _on_clientes(self):
+        self.controlador.ir_clientes()
+
+    def _on_perfil(self):
+        self.controlador.ir_perfil()
+
+    def _on_buscar(self):
+        self.controlador.buscar_cliente_control_acceso()
+
+    def _on_entrada(self):
+        self.controlador.registrar_acceso_control("entrada")
+
+    def _on_salida(self):
+        self.controlador.registrar_acceso_control("salida")
 
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # — Getter —
+    # ── Getter ───────────────────────────────────────────────────────────
+
     def get_dni_id(self):
         return self.txtDNIoID.text().strip()
 
-    # — Métodos que el controlador llama para actualizar la UI —
+    # ── Métodos para actualizar la UI ────────────────────────────────────
+
     def set_cliente_encontrado(self, nombre, dni, id_usuario, estado_pago):
         self.lblNombre.setText(str(nombre))
-        self.lblDNI.setText(f'DNI: {dni}')
-        self.lblID.setText(f'ID: {id_usuario}')
+        self.lblDNI.setText(f"DNI: {dni}")
+        self.lblID.setText(f"ID: {id_usuario}")
         self.lblEstado.setText(str(estado_pago))
 
     def set_cliente_no_encontrado(self):
-        self.lblNombre.setText('Cliente no encontrado')
-        self.lblDNI.setText('DNI: -')
-        self.lblID.setText('ID: -')
-        self.lblEstado.setText('-')
+        self.lblNombre.setText("Cliente no encontrado")
+        self.lblDNI.setText("DNI: -")
+        self.lblID.setText("ID: -")
+        self.lblEstado.setText("-")
 
     def limpiar_cliente(self):
-        self.lblNombre.setText('Cliente no seleccionado')
-        self.lblDNI.setText('DNI: -')
-        self.lblID.setText('ID: -')
-        self.lblEstado.setText('-')
+        self.lblNombre.setText("Cliente no seleccionado")
+        self.lblDNI.setText("DNI: -")
+        self.lblID.setText("ID: -")
+        self.lblEstado.setText("-")
 
     def cargar_tabla_accesos(self, cabeceras: list, datos: list):
         _rellenar_tabla_accesos(self.tableAccesos, cabeceras, datos)
 
     def mostrar_error(self, msg: str):
-        QMessageBox.warning(self, 'Error', msg)
+        QMessageBox.warning(self, "Error", msg)
 
     def mostrar_exito(self, msg: str):
-        QMessageBox.information(self, 'Correcto', msg)
+        QMessageBox.information(self, "Correcto", msg)
 
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ── Vista clientes ────────────────────────────────────────────────────────────
+
 class VistaRecepcionistaClientes(QMainWindow):
-    """Vista del listado de clientes (interfaz_recepcionista_clientes.ui)."""
+    """
+    Vista del listado de clientes de recepción.
+
+    Permite filtrar clientes y editar datos de la tabla.
+    """
 
     def __init__(self, ruta_ui):
         super().__init__()
         loadUi(ruta_ui, self)
+
         self.controlador = None
-        # Menú lateral
+
+        # Menú lateral.
         self.btnCerrarSesion.clicked.connect(self._on_cerrar_sesion)
         self.btnInicio.clicked.connect(self._on_inicio)
         self.btnRegistroUsuario.clicked.connect(self._on_registrar_usuario)
         self.btnControlAcceso.clicked.connect(self._on_control_acceso)
         self.btnClientes.clicked.connect(self._on_clientes)
         self.btnPerfil.clicked.connect(self._on_perfil)
-        # Filtros y guardar
+
+        # Filtros y guardar cambios.
         self.lblBuscarDNI.textChanged.connect(self._on_filtrar)
         self.comboBox_adultomenor.currentIndexChanged.connect(self._on_filtrar)
         self.comboBox_plan.currentIndexChanged.connect(self._on_filtrar)
         self.btnCambios.clicked.connect(self._on_guardar)
 
-    # — Delegación al controlador —
-    def _on_cerrar_sesion(self):        self.controlador.cerrar_sesion()
-    def _on_inicio(self):               self.controlador.ir_inicio()
-    def _on_registrar_usuario(self):    self.controlador.ir_registrar_usuario()
-    def _on_control_acceso(self):       self.controlador.ir_control_acceso()
-    def _on_clientes(self):             self.controlador.ir_clientes()
-    def _on_perfil(self):               self.controlador.ir_perfil()
-    def _on_filtrar(self):              self.controlador.filtrar_clientes_recepcionista()
-    def _on_guardar(self):              self.controlador.guardar_cambios_clientes_recepcionista()
+    # ── Delegación al controlador ────────────────────────────────────────
+
+    def _on_cerrar_sesion(self):
+        self.controlador.cerrar_sesion()
+
+    def _on_inicio(self):
+        self.controlador.ir_inicio()
+
+    def _on_registrar_usuario(self):
+        self.controlador.ir_registrar_usuario()
+
+    def _on_control_acceso(self):
+        self.controlador.ir_control_acceso()
+
+    def _on_clientes(self):
+        self.controlador.ir_clientes()
+
+    def _on_perfil(self):
+        self.controlador.ir_perfil()
+
+    def _on_filtrar(self):
+        self.controlador.filtrar_clientes_recepcionista()
+
+    def _on_guardar(self):
+        self.controlador.guardar_cambios_clientes_recepcionista()
 
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # — Getters de filtros —
-    def get_filtro_dni(self):   return self.lblBuscarDNI.text().strip()
-    def get_filtro_tipo(self):  return self.comboBox_adultomenor.currentText()
-    def get_filtro_plan(self):  return self.comboBox_plan.currentText()
+    # ── Getters de filtros ───────────────────────────────────────────────
 
-    # — Métodos que el controlador llama para actualizar la UI —
+    def get_filtro_dni(self):
+        return self.lblBuscarDNI.text().strip()
+
+    def get_filtro_tipo(self):
+        return self.comboBox_adultomenor.currentText()
+
+    def get_filtro_plan(self):
+        return self.comboBox_plan.currentText()
+
+    # ── Métodos para actualizar la UI ────────────────────────────────────
+
     def set_total_clientes(self, valor: str):
         self.lblTotalClientes.setText(valor)
 
@@ -274,37 +446,50 @@ class VistaRecepcionistaClientes(QMainWindow):
 
     def cargar_tabla_clientes(self, cabeceras: list, datos: list):
         _rellenar_tabla_tuplas(self.tablaClientes, cabeceras, datos)
+
+        # Permitimos editar celdas con doble click o click sobre selección.
         self.tablaClientes.setEditTriggers(
             self.tablaClientes.DoubleClicked | self.tablaClientes.SelectedClicked
         )
+
         self.tablaClientes.setSelectionBehavior(self.tablaClientes.SelectRows)
 
     def num_filas(self) -> int:
         return self.tablaClientes.rowCount()
 
     def get_fila_tabla(self, fila: int, num_cols: int) -> list:
+        """
+        Devuelve los textos de una fila editada.
+
+        El controlador usa esto para enviar los datos al modelo.
+        """
         return [
             self.tablaClientes.item(fila, col).text().strip()
-            if self.tablaClientes.item(fila, col) else ''
+            if self.tablaClientes.item(fila, col) else ""
             for col in range(num_cols)
         ]
 
     def mostrar_error(self, msg: str):
-        QMessageBox.warning(self, 'Error', msg)
+        QMessageBox.warning(self, "Error", msg)
 
     def mostrar_exito(self, msg: str):
-        QMessageBox.information(self, 'Correcto', msg)
+        QMessageBox.information(self, "Correcto", msg)
 
 
-# ──────────────────────────────────────────────────────────────────────────────
+# ── Vista perfil ──────────────────────────────────────────────────────────────
+
 class VistaRecepcionistaPerfil(QMainWindow):
-    """Vista del perfil del recepcionista (interfaz_recepcionista_perfil.ui)."""
+    """
+    Vista del perfil del recepcionista.
+    """
 
     def __init__(self, ruta_ui):
         super().__init__()
         loadUi(ruta_ui, self)
+
         self.controlador = None
-        # Menú lateral
+
+        # Menú lateral.
         self.btnCerrarSesion.clicked.connect(self._on_cerrar_sesion)
         self.btnInicio.clicked.connect(self._on_inicio)
         self.btnRegistroUsuario.clicked.connect(self._on_registrar_usuario)
@@ -312,19 +497,39 @@ class VistaRecepcionistaPerfil(QMainWindow):
         self.btnClientes.clicked.connect(self._on_clientes)
         self.btnPerfil.clicked.connect(self._on_perfil)
 
-    # — Delegación al controlador —
-    def _on_cerrar_sesion(self):        self.controlador.cerrar_sesion()
-    def _on_inicio(self):               self.controlador.ir_inicio()
-    def _on_registrar_usuario(self):    self.controlador.ir_registrar_usuario()
-    def _on_control_acceso(self):       self.controlador.ir_control_acceso()
-    def _on_clientes(self):             self.controlador.ir_clientes()
-    def _on_perfil(self):               self.controlador.ir_perfil()
+    # ── Delegación al controlador ────────────────────────────────────────
+
+    def _on_cerrar_sesion(self):
+        self.controlador.cerrar_sesion()
+
+    def _on_inicio(self):
+        self.controlador.ir_inicio()
+
+    def _on_registrar_usuario(self):
+        self.controlador.ir_registrar_usuario()
+
+    def _on_control_acceso(self):
+        self.controlador.ir_control_acceso()
+
+    def _on_clientes(self):
+        self.controlador.ir_clientes()
+
+    def _on_perfil(self):
+        self.controlador.ir_perfil()
 
     def set_controlador(self, ctrl):
         self.controlador = ctrl
 
-    # — Métodos que el controlador llama para actualizar la UI —
-    def set_nombre(self, valor: str):   self.label_Nombre.setText(valor)
-    def set_email(self, valor: str):    self.label_7.setText(valor)
-    def set_username(self, valor: str): self.label_9.setText(valor)
-    def set_direccion(self, valor: str):self.label_16.setText(valor)
+    # ── Métodos para actualizar la UI ────────────────────────────────────
+
+    def set_nombre(self, valor: str):
+        self.label_Nombre.setText(valor)
+
+    def set_email(self, valor: str):
+        self.label_7.setText(valor)
+
+    def set_username(self, valor: str):
+        self.label_9.setText(valor)
+
+    def set_direccion(self, valor: str):
+        self.label_16.setText(valor)

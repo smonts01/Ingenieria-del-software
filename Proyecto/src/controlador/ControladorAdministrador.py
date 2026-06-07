@@ -1,38 +1,29 @@
 """
-Controlador del rol Administrador — Patrón MVC según ejemplo de la profesora.
-
+Controlador del Administrador
 Responsabilidad:
-- Instanciar la Vista y asignarle set_controlador(self)
-- Responder a los eventos que la Vista delega
-- Llamar al Modelo para obtener/guardar datos
-- Llamar a métodos de la Vista para actualizar la UI
-- NO conecta botones, NO toca widgets directamente
+- Recibe las acciones de la Vista.
+- Decide qué operación debe realizarse.
+- Llama al Modelo/Logica para obtener o guardar datos.
+- Envía los resultados a la Vista mediante métodos.
 """
+
 import os
 import io
-
 from src.vista.componentes import MensajeView, TablaView, ImagenView, ArchivoView, BotonesView
 from src.modelo.VO.NuevoUsuarioFormVO import NuevoUsuarioFormVO
-from src.vista.vistas.vista_admin import (
-    VistaAdminInicio,
-    VistaAdminUsuariosClientes,
-    VistaAdminUsuariosTrabajadores,
-    VistaAdminNuevoUsuario,
-    VistaAdminClases,
-    VistaAdminInscripciones,
-    VistaAdminPagos,
-    VistaAdminEstadisticas,
-)
+from src.vista.vistas.vista_admin import (VistaAdminInicio, VistaAdminUsuariosClientes, VistaAdminUsuariosTrabajadores, VistaAdminNuevoUsuario, VistaAdminClases, VistaAdminInscripciones, VistaAdminPagos,VistaAdminEstadisticas,)
+
+# Relaciona cada archivo .ui con su clase de Vista, así el controlador puede abrir la pantalla adecuada sin crear widgets manualmente.
 
 _VISTAS = {
-    'interfaz_admin_inicio.ui':                    VistaAdminInicio,
-    'interfaz_admin_usuarios_clientes.ui':          VistaAdminUsuariosClientes,
-    'interfaz_admin_usuarios_trabajadores.ui':      VistaAdminUsuariosTrabajadores,
-    'interfaz_admin_usuarios_nuevo_usuario.ui':     VistaAdminNuevoUsuario,
-    'interfaz_admin_clases.ui':                     VistaAdminClases,
-    'interfaz_admin_inscripciones.ui':              VistaAdminInscripciones,
-    'interfaz_admin_pagos.ui':                      VistaAdminPagos,
-    'interfaz_admin_estadisticas.ui':               VistaAdminEstadisticas,
+    'interfaz_admin_inicio.ui': VistaAdminInicio,
+    'interfaz_admin_usuarios_clientes.ui': VistaAdminUsuariosClientes,
+    'interfaz_admin_usuarios_trabajadores.ui': VistaAdminUsuariosTrabajadores,
+    'interfaz_admin_usuarios_nuevo_usuario.ui': VistaAdminNuevoUsuario,
+    'interfaz_admin_clases.ui': VistaAdminClases,
+    'interfaz_admin_inscripciones.ui': VistaAdminInscripciones,
+    'interfaz_admin_pagos.ui': VistaAdminPagos,
+    'interfaz_admin_estadisticas.ui': VistaAdminEstadisticas,
 }
 
 
@@ -48,6 +39,9 @@ class ControladorAdministrador:
     def abrir(self):
         self.ir_inicio()
 
+# Abre una pantalla del administrador.
+# La vista carga el .ui y el controlador solo le indica qué pantalla debe mostrarse.
+
     def abrir_pantalla(self, archivo):
         if self.ventana:
             self.ventana.close()
@@ -59,26 +53,32 @@ class ControladorAdministrador:
         self.cargar_datos()
         self.ventana.show()
 
-    # ── Navegación ────────────────────────────────────────────────────────
-    def ir_inicio(self):                self.abrir_pantalla('interfaz_admin_inicio.ui')
-    def ir_usuarios_clientes(self):     self.abrir_pantalla('interfaz_admin_usuarios_clientes.ui')
+    def ir_inicio(self): self.abrir_pantalla('interfaz_admin_inicio.ui')
+    def ir_usuarios_clientes(self): self.abrir_pantalla('interfaz_admin_usuarios_clientes.ui')
     def ir_usuarios_trabajadores(self): self.abrir_pantalla('interfaz_admin_usuarios_trabajadores.ui')
-    def ir_nuevo_usuario(self):         self.abrir_pantalla('interfaz_admin_usuarios_nuevo_usuario.ui')
-    def ir_clases(self):                self.abrir_pantalla('interfaz_admin_clases.ui')
-    def ir_inscripciones(self):         self.abrir_pantalla('interfaz_admin_inscripciones.ui')
-    def ir_pagos(self):                 self.abrir_pantalla('interfaz_admin_pagos.ui')
-    def ir_estadisticas(self):          self.abrir_pantalla('interfaz_admin_estadisticas.ui')
+    def ir_nuevo_usuario(self): self.abrir_pantalla('interfaz_admin_usuarios_nuevo_usuario.ui')
+    def ir_clases(self): self.abrir_pantalla('interfaz_admin_clases.ui')
+    def ir_inscripciones(self): self.abrir_pantalla('interfaz_admin_inscripciones.ui')
+    def ir_pagos(self): self.abrir_pantalla('interfaz_admin_pagos.ui')
+    def ir_estadisticas(self): self.abrir_pantalla('interfaz_admin_estadisticas.ui')
 
-    # ── Carga de datos por pantalla ───────────────────────────────────────
+
+# Decide qué datos cargar según la pantalla abierta.
+# El controlador no calcula los datos: se los pide al modelo.
+
     def cargar_datos(self):
         v = self.ventana
-        if isinstance(v, VistaAdminInicio):             self._cargar_inicio()
+        if isinstance(v, VistaAdminInicio): self._cargar_inicio()
         elif isinstance(v, VistaAdminUsuariosClientes): self._cargar_clientes()
         elif isinstance(v, VistaAdminUsuariosTrabajadores): self._cargar_trabajadores()
-        elif isinstance(v, VistaAdminClases):           self._cargar_clases()
-        elif isinstance(v, VistaAdminInscripciones):    self._cargar_inscripciones()
-        elif isinstance(v, VistaAdminPagos):            self._cargar_pagos()
-        elif isinstance(v, VistaAdminEstadisticas):     self._cargar_estadisticas()
+        elif isinstance(v, VistaAdminClases): self._cargar_clases()
+        elif isinstance(v, VistaAdminInscripciones): self._cargar_inscripciones()
+        elif isinstance(v, VistaAdminPagos): self._cargar_pagos()
+        elif isinstance(v, VistaAdminEstadisticas): self._cargar_estadisticas()
+
+        
+# Carga los datos del panel inicial del administrador.
+# Pide estadísticas al modelo y se las pasa a la vista.
 
     def _cargar_inicio(self):
         v = self.ventana
@@ -162,6 +162,8 @@ class ControladorAdministrador:
             )
         except Exception as e: print('Error resumen pagos:', e)
 
+# Gráfico de ocupacion por clase
+
     def _cargar_estadisticas(self):
         v = self.ventana
         try:
@@ -183,7 +185,9 @@ class ControladorAdministrador:
                 v.set_ocupacion_clase(i, nombre, pct)
         except Exception as e: print('Error ocupacion:', e)
 
-    # ── Acciones ──────────────────────────────────────────────────────────
+
+# Acciones de busqueda o filtrado sobre tablas
+
     def filtrar_clientes(self):
         v = self.ventana
         try:
@@ -213,22 +217,83 @@ class ControladorAdministrador:
             v.set_texto_mostrando(f'Mostrando {len(datos)} trabajadores')
         except Exception as e: print('Error filtrar rol:', e)
 
-    def guardar_cambios_trabajador(self):
+
+    def filtrar_clases(self):
         v = self.ventana
         try:
+            texto = v.get_texto_buscar()
+            datos = self.modelo.buscar_clases(texto) if texto else self.modelo.listar_clases()
+            v.cargar_tabla(datos)
+            v.set_total_clases(str(len(datos)))
+        except Exception as e: print('Error filtrar clases:', e)
+
+
+    def filtrar_inscripciones(self):
+        v = self.ventana
+        try:
+            texto = v.get_texto_buscar()
+            datos = (self.modelo.buscar_inscripciones(texto)
+                     if texto else self.modelo.listar_inscripciones_resumen())
+            v.cargar_tabla(datos)
+            v.set_texto_mostrando(f'Mostrando {len(datos)} inscripciones')
+        except Exception as e: print('Error filtrar inscripciones:', e)
+
+    def filtrar_pagos_pendientes(self):
+        v = self.ventana
+        try:
+            texto = v.get_texto_buscar()
+            datos = (self.modelo.buscar_cliente_pendiente_por_dni_admin(texto)
+                     if texto else self.modelo.clientes_pendientes_admin())
+            v.cargar_tabla_pagos(datos)
+            try:
+                v.set_resumen_pagos(
+                    float(self.modelo.ingresos_mes_actual()),
+                    float(self.modelo.ingresos_anio_actual()),
+                    int(self.modelo.numero_clientes_pendientes_pago()),
+                    float(self.modelo.importe_pendiente_cobrar())
+                )
+            except: pass
+        except Exception as e: print('Error filtrar pagos:', e)
+
+# Función para guardar cambios después de modificar la tabla de trabajador        
+
+    def guardar_cambios_trabajador(self):
+        v = self.ventana
+
+        try:
             filas = v.get_datos_tabla()
+
             for fila in filas:
-                id_str = fila[0]
+                id_str = fila[0].strip()
+
                 if not id_str:
                     continue
+
                 id_usuario = int(id_str)
-                nombre, telefono, email, direccion = fila[2], fila[3], fila[4], fila[7]
+
+                nombre = fila[2].strip()
+                telefono = fila[3].strip()
+                email = fila[4].strip()
+                direccion = fila[7].strip()
+
                 self.modelo.guardar_cambios_trabajador(
-                    id_usuario, nombre, telefono, email, direccion
+                    id_usuario,
+                    nombre,
+                    telefono,
+                    email,
+                    direccion
                 )
-            v.mostrar_exito('Cambios guardados correctamente')
+
+            v.mostrar_exito("Cambios guardados correctamente")
+            self._cargar_trabajadores()
+
         except Exception as e:
-            v.mostrar_error(str(e))
+            v.mostrar_error(f"Error al guardar cambios:\n{str(e)}")
+
+
+# Recoge los datos del formulario desde la vista.
+# Crea un VO para transportar la información.
+# Delega el alta del usuario en el modelo.
 
     def registrar_usuario(self):
         v = self.ventana
@@ -270,14 +335,7 @@ class ControladorAdministrador:
         except Exception as e:
             v.mostrar_error(f'Error al registrar: {str(e)}')
 
-    def filtrar_clases(self):
-        v = self.ventana
-        try:
-            texto = v.get_texto_buscar()
-            datos = self.modelo.buscar_clases(texto) if texto else self.modelo.listar_clases()
-            v.cargar_tabla(datos)
-            v.set_total_clases(str(len(datos)))
-        except Exception as e: print('Error filtrar clases:', e)
+# Cambios sobre tabla de clases, añadir o modificar una fila, y luego guardar cambios
 
     def anadir_fila_clase(self):
         v = self.ventana
@@ -313,32 +371,33 @@ class ControladorAdministrador:
         except Exception as e:
             v.mostrar_error(str(e))
 
-    def filtrar_inscripciones(self):
-        v = self.ventana
-        try:
-            texto = v.get_texto_buscar()
-            datos = (self.modelo.buscar_inscripciones(texto)
-                     if texto else self.modelo.listar_inscripciones_resumen())
-            v.cargar_tabla(datos)
-            v.set_texto_mostrando(f'Mostrando {len(datos)} inscripciones')
-        except Exception as e: print('Error filtrar inscripciones:', e)
+    def eliminar_clase(self):
+        """
+        Elimina la clase seleccionada en la tabla.
 
-    def filtrar_pagos_pendientes(self):
+        Esto representa una operación de baja sobre la base de datos.
+        """
         v = self.ventana
+
         try:
-            texto = v.get_texto_buscar()
-            datos = (self.modelo.buscar_cliente_pendiente_por_dni_admin(texto)
-                     if texto else self.modelo.clientes_pendientes_admin())
-            v.cargar_tabla_pagos(datos)
-            try:
-                v.set_resumen_pagos(
-                    float(self.modelo.ingresos_mes_actual()),
-                    float(self.modelo.ingresos_anio_actual()),
-                    int(self.modelo.numero_clientes_pendientes_pago()),
-                    float(self.modelo.importe_pendiente_cobrar())
-                )
-            except: pass
-        except Exception as e: print('Error filtrar pagos:', e)
+            id_clase = v.get_id_clase_seleccionada()
+
+            if id_clase is None:
+                v.mostrar_error("Selecciona una clase para eliminar")
+                return
+
+            filas = self.modelo.eliminar_clase(id_clase)
+
+            if filas > 0:
+                v.mostrar_exito("Clase eliminada correctamente")
+                self._cargar_clases()
+            else:
+                v.mostrar_error("No se ha podido eliminar la clase")
+
+        except Exception as e:
+            v.mostrar_error(f"Error al eliminar clase:\n{str(e)}")
+
+# Copia de seguridad (backup)
 
     def crear_copia_seguridad(self):
         v = self.ventana
@@ -360,7 +419,9 @@ class ControladorAdministrador:
         except Exception as e:
             v.mostrar_error(f'No se pudo restaurar:\n\n{e}')
 
-    # Informe
+    # Informe de ingresos
+    # Pide al modelo los ingresos por mes.
+    # El controlador prepara los datos y la vista se encarga de dibujar el gráfico.
 
     def _dibujar_grafico(self):
         try:
@@ -376,13 +437,16 @@ class ControladorAdministrador:
         except Exception as e:
             print('Error grafico:', e)
 
-    # ── Cerrar sesión ─────────────────────────────────────────────────────
+    # Cerrar sesión
     def cerrar_sesion(self):
         if self.ventana:
             self.ventana.close()
         self.vista_login.show()
 
-    # ── Ayuda ─────────────────────────────────────────────────────────────
+    # Ayuda ?
+    # Muestra ayuda específica según la pantalla actual.
+    # Los mensajes visuales se delegan a MensajeView.
+    
     def _añadir_boton_ayuda(self):
         BotonesView.crear_boton_ayuda(self.ventana, 1015, 20, self._mostrar_ayuda)
 
@@ -396,8 +460,7 @@ class ControladorAdministrador:
         elif isinstance(v, VistaAdminUsuariosClientes):
             MensajeView.information(v, 'Ayuda — Clientes',
                 'Consulta y gestiona los clientes del gimnasio.\n\n'
-                '• Usa el buscador para filtrar por nombre.\n'
-                '• Haz doble clic en una celda para editar.')
+                '• Usa el buscador para filtrar por nombre.\n')
         elif isinstance(v, VistaAdminUsuariosTrabajadores):
             MensajeView.information(v, 'Ayuda — Trabajadores',
                 'Lista del personal del gimnasio.\n\n'
@@ -412,6 +475,7 @@ class ControladorAdministrador:
             MensajeView.information(v, 'Ayuda — Clases',
                 'Administra las clases del gimnasio.\n\n'
                 '• Pulsa Nueva clase para añadir una fila.\n'
+                '• Pulsa sobre una clase y luego al boton de Eliminar, para eliminar una clase.\n'
                 '• Edita y pulsa Guardar cambios.')
         elif isinstance(v, VistaAdminInscripciones):
             MensajeView.information(v, 'Ayuda — Inscripciones',

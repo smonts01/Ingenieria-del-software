@@ -110,9 +110,11 @@ class LogicaClases:
         return self._clase_dao.update(clase_vo)
 
     def eliminar_clase(self, id_clase):
-        if not id_clase:
-            raise ValueError("Debe indicarse la clase")
+        """
+        Baja física de una clase.
 
+        Delega la eliminación en el DAO.
+        """
         return self._clase_dao.delete(id_clase)
 
     def guardar_cambios_clase_tabla(self, id_clase, nombre, dia, hora_ini, hora_fin, aforo, nivel):

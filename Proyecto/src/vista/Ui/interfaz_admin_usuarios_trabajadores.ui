@@ -1025,6 +1025,19 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
       <string>+ Nuevo Trabajador</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="btnGuardarCambios">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>145</y>
+       <width>111</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Guardar cambios</string>
+     </property>
+    </widget>
     <zorder>label</zorder>
     <zorder>lblTituloUsuarios</zorder>
     <zorder>lblSubUsuarios</zorder>
@@ -1035,6 +1048,7 @@ QHeaderView::section { background-color: white; color: #1F2937; font: bold 8pt &
     <zorder>txtBuscarTrabajador</zorder>
     <zorder>cmbRoles</zorder>
     <zorder>btnNuevoTrabajador</zorder>
+    <zorder>btnGuardarCambios</zorder>
    </widget>
   </widget>
  </widget>

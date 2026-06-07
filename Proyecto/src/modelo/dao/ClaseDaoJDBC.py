@@ -117,16 +117,19 @@ class ClaseDaoJDBC:
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_clase: int) -> int:
-        """Elimina una clase por su ID. Retorna filas afectadas."""
+    def delete(self, id_clase):
         cursor = self._conexion.getCursor()
         rows = 0
+
         try:
             cursor.execute(self.SQL_DELETE, (id_clase,))
             rows = cursor.rowcount
+
         except Exception as e:
             print("Error al eliminar clase:", e)
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
+
         return rows
