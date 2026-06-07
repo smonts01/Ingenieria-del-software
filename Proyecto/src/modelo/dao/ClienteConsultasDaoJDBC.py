@@ -144,7 +144,20 @@ class ClienteConsultasDaoJDBC(DaoJDBCBase):
         sql += "ORDER BY u.nombre"
 
         filas = self.consultar(sql, tuple(parametros))
-        return [ClienteResumenVO(f[0], f[1], f[2], f[3], f[4], f[5], f[6], f[7], f[8]) for f in filas]
+
+        return [
+            (
+                f[0],  # ID
+                f[1],  # DNI
+                f[2],  # Nombre
+                f[3],  # Teléfono
+                f[4],  # Email
+                f[5],  # Dirección
+                f[6],  # Nacimiento
+                f[7],  # Estado pago
+            )
+            for f in filas
+        ]
 
     def recepcion_guardar_cambios_cliente(self, id_cliente, dni, nombre, telefono,
                                            email, direccion, fecha_nacimiento, estado_pagado):

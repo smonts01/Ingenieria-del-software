@@ -238,7 +238,7 @@ class ControladorRecepcionista:
             datos = self.modelo.recepcion_listar_clientes_filtrados(dni, tipo, plan)
             cabeceras = [
                 'ID', 'DNI', 'Nombre', 'Teléfono', 'Email',
-                'Dirección', 'Nacimiento', 'Estado pago', 'Tipo', 'Plan'
+                'Dirección', 'Nacimiento', 'Estado pago'
             ]
             v.cargar_tabla_clientes(cabeceras, datos)
         except Exception as e:
@@ -253,7 +253,8 @@ class ControladorRecepcionista:
                 if not id_str:
                     continue
                 id_cliente = int(id_str)
-                _, dni, nombre, telefono, email, direccion, nacimiento, estado_pago = fila_datos
+                id_str, dni, nombre, telefono, email, direccion, nacimiento, estado_pago = fila_datos
+               
                 self.modelo.recepcion_guardar_cambios_cliente(
                     id_cliente, dni, nombre, telefono,
                     email, direccion, nacimiento, estado_pago

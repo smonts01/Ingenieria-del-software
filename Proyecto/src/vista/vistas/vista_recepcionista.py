@@ -30,15 +30,32 @@ def _rellenar_tabla_accesos(tabla, cabeceras, datos):
 
 
 def _rellenar_tabla_tuplas(tabla, cabeceras, datos):
-    """Rellena tabla con lista de tuplas."""
+    tabla.clear()
     tabla.setColumnCount(len(cabeceras))
     tabla.setHorizontalHeaderLabels(cabeceras)
     tabla.setRowCount(len(datos))
-    for fi, fila in enumerate(datos):
-        valores = list(fila) if isinstance(fila, (list, tuple)) else [str(fila)]
-        for ci, val in enumerate(valores[:len(cabeceras)]):
-            tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
 
+    for fi, fila in enumerate(datos):
+
+        if isinstance(fila, (list, tuple)):
+            valores = list(fila)
+        else:
+            valores = [
+                getattr(fila, "id_cliente", getattr(fila, "id_usuario", "")),
+                getattr(fila, "dni", ""),
+                getattr(fila, "nombre", ""),
+                getattr(fila, "telefono", ""),
+                getattr(fila, "email", ""),
+                getattr(fila, "direccion", ""),
+                getattr(fila, "fecha_nacimiento", ""),
+                getattr(fila, "estado_pagado", ""),
+             
+            ]
+
+        for ci, val in enumerate(valores[:len(cabeceras)]):
+            tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ""))
+
+    tabla.resizeColumnsToContents()
 
 # ──────────────────────────────────────────────────────────────────────────────
 class VistaRecepcionistaInicio(QMainWindow):
