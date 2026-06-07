@@ -9,7 +9,7 @@ class InformeDaoJDBC:
     SQL_SELECT_BY_CONTABLE = "SELECT id_informe, id_contable, tipo_informe, fecha_generacion FROM informe WHERE id_contable = ?"
     SQL_INSERT = "INSERT INTO informe (id_contable, tipo_informe, fecha_generacion) VALUES (?, ?, ?)"
     SQL_UPDATE = "UPDATE informe SET id_contable=?, tipo_informe=?, fecha_generacion=? WHERE id_informe=?"
-    SQL_DELETE = "DELETE FROM informe WHERE id_informe = ?"
+
 
     def __init__(self):
         self._conexion = Conexion()  
@@ -92,16 +92,4 @@ class InformeDaoJDBC:
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_informe: int) -> int:
-        """Elimina un informe por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_informe,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar informe:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
+  

@@ -10,7 +10,7 @@ class InscripcionDaoJDBC:
     SQL_SELECT_BY_CLASE = "SELECT id_inscripcion, id_cliente, id_clase, fecha_inscripcion, estado FROM inscripcion WHERE id_clase = ?"
     SQL_INSERT = "INSERT INTO inscripcion (id_cliente, id_clase, estado) VALUES (?, ?, ?)"
     SQL_UPDATE_ESTADO = "UPDATE inscripcion SET estado=? WHERE id_inscripcion=?"
-    SQL_DELETE = "DELETE FROM inscripcion WHERE id_inscripcion = ?"
+
 
 
     def __init__(self):
@@ -109,16 +109,3 @@ class InscripcionDaoJDBC:
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_inscripcion: int) -> int:
-        """Elimina una inscripción por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_inscripcion,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar inscripción:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows

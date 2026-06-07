@@ -3,7 +3,6 @@ from src.modelo.conexion.Conexion import Conexion
 
 class DaoJDBCBase:
     """Base común para DAOs de consultas complejas.
-
         Centraliza las operaciones SQL auxiliares para los DAO del proyecto.
     """
 

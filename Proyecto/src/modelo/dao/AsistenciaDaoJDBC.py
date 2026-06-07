@@ -10,7 +10,6 @@ class AsistenciaDaoJDBC:
     SQL_SELECT_BY_CLASE = "SELECT id_asistencia, id_cliente, id_clase, fecha, presente FROM asistencia WHERE id_clase = ?"
     SQL_INSERT = "INSERT INTO asistencia (id_cliente, id_clase, fecha, presente) VALUES (?, ?, ?, ?)"
     SQL_UPDATE = "UPDATE asistencia SET presente=? WHERE id_asistencia=?"
-    SQL_DELETE = "DELETE FROM asistencia WHERE id_asistencia = ?"
 
     def __init__(self):
         self._conexion = Conexion()  
@@ -110,16 +109,4 @@ class AsistenciaDaoJDBC:
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_asistencia: int) -> int:
-        """Elimina una asistencia por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_asistencia,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar asistencia:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
+

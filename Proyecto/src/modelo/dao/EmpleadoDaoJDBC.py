@@ -8,7 +8,7 @@ class EmpleadoDaoJDBC:
     SQL_SELECT_BY_ID = "SELECT id_empleado, salario FROM empleados WHERE id_empleado = ?"
     SQL_INSERT = "INSERT INTO empleados (id_empleado, salario) VALUES (?, ?)"
     SQL_UPDATE = "UPDATE empleados SET salario=? WHERE id_empleado=?"
-    SQL_DELETE = "DELETE FROM empleados WHERE id_empleado = ?"
+
 
     def __init__(self):
         self._conexion = Conexion()  
@@ -76,16 +76,4 @@ class EmpleadoDaoJDBC:
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_empleado: int) -> int:
-        """Elimina un empleado por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_empleado,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar empleado:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
+

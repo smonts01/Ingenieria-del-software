@@ -39,10 +39,7 @@ class PagoDaoJDBC:
         WHERE id_pago = ?
     """
 
-    SQL_DELETE = """
-        DELETE FROM pago
-        WHERE id_pago = ?
-    """
+
 
     def __init__(self):
         self._conexion = Conexion()  
@@ -175,19 +172,3 @@ class PagoDaoJDBC:
 
         return rows
 
-    def delete(self, id_pago: int) -> int:
-        cursor = self._conexion.getCursor()
-        rows = 0
-
-        try:
-            cursor.execute(self.SQL_DELETE, (id_pago,))
-            rows = cursor.rowcount
-
-        except Exception as e:
-            print("Error al eliminar pago:", e)
-
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-
-        return rows

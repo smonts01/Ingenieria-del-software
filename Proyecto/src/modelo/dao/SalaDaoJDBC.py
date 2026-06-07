@@ -15,24 +15,7 @@ class SalaDaoJDBC:
         WHERE id_sala = ?
     """
 
-    SQL_INSERT = """
-        INSERT INTO sala
-            (nombre, aforo_maximo)
-        VALUES
-            (?, ?)
-    """
 
-    SQL_UPDATE = """
-        UPDATE sala
-        SET nombre = ?,
-            aforo_maximo = ?
-        WHERE id_sala = ?
-    """
-
-    SQL_DELETE = """
-        DELETE FROM sala
-        WHERE id_sala = ?
-    """
 
     def __init__(self):
         self._conexion = Conexion()  
@@ -85,68 +68,4 @@ class SalaDaoJDBC:
             self._conexion.closeConnection()
         return sala
 
-    def insert(self, vo: SalaVO) -> int:
-        """Inserta una nueva sala. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-
-        try:
-            cursor.execute(
-                self.SQL_INSERT,
-                (
-                    vo.nombre,
-                    vo.aforo_maximo
-                )
-            )
-
-            rows = cursor.rowcount
-
-        except Exception as e:
-            print("Error al insertar sala:", e)
-
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
-
-    def update(self, vo: SalaVO) -> int:
-        """Actualiza una sala existente. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-
-        try:
-            cursor.execute(
-                self.SQL_UPDATE,
-                (
-                    vo.nombre,
-                    vo.aforo_maximo,
-                    vo.id_sala
-                )
-            )
-
-            rows = cursor.rowcount
-
-        except Exception as e:
-            print("Error al actualizar sala:", e)
-
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
-
-    def delete(self, id_sala: int) -> int:
-        """Elimina una sala por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-
-        try:
-            cursor.execute(self.SQL_DELETE, (id_sala,))
-            rows = cursor.rowcount
-
-        except Exception as e:
-            print("Error al eliminar sala:", e)
-
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
+    

@@ -10,7 +10,7 @@ class UsuarioDaoJDBC:
     SQL_CHECK_LOGIN = "SELECT id_usuario, dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_registro, fecha_nacimiento FROM usuarios WHERE username = ? AND password_hash = ?"
     SQL_INSERT = "INSERT INTO usuarios (dni, nombre, telefono, email, username, password_hash, id_rol, direccion, fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     SQL_UPDATE = "UPDATE usuarios SET dni=?, nombre=?, telefono=?, email=?, username=?, password_hash=?, id_rol=?, direccion=?, fecha_nacimiento=? WHERE id_usuario=?"
-    SQL_DELETE = "DELETE FROM usuarios WHERE id_usuario = ?"
+
 
 
     def __init__(self):
@@ -121,16 +121,3 @@ class UsuarioDaoJDBC:
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_usuario: int) -> int:
-        """Elimina un usuario por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_usuario,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar usuario:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
