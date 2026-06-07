@@ -467,7 +467,7 @@ class Logica:
         return self._pagos.contable_balance_mes()
 
     def historial_informes_contable(self):
-        return self._pagos.historial_informes_contable()
+        return self._informes.historial_informes_contable()
 
     def contable_pagos_registrados(self, id_contable):
         return self._pagos.contable_pagos_registrados(id_contable)
@@ -476,7 +476,7 @@ class Logica:
         return self._pagos.contable_pendientes_revisados()
 
     def contable_informes_generados_usuario(self, id_contable):
-        return self._pagos.contable_informes_generados_usuario(id_contable)
+        return self._informes.contable_informes_generados_usuario(id_contable)
 
     def contable_importe_gestionado(self, id_contable):
         return self._pagos.contable_importe_gestionado(id_contable)
