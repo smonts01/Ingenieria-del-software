@@ -69,15 +69,7 @@ class LogicaRecepcionista:
     def listar_accesos(self):
         accesos = self._acceso_dao.select()
 
-        return [
-            (
-                acceso.id_registro,
-                acceso.id_usuario,
-                acceso.fecha_hora_registro,
-                acceso.tipo_acceso
-            )
-            for acceso in accesos
-        ]
+        return accesos
 
     def registrar_acceso_cliente_control(self, id_usuario, tipo_acceso):
         if not id_usuario:

@@ -142,20 +142,7 @@ class LogicaUsuarios:
     def listar_usuarios(self):
         usuarios = self._usuario_dao.select()
 
-        return [
-            (
-                usuario.id_usuario,
-                usuario.dni,
-                usuario.nombre,
-                usuario.telefono,
-                usuario.email,
-                usuario.username,
-                usuario.id_rol,
-                usuario.direccion,
-                usuario.fecha_nacimiento
-            )
-            for usuario in usuarios
-        ]
+        return usuarios
 
     def cambiar_password(self, id_usuario, nueva_password):
         if not nueva_password:
@@ -273,13 +260,7 @@ class LogicaUsuarios:
     def listar_empleados(self):
         empleados = self._empleado_dao.select()
 
-        return [
-            (
-                empleado.id_empleado,
-                empleado.salario
-            )
-            for empleado in empleados
-        ]
+        return empleados
 
     def guardar_cambios_trabajador(self, id_usuario, nombre, telefono, email, direccion):
         usuario_vo = self._usuario_dao.selectById(id_usuario)

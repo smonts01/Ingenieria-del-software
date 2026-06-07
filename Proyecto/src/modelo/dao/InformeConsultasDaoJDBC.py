@@ -1,4 +1,8 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.SalarioVO import SalarioVO
+from src.modelo.VO.HistorialInformeVO import HistorialInformeVO
+from src.modelo.VO.GestionEconomicaVO import GestionEconomicaVO
+from src.modelo.VO.BalanceMensualVO import BalanceMensualVO
 
 
 class InformeConsultasDaoJDBC(DaoJDBCBase):
@@ -52,27 +56,27 @@ class InformeConsultasDaoJDBC(DaoJDBCBase):
         return self.ejecutar(self.SQL_GENERAR_INFORME, (id_contable, tipo))
 
     def informe_salarios(self):
-        return self.consultar(self.SQL_INFORME_SALARIOS)
+        filas = self.consultar(self.SQL_INFORME_SALARIOS)
+        return [SalarioVO(f[0], f[1], f[2]) for f in filas]
 
     def num_informes_mes_contable(self):
         datos = self.consultar(self.SQL_NUM_INFORMES_MES)
         return datos[0][0] if datos else 0
 
     def historial_informes_contable(self):
-        return self.consultar(self.SQL_HISTORIAL_INFORMES)
+        filas = self.consultar(self.SQL_HISTORIAL_INFORMES)
+        return [HistorialInformeVO(f[0], f[1], f[2], f[3]) for f in filas]
 
     def informe_balance_mensual_contable(self, gasto_mensual):
         ingresos_mensuales = self.consultar(self.SQL_BALANCE_MENSUAL)
-
         resultado = []
         for fila in ingresos_mensuales:
             anio = fila[0]
             mes = fila[1]
             ingresos = fila[2]
             balance = ingresos - gasto_mensual
-            resultado.append((
-                anio,
-                mes,
+            resultado.append(BalanceMensualVO(
+                anio, mes,
                 f"{float(ingresos):.2f} €",
                 f"{float(gasto_mensual):.2f} €",
                 f"{float(balance):.2f} €"
@@ -81,12 +85,12 @@ class InformeConsultasDaoJDBC(DaoJDBCBase):
 
     def informe_gestion_economica_contable(self, ingresos, gastos, balance, pendiente, tarifas_activas, nominas):
         return [
-            ("Ingresos abonados", f"{float(ingresos):.2f} €"),
-            ("Gastos / nóminas", f"{float(gastos):.2f} €"),
-            ("Balance", f"{float(balance):.2f} €"),
-            ("Pagos pendientes", f"{float(pendiente):.2f} €"),
-            ("Tarifas activas", str(tarifas_activas)),
-            ("Total nóminas", f"{float(nominas):.2f} €"),
+            GestionEconomicaVO("Ingresos abonados", f"{float(ingresos):.2f} €"),
+            GestionEconomicaVO("Gastos / nominas", f"{float(gastos):.2f} €"),
+            GestionEconomicaVO("Balance", f"{float(balance):.2f} €"),
+            GestionEconomicaVO("Pagos pendientes", f"{float(pendiente):.2f} €"),
+            GestionEconomicaVO("Tarifas activas", str(tarifas_activas)),
+            GestionEconomicaVO("Total nominas", f"{float(nominas):.2f} €"),
         ]
 
     def contable_informes_generados_usuario(self, id_contable):

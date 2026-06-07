@@ -1,4 +1,6 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.OcupacionAdminVO import OcupacionAdminVO
+from src.modelo.VO.RankingClienteVO import RankingClienteVO
  
  
 class EstadisticasConsultasDaoJDBC(DaoJDBCBase):
@@ -80,8 +82,10 @@ class EstadisticasConsultasDaoJDBC(DaoJDBCBase):
         }
  
     def ranking_usuarios_activos_estadisticas(self):
-        return self.consultar(self.SQL_RANKING_USUARIOS_ACTIVOS)
+        filas = self.consultar(self.SQL_RANKING_USUARIOS_ACTIVOS)
+        return [RankingClienteVO(f[0], f[1], f[2], f[3]) for f in filas]
  
     def ocupacion_por_clase_estadisticas(self):
-        return self.consultar(self.SQL_OCUPACION_POR_CLASE)
+        filas = self.consultar(self.SQL_OCUPACION_POR_CLASE)
+        return [OcupacionAdminVO(f[0], f[1]) for f in filas]
  

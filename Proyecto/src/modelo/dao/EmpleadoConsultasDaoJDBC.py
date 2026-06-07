@@ -1,4 +1,5 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.SalarioVO import SalarioVO
 from src.modelo.VO.TrabajadorVO import TrabajadorVO
 
 
@@ -74,7 +75,8 @@ class EmpleadoConsultasDaoJDBC(DaoJDBCBase):
         return [self._rowToVO(f) for f in filas]
 
     def contable_salarios_personal(self):
-        return self.consultar(self.SQL_SALARIOS_PERSONAL)
+        filas = self.consultar(self.SQL_SALARIOS_PERSONAL)
+        return [SalarioVO(f[0], f[1], f[2]) for f in filas]
 
     def obtener_salario_base_por_rol(self, id_rol):
         datos = self.consultar(self.SQL_SALARIO_BASE_POR_ROL, (id_rol,))

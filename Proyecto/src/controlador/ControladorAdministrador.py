@@ -176,8 +176,8 @@ class ControladorAdministrador:
             ocupacion = self.modelo.ocupacion_por_clase_estadisticas()
             for i in range(4):
                 if i < len(ocupacion):
-                    nombre = str(ocupacion[i][0])
-                    pct = int(ocupacion[i][1]) if ocupacion[i][1] is not None else 0
+                    nombre = str(ocupacion[i].nombre_actividad)
+                    pct = int(ocupacion[i].ocupacion) if ocupacion[i].ocupacion is not None else 0
                 else:
                     nombre, pct = '-', 0
                 v.set_ocupacion_clase(i, nombre, pct)
@@ -371,8 +371,8 @@ class ControladorAdministrador:
                 return
             meses = ['','Ene','Feb','Mar','Abr','May','Jun',
                     'Jul','Ago','Sep','Oct','Nov','Dic']
-            etiquetas = [f"{meses[int(r[1])]}\n{str(r[0])[-2:]}" for r in datos][::-1]
-            valores   = [float(r[2]) for r in datos][::-1]
+            etiquetas = [f"{meses[int(r.mes)]}\n{str(r.anio)[-2:]}" for r in datos][::-1]
+            valores   = [float(r.total) for r in datos][::-1]
             # Pasa los datos a la vista, que se encarga de dibujar
             self.ventana.dibujar_grafico_ingresos(etiquetas, valores)
         except Exception as e:

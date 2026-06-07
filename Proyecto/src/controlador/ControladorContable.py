@@ -148,7 +148,7 @@ class ControladorContable:
             datos = self.modelo.pagos_pendientes()
             datos_filtrados = []
             for fila in datos:
-                fecha_pago = fila[4]
+                fecha_pago = fila.fecha
                 es_vencido = self.modelo.es_pago_vencido(fecha_pago)
                 if filtro == 'vencido' and not es_vencido:
                     continue
@@ -164,7 +164,7 @@ class ControladorContable:
         try:
             tarifas = self.modelo.contable_tarifas_economica()
             for t in tarifas:
-                v.set_tarifa(str(t[0]).lower(), str(t[1]), str(t[2]))
+                v.set_tarifa(str(t.nombre).lower(), str(t.precio), str(t.duracion))
         except Exception as e: print('Error tarifas:', e)
         try: v.cargar_tabla_salarios(self.modelo.contable_salarios_personal())
         except Exception as e: print('Error salarios:', e)

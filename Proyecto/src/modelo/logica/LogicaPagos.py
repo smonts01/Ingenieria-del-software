@@ -80,27 +80,12 @@ class LogicaPagos:
     def listar_pagos(self):
         pagos = self._pago_dao.select()
 
-        return [
-            (
-                pago.id_pago,
-                pago.id_cliente,
-                pago.id_contable,
-                pago.id_tarifa,
-                pago.importe,
-                pago.metodo_pago,
-                pago.fecha_pago,
-                "abonado"
-            )
-            for pago in pagos
-        ]
+        return pagos
 
     def pagos_pendientes(self):
         pagos = self._pago_consultas_dao.pagos_pendientes()
 
-        return [
-            self._pago_pendiente_a_tupla(pago)
-            for pago in pagos
-        ]
+        return pagos
 
     def pagos_cliente(self, id_cliente):
         if not id_cliente:
@@ -108,16 +93,7 @@ class LogicaPagos:
 
         pagos = self._pago_dao.selectByCliente(id_cliente)
 
-        return [
-            (
-                pago.id_pago,
-                pago.importe,
-                pago.metodo_pago,
-                pago.fecha_pago,
-                "abonado"
-            )
-            for pago in pagos
-        ]
+        return pagos
 
     def listar_pagos_pendientes_admin(self):
         return self._pago_consultas_dao.listar_pagos_pendientes_admin()
@@ -162,16 +138,7 @@ class LogicaPagos:
     def listar_tarifas(self):
         tarifas = self._tarifa_dao.select()
 
-        return [
-            (
-                tarifa.id_tarifa,
-                tarifa.nombre,
-                tarifa.precio_mensual,
-                tarifa.servicios_incluidos,
-                tarifa.fecha_inicio
-            )
-            for tarifa in tarifas
-        ]
+        return tarifas
 
     def contar_clientes_tarifa(self, nombre_tarifa):
         if not nombre_tarifa:
@@ -193,15 +160,7 @@ class LogicaPagos:
     def listar_informes(self):
         informes = self._informe_dao.select()
 
-        return [
-            (
-                informe.id_informe,
-                informe.id_contable,
-                informe.tipo_informe,
-                informe.fecha_generacion
-            )
-            for informe in informes
-        ]
+        return informes
 
     def informe_salarios(self):
         return self._informe_consultas_dao.informe_salarios()
