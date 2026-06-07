@@ -9,6 +9,7 @@ from src.modelo.logica.LogicaBackup import LogicaBackup
 from src.modelo.logica.LogicaInformes import LogicaInformes
 
 
+
 class Logica:
     """
     Capa de lógica de negocio de la aplicación.
@@ -290,6 +291,7 @@ class Logica:
 
     def desapuntarse_clase(self, id_cliente, id_clase):
         return self._clientes.desapuntarse_clase(id_cliente, id_clase)
+    
 
     def clases_inscritas_cliente(self, id_cliente):
         return self._clientes.clases_inscritas_cliente(id_cliente)

@@ -215,6 +215,9 @@ class VistaAdminUsuariosTrabajadores(QMainWindow):
         self.btnNuevoTrabajador.clicked.connect(ctrl.ir_nuevo_usuario)
         if hasattr(self, 'btnGuardarCambios_2'):
             self.btnGuardarCambios_2.clicked.connect(ctrl.guardar_cambios_trabajador)
+
+        if hasattr(self, 'btnGuardarCambios'):
+            self.btnGuardarCambios.clicked.connect(ctrl.guardar_cambios_trabajador)
         if hasattr(self, 'lblTabClientes'):
             self.lblTabClientes.mousePressEvent = lambda e: ctrl.ir_usuarios_clientes()
         if hasattr(self, 'lblTabTrabajadores'):
@@ -306,6 +309,7 @@ class VistaAdminClases(QMainWindow):
         self.txtBuscar.textChanged.connect(ctrl.filtrar_clases)
         self.btnNuevaClase.clicked.connect(ctrl.anadir_fila_clase)
         self.btnGuardarCambios.clicked.connect(ctrl.guardar_cambios_clase)
+        self.btnEliminarClase.clicked.connect(ctrl.eliminar_clase)
 
     def get_texto_buscar(self): return self.txtBuscar.text().strip()
 
@@ -338,6 +342,23 @@ class VistaAdminClases(QMainWindow):
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Correcto', msg)
 
+    def get_id_clase_seleccionada(self):
+        """
+        Devuelve el ID de la clase seleccionada en la tabla.
+
+        El controlador usa este método para saber qué clase debe eliminar.
+        """
+        fila = self.tablaClases.currentRow()
+
+        if fila < 0:
+            return None
+
+        item = self.tablaClases.item(fila, 0)
+
+        if item is None or not item.text().strip():
+            return None
+
+        return int(item.text().strip())
 
 # ── Vista inscripciones ───────────────────────────────────────────────────────
 
@@ -354,6 +375,7 @@ class VistaAdminInscripciones(QMainWindow):
         self.controlador = ctrl
         _menu_admin(self, ctrl)
         self.txtBuscarInscripciones.textChanged.connect(ctrl.filtrar_inscripciones)
+        
 
     def get_texto_buscar(self): return self.txtBuscarInscripciones.text().strip()
 
