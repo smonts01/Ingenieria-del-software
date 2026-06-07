@@ -168,17 +168,7 @@ class LogicaClases:
         El DAO devuelve ClaseEntrenadorVO y aquí lo convertimos a tuplas.
         """
         clases = self._clase_consultas_dao.clases_entrenador_tabla(id_entrenador)
-
-        return [
-            (
-                clase.nombre_actividad,
-                clase.sala,
-                clase.horario,
-                clase.dia_semana,
-                clase.capacidad
-            )
-            for clase in clases
-        ]
+        return clases
 
     def ocupacion_clases_entrenador(self, id_entrenador):
         """
@@ -187,16 +177,7 @@ class LogicaClases:
         """
         ocupaciones = self._clase_consultas_dao.ocupacion_clases_entrenador(id_entrenador)
 
-        return [
-            (
-                ocupacion.id_clase,
-                ocupacion.nombre_actividad,
-                ocupacion.inscritos,
-                ocupacion.aforo_maximo,
-                ocupacion.porcentaje
-            )
-            for ocupacion in ocupaciones
-        ]
+        return ocupaciones
 
     def informacion_clase_con_sala(self, id_clase):
         return self._clase_consultas_dao.informacion_clase_con_sala(id_clase)
@@ -280,15 +261,7 @@ class LogicaClases:
     def historial_cliente(self, id_cliente):
         asistencias = self._asistencia_dao.selectByCliente(id_cliente)
 
-        return [
-            (
-                asistencia.id_asistencia,
-                asistencia.id_clase,
-                asistencia.fecha,
-                asistencia.presente
-            )
-            for asistencia in asistencias
-        ]
+        return asistencias
 
     def ranking_clientes_activos(self):
         return self._asistencia_consultas_dao.ranking_clientes_activos()
@@ -335,20 +308,20 @@ class LogicaClases:
         clase_mas_llena = datos_ocupacion[0]
 
         for dato in datos_ocupacion:
-            inscritos = int(dato[2] or 0)
-            aforo = int(dato[3] or 0)
-            ocupacion = float(dato[4] or 0)
+            inscritos = int(dato.inscritos or 0)
+            aforo = int(dato.aforo_maximo or 0)
+            ocupacion = float(dato.porcentaje or 0)
 
             total_ocupacion += ocupacion
 
             if aforo > 0 and inscritos >= aforo:
                 clases_llenas += 1
 
-            if ocupacion > float(clase_mas_llena[4] or 0):
+            if ocupacion > float(clase_mas_llena.porcentaje or 0):
                 clase_mas_llena = dato
 
         ocupacion_media = round(total_ocupacion / len(datos_ocupacion), 2)
-        plazas_libres = int(clase_mas_llena[3] or 0) - int(clase_mas_llena[2] or 0)
+        plazas_libres = int(clase_mas_llena.aforo_maximo or 0) - int(clase_mas_llena.inscritos or 0)
 
         return {
             "total_clases": len(datos_ocupacion),

@@ -1,4 +1,5 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.TarifaEconomicaVO import TarifaEconomicaVO
 
 
 class TarifaConsultasDaoJDBC(DaoJDBCBase):
@@ -35,4 +36,5 @@ class TarifaConsultasDaoJDBC(DaoJDBCBase):
         return datos[0][0] if datos else 0
 
     def contable_tarifas_economica(self):
-        return self.consultar(self.SQL_TARIFAS_ECONOMICA)
+        filas = self.consultar(self.SQL_TARIFAS_ECONOMICA)
+        return [TarifaEconomicaVO(f[0], f[1], f[2]) for f in filas]

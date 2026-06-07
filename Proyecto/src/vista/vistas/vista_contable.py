@@ -27,14 +27,21 @@ def _menu_contable(v, ctrl):
 
 # ── Helper: rellenar tabla con tuplas ─────────────────────────────────────────
 
+def _extraer(vo, n):
+    if isinstance(vo, (list, tuple)):
+        return [str(x) if x is not None else '' for x in list(vo)[:n]]
+    props = [k for k,v in type(vo).__dict__.items() if isinstance(v, property)]
+    return [str(getattr(vo, k, '')) for k in props[:n]]
+
 def _rellenar(tabla, cabeceras, datos):
     tabla.clear()
     tabla.setColumnCount(len(cabeceras))
     tabla.setHorizontalHeaderLabels(cabeceras)
     tabla.setRowCount(len(datos))
     for fi, fila in enumerate(datos):
-        for ci, val in enumerate(list(fila)[:len(cabeceras)]):
-            tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+        vals = _extraer(fila, len(cabeceras))
+        for ci, val in enumerate(vals):
+            tabla.setItem(fi, ci, QTableWidgetItem(val))
     tabla.resizeColumnsToContents()
 
 
@@ -75,12 +82,24 @@ class VistaContableInicio(QMainWindow):
         if hasattr(self, 'lblInformesGen'): self.lblInformesGen.setText(v)
 
     def cargar_tabla_ultimos_pagos(self, datos):
-        _rellenar(self.tablaUltimosPagos,
-                  ['Cliente', 'Tarifa', 'Importe', 'Fecha', 'Estado'], datos)
+        tabla = self.tablaUltimosPagos
+        cabeceras = ['Cliente', 'Tarifa', 'Importe', 'Fecha', 'Estado']
+        tabla.clear(); tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras); tabla.setRowCount(len(datos))
+        for fi, vo in enumerate(datos):
+            for ci, val in enumerate([vo.cliente, vo.tarifa, vo.importe, vo.fecha, vo.estado]):
+                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+        tabla.resizeColumnsToContents()
 
     def cargar_tabla_pagos_pendientes(self, datos):
-        _rellenar(self.tablaClientesPagosPendientes,
-                  ['Cliente', 'Importe Pendiente', 'Fecha límite'], datos)
+        tabla = self.tablaClientesPagosPendientes
+        cabeceras = ['Cliente', 'Importe Pendiente', 'Fecha límite']
+        tabla.clear(); tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras); tabla.setRowCount(len(datos))
+        for fi, vo in enumerate(datos):
+            for ci, val in enumerate([vo.cliente, vo.importe_pendiente, vo.fecha_limite]):
+                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+        tabla.resizeColumnsToContents()
 
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Correcto', msg)
@@ -171,6 +190,16 @@ class VistaContablePagosPendientes(QMainWindow):
         if hasattr(self, 'label_ImporteTotal'):     self.label_ImporteTotal.setText(f'{float(importe_pendiente):.2f} €')
 
     def cargar_tabla(self, datos):
+        # datos = lista de PagoPendienteVO
+        cabeceras = ['Cliente', 'Tarifa', 'Importe', 'Fecha']
+        tabla = self.tableWidget
+        tabla.clear(); tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras); tabla.setRowCount(len(datos))
+        for fi, vo in enumerate(datos):
+            for ci, val in enumerate([vo.nombre_cliente, vo.nombre_tarifa, vo.importe, vo.fecha]):
+                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+        tabla.resizeColumnsToContents()
+        return
         cabeceras = ['Cliente', 'Tarifa', 'Importe', 'Fecha']
         tabla = self.tableWidget
         tabla.clear()
@@ -224,7 +253,14 @@ class VistaContableGestionEconomica(QMainWindow):
         if hasattr(self, 'labelBalanceEco'):  self.labelBalanceEco.setText(balance)
 
     def cargar_tabla_salarios(self, datos):
-        _rellenar(self.tablaSalariosEconomica, ['Empleado', 'Rol', 'Salario'], datos)
+        tabla = self.tablaSalariosEconomica
+        cabeceras = ['Empleado', 'Rol', 'Salario']
+        tabla.clear(); tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras); tabla.setRowCount(len(datos))
+        for fi, vo in enumerate(datos):
+            for ci, val in enumerate([vo.nombre, vo.rol, vo.salario]):
+                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+        tabla.resizeColumnsToContents()
 
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
 
@@ -267,7 +303,14 @@ class VistaContableInformes(QMainWindow):
         if hasattr(self, 'labelBalanceInf'): self.labelBalanceInf.setText(v)
 
     def cargar_tabla_historial(self, datos):
-        _rellenar(self.tablaHistorialInformes, ['ID', 'Contable', 'Tipo', 'Fecha'], datos)
+        tabla = self.tablaHistorialInformes
+        cabeceras = ['ID', 'Contable', 'Tipo', 'Fecha']
+        tabla.clear(); tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras); tabla.setRowCount(len(datos))
+        for fi, vo in enumerate(datos):
+            for ci, val in enumerate([vo.id_informe, vo.contable, vo.tipo_informe, vo.fecha]):
+                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
+        tabla.resizeColumnsToContents()
 
     def mostrar_error(self, msg): QMessageBox.warning(self, 'Error', msg)
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Correcto', msg)

@@ -1,6 +1,5 @@
 class ClaseOcupacionClienteVO:
-    """VO que representa una clase con datos de sala e inscripción para la vista del cliente."""
-
+    """VO para clases con ocupación en la vista del cliente."""
     def __init__(self, id_clase, nombre_actividad, dia_semana,
                  hora_inicio, hora_fin, sala, inscritos, aforo_maximo):
         self._id_clase         = id_clase
@@ -11,7 +10,6 @@ class ClaseOcupacionClienteVO:
         self._sala             = sala
         self._inscritos        = inscritos
         self._aforo_maximo     = aforo_maximo
-
     @property
     def id_clase(self):         return self._id_clase
     @property

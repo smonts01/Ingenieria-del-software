@@ -80,7 +80,8 @@ class ControladorEntrenador:
         id_u = self.usuario['id_usuario']
         try:
             datos = self.modelo.clases_entrenador_tabla(id_u)
-            v.cargar_tabla_proximas(datos)
+            filas = [(d.nombre_actividad, d.sala, d.horario, d.dia_semana, d.capacidad) for d in datos]
+            v.cargar_tabla_proximas(filas)
             v.set_num_clases_hoy(str(self.modelo.clases_hoy_entrenador(id_u)))
             v.set_num_asistencias(str(self.modelo.total_inscritos_clases_entrenador(id_u)))
             v.set_ocupacion_media(f'{self.modelo.ocupacion_media_entrenador(id_u)}%')
@@ -97,15 +98,17 @@ class ControladorEntrenador:
         id_u = self.usuario['id_usuario']
         try:
             datos = self.modelo.clases_entrenador_tabla(id_u)
-            v.cargar_tabla(datos)
+            # ClaseEntrenadorVO: nombre_actividad, sala, horario, dia_semana, capacidad
+            filas = [(d.nombre_actividad, d.sala, d.horario, d.dia_semana, d.capacidad) for d in datos]
+            v.cargar_tabla(filas)
             v.set_total_clases(str(len(datos)))
             v.set_clases_hoy(str(self.modelo.clases_hoy_entrenador(id_u)))
             media = self.modelo.ocupacion_media_entrenador(id_u)
             v.set_ocupacion_media(f'{float(media):.1f}%')
             if datos:
-                nombre  = datos[0][0]
-                horario = datos[0][2]
-                dia     = datos[0][3]
+                nombre  = datos[0].nombre_actividad
+                horario = datos[0].horario
+                dia     = datos[0].dia_semana
                 hora    = str(horario).split(' - ')[0]
                 v.set_proxima_clase(nombre, f'{dia} {hora}')
         except Exception as e:
@@ -134,8 +137,7 @@ class ControladorEntrenador:
             v.set_num_inscritos(str(len(datos)))
             info = self.modelo.informacion_clase_con_sala(id_clase)
             if info:
-                v.set_info_clase(str(info[0]), str(info[1]),
-                                 str(info[2]), f'{info[3]} - {info[4]}')
+                v.set_info_clase(str(info.nombre_actividad), str(info.sala), str(info.dia_semana), f'{info.hora_inicio} - {info.hora_fin}')
         except Exception as e:
             print('Error cargar clientes inscritos:', e)
 
@@ -145,20 +147,15 @@ class ControladorEntrenador:
         try:
             datos = self.modelo.ocupacion_clases_entrenador(id_u)
             # datos[i] es OcupacionClaseVO o tupla (id, nombre, inscritos, aforo, pct)
-            filas = []
-            for d in datos:
-                if hasattr(d, 'id_clase'):
-                    filas.append((d.id_clase, d.nombre_actividad,
-                                  d.inscritos, d.aforo_maximo, d.ocupacion))
-                else:
-                    filas.append(tuple(d))
+            filas = [(d.id_clase, d.nombre_actividad,
+                      d.inscritos, d.aforo_maximo, d.porcentaje) for d in datos]
             v.cargar_tabla(filas)
             resumen = self.modelo.resumen_ocupacion_entrenador(id_u)
             clase_ml = resumen.get('clase_mas_llena')
             if clase_ml:
-                nombre_ml = clase_ml[1] if isinstance(clase_ml, (list, tuple)) else str(clase_ml)
-                ins = clase_ml[2] if isinstance(clase_ml, (list, tuple)) else 0
-                afo = clase_ml[3] if isinstance(clase_ml, (list, tuple)) else 0
+                nombre_ml = clase_ml.nombre_actividad if hasattr(clase_ml, 'nombre_actividad') else str(clase_ml)
+                ins = clase_ml.inscritos if hasattr(clase_ml, 'inscritos') else 0
+                afo = clase_ml.aforo_maximo if hasattr(clase_ml, 'aforo_maximo') else 0
                 plazas = resumen.get('plazas_libres_mas_llena', 0)
                 media  = resumen.get('ocupacion_media', 0)
                 v.set_resumen(

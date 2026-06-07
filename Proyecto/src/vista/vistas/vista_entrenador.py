@@ -28,13 +28,22 @@ def _menu_entrenador(v, ctrl):
     if hasattr(v, 'btnInformacion'):       v.btnInformacion.clicked.connect(ctrl.ir_informacion)
 
 
+def _vo_a_lista(vo, n):
+    """Extrae n campos de un VO usando sus propiedades en orden, o list() si es tupla."""
+    if isinstance(vo, (list, tuple)):
+        return list(vo)[:n]
+    props = [v for k, v in type(vo).__dict__.items()
+             if isinstance(v, property) and not k.startswith('_')]
+    return [str(getattr(vo, p.fget.__name__, '')) for p in props[:n]]
+
 def _rellenar(tabla, cabeceras, datos):
     tabla.clear()
     tabla.setColumnCount(len(cabeceras))
     tabla.setHorizontalHeaderLabels(cabeceras)
     tabla.setRowCount(len(datos))
     for fi, fila in enumerate(datos):
-        for ci, val in enumerate(list(fila)[:len(cabeceras)]):
+        vals = _vo_a_lista(fila, len(cabeceras))
+        for ci, val in enumerate(vals):
             tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
 
 
@@ -132,7 +141,15 @@ class VistaEntrenadorListaClientes(QMainWindow):
         return self.comboClasesInscritos.currentData()
 
     def cargar_tabla_inscritos(self, datos):
-        _rellenar(self.tablaInscritos, ['Cliente', 'Teléfono', 'Email'], datos)
+        cabeceras = ['Cliente', 'Teléfono', 'Email']
+        tabla = self.tablaInscritos
+        tabla.clear()
+        tabla.setColumnCount(len(cabeceras))
+        tabla.setHorizontalHeaderLabels(cabeceras)
+        tabla.setRowCount(len(datos))
+        for fi, vo in enumerate(datos):
+            for ci, val in enumerate([vo.nombre, vo.telefono, vo.email]):
+                tabla.setItem(fi, ci, QTableWidgetItem(str(val) if val is not None else ''))
 
     def set_num_inscritos(self, v):
         if hasattr(self, 'label_numInscritos_ins'): self.label_numInscritos_ins.setText(v)

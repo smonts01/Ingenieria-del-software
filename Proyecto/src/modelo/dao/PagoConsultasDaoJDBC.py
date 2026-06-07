@@ -1,4 +1,8 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
+from src.modelo.VO.IngresoMesVO import IngresoMesVO
+from src.modelo.VO.InformePagoVO import InformePagoVO
+from src.modelo.VO.PagoPendienteInicioVO import PagoPendienteInicioVO
+from src.modelo.VO.UltimoPagoVO import UltimoPagoVO
 from src.modelo.VO.PagoPendienteVO import PagoPendienteVO
 
 
@@ -353,14 +357,16 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return [PagoPendienteVO(f[0], f[1], f[2], f[3], f[4]) for f in filas]
 
     def informe_pagos_realizados(self):
-        return self.consultar(self.SQL_INFORME_PAGOS_REALIZADOS)
+        filas = self.consultar(self.SQL_INFORME_PAGOS_REALIZADOS)
+        return [InformePagoVO(f[0], f[1], f[2], f[3], f[4]) for f in filas]
 
     def total_ingresos(self):
         datos = self.consultar(self.SQL_TOTAL_INGRESOS)
         return datos[0][0] if datos else 0
 
     def ingresos_por_mes(self):
-        return self.consultar(self.SQL_INGRESOS_POR_MES)
+        filas = self.consultar(self.SQL_INGRESOS_POR_MES)
+        return [IngresoMesVO(f[0], f[1], f[2]) for f in filas]
 
     def ingresos_mes_actual(self):
         datos = self.consultar(self.SQL_INGRESOS_MES_ACTUAL)
@@ -395,10 +401,12 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return datos[0][0] if datos else 0
 
     def ultimos_pagos_inicio_contable(self):
-        return self.consultar(self.SQL_ULTIMOS_PAGOS_CONTABLE)
+        filas = self.consultar(self.SQL_ULTIMOS_PAGOS_CONTABLE)
+        return [UltimoPagoVO(f[0], f[1], f[2], f[3], f[4]) for f in filas]
 
     def pagos_pendientes_inicio_contable(self):
-        return self.consultar(self.SQL_PAGOS_PENDIENTES_CONTABLE)
+        filas = self.consultar(self.SQL_PAGOS_PENDIENTES_CONTABLE)
+        return [PagoPendienteInicioVO(f[0], f[1], f[2]) for f in filas]
 
     def num_pagos_pendientes_contable(self):
         datos = self.consultar(self.SQL_NUM_PAGOS_PENDIENTES)
