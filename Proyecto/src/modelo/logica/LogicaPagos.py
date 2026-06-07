@@ -233,6 +233,12 @@ class LogicaPagos:
             fecha_pago
         )
 
+
+    def fecha_pago_actual(self):
+        """Devuelve la fecha y hora actual formateada para registrar un pago."""
+        from datetime import datetime
+        return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
     def contable_tarifas_economica(self):
         return self._tarifa_consultas_dao.contable_tarifas_economica()
 

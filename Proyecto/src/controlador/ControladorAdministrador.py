@@ -10,7 +10,6 @@ Responsabilidad:
 """
 import os
 import io
-from datetime import datetime
 
 from src.vista.componentes import MensajeView, TablaView, ImagenView, ArchivoView, BotonesView
 from src.modelo.VO.NuevoUsuarioFormVO import NuevoUsuarioFormVO
@@ -245,24 +244,15 @@ class ControladorAdministrador:
             confirmar = v.get_confirmar()
             rol_texto = v.get_rol()
 
-            if not all([dni, nombre, telefono, email, username, password]):
-                v.mostrar_error('Todos los campos son obligatorios')
-                return
-            if password != confirmar:
-                v.mostrar_error('Las contraseñas no coinciden')
-                return
-            if len(password) < 4:
-                v.mostrar_error('La contraseña debe tener al menos 4 caracteres')
-                return
             try:
-                fecha_bd = datetime.strptime(fecha, '%d/%m/%Y').strftime('%Y-%m-%d')
-            except ValueError:
-                v.mostrar_error('Formato de fecha incorrecto. Usa DD/MM/YYYY')
+                fecha_bd = self.modelo.validar_nuevo_usuario(
+                    dni, nombre, telefono, email, username, password, confirmar, fecha
+                )
+            except ValueError as e:
+                v.mostrar_error(str(e))
                 return
 
-            roles_map = {'Cliente':1,'Entrenador':2,'Recepcionista':3,
-                         'Administrador':4,'Contable':5}
-            id_rol = roles_map.get(rol_texto, 1)
+            id_rol = self.modelo.rol_texto_a_id(rol_texto)
 
             nuevo_usuario_vo = NuevoUsuarioFormVO(
                 dni, nombre, telefono, email, username, password,

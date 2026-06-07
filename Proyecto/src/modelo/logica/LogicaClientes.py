@@ -206,6 +206,25 @@ class LogicaClientes:
         self._asignar_tarifa_cliente(id_cliente, plan)
         return id_cliente
 
+
+    def periodo_semana_actual(self):
+        """Devuelve el texto del período de la semana actual para la vista.
+        Ejemplo: "2 - 8 junio 2026" """
+        from datetime import date, timedelta
+        meses = {1:"enero",2:"febrero",3:"marzo",4:"abril",5:"mayo",6:"junio",
+                 7:"julio",8:"agosto",9:"septiembre",10:"octubre",
+                 11:"noviembre",12:"diciembre"}
+        hoy    = date.today()
+        lunes  = hoy - timedelta(days=hoy.weekday())
+        domingo = lunes + timedelta(days=6)
+        return f"{lunes.day} - {domingo.day} {meses[domingo.month]} {domingo.year}"
+
+    def texto_estado_pago(self, estado_pagado):
+        """Devuelve el texto descriptivo del estado de pago del cliente."""
+        if str(estado_pagado).lower() == 'abonado':
+            return 'Sin pagos pendientes'
+        return 'Tienes pagos pendientes'
+
     def _obtener_id_tarifa_por_plan(self, plan):
         plan = str(plan).strip().lower()
 

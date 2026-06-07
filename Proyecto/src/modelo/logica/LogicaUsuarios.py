@@ -312,6 +312,33 @@ class LogicaUsuarios:
 
         return resumen
 
+
+    def validar_nuevo_usuario(self, dni, nombre, telefono, email,
+                               username, password, confirmar, fecha_texto):
+        """Valida los datos del formulario de registro de usuario.
+        Lanza ValueError si algo es incorrecto.
+        Devuelve la fecha en formato BD (YYYY-MM-DD)."""
+        from datetime import datetime
+        if not all([dni, nombre, telefono, email, username, password]):
+            raise ValueError("Todos los campos son obligatorios")
+        if password != confirmar:
+            raise ValueError("Las contraseñas no coinciden")
+        if len(password) < 4:
+            raise ValueError("La contraseña debe tener al menos 4 caracteres")
+        try:
+            fecha_bd = datetime.strptime(fecha_texto, '%d/%m/%Y').strftime('%Y-%m-%d')
+        except ValueError:
+            raise ValueError("Formato de fecha incorrecto. Usa DD/MM/YYYY")
+        return fecha_bd
+
+    def rol_texto_a_id(self, rol_texto):
+        """Convierte el texto del rol (del combo de la vista) al id_rol de la BD."""
+        roles_map = {
+            'Cliente': 1, 'Entrenador': 2, 'Recepcionista': 3,
+            'Administrador': 4, 'Contable': 5
+        }
+        return roles_map.get(rol_texto, 1)
+
     def _salario_base_por_rol(self, id_rol):
         salarios_por_defecto = {
             2: 1600.00,

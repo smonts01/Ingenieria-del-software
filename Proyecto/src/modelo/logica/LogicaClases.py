@@ -319,6 +319,41 @@ class LogicaClases:
             "plazas_libres_mas_llena": plazas_libres
         }
 
+
+    def resumen_asistencia_clase(self, id_clase, fecha):
+        """Calcula presentes, ausentes y pendientes para una clase en una fecha.
+        Devuelve dict con claves: total, presentes, ausentes, pendientes."""
+        datos    = self.clientes_inscritos_clase(id_clase)
+        asistencias = self.asistencia_clase_fecha(id_clase, fecha)
+        mapa = {a.id_cliente: a.presente for a in asistencias}
+        presentes  = sum(1 for v in mapa.values() if v == 'si')
+        ausentes   = sum(1 for v in mapa.values() if v == 'no')
+        pendientes = len(datos) - presentes - ausentes
+        return {
+            'total': len(datos),
+            'presentes': presentes,
+            'ausentes': ausentes,
+            'pendientes': pendientes,
+            'mapa': mapa,
+            'datos': datos,
+        }
+
+    def estadisticas_perfil_entrenador(self, id_entrenador):
+        """Calcula total de clientes y porcentaje de asistencia del entrenador.
+        Devuelve dict con claves: total_clientes, pct_asistencia."""
+        clases = self.clases_de_entrenador(id_entrenador)
+        total_clientes = sum(
+            len(self.clientes_inscritos_clase(c.id_clase)) for c in clases
+        )
+        total_reg = total_pres = 0
+        for c in clases:
+            for a in self.consultar_asistencia_clase(c.id_clase):
+                total_reg += 1
+                if a.presente == 'si':
+                    total_pres += 1
+        pct = f'{round(total_pres * 100 / total_reg, 2)}%' if total_reg > 0 else '0%'
+        return {'total_clientes': total_clientes, 'pct_asistencia': pct}
+
     def normalizar_estado_asistencia(self, estado):
         estado = str(estado).strip().lower()
 

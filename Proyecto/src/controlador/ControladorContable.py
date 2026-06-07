@@ -3,7 +3,6 @@ Controlador del rol Contable — Patrón MVC según ejemplo de la profesora.
 """
 import os
 import ctypes.wintypes
-from datetime import datetime
 
 from src.vista.componentes import MensajeView, BotonesView, ArchivoView
 from src.modelo.VO.RegistroPagoVO import RegistroPagoVO
@@ -248,7 +247,7 @@ class ControladorContable:
                 v.mostrar_error(str(e))
                 return
             fecha_texto = v.get_fecha_texto()
-            fecha_pago = (fecha_texto + ' 00:00:00') if fecha_texto else datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            fecha_pago = (fecha_texto + ' 00:00:00') if fecha_texto else self.modelo.fecha_pago_actual()
             pago_vo = RegistroPagoVO(dni, self.usuario['id_usuario'], metodo_pago, fecha_pago)
             correcto, mensaje = self.modelo.registrar_pago_contable(
                 pago_vo.dni_cliente, pago_vo.id_contable,

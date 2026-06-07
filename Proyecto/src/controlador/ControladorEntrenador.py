@@ -183,16 +183,13 @@ class ControladorEntrenador:
         if id_clase is None:
             return
         try:
-            datos = self.modelo.clientes_inscritos_clase(id_clase)
             fecha = date.today().isoformat()
-            asistencias = self.modelo.asistencia_clase_fecha(id_clase, fecha)
-            mapa = {a.id_cliente: a.presente for a in asistencias}
-            v.cargar_tabla_asistencia(datos, mapa)
-
-            presentes = sum(1 for a in mapa.values() if a == 'si')
-            ausentes  = sum(1 for a in mapa.values() if a == 'no')
-            pendientes = len(datos) - presentes - ausentes
-            v.set_resumen_asistencia(len(datos), presentes, ausentes, pendientes)
+            resumen = self.modelo.resumen_asistencia_clase(id_clase, fecha)
+            v.cargar_tabla_asistencia(resumen['datos'], resumen['mapa'])
+            v.set_resumen_asistencia(
+                resumen['total'], resumen['presentes'],
+                resumen['ausentes'], resumen['pendientes']
+            )
 
             clase = self.modelo.datos_clase_asistencia(id_clase)
             if clase:
@@ -223,18 +220,9 @@ class ControladorEntrenador:
                     str(perfil[8] or '')
                 )
             clases = self.modelo.clases_de_entrenador(id_u)
-            total_clientes = sum(
-                len(self.modelo.clientes_inscritos_clase(c.id_clase)) for c in clases
-            )
-            total_reg = total_pres = 0
-            for c in clases:
-                for a in self.modelo.consultar_asistencia_clase(c.id_clase):
-                    total_reg += 1
-                    if a.presente == 'si':
-                        total_pres += 1
-            pct = f'{round(total_pres*100/total_reg,2)}%' if total_reg > 0 else '0%'
+            stats = self.modelo.estadisticas_perfil_entrenador(id_u)
             v.set_stats(len(clases), self.modelo.clases_hoy_entrenador(id_u),
-                        total_clientes, pct)
+                        stats['total_clientes'], stats['pct_asistencia'])
         except Exception as e:
             print('Error cargar perfil entrenador:', e)
 

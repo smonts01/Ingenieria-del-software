@@ -9,7 +9,6 @@ Responsabilidad:
 - NO conecta botones, NO toca widgets directamente
 """
 import os
-from datetime import date, timedelta
 
 from src.vista.componentes import MensajeView, BotonesView
 from src.modelo.VO.ModificacionPerfilVO import ModificacionPerfilVO
@@ -97,7 +96,7 @@ class ControladorCliente:
         v.set_bienvenida(f'Bienvenida, {vo.nombre}')
         v.set_num_clases(str(len(vo.proximas_clases)))
         v.set_estado_pago(str(vo.estado_pagado).capitalize())
-        v.set_sub_pago('Sin pagos pendientes' if str(vo.estado_pagado).lower() == 'abonado' else 'Tienes pagos pendientes')
+        v.set_sub_pago(self.modelo.texto_estado_pago(vo.estado_pagado))
         v.set_calorias_semana(f'{vo.calorias_semana} kcal')
         v.set_asistencias(vo.get_asistencias_str())
         v.set_cuota(str(vo.nombre_tarifa))
@@ -122,10 +121,7 @@ class ControladorCliente:
             v.poblar_combo_horario(horarios)
 
             # Periodo
-            hoy    = date.today()
-            lunes  = hoy - timedelta(days=hoy.weekday())
-            domingo = lunes + timedelta(days=6)
-            v.set_periodo(f"{lunes.day} - {domingo.day} {domingo.strftime('%B %Y').lower()}")
+            v.set_periodo(self.modelo.periodo_semana_actual())
 
             # Cards
             v.cargar_cards(clases, ids_ins, asistidas)
@@ -152,26 +148,7 @@ class ControladorCliente:
 
     def _cargar_estadisticas(self):
         v, vo = self.ventana, self._vo
-        hoy = date.today()
-        lunes = hoy - timedelta(days=hoy.weekday())
-        domingo = lunes + timedelta(days=6)
-
-        meses = {
-            1: "enero",
-            2: "febrero",
-            3: "marzo",
-            4: "abril",
-            5: "mayo",
-            6: "junio",
-            7: "julio",
-            8: "agosto",
-            9: "septiembre",
-            10: "octubre",
-            11: "noviembre",
-            12: "diciembre",
-        }
-
-        v.set_periodo(f"{lunes.day} - {domingo.day} {meses[domingo.month]} {domingo.year}")
+        v.set_periodo(self.modelo.periodo_semana_actual())
 
         v.set_entrenos(str(vo.entrenos_semana), vo.get_delta_entrenos_str())
         v.set_tiempo(vo.get_tiempo_semana_str(), vo.get_delta_tiempo_str())
