@@ -351,12 +351,8 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return datos[0] if datos else None
 
     def listar_pagos_pendientes_admin(self):
-<<<<<<< Updated upstream
         filas = self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
         return [ClientePendienteAdminVO(f[2], f[1], f[3], f[4], f[5]) for f in filas]
-=======
-        return self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
->>>>>>> Stashed changes
 
     def marcar_pago_abonado(self, id_pago: int):
         raise ValueError("Con la base nueva no se actualiza pago.estado. Se registra el pago y se marca el cliente como abonado.")
