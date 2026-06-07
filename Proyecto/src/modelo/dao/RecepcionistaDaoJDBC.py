@@ -84,21 +84,32 @@ class RecepcionistaDaoJDBC:
     # Añadir
 
     def insert(self, vo: RecepcionistaVO) -> int:
-        """Inserta un nuevo recepcionista a partir de un RecepcionistaVO.
-        Devuelve el número de filas afectadas."""
+        """
+        Inserta un recepcionista en la tabla recepcionista.
+        Si falla, lanza el error para que la lógica/controlador se enteren.
+        """
         cursor = self._conexion.getCursor()
         rows = 0
+
         try:
             cursor.execute(
                 self.SQL_INSERT,
-                (vo.id_recepcionista, vo.id_administrador_registra)
+                (
+                    vo.id_recepcionista,
+                    vo.id_administrador_registra
+                )
             )
+
             rows = cursor.rowcount
+
         except Exception as e:
             print("Error al insertar recepcionista:", e)
+            raise e
+
         finally:
             cursor.close()
             self._conexion.closeConnection()
+
         return rows
 
     # Modificaciones

@@ -329,7 +329,7 @@ class VistaEntrenadorRegistrarAsistencia(QMainWindow):
         filas = []
         for fi in range(tabla.rowCount()):
             item_c = tabla.item(fi, 0) # Cliente
-            item_e = tabla.item(fi, 1) # Estado escrito
+            item_e = tabla.item(fi, 2) # Estado escrito
 
             if item_c and item_e:
                 filas.append((item_c.text(), item_e.text().strip().lower()))
