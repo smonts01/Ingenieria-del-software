@@ -2,17 +2,6 @@ class ClienteInicioVO:
     """
     Value Object que agrupa toda la información necesaria para inicializar
     las pantallas del cliente.
-
-    Cubre los siguientes bloques de la interfaz:
-        - Header:           nombre, fecha de registro
-        - Página Inicio:    clases esta semana, estado de pago, calorías
-                            acumuladas, asistencias mes actual, próximas clases
-                            inscritas, último pago
-        - Página Estadísticas: entrenamientos semana, tiempo total semana,
-                               calorías semana, racha de días consecutivos,
-                               distribución por tipo de clase
-        - Página Perfil:    datos personales del usuario (todos los campos
-                            editables + email de solo lectura)
     """
 
     def __init__(

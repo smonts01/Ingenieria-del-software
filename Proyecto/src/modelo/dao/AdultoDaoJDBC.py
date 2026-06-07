@@ -100,7 +100,7 @@ class AdultoDaoJDBC:
         cursor = self._conexion.getCursor()
         adulto = None
 
-        try:.
+        try:
             cursor.execute(self.SQL_SELECT_BY_ID, (id_cliente,))
 
             # Obtenemos una única fila.

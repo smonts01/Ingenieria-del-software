@@ -35,7 +35,8 @@ class LogicaClientes:
     def _cifrar(self, password: str) -> str:
         return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
-    # ── CLIENTES ─────────────────────────────────────────────────────
+    # Clientes
+
     def calorias_semana_por_dia(self, id_cliente):
         return self._cliente_dao.calorias_semana_por_dia(id_cliente)
 
@@ -82,7 +83,7 @@ class LogicaClientes:
 
         return self._cliente_dao.selectInicioCliente(id_cliente)
 
-    # ── RECEPCIÓN / CLIENTES ─────────────────────────────────────────
+    # Clientes, usado en recepcion
 
     def recepcion_total_clientes(self):
         return self._cliente_consultas_dao.recepcion_total_clientes()
@@ -131,7 +132,7 @@ class LogicaClientes:
     def buscar_cliente_acceso_por_dni_o_id(self, texto):
         return self._cliente_consultas_dao.buscar_cliente_acceso_por_dni_o_id(texto)
 
-    # ── ALTA DE CLIENTE DESDE RECEPCIÓN ──────────────────────────────
+    # Dar de alta nuevo cliente desde recepcion
 
     def crear_cliente_desde_recepcion(self, dni, nombre, telefono, email, username,
                                       password, direccion, fecha_nacimiento,
@@ -240,7 +241,7 @@ class LogicaClientes:
             id_tarifa
         )
 
-    # ── INSCRIPCIONES DEL CLIENTE ───────────────────────────────────
+    # Cliente se apunta a clases
 
     def inscribirse_clase(self, id_cliente, id_clase):
         if not id_cliente:
@@ -340,6 +341,8 @@ class LogicaClientes:
             raise ValueError("Selecciona un plan válido")
 
         return True
+
+# Conversion fecha
 
     def convertir_fecha_a_bd(self, fecha):
         try:

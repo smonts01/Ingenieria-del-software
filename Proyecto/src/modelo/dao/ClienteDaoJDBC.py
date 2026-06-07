@@ -5,6 +5,11 @@ from src.modelo.VO.ClientesVO import ClientesVO
 from src.modelo.VO.ClienteInicioVO import ClienteInicioVO
 from src.modelo.conexion.Conexion import Conexion
 
+"""
+Definición de método estático: Un método estático es un método que pertenece a una clase, pero no necesita acceder 
+a los atributos del objeto. Se usa para funciones auxiliares, como calcular una racha o una distribución, porque 
+solo trabajan con los parámetros que reciben.
+"""
 
 class ClienteDaoJDBC(DaoJDBCBase):
     """
@@ -516,11 +521,6 @@ class ClienteDaoJDBC(DaoJDBCBase):
             cursor.close()
             self._conexion.closeConnection()
 
-"""
-Definición de método estático: Un método estático es un método que pertenece a una clase, pero no necesita acceder 
-a los atributos del objeto. Se usa para funciones auxiliares, como calcular una racha o una distribución, porque 
-solo trabajan con los parámetros que reciben.
-"""
 
     @staticmethod
     def _calcular_racha(fechas: list) -> int:
