@@ -273,6 +273,10 @@ class VistaClienteEstadisticas(QMainWindow):
     def set_nombre_cliente(self, v): self.lblNombreCliente.setText(v)
     def set_fecha_alta(self, v):     self.lblFechaAltaCliente.setText(v)
 
+    def set_periodo(self, texto):
+        if hasattr(self, 'btnPeriodo'):
+            self.btnPeriodo.setText(texto)
+
     def set_entrenos(self, num, sub):
         if hasattr(self, 'lblNumEntrenos'):  self.lblNumEntrenos.setText(num)
         if hasattr(self, 'lblSubEntrenos'):  self.lblSubEntrenos.setText(sub)

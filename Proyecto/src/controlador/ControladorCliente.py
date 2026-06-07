@@ -115,8 +115,20 @@ class ControladorCliente:
             ids_ins   = [ins.id_clase for ins in inscritas]
 
             # Poblar combos
-            nombres  = sorted(set(str(c[1]).strip() for c in clases if c[1]))
-            horarios = sorted(set(f"{str(c[3])[:5]} - {str(c[4])[:5]}" for c in clases if c[3] and c[4]))
+            nombres = sorted(set(
+                str(c.nombre_actividad).strip()
+                for c in clases
+                if c.nombre_actividad
+            ))
+
+            horarios = sorted(set(
+                f"{str(c.hora_inicio)[:5]} - {str(c.hora_fin)[:5]}"
+                for c in clases
+                if c.hora_inicio and c.hora_fin
+            ))
+
+
+
             v.poblar_combo_tipo(nombres)
             v.poblar_combo_horario(horarios)
 
@@ -127,11 +139,18 @@ class ControladorCliente:
             v.cargar_cards(clases, ids_ins, asistidas)
 
             # Próxima clase
-            proxima = next((c for c in clases if c[0] not in asistidas), None)
+            proxima = next((c for c in clases if c.id_clase not in asistidas), None)
+
             if proxima:
-                v.set_prox_datos(f"{proxima[1]}\n{proxima[2]} · {str(proxima[3])[:5]} - {str(proxima[4])[:5]}\n{proxima[5]}")
+                v.set_prox_datos(
+                    f"{proxima.nombre_actividad}\n"
+                    f"{proxima.dia_semana} · {str(proxima.hora_inicio)[:5]} - {str(proxima.hora_fin)[:5]}\n"
+                    f"{proxima.sala}"
+                )
             else:
-                v.set_prox_datos('No tienes próximas clases')
+                v.set_prox_datos("No tienes próximas clases")
+
+
         except Exception as e:
             print('Error cargar clases todas:', e)
 
@@ -141,7 +160,10 @@ class ControladorCliente:
             reservas = self._vo.proximas_clases
             clases_ocupacion = self.modelo.clases_ocupacion_cliente()
             # mapa nombre_lower -> (inscritos, aforo)
-            ocup = {str(c[1]).lower(): (c[6], c[7]) for c in clases_ocupacion}
+            ocup = {
+                str(c.nombre_actividad).lower(): (c.inscritos, c.aforo_maximo)
+                for c in clases_ocupacion
+            }
             v.cargar_cards(reservas, ocup)
         except Exception as e:
             print('Error cargar reservas:', e)
