@@ -8,7 +8,6 @@ class MenorDaoJDBC(Conexion):
     SQL_SELECT_BY_ID = "SELECT id_cliente, dni_tutor, nombre_tutor FROM menor WHERE id_cliente = ?"
     SQL_INSERT = "INSERT INTO menor (id_cliente, dni_tutor, nombre_tutor) VALUES (?, ?, ?)"
     SQL_UPDATE = "UPDATE menor SET dni_tutor=?, nombre_tutor=? WHERE id_cliente=?"
-    SQL_DELETE = "DELETE FROM menor WHERE id_cliente = ?"
 
     def __init__(self):
         self._conexion = Conexion()  
@@ -76,16 +75,4 @@ class MenorDaoJDBC(Conexion):
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_cliente: int) -> int:
-        """Elimina un menor por su ID de cliente. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_cliente,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar menor:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
+

@@ -9,7 +9,6 @@ class RegistroAccesoDaoJDBC:
     SQL_SELECT_BY_USUARIO = "SELECT id_registro, id_usuario, fecha_hora_registro, tipo_acceso FROM registro_acceso WHERE id_usuario = ?"
     SQL_INSERT = "INSERT INTO registro_acceso (id_usuario, fecha_hora_registro, tipo_acceso) VALUES (?, ?, ?)"
     SQL_UPDATE = "UPDATE registro_acceso SET id_usuario=?, fecha_hora_registro=?, tipo_acceso=? WHERE id_registro=?"
-    SQL_DELETE = "DELETE FROM registro_acceso WHERE id_registro = ?"
 
     def __init__(self):
         self._conexion = Conexion()  
@@ -92,16 +91,4 @@ class RegistroAccesoDaoJDBC:
             self._conexion.closeConnection()
         return rows
 
-    def delete(self, id_registro: int) -> int:
-        """Elimina un registro de acceso por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_registro,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar registro de acceso:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
+
