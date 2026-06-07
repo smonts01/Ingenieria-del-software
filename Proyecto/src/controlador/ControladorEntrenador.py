@@ -12,6 +12,7 @@ import os
 from datetime import date
 
 from src.vista.componentes import MensajeView, TablaView, BotonesView
+from src.modelo.VO.AsistenciaVO import AsistenciaVO
 from src.vista.vistas.vista_entrenador import (
     VistaEntrenadorInicio,
     VistaEntrenadorClases,
@@ -252,8 +253,10 @@ class ControladorEntrenador:
                 id_cliente = int(texto_cliente.split(' - ')[0])
                 estado_norm = self.modelo.normalizar_estado_asistencia(estado)
                 if estado_norm in ('si', 'no'):
+                    asistencia_vo = AsistenciaVO(None, id_cliente, id_clase, fecha, estado_norm)
                     self.modelo.registrar_asistencia_normalizada(
-                        id_cliente, id_clase, fecha, estado
+                        asistencia_vo.id_cliente, asistencia_vo.id_clase,
+                        asistencia_vo.fecha, asistencia_vo.presente
                     )
                 if estado_norm == 'si':   presentes += 1
                 elif estado_norm == 'no': ausentes += 1
