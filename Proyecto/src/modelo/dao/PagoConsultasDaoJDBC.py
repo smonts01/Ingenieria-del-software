@@ -1,5 +1,4 @@
 from src.modelo.dao.DaoJDBCBase import DaoJDBCBase
-from src.modelo.VO.ClientePendienteAdminVO import ClientePendienteAdminVO
 from src.modelo.VO.IngresoMesVO import IngresoMesVO
 from src.modelo.VO.InformePagoVO import InformePagoVO
 from src.modelo.VO.PagoPendienteInicioVO import PagoPendienteInicioVO
@@ -352,8 +351,12 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return datos[0] if datos else None
 
     def listar_pagos_pendientes_admin(self):
+<<<<<<< Updated upstream
         filas = self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
         return [ClientePendienteAdminVO(f[2], f[1], f[3], f[4], f[5]) for f in filas]
+=======
+        return self.consultar(self.SQL_LISTAR_PAGOS_PENDIENTES_ADMIN)
+>>>>>>> Stashed changes
 
     def marcar_pago_abonado(self, id_pago: int):
         raise ValueError("Con la base nueva no se actualiza pago.estado. Se registra el pago y se marca el cliente como abonado.")
@@ -391,13 +394,11 @@ class PagoConsultasDaoJDBC(DaoJDBCBase):
         return datos[0][0] if datos else 0
 
     def clientes_pendientes_admin(self):
-        filas = self.consultar(self.SQL_CLIENTES_PENDIENTES_ADMIN)
-        return [ClientePendienteAdminVO(f[0],f[1],f[2],f[3],f[4]) for f in filas]
+        return self.consultar(self.SQL_CLIENTES_PENDIENTES_ADMIN)
 
     def buscar_cliente_pendiente_por_dni_admin(self, dni):
         d = f"%{dni.lower().strip()}%"
-        filas = self.consultar(self.SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN, (d,))
-        return [ClientePendienteAdminVO(f[0],f[1],f[2],f[3],f[4]) for f in filas]
+        return self.consultar(self.SQL_BUSCAR_CLIENTE_PENDIENTE_DNI_ADMIN, (d,))
 
     def buscar_pago_pendiente_por_dni(self, dni):
         d = dni.strip().upper()
