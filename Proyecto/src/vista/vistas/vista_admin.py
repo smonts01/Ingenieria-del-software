@@ -10,11 +10,7 @@ Responsabilidad de la Vista:
 """
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QLineEdit, QMessageBox
 from PyQt5.uic import loadUi
-from src.vista.componentes import TablaView
-import io
-import matplotlib
-import matplotlib.pyplot as plt
-from src.vista.componentes import ImagenView
+
 
 # ── Helpers internos ──────────────────────────────────────────────────────────
 
@@ -30,6 +26,7 @@ def _menu_admin(v, ctrl):
 
 
 def _rellenar_tabla(tabla, cabeceras, datos, extractor=None, editables=None):
+    from src.vista.componentes import TablaView
     TablaView.configurar_columnas(tabla, cabeceras)
     tabla.setRowCount(len(datos))
     tabla.setEditTriggers(tabla.DoubleClicked | tabla.SelectedClicked)
@@ -40,6 +37,7 @@ def _rellenar_tabla(tabla, cabeceras, datos, extractor=None, editables=None):
             list(fila) if isinstance(fila, (list, tuple)) else [str(fila)]
         )
         for ci, val in enumerate(valores[:len(cabeceras)]):
+            from src.vista.componentes import TablaView
             item = TablaView.crear_item(
                 str(val) if val is not None else '',
                 editable=(ci not in no_edit)
@@ -111,8 +109,12 @@ class VistaAdminInicio(QMainWindow):
                         datos, _ext_inscripcion)
 
     def cargar_tabla_pagos_pendientes(self, cabeceras, datos):
+        def _ext_pend(vo):
+            if isinstance(vo, (list, tuple)):
+                return list(vo)
+            return [vo.cliente, vo.dni, vo.tarifa, vo.importe_pendiente, vo.fecha_limite]
         _rellenar_tabla(self.tablaClientesPagosPendientes,
-                        cabeceras, datos, editables={0, 1, 2, 3})
+                        cabeceras, datos, extractor=_ext_pend, editables={0, 1, 2, 3})
 
     def set_grafico(self, pixmap, w, h):
         if hasattr(self, 'graficoFake'):
@@ -122,7 +124,11 @@ class VistaAdminInicio(QMainWindow):
     def mostrar_exito(self, msg): QMessageBox.information(self, 'Correcto', msg)
     def dibujar_grafico_ingresos(self, etiquetas, valores):
         try:
+            import io
+            import matplotlib
+            import matplotlib.pyplot as plt
             matplotlib.use('Agg')
+            from src.vista.componentes import ImagenView
 
             fig, ax = plt.subplots(figsize=(4.0, 2.3), dpi=92)
             fig.patch.set_facecolor('#F8F9FA')
@@ -316,7 +322,7 @@ class VistaAdminClases(QMainWindow):
         ]
 
     def insertar_fila_vacia(self):
-
+        from src.vista.componentes import TablaView
         tabla = self.tablaClases
         fi = tabla.rowCount()
         tabla.insertRow(fi)
@@ -426,6 +432,7 @@ class VistaAdminEstadisticas(QMainWindow):
         if hasattr(self, 'lblNumSalas'):         self.lblNumSalas.setText(str(stats.get('salas', '')))
 
     def cargar_tabla_ranking(self, datos):
+        from src.vista.componentes import TablaView
         tabla = self.tablaRanking
         TablaView.configurar_columnas(tabla, self.CABECERAS_RANKING)
         tabla.setRowCount(len(datos))

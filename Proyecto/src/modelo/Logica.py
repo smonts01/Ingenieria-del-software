@@ -497,3 +497,30 @@ class Logica:
 
     def restaurar_copia_seguridad(self, ruta_sql):
         return self._backup.restaurar_copia_seguridad(ruta_sql)
+
+    # ── Validación y utilidades de usuario ──────────────────────────────
+    def validar_nuevo_usuario(self, dni, nombre, telefono, email,
+                               username, password, confirmar, fecha_texto):
+        return self._usuarios.validar_nuevo_usuario(
+            dni, nombre, telefono, email, username, password, confirmar, fecha_texto)
+
+    def rol_texto_a_id(self, rol_texto):
+        return self._usuarios.rol_texto_a_id(rol_texto)
+
+    # ── Utilidades de pagos ──────────────────────────────────────────────
+    def fecha_pago_actual(self):
+        return self._pagos.fecha_pago_actual()
+
+    # ── Utilidades de clientes ───────────────────────────────────────────
+    def periodo_semana_actual(self):
+        return self._clientes.periodo_semana_actual()
+
+    def texto_estado_pago(self, estado_pagado):
+        return self._clientes.texto_estado_pago(estado_pagado)
+
+    # ── Estadísticas del entrenador ──────────────────────────────────────
+    def resumen_asistencia_clase(self, id_clase, fecha):
+        return self._clases.resumen_asistencia_clase(id_clase, fecha)
+
+    def estadisticas_perfil_entrenador(self, id_entrenador):
+        return self._clases.estadisticas_perfil_entrenador(id_entrenador)
