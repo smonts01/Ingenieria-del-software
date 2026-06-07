@@ -3,22 +3,31 @@ from src.modelo.VO.RolesVO import RolesVO
 
 
 class RolesDaoJDBC:
+    """DAO para la tabla roles.
 
+    Gestiona los roles de usuario del sistema (administrador, cliente,
+    entrenador, contable, recepcionista). Solo permite consultas.
+    """
+
+    # Todos los roles del sistema
     SQL_SELECT = "SELECT id_rol, nombre_rol FROM roles"
+
+    # Un rol por su ID
     SQL_SELECT_BY_ID = "SELECT id_rol, nombre_rol FROM roles WHERE id_rol = ?"
-    SQL_INSERT = "INSERT INTO roles (nombre_rol) VALUES (?)"
-    SQL_UPDATE = "UPDATE roles SET nombre_rol=? WHERE id_rol=?"
-    SQL_DELETE = "DELETE FROM roles WHERE id_rol = ?"
+
 
     def __init__(self):
-        self._conexion = Conexion()  
+        self._conexion = Conexion()
+
 
     def _rowToVO(self, row) -> RolesVO:
+        """Convierte una fila de la BD en un RolesVO."""
         id_rol, nombre_rol = row
         return RolesVO(id_rol, nombre_rol)
 
-    def select(self) -> list[RolesVO]:
-        """Recupera todos los roles."""
+
+    def select(self) -> list:
+        """Devuelve todos los roles del sistema como lista de RolesVO."""
         cursor = self._conexion.getCursor()
         roles = []
         try:
@@ -33,7 +42,8 @@ class RolesDaoJDBC:
         return roles
 
     def selectById(self, id_rol: int) -> RolesVO:
-        """Recupera un rol por su ID."""
+        """Devuelve el rol con el ID indicado como RolesVO,
+        o None si no existe."""
         cursor = self._conexion.getCursor()
         rol = None
         try:
@@ -48,49 +58,8 @@ class RolesDaoJDBC:
             self._conexion.closeConnection()
         return rol
 
-    def insert(self, vo: RolesVO) -> int:
-        """Inserta un nuevo rol. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_INSERT, (vo.nombre_rol,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al insertar rol:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
-
-    def update(self, vo: RolesVO) -> int:
-        """Actualiza un rol existente. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_UPDATE, (vo.nombre_rol, vo.id_rol))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al actualizar rol:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
-
-    def delete(self, id_rol: int) -> int:
-        """Elimina un rol por su ID. Retorna filas afectadas."""
-        cursor = self._conexion.getCursor()
-        rows = 0
-        try:
-            cursor.execute(self.SQL_DELETE, (id_rol,))
-            rows = cursor.rowcount
-        except Exception as e:
-            print("Error al eliminar rol:", e)
-        finally:
-            cursor.close()
-            self._conexion.closeConnection()
-        return rows
-
-    def nombre_rol_por_id(self, id_rol):
+    def nombre_rol_por_id(self, id_rol: int) -> str:
+        """Devuelve el nombre del rol con el ID indicado,
+        o None si no existe. Método de conveniencia sobre selectById."""
         rol = self.selectById(id_rol)
         return rol.nombre_rol if rol else None
-
