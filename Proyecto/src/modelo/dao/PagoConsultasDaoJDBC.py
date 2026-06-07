@@ -4,6 +4,7 @@ from src.modelo.VO.InformePagoVO import InformePagoVO
 from src.modelo.VO.PagoPendienteInicioVO import PagoPendienteInicioVO
 from src.modelo.VO.UltimoPagoVO import UltimoPagoVO
 from src.modelo.VO.PagoPendienteVO import PagoPendienteVO
+from src.modelo.VO.ClientePendienteAdminVO import ClientePendienteAdminVO
 
 
 class PagoConsultasDaoJDBC(DaoJDBCBase):
