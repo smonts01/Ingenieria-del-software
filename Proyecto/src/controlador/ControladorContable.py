@@ -337,8 +337,7 @@ class ControladorContable:
         elif isinstance(v, VistaContablePagosPendientes):
             MensajeView.information(v, 'Ayuda — Pagos pendientes',
                 'Clientes con pagos pendientes.\n\n'
-                '• Filtra por estado con el desplegable.\n'
-                '• Selecciona una fila y pulsa Marcar como abonado.')
+                '• Filtra por estado con el desplegable.\n')
         elif isinstance(v, VistaContableGestionEconomica):
             MensajeView.information(v, 'Ayuda — Gestión económica',
                 'Situación económica del gimnasio.\n\n'
@@ -347,7 +346,7 @@ class ControladorContable:
             MensajeView.information(v, 'Ayuda — Informes',
                 'Generación de informes económicos.\n\n'
                 '• Selecciona el tipo de informe y pulsa el botón.\n'
-                '• Usa Exportar PDF para guardar el informe.')
+                '• Usa Exportar infome a PDF para guardar el informe.')
         elif isinstance(v, VistaContablePerfil):
             MensajeView.information(v, 'Ayuda — Mi perfil',
                 'Información de tu cuenta de contable.')
