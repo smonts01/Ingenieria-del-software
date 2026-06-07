@@ -394,8 +394,12 @@ class VistaAdminPagos(QMainWindow):
     def get_texto_buscar(self): return self.txtBuscarDNI.text().strip()
 
     def cargar_tabla_pagos(self, datos):
+        def _ext(vo):
+            if isinstance(vo, (list, tuple)):
+                return list(vo)
+            return [vo.cliente, vo.dni, vo.tarifa, vo.importe_pendiente, vo.fecha_limite]
         _rellenar_tabla(self.tablaPagoAdmin, self.CABECERAS_PAGOS,
-                        datos, editables={0, 1, 2, 3, 4})
+                        datos, extractor=_ext, editables={0, 1, 2, 3, 4})
 
     def set_resumen_pagos(self, ingresos_mes, ingresos_anio,
                           clientes_pendientes, importe_pendiente):
